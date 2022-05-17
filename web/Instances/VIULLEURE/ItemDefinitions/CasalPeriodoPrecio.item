@@ -1,0 +1,76 @@
+﻿{
+    "Id": 1308,
+    "ItemName": "CasalPeriodoPrecio",
+    "Layout": {
+        "Icon": "fa fa-euro",
+        "Label": "Periode",
+        "LabelPlural": "Periodes",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+				{ "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "Casal"} ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Cantidad", "Label": "Quantitat", "Type": "int"},
+        { "Name": "Precio", "Label": "Preu", "Type": "money"},
+        { "Name": "CasalId", "Label": "Casal", "Type": "long", "ColumnDataType": "Text", "FK": true }
+    ],
+    "Lists": [
+        {
+			"Id": "Custom",
+			"FormId": "Custom",
+			"Layout": 1,
+			"EditAction": 3,
+			"Columns": [
+				{ "DataProperty": "CasalId", "Orderable":true, "Search": true, "Linkable": true },
+				{ "DataProperty": "Cantidad", "Orderable":true, "Width": 200 },
+				{ "DataProperty": "Precio", "Orderable":true, "Width": 200 }
+			]
+        },
+        {
+			"Id": "ByCasal",
+			"FormId": "Custom",
+			"Layout": 1,
+			"ForceHeight": 300,
+			"EditAction": 2,
+			"Parameters": [ {"Name": "CasalId", "Value": "#actualItemId#"} ],
+			"Columns": [
+				{ "DataProperty": "Cantidad", "Orderable":true, "Width": 200 },
+				{ "DataProperty": "Precio", "Orderable":true }
+			]
+        }
+    ],
+	"Forms": [ 
+		{
+            "Id": "Custom",
+            "FormType": "Custom",
+            "DefaultSelected": true,
+            "Tabs": [				
+                {
+                    "Label": "Datos",
+                    "Id": "Data",
+                    "Rows": [
+                        {
+							"Hidden": true,
+                            "Fields": [
+								{ "Name": "CasalId" }
+                            ]
+                        },
+                        {
+                            "Fields": [
+                                { "Name": "Cantidad" },
+                                { "Name": "Precio" }
+                            ]
+                        }
+					]
+				
+				}
+			]
+		}
+	]
+}

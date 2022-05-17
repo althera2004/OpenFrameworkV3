@@ -1,0 +1,70 @@
+﻿{
+    "Id": 2,
+    "ItemName": "CustomerCompany",
+	"Features": { "Attachs": true },
+	"Description": "Client",
+    "Layout": {
+        "Icon": "fa fa-exclamation",
+        "Label": "Client",
+        "LabelPlural": "Clients",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [  ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Date", "Label": "Fecha", "Type": "datetime" },
+		{ "Name": "Code", "Label": "Codi", "Type": "text", "Length": 15 },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150 }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Code", "Width": 150   },
+                { "DataProperty": "Name" },
+                { "DataProperty": "Date", "Width": 100, "Align": "center" }
+            ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Code" },
+								{ "Name": "Name" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Date" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

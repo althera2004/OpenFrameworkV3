@@ -1,0 +1,1 @@
+﻿<%@ WebService Language="C#" CodeBehind="~/App_Code/SecurityService.cs" Class="SecurityService" %>

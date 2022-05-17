@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ExportInscripcionListado.aspx.cs" Inherits="OpenFrameworkV2.Web.Viulleure.Export.ExportInscripcionListado" %>

@@ -1,0 +1,69 @@
+﻿{
+    "Id": 303,
+    "ItemName": "Colaboracion",
+    "Layout": {
+        "Icon": "fa fa-cog",
+        "Label": "Colaboració",
+        "LabelPlural": "Colaboracions",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+				{ "Name": "Title" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Title", "Label": "Titòl", "Type": "text", "Required": true, "Length": 100 },
+        { "Name": "Published", "Label": "Publicat", "Type": "boolean", "DataFormat": { "Name": "ToBooleanCheck" } },
+        { "Name": "Photo", "Label": "Imagen", "Type": "ImageFile" },
+        { "Name": "Web", "Label": "Web", "Type": "Url" },
+        { "Name": "Weight", "Label": "Pes", "Type": "int", "Required": true }
+    ],
+    "Lists": [
+        {
+			"Id": "Custom",
+			"FormId": "Custom",
+			"Layout": 1,
+			"EditAction": 3,
+			"Columns": [
+				{ "DataProperty": "Title", "Orderable":true, "Search": true, "Linkable": true },
+				{ "DataProperty": "Weight", "Orderable":true, "Width": 90 },
+				{ "DataProperty": "Published", "Orderable":true, "Width": 90 }
+			]
+        }
+    ],
+	"Forms": [ 
+		{
+            "Id": "Custom",
+            "FormType": "Custom",
+            "DefaultSelected": true,
+            "Tabs": [
+                {
+                    "Label": "Dades",
+                    "Id": "Data",
+                    "Rows": [
+						{
+							"Fields": [
+								{ "Name": "Title", "ColSpan": 2 },
+								{ "Name": "Published" }
+							]
+						},
+                        {
+                            "Fields": [
+								{ "Name": "Web" }
+                            ]
+                        },
+                        {
+                            "Fields": [
+								{ "Name": "Photo" },
+								{ "Name": "Weight" }
+                            ]
+                        }
+					]
+				}
+            ]
+        }
+	]
+}

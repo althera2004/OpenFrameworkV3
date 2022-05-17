@@ -1,0 +1,31 @@
+﻿{
+    "Id": 201,
+    "ItemName": "LearningStatus",
+    "Layout": {
+        "Icon": "fa fa-tasks-alt",
+        "Label": "Estat de la formació",
+        "LabelPlural": "Estats de la formació",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Name", "Label": "Nombre", "Type": "text", "Length": 50, "Required": true }
+    ],
+	"Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": 2,
+            "Columns": [
+                { "DataProperty": "Name", "Search": true, "Orderable": true, "Linkable": true }
+            ]
+        }
+	]
+}

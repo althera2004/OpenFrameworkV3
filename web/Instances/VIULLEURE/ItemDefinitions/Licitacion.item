@@ -1,0 +1,53 @@
+﻿{
+    "Id": 9932,
+    "ItemName": "Licitacion",
+    "Layout": {
+        "Icon": "fa fa-cog",
+        "Label": "Licitació",
+        "LabelPlural": "Licitacions",
+        "Description": {
+            "Pattern": "{0} - {1}",
+            "Fields": [
+				{ "Name": "ClienteId" },
+                { "Name": "Referencia" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "ForeignValues": [  {"ItemName":"Cliente"} ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "ClienteId", "Label": "Client", "Type": "long", "Required": true, "ColumnDataType": "Text", "FK": true },
+        { "Name": "Referencia", "Label": "Referència", "Type": "text", "Required": true, "Length": 100 },
+        { "Name": "Descripcion", "Label": "Descripció", "Type": "textarea", "Length": 2000 },
+        { "Name": "Url", "Label": "Url", "Type": "Url" }
+    ],
+    "Lists": [
+        {
+          "Id": "Custom",
+          "FormId": "Custom",
+          "Layout": 1,
+          "Exportable": false,
+          "EditAction": 4,
+		  "ForceHeight": 250,
+          "Columns": [
+            { "DataProperty": "ClienteId", "Orderable":true, "Search": true },
+            { "DataProperty": "Referencia", "Orderable":true, "Search": true, "Width": 350 },
+            { "DataProperty": "Descripcion", "Orderable":true, "Search": true, "Width": 350 }
+          ]
+        },
+        {
+			"Id": "ByCliente",
+			"FormId": "Custom",
+			"Layout": 1,
+			"EditAction": 2,
+			"PageSize": 50,
+			"ItemLink": "Licitacion",
+			"Parameters": [ {"Name": "ClienteId", "Value": "#actualItemId#"} ],
+			"Columns": [
+				{ "DataProperty": "Referencia", "Orderable":true, "Search": true, "Width": 350 },
+				{ "DataProperty": "Descripcion", "Orderable":true }
+			]
+        }
+    ]
+}

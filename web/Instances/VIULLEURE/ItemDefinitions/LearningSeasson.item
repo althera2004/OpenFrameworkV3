@@ -1,0 +1,48 @@
+﻿{
+    "Id": 203,
+    "ItemName": "LearningSeasson",
+    "Layout": {
+        "Icon": "fa fa-chalkboard-teacher",
+        "Label": "Sessió",
+        "LabelPlural": "Sessions",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "LearningId" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "ForeignValues": [ { "ItemName":"Learning" } ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "LearningId", "Label": "Curs", "Type": "long", "Required": true, "ColumnDataType": "Text", "FK": true },
+		{ "Name": "Date", "Label": "Data", "Type": "datetime", "Required": true },
+		{ "Name": "TimeStart", "Label": "Inici", "Type": "int", "Required": true },
+		{ "Name": "TimeEnd", "Label": "Fi", "Type": "int", "Required": true }
+    ],
+	"Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": 2,
+            "Columns": [
+                { "DataProperty": "Name", "Search": true, "Orderable": true, "Linkable": true }
+            ]
+        },
+        {
+			"Id": "ByLearning",
+			"FormId": "Custom",
+			"Layout": 1,
+            "EditAction": 2,
+			"Title": "Calendari",
+			"Parameters": [ {"Name": "LearningId", "Value": "#actualItemId#"} ],
+			"Columns": [
+				{ "DataProperty": "Date", "Orderable":true },
+				{ "DataProperty": "TimeStart" },
+				{ "DataProperty": "TimeEnd" }
+			]
+        }
+	]
+}

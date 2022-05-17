@@ -1,0 +1,63 @@
+{
+    "ConnectionString": "Data Source=hw120.dinaserver.com;Initial Catalog=openf_viulleure;User Id=openf_viulleure;Password=P@ssw0rd;",
+    "ConnectionStringPRE": "Data Source=sql5045.site4now.net;Initial Catalog=DB_9EAFD8_viulleure;User Id=DB_9EAFD8_viulleure_admin;Password=P@ssw0rd;",
+    "Id": 7777,
+    "Name": "ViuLleure",
+    "DebugMode": true,
+    "Description": "Viu lleure",
+    "UrlSite": "http://localhost/",
+    "DeleteAction": "Inactive",
+    "SessionTimeout": "15m",
+    "MultiCompany": false,
+    "MultiCompanyItem": "Actividad",
+    "ListNumRows": 50,
+    "FAQS": true,
+    "DefaultLanguage": "ca-es",
+    "GoogleAPIKey": "",
+    "ActiveAlerts": true,
+    "SaveAction": 1,
+    "FollowEnabled": true,
+    "Portal": true,
+    "PinCode": false,
+	"Sticking": true,
+    "TraceType": 0,
+	"Features": {
+		"CreditCard": true
+	},
+    "Mail": {
+        "Mode": "smtp",
+        "Server": "mail.openframework.es",
+        "User": "info@openframework.es",
+        "Password": "V@nessa57",
+        "Port": 25,
+        "UserName": "OpenFramework",
+        "MailSender": "info@openframework.es"
+    },
+    "Security": {
+        "IPAccess": false,
+        "PasswordComplexity": "Strong",
+        "MustChangePassword": false,
+        "Traceability": "item",
+        "GrantPermission": "ByGroup",
+        "FailedAttempts": 3,
+        "MinimumPasswordLength": 6
+    },
+    "Profile": {
+        "Twiter": true,
+        "LinkedIn": true,
+        "Facebook": false,
+        "Instagram": false,
+        "BirthDate": true,
+        "Mobile": true,
+        "IdentificationCard": true,
+        "NameFormat": 2,
+        "Gender": true,
+        "PhoneEmergency": true,
+        "EmailAlternative": true,
+        "Web": false,
+        "Nacionality": true,
+        "Fax": true,
+        "Address": true
+    },
+    "ExternalUsers": []
+}

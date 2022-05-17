@@ -1,0 +1,80 @@
+﻿{
+    "Id": 1,
+    "ItemName": "Instancia",
+	"Description": "Instancia implementada",
+    "Layout": {
+        "Icon": "fa fa-cog",
+        "Label": "Instància",
+        "LabelPlural": "Instancias",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [  ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150 },
+		{ "Name": "Tipo", "Label": "Tipus", "Type": "fixedlist", "FixedListName": "InstanciaTipo" },
+		{ "Name": "Url", "Label": "Url", "Type": "Url" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name" },
+                { "DataProperty": "Url", "Width": 300 },
+                { "DataProperty": "Tipo", "Width": 150, "Render": "Instancia_Column_Tipo", "Align": "left" }
+            ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name", "ColSpan": 2 },
+								{ "Name": "Tipo", "FixedListMode": "DropDown" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Dades Bàsiques",
+					"Rows": [
+						{
+							"ItemList": "CustomerCompanyInstance",
+							"ListId": "ByInstance",
+							"FilterFields": [ { "Field": "Instancia" } ]
+						}
+					]
+				},
+				{
+					"Id": "Incidencias",
+					"Label": "Incidencias",
+					"Rows": [
+						{
+							"ItemList": "Incidencia",
+							"ListId": "ByInstancia",
+							"FilterFields": [ { "Field": "Instancia" } ]
+						}
+					]
+				}
+			]
+		}
+	]
+}

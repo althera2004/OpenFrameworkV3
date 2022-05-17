@@ -1,0 +1,39 @@
+[
+	{ "Leaf": true, "Item": "Cliente" },
+	{ "Leaf": true, "Item": "Licitacion" },
+	{ "Leaf": true, "Item": "Learning" },
+  {
+    "Label": "Formació",
+    "Options": [
+      { "Leaf": true, "Item": "Learning" },
+      { "Leaf": true, "Item": "LearningTeacher" }
+    ]
+  },
+  {
+    "Label": "Activitats",
+    "Options": [
+      { "Leaf": true, "Item": "Casal" },
+      { "Leaf": true, "Item": "Monitor" },
+      { "Leaf": true, "Item": "Inscripcion" },
+	  { "Leaf": true, "Item": "TipoActividad" }
+    ]
+  },
+  {
+    "Label": "Web",
+    "Options": [
+      { "Leaf": true, "Item": "Casal" },
+      { "Leaf": true, "Item": "TextoWeb" },
+      { "Leaf": true, "Item": "Destacado" },
+      { "Leaf": true, "Item": "Evento" },
+      { "Leaf": true, "Item": "Noticia" },
+      { "Leaf": true, "Item": "Colaboracion" }
+    ]
+  },
+  {
+    "Label": "Configuració",
+    "Options": [
+      { "Leaf": true, "Item": "LearningStatus" },
+      { "Leaf": true, "Item": "EstadoLicitacion" }
+    ]
+  }
+]

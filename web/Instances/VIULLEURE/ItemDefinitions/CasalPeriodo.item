@@ -1,0 +1,81 @@
+﻿{
+    "Id": 1307,
+    "ItemName": "CasalPeriodo",
+    "Layout": {
+        "Icon": "fa fa-calendar",
+        "Label": "Periode",
+        "LabelPlural": "Periodes",
+        "Description": {
+            "Pattern": "{0} - {1}",
+            "Fields": [
+				{ "Name": "Code" },
+				{ "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "Casal"} ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Name", "Label": "Descripció", "Type": "textarea", "Length": 2000 },
+        { "Name": "Code", "Label": "Codi", "Type": "text", "Length": 4, "FK": true },
+        { "Name": "CasalId", "Label": "Casal", "Type": "long", "ColumnDataType": "Text", "FK": true },
+        { "Name": "Disponible", "Label": "Disponible", "Type": "bool", "DataFormat": { "Name": "ToBooleanCheck" } }
+    ],
+    "Lists": [
+        {
+			"Id": "Custom",
+			"FormId": "Custom",
+			"Layout": 1,
+			"EditAction": 3,
+			"Columns": [
+				{ "DataProperty": "CasalId", "Orderable":true, "Search": true, "Linkable": true },
+				{ "DataProperty": "Name", "Width": 200 }
+			]
+        },
+        {
+			"Id": "ByCasal",
+			"FormId": "Custom",
+			"ForceHeight": 300,
+			"Layout": 1,
+			"EditAction": 2,
+			"Parameters": [ {"Name": "CasalId", "Value": "#actualItemId#"} ],
+			"Columns": [
+				{ "DataProperty": "Code", "Width": 50 },
+				{ "DataProperty": "Name" },
+				{ "DataProperty": "Disponible", "Width": 100 }
+			]
+        }
+    ],
+	"Forms": [ 
+		{
+            "Id": "Custom",
+            "FormType": "Custom",
+            "DefaultSelected": true,
+            "Tabs": [				
+                {
+                    "Label": "Datos",
+                    "Id": "Data",
+                    "Rows": [
+                        {
+							"Hidden": true,
+                            "Fields": [
+								{ "Name": "CasalId" }
+                            ]
+                        },
+                        {
+                            "Fields": [
+                                { "Name": "Name" }
+                            ]
+                        },
+                        {
+                            "Fields": [
+								{ "Name": "Code" },
+								{ "Name": "Disponible" }
+                            ]
+                        }
+					]
+				
+		}
+	]
+}]}

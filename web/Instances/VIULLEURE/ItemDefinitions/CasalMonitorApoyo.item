@@ -1,0 +1,76 @@
+﻿{
+    "Id": 103,
+    "ItemName": "CasalMonitorApoyo",
+	"Features": {"Attachs": true},
+    "Layout": {
+        "Icon": "fa fa-users",
+        "Label": "Monitor recolçament",
+        "LabelPlural": "Monitors recolçament",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "Casal"} ,{"ItemName": "Monitor"}  ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "CasalId", "Label": "Actividad", "Type": "long", "Required": true, "ColumnDataType": "text" },
+        { "Name": "MonitorId", "Label": "Monitor", "Type": "long", "Required": true, "ColumnDataType": "text" }
+    ],
+	"Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": 3,
+            "Columns": [
+                { "DataProperty": "CasalId", "Search": true, "Orderable": true, "Linkable": true, "Width": 250 },
+                { "DataProperty": "MonitorId", "Search": true, "Width": 250 }
+            ]
+        },
+        {
+            "Id": "ByCasal",
+            "FormId": "Custom",
+			"Layout": 1,
+			"EditAction": 2,
+			"ForceHeight": 350,
+			"Title": "Monitors de reforç",
+			"NoDataMessage": "No hi ha grups a aquesta activitat",
+			"Parameters": [ {"Name": "CasalId", "Value": "#actualItemId#"} ],
+            "Columns": [
+                { "DataProperty": "MonitorId", "Search": true }
+            ],
+			"Buttons": [
+				{ "Name": "ViewProfile", "Label": "Veure dades", "Icon": "fal fa-user", "Function": "MONITOR_ViewProfileByApoyo"}
+			]
+        }
+	],
+	"Forms": [ 
+		{
+            "Id": "Custom",
+            "FormType": "Custom",
+            "DefaultSelected": true,
+            "Tabs": [
+                {
+                    "Id": "Data",
+                    "Rows": [
+                        {
+							"Hidden": true,
+                            "Fields": [
+                                { "Name": "CasalId" }
+                            ]
+                        },
+                        {
+                            "Fields": [
+                                { "Name": "MonitorId" }
+                            ]
+                        }
+					]
+				}
+            ]
+        }
+	]
+}
