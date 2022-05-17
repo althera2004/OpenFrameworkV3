@@ -2,17 +2,11 @@
 // <copyright file="BaseItem.cs" company="OpenFramework">
 //     Copyright (c) 2013 - OpenFramework. All rights reserved.
 // </copyright>
-// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
 namespace OpenFrameworkV3.Core.ItemManager
 {
     using System;
-    using System.Collections.Generic;
-    using System.Data.SqlClient;
-    using System.Globalization;
-    using System.Linq;
-    using System.Text;
-    using OpenFrameworkV3.Core.Activity;
     using OpenFrameworkV3.Core.Security;
 
     public abstract class BaseItem

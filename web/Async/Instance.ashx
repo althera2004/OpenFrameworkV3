@@ -1,13 +1,13 @@
-﻿<%@ WebHandler Language="C#" Class="Instance" %>
+﻿<%@ WebHandler Language="C#" Class="Instance" %> 
 
 using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Web;
 using Newtonsoft.Json;
-using OpenFrameworkV2;
-using System.Data;
-using System.Data.SqlClient;
+using OpenFrameworkV3.Core.Activity;
 
 public class Instance : IHttpHandler
 {
@@ -56,7 +56,7 @@ public class Instance : IHttpHandler
         var res = ActionResult.NoAction;
         dynamic json = JsonConvert.DeserializeObject(actionData);
         var instanceName = json.SelectToken("instanceName").ToString();
-        return OpenFrameworkV2.Core.Instance.Reload(instanceName);
+        return OpenFrameworkV3.Core.Instance.Reload(instanceName);
     }
 
     public ActionResult PathVerify(string actionData)

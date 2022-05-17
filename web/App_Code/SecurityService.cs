@@ -1,8 +1,14 @@
-﻿using OpenFrameworkV2;
-using OpenFrameworkV2.Core.Security;
-using OpenFrameworkV2.Tools;
+﻿// --------------------------------
+// <copyright file="SecurityService.cs" company="OpenFramework">
+//     Copyright (c) 2013 - OpenFramework. All rights reserved.
+// </copyright>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
+// --------------------------------
 using System.Web.Script.Services;
 using System.Web.Services;
+using OpenFrameworkV3.Core.Activity;
+using OpenFrameworkV3.Core.Security;
+using OpenFrameworkV3.Tools;
 
 /// <summary>
 /// Descripción breve de ItemService

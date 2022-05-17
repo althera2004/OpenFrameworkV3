@@ -2,7 +2,7 @@
 // <copyright file="Receipt.cs" company="OpenFramework">
 //     Copyright (c) 2013 - ColumnsInvoiceLineGet. All rights reserved.
 // </copyright>
-// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
 namespace OpenFrameworkV3.Billing
 {

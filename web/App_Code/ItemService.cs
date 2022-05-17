@@ -1,4 +1,10 @@
-﻿using System;
+﻿// --------------------------------
+// <copyright file="ItemService.cs" company="OpenFramework">
+//     Copyright (c) 2013 - OpenFramework. All rights reserved.
+// </copyright>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
+// --------------------------------
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -7,6 +13,7 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using OpenFrameworkV3;
 using OpenFrameworkV3.Core.DataAccess;
+using OpenFrameworkV3.Core.ItemManager.ItemList;
 using OpenFrameworkV3.Tools;
 
 /// <summary>
@@ -58,11 +65,11 @@ public class ItemService : WebService
             var itemDefinition = Persistence.ItemDefinitions(instanceName).First(d => d.ItemName.Equals(itemName, StringComparison.OrdinalIgnoreCase) == true);
             if (!string.IsNullOrEmpty(itemDefinition.CustomFK))
             {
-                data = Read.GetCustomFK(itemDefinition, instanceName);
+                data = Read.GetCustomFK(itemName, instanceName);
             }
             else
             {
-                data = Read.JsonActive(itemDefinition, companyId, instanceName);
+                data = Read.JsonActive(itemName, companyId, instanceName);
             }
         }
 

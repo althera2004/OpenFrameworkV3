@@ -2,7 +2,7 @@
 // <copyright file="PdfTemplate.cs" company="OpenFramework">
 //     Copyright (c) 2019 - OpenFramework. All rights reserved.
 // </copyright>
-// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
 namespace OpenFrameworkV3.Export
 {

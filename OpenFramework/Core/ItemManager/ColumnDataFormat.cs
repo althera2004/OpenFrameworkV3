@@ -1,4 +1,10 @@
-﻿namespace OpenFrameworkV3.Core.ItemManager
+﻿// --------------------------------
+// <copyright file="SecurityConfiguration.cs" company="OpenFramework">
+//     Copyright (c) 2013 - OpenFramework. All rights reserved.
+// </copyright>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
+// --------------------------------
+namespace OpenFrameworkV3.Core.ItemManager
 {
     using Newtonsoft.Json;
     using OpenFrameworkV3.Core.ItemManager.List;

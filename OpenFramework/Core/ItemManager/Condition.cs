@@ -2,9 +2,9 @@
 // <copyright file="Condition.cs" company="OpenFramework">
 //     Copyright (c) 2013 - OpenFramework. All rights reserved.
 // </copyright>
-// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
-namespace OpenFrameworkV3.Core.ItemManager
+namespace OpenFrameworkV3.Core.ItemManager 
 {
     using System;
     using Newtonsoft.Json;

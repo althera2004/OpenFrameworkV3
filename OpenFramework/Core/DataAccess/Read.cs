@@ -2,7 +2,7 @@
 // <copyright file="Read.cs" company="OpenFramework">
 //     Copyright (c) 2013 - OpenFramework. All rights reserved.
 // </copyright>
-// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
 namespace OpenFrameworkV3.Core.DataAccess
 {
@@ -424,6 +424,10 @@ namespace OpenFrameworkV3.Core.DataAccess
                 case DataOrigin.JsonFile: return JsonConnector.All<string>(definition, instanceName);
                 default: return SqlConnector.All<string>(definition, instanceName);
             }
+        }
+        public static string GetCustomFK(string itemName, string instanceName)
+        {
+            return GetCustomFK(Persistence.ItemDefinitionByName(itemName, instanceName), instanceName);
         }
 
         public static string GetCustomFK(ItemDefinition definition, string instanceName)

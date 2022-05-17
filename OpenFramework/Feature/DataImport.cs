@@ -1,8 +1,8 @@
 ﻿// --------------------------------
-// <copyright file="Note.cs" company="OpenFramework">
+// <copyright file="SecurityConfiguration.cs" company="OpenFramework">
 //     Copyright (c) 2013 - OpenFramework. All rights reserved.
 // </copyright>
-// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
 namespace OpenFrameworkV3.Feature
 {

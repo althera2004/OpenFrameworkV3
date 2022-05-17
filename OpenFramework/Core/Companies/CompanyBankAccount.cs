@@ -2,7 +2,7 @@
 // <copyright file="CompanyBankAccount.cs" company="OpenFramework">
 //     Copyright (c) 2013 - OpenFramework. All rights reserved.
 // </copyright>
-// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
 namespace OpenFrameworkV3.Core.Companies
 {
@@ -427,6 +427,16 @@ namespace OpenFrameworkV3.Core.Companies
             }
 
             return new ReadOnlyCollection<CompanyBankAccount>(res);
+        }
+
+        public ActionResult Save(long applicationUserId, string instanceName)
+        {
+            if(this.Id > 0)
+            {
+                return Update(applicationUserId, instanceName);
+            }
+
+            return Insert(applicationUserId, instanceName);
         }
 
         public ActionResult Insert(long applicationUserId, string instanceName)

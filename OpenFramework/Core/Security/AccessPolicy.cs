@@ -1,4 +1,10 @@
-﻿namespace OpenFrameworkV3.Core.Security
+﻿// --------------------------------
+// <copyright file="SecurityConfiguration.cs" company="OpenFramework">
+//     Copyright (c) 2013 - OpenFramework. All rights reserved.
+// </copyright>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
+// --------------------------------
+namespace OpenFrameworkV3.Core.Security
 {
     using System;
     using System.Data;

@@ -2,7 +2,7 @@
 // <copyright file="InvoiceLine.cs" company="OpenFramework">
 //     Copyright (c) 2013 - OpenFramework. All rights reserved.
 // </copyright>
-// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
 namespace OpenFrameworkV3.Billing
 {
@@ -19,7 +19,7 @@ namespace OpenFrameworkV3.Billing
 
     public partial class InvoiceLine
     {
-        public long Id { get; set; }
+        public long Id { get; set; } 
         public long CompanyId { get; set; }
         public long InvoiceId { get; set; }
         public string ConceptText { get; set; }

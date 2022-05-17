@@ -1,15 +1,16 @@
-﻿namespace OpenFrameworkV3.Feature
+﻿// --------------------------------
+// <copyright file="SecurityConfiguration.cs" company="OpenFramework">
+//     Copyright (c) 2013 - OpenFramework. All rights reserved.
+// </copyright>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
+// --------------------------------
+namespace OpenFrameworkV3.Feature
 {
-    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using Newtonsoft.Json;
-    using OpenFrameworkV3.Core;
-    using OpenFrameworkV3.Tools;
 
     public class CustomListUpdate
     {

@@ -1,8 +1,14 @@
-﻿using OpenFrameworkV2;
-using OpenFrameworkV2.Core;
-using OpenFrameworkV2.Core.Companies;
+﻿// --------------------------------
+// <copyright file="CompanyService.cs" company="OpenFramework">
+//     Copyright (c) 2013 - OpenFramework. All rights reserved.
+// </copyright>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
+// --------------------------------
 using System.Web.Script.Services;
 using System.Web.Services;
+using OpenFrameworkV3.Core.Activity;
+using OpenFrameworkV3.Core.Companies;
+using OpenFrameworkV3.Mail;
 
 /// <summary>
 /// Descripción breve de CompanyService
@@ -46,9 +52,9 @@ public class CompanyService : WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public ActionResult BankAccountActivate(long bankAccountId, bool active, long applicationUserId, long companyId, string instanceName)
+    public ActionResult BankAccountActivate(long bankAccountId, long applicationUserId, long companyId, string instanceName)
     {
-        return CompanyBankAccount.Activate(bankAccountId, active, applicationUserId, companyId, instanceName);
+        return CompanyBankAccount.Activate(bankAccountId, applicationUserId, companyId, instanceName);
     }
 
     [WebMethod]

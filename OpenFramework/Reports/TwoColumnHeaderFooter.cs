@@ -2,7 +2,7 @@
 // <copyright file="TwoColumnHeaderFooter.cs" company="OpenFramework">
 //     Copyright (c) OpenFramework. All rights reserved.
 // </copyright>
-// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
 namespace OpenFrameworkV3.Reports
 {

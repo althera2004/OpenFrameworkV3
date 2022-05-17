@@ -2,7 +2,7 @@
 // <copyright file="ExportCasalPeriodo.aspx.cs" company="OpenFramework">
 //     Copyright (c) 2013 - OpenFramework. All rights reserved.
 // </copyright>
-// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
 namespace Instances.Viulleure.Export
 {
