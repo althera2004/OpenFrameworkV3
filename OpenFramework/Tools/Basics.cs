@@ -309,28 +309,6 @@ namespace OpenFrameworkV3.Tools
             return res.ToString().Trim();
         }
 
-        public static DateTime? TextToDate(string text)
-        {
-            if (string.IsNullOrEmpty(text))
-            {
-                return null;
-            }
-
-            if (text.IndexOf("T") != -1)
-            {
-                var partsT = text.Split('T')[0].Replace('-', '/').Split('/');
-                return DateTime.ParseExact(partsT[2] + "/" + partsT[1] + "/" + partsT[0], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            }
-
-            var parts = text.Split('/');
-            if (parts.Length == 3)
-            {
-                return DateTime.ParseExact(text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            }
-
-            return null;
-        }
-
         /// <summary>Make a string with decimal format for pdf purposses</summary>
         /// <param name="value">Decimal value</param>
         /// <returns>String with decimal format</returns>
@@ -489,39 +467,6 @@ namespace OpenFrameworkV3.Tools
             }
 
             return fileName.Replace('#', '_').Replace('%', '_');
-        }
-
-        public static DateTime? DateFromStringddMMyyy(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return null;
-            }
-
-            var data = value.Split('/');
-
-            if (data.Length != 3)
-            {
-                return null;
-            }
-
-            int year = Convert.ToInt32(data[2], CultureInfo.InvariantCulture);
-            int month = Convert.ToInt32(data[1], CultureInfo.InvariantCulture);
-            int day = Convert.ToInt32(data[0], CultureInfo.InvariantCulture);
-            return new DateTime(year, month, day);
-        }
-
-        public static DateTime? DateFromStringyyyyMMdd(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return null;
-            }
-
-            int year = Convert.ToInt32(value.Substring(0, 4), CultureInfo.InvariantCulture);
-            int month = Convert.ToInt32(value.Substring(4, 2), CultureInfo.InvariantCulture);
-            int day = Convert.ToInt32(value.Substring(6, 2), CultureInfo.InvariantCulture);
-            return new DateTime(year, month, day);
         }
 
         /// <summary>Converts degree to radian</summary>

@@ -186,7 +186,7 @@ namespace OpenFrameworkV3.Tools
             switch (cell.CellType)
             {
                 case CellType.String:
-                    return Tools.DateFormat.FromStringddMMyyy(cell.StringCellValue);
+                    return Tools.DateFormat.FromStringddMMyyyy(cell.StringCellValue);
                 case CellType.Blank:
                     return null;
                 default: return cell.DateCellValue;

@@ -22,6 +22,7 @@ namespace OpenFrameworkV3.Core.Navigation
 
     public class Menu
     {
+        private string instanceName;
 
         /// <summary>Menu options</summary>
         [JsonProperty("Options")]
@@ -95,6 +96,53 @@ namespace OpenFrameworkV3.Core.Navigation
             }
         }
 
+        public string GetJson()
+        {
+            return Json(new ReadOnlyCollection<MenuOption>(this.options));
+        }
+
+        public static string Json(ReadOnlyCollection<MenuOption> options)
+        {
+            var res = new StringBuilder("[");
+            bool first = true;
+            foreach (var option in options)
+            {
+                if (option.Options.Count > 0)
+                {
+                    var resOptions = Json(option.Options);
+                    res.AppendFormat(
+                        CultureInfo.InvariantCulture,
+                        @"{7}{{""Id"": ""{0}"", ""Label"": ""{1}"", ""Icon"":""{2}"", ""Link"":""{3}"",""ItemName"":""{4}"",""ListId"":""{5}"", ""Options"":{6}}}",
+                        option.Id,
+                        option.Label,
+                        option.Icon,
+                        option.Link,
+                        option.ItemName,
+                        option.ListId,
+                        resOptions,
+                        first ? string.Empty : ", ");
+                }
+                else
+                {
+                    res.AppendFormat(
+                        CultureInfo.InvariantCulture,
+                        @"{6}{{""Id"": ""{0}"", ""Label"": ""{1}"", ""Icon"":""{2}"", ""Link"":""{3}"",""ItemName"":""{4}"",""ListId"":""{5}""}}",
+                        option.Id,
+                        option.Label,
+                        option.Icon,
+                        option.Link,
+                        option.ItemName,
+                        option.ListId,
+                        first ? string.Empty : ", ");
+                }
+
+                first = false;
+            }
+
+            res.Append("]");
+            return res.ToString();
+        }
+
         /// <summary>Load menu</summary>
         /// <param name="externalUsers">External users identifiers</param>
         /// <param name="codedQueryClean">Indicates if query is clean</param>
@@ -127,7 +175,7 @@ namespace OpenFrameworkV3.Core.Navigation
                     try
                     {
                         string menuFile = string.Format(CultureInfo.InvariantCulture, "{0}menu_{1}.json", menuPath, externalUser.Replace(' ', '_'));
-                        var menuContentJson = Json.EmptyJsonObject;
+                        var menuContentJson = Tools.Json.EmptyJsonObject;
 
                         if (File.Exists(menuFile))
                         {
@@ -139,7 +187,7 @@ namespace OpenFrameworkV3.Core.Navigation
                             menuContentJson = string.Format(CultureInfo.InvariantCulture, @"{{""Options"":{0}}}", menuContentJson);
                             temp = JsonConvert.DeserializeObject<Menu>(menuContentJson);
                             ValidateOptions(temp, instanceName);
-                            res.AddOptionsBulk(MenuOption.ByGrants(temp.Options, applicationUser.Grants));
+                            res.AddOptionsBulk(MenuOption.ByGrants(temp.Options, applicationUser));
                         }
                     }
                     catch (Exception ex)
@@ -156,9 +204,17 @@ namespace OpenFrameworkV3.Core.Navigation
         /// <summary>Load menu</summary>
         /// <param name="codedQueryClean">Indicates if query is clean</param>
         /// <returns>Main menu</returns>
-        public static Menu Load(bool codedQueryClean, string instanceName)
+        public static Menu Load(long applicationUserId,long companyId, bool codedQueryClean, string instanceName)
         {
-            var applicationUser = HttpContext.Current.Session["ApplicationUser"] as ApplicationUser;
+            var applicationUser = ApplicationUser.ById(applicationUserId, instanceName);
+            return Load(applicationUser, companyId, codedQueryClean, instanceName);
+        }
+
+        /// <summary>Load menu</summary>
+        /// <param name="codedQueryClean">Indicates if query is clean</param>
+        /// <returns>Main menu</returns>
+        public static Menu Load(ApplicationUser applicationUser, long companyId, bool codedQueryClean, string instanceName)
+        {
 
             // weke if (applicationUser.External)
             //{
@@ -177,9 +233,12 @@ namespace OpenFrameworkV3.Core.Navigation
 
             var res = Menu.Empty;
             var temp = Menu.Empty;
+
+            res.instanceName = instanceName;
+            temp.instanceName = instanceName;
             try
             {
-                var menuContentJson = Json.EmptyJsonObject;
+                var menuContentJson = Tools.Json.EmptyJsonObject;
                 using (var input = new StreamReader(menuPath))
                 {
                     menuContentJson = input.ReadToEnd();
@@ -188,7 +247,7 @@ namespace OpenFrameworkV3.Core.Navigation
                 menuContentJson = string.Format(CultureInfo.InvariantCulture, @"{{""Options"":{0}}}", menuContentJson);
                 temp = JsonConvert.DeserializeObject<Menu>(menuContentJson);
                 ValidateOptions(temp, instanceName);
-                res.AddOptionsBulk(MenuOption.ByGrants(temp.Options, applicationUser.Grants));
+                res.AddOptionsBulk(MenuOption.ByGrants(temp.Options, applicationUser));
             }
             catch (Exception ex)
             {
@@ -221,7 +280,7 @@ namespace OpenFrameworkV3.Core.Navigation
                     ItemName = "Core_CompanyProfile",
                     Label = "Core_CompanyProfile_MenuLabel",
                     Leaf = true,
-                    DestinationPage = "/Admin/CompanyProfile.aspx"
+                    DestinationPage = "/Admin/CompanyProfile.aspx?" + Tools.Basics.Base64Encode("I=" + instanceName + "&C=" + companyId.ToString())
                 };
 
                 companyOption.SetIcon("fa fa-user-tie");
@@ -242,7 +301,7 @@ namespace OpenFrameworkV3.Core.Navigation
                     usersOption.SetIcon("fa fa-user");
                     administrationOptions.Add(usersOption);
 
-                    /*administrationOptions.Add(new MenuOptionDefinition
+                    administrationOptions.Add(new MenuOption
                     {
                         Id = 1010,
                         OptionId = 1010,
@@ -250,9 +309,9 @@ namespace OpenFrameworkV3.Core.Navigation
                         Label = "Core_Traces_MenuLabel",
                         Leaf = true,
                         DestinationPage = "/Admin/TracesList.aspx"
-                    });*/
+                    });
 
-                    /*administrationOptions.Add(new MenuOptionDefinition
+                    administrationOptions.Add(new MenuOption
                     {
                         Id = 1011,
                         OptionId = 1011,
@@ -260,11 +319,11 @@ namespace OpenFrameworkV3.Core.Navigation
                         Label = "Core_BackUp_MenuLabel",
                         Leaf = true,
                         DestinationPage = "/Admin/BackupHome.aspx"
-                    });*/
+                    });
 
-                    /*if (applicationUser.AdminUser)
+                    if (applicationUser.AdminUser)
                     {
-                        administrationOptions.Add(new MenuOptionDefinition
+                        administrationOptions.Add(new MenuOption
                         {
                             Id = 1020,
                             OptionId = 1020,
@@ -273,7 +332,7 @@ namespace OpenFrameworkV3.Core.Navigation
                             Leaf = true,
                             DestinationPage = "/Admin/ImportHome.aspx"
                         });
-                    }*/
+                    }
 
                     if (applicationUser.AdminUser)
                     {
@@ -298,6 +357,8 @@ namespace OpenFrameworkV3.Core.Navigation
                     Label = "Common_Administration"
                 };
 
+                administrationOption.SetIcon("fad fa-cogs");
+
                 administrationOption.AddOptionsBulk(new ReadOnlyCollection<MenuOption>(administrationOptions.OrderBy(ao => ao.Id).ToList()));
 
                 var options = res.options.ToList();
@@ -305,13 +366,12 @@ namespace OpenFrameworkV3.Core.Navigation
                 res.options = options.ToArray();
             }
 
-            HttpContext.Current.Session["Menu"] = res;
             return res;
         }
 
         /// <summary>Validate menu options readed from menu file</summary>
         /// <param name="menu">Menu destination</param>
-        /// <param name="instance">Actual instance</param>
+        /// <param name="instanceName">NAme of actual instance</param>
         private static void ValidateOptions(Menu menu, string instanceName)
         {
             long optionId = 1;
@@ -342,14 +402,13 @@ namespace OpenFrameworkV3.Core.Navigation
                                 {
                                     if (itemDefinition.Lists.Any(l => l.Id.Equals(option.ListId, StringComparison.OrdinalIgnoreCase)))
                                     {
-                                        var label = itemDefinition.Lists.First(l => l.Id.Equals(option.ListId, StringComparison.OrdinalIgnoreCase)).Label;
-                                        var finalLabel = ApplicationDictionary.Translate("Item_" + itemDefinition.ItemName + "_Plural");
-
-                                        if (!finalLabel.Equals("Item_" + itemDefinition.ItemName + "_Plural", StringComparison.OrdinalIgnoreCase))
+                                        var list = itemDefinition.Lists.First(l => l.Id.Equals(option.ListId, StringComparison.OrdinalIgnoreCase));
+                                        var label = list.Title;
+                                        if(string.IsNullOrEmpty(label))
                                         {
-                                            label = finalLabel;
+                                            label = itemDefinition.Layout.LabelPlural;
                                         }
-
+                                        
                                         if (!string.IsNullOrEmpty(label))
                                         {
                                             option.Label = label;
@@ -457,10 +516,12 @@ namespace OpenFrameworkV3.Core.Navigation
                         {
                             if (itemDefinition.Lists.Any(l => l.Id.Equals(option.ListId, StringComparison.OrdinalIgnoreCase)))
                             {
-                                string label = itemDefinition.Lists.First(l => l.Id.Equals(option.ListId, StringComparison.OrdinalIgnoreCase)).Label;
-                                if (ApplicationDictionary.ContainsKey(label))
+                                var list = itemDefinition.Lists.First(l => l.Id.Equals(option.ListId, StringComparison.OrdinalIgnoreCase));
+                                string label = list.Title;
+
+                                if (string.IsNullOrEmpty(label))
                                 {
-                                    label = ApplicationDictionary.Translate("Item_" + itemDefinition.ItemName + "_Plural");
+                                    label = itemDefinition.Layout.LabelPlural;
                                 }
 
                                 if (!string.IsNullOrEmpty(label))

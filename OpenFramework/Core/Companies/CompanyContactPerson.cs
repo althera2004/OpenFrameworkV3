@@ -114,6 +114,11 @@ namespace OpenFrameworkV3.Core.Companies
         {
             get
             {
+                if(this.Id == Constant.DefaultId)
+                {
+                    return @"{""Id"":-1}";
+                }
+
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     @"{{

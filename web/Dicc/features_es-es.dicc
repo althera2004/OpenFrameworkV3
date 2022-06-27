@@ -1,0 +1,98 @@
+﻿Feature_Attachment_TabTitle::Adjuntos
+Feature_WhatYouMissed::Lo que te has perdido
+Feature_WhatYouMissed_HeaderList_Date::Fecha
+Feature_WhatYouMissed_HeaderList_Category::Categoria
+Feature_WhatYouMissed_HeaderList_Affected::ítem implicado
+Feature_WhatYouMissed_HeaderList_Concept::Concepto
+Feature_DocumentSign_NotSigned::Falta firmar el documento
+Common_Feature_Alert_AfterLogin_Popup_Title::Estas tares requiere una acción inmediata
+Features_FAQs_PopupDelete_Title::Eliminar FAQ
+Features_FAQs_Publish::Publicar
+Feature_Alert_DataDescripcion::Ítem implicado
+Feature_Alert_LargeDescription::Descripción
+Feature_Alert_Responsible::Responsable
+Feature_DocumentSign_NoCreated::Antes de firmar un documento se tiene que generar
+Feature_DocumentSign_ReSign::El documento ya está firmado. ¿Quiere volverlo a firmar?
+Feature_FAQs::FAQs activadas
+Feature_FAQs_Tooltip::FAQs activadas
+Feature_FAQs_Tooltip_Off::FAQs desctivadas
+Feature_FAQs_Header_Answer::Respuesta
+Feature_FAQs_Header_ItemName::Ítem
+Feature_FAQs_Header_Question::Pregunta
+Feature_FAQs_Header_Status::Estado
+Feature_FAQs_Label_Answer::Respuesta
+Feature_FAQs_Label_Published::Publicada en el portal
+Feature_FAQs_Label_Question::Pregunta
+Feature_FAQs_Label_Target::Objetivo
+Feature_FAQs_Label_Theme::Tema
+Feature_FAQs_Status_Published::Publicada
+Feature_FAQs_Status_Unpublished::No publicada
+Feature_News::Noticies
+Feature_News_Add::Añadir noticia
+Feature_News_Header_ItemName::Tema
+Feature_News_Header_Publisher::Autor
+Feature_News_Header_Status::Estado
+Feature_News_Header_Title::Título
+Feature_News_Status_Published::Publicada
+Feature_Tags::Tags
+Feature_Tags_None::No hay tags
+Feature_Tags_NoNumber::No hay tags que empiecen per un número
+Feature_Tags_Void::No hay tags que empiecen per
+Features_Alerts::Alertas
+Features_FAQs::Preguntas frecuentes (FAQs)
+Features_FAQs_BtnAdd::Añadir FAQ
+Features_FAQs_Popup_Title_Edit::Modificar FAQ
+Features_FAQs_Popup_Title_New::Añadir FAQ
+Features_Follow::Permite seguimiento
+Features_Mail_Send::Enviar per mail
+Features_Title::Funcionalides
+Feature_AdminRestriction::Restringido a administradores
+Feature_Attachs::Permet añadir adjuntos
+Feature_Attachs_Tooltip::Admite adjuntos
+Feature_Attachs_Tooltip_Off::Sin adjuntos
+Feature_Following::Permite seguimiento
+Feature_Following_Tooltip::Permite poner en seguimiento
+Feature_Following_Tooltip_Off::No permite seguimiento
+Feature_Geolocation::Permetre geolocalizacióm
+Feature_Geolocation_Tooltip::Geolocalizable
+Feature_Geolocation_Tooltip_Off::No geolocalizable
+Feature_Messaging_List::Mensajes recibidos
+Feature_Messaging_Check_SetAsImportant::Marcar como importante
+Feature_Messaging_Label_Subject::Asunto
+Feature_Messaging_Label_Message::Mensaje
+Feature_Messaging_Label_SendTo::Enviar a
+Feature_Messaging_Check_FromBoss::Desde dirección
+Feature_Messaging_Label_Create::Enviar mensaje
+Feature_Messaging_Title_FromBoss::Mensaje enviado desde dirección, necesita respuesta
+Feature_Messaging_Message_Saving::Enviando mensaje
+Feature_Messaging_Message_Saved::Mensaje enviado correctamente
+Feature_Messaging_Message_NoMessaged::No hay mensajes
+Feature_BlockAction_Label_SendTo::Usuario a bloquear
+Core_BlockAction_Add::Bloquear usuario
+Feature_Messagin_IconTitle::Enviar missatge urgent al professional
+Feature_BlockAction_IconTitle::Bloquejar al professional fins que no resolgui l'alerta
+Feature_Document_AddWarning::La creació d'un nou document substiruirà el vigent actual.<br />Vol continuar?
+Feature_Sticky::Recordatorio				   
+Feature_Sticking_HeaderTitle::Recordatorios
+Feature_Sticking_Add::Añadir recordatorio
+Feature_Sticky_Label_SendTo::Visible por
+Feature_Sticky_Label_Message::Mensjae	
+Core_Instance_Portal::Portal
+Core_Instance_ScopeView::Visualización por ámbitos activada
+Feature_BankAccount_TabTitle::Cuentas bancarias
+Feature_BankAccount_BtnAdd::Añadir cuenta bancaria
+Feature_BankAccount_HeaderEntidad::Entidad
+Feature_BankAccount_HeaderIBAN::IBAN
+Feature_BankAccount_HeaderSwift::SWIFT
+Feature_BankAccount_HeaderPrincipal::Principal
+Feature_BankAccount_HeaderAlias::Alias
+Feature_BankAccount_MessageNoData::No hay cuentas bancarias resgistradas
+Dictionary.Feature_Signature_Uploading::Registrando firma...
+Feature_Sign_Firmafy_LoginMessage::Accediendo a plataforma Firmafy
+Feature_Sign_Firmafy_GetUserIdMessage::Obteniendo usuario
+Feature_Sign_Firmafy_SendDocumentMessage::Enviando solicitud de firma
+Feature_Sign_Wacom_NotAvailable::Compruebe que el dispositivo está conectado al equipo. Y que en la pantalla aparece el dibujo de la imagen.
+Feature_Sign_Wacom_NotAvailable2::Puede ver |aquí| el documento para descargar y firmar manualmente.
+Feature_Sign_Firmafy_Config::Configuración Firmafy
+Feature_Sign_Firmafy_SavingConfig::Guardando configuración
+Feature_Sign_Popup_Title::Firmar documento

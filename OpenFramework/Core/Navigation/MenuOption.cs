@@ -36,6 +36,15 @@ namespace OpenFrameworkV3.Core.Navigation
         [JsonProperty("ListId")]
         public string ListId { get; set; }
 
+        [JsonIgnore]
+        public string Link
+        {
+            get
+            {
+                return "#";
+            }
+        }
+
         [JsonProperty("Options")]
         private MenuOption[] options;
 
@@ -121,9 +130,8 @@ namespace OpenFrameworkV3.Core.Navigation
             }
         }
 
-        public static ReadOnlyCollection<MenuOption> ByGrants(ReadOnlyCollection<MenuOption> options, ReadOnlyCollection<Grant> grants)
+        public static ReadOnlyCollection<MenuOption> ByGrants(ReadOnlyCollection<MenuOption> options, ApplicationUser applicationUser)
         {
-            var user = ApplicationUser.Actual;
             if (options == null || options.Count == 0)
             {
                 return new ReadOnlyCollection<MenuOption>(new List<MenuOption>());
@@ -135,8 +143,10 @@ namespace OpenFrameworkV3.Core.Navigation
                 var optionTraspassed = option;
 
                 // Si es administrador tiene acceso a todo
-                if (!ApplicationUser.Actual.AdminUser)
+                if (!applicationUser.AdminUser)
                 {
+                    var grants = applicationUser.Grants;
+
                     // Los permisos primero se comprueban con ItemId y en caso negativo con ItemName
                     if (!grants.Any(g => g.ItemId == option.Id && g.Grants.Contains("R")) && optionTraspassed.Leaf)
                     {
@@ -147,7 +157,7 @@ namespace OpenFrameworkV3.Core.Navigation
                             {
                                 foreach (var optionGroup in option.Groups)
                                 {
-                                    if (user.Groups.Any(g => g == optionGroup))
+                                    if (applicationUser.Groups.Any(g => g == optionGroup))
                                     {
                                         byOptionGroup = true;
                                         break;
@@ -176,7 +186,7 @@ namespace OpenFrameworkV3.Core.Navigation
 
                 if (option.Options != null && option.Options.Count > 0)
                 {
-                    option.SetOptionsBulk(ByGrants(option.Options, grants));
+                    option.SetOptionsBulk(ByGrants(option.Options, applicationUser));
                 }
 
                 // Si es un grupo y no tiene subopciones no se añade

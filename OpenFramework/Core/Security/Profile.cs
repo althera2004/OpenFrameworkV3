@@ -362,6 +362,29 @@ namespace OpenFrameworkV3.Core.Security
         public string IdentificationCard { get; set; }
 
         /// <summary>Gets a JSON structure of user profile</summary>
+        public string JsonSimple
+        {
+            get
+            {
+                string pattern = @"{{
+                        ""ApplicationUserId"":{0},
+                        ""Name"":""{1}"",
+                        ""LastName"":""{2}"",
+                        ""LastName2"":""{3}"",
+                        ""FullName"":""{4}""
+                    }}";
+                return string.Format(
+                    CultureInfo.InvariantCulture,
+                    pattern,
+                    this.ApplicationUserId,
+                    Tools.Json.JsonCompliant(this.Name),
+                    Tools.Json.JsonCompliant(this.LastName),
+                    Tools.Json.JsonCompliant(this.LastName2),
+                    Tools.Json.JsonCompliant(this.FullName));
+            }
+        }
+
+        /// <summary>Gets a JSON structure of user profile</summary>
         public string Json
         {
             get

@@ -77,9 +77,9 @@ namespace OpenFrameworkV3.Core.Companies
                     LOPD = false,
                     SubscriptionStart = DateTime.Now,
                     DefaultLanguage = Language.Empty,
-                    CreatedBy = ApplicationUser.Empty,
+                    CreatedBy = ApplicationUser.OpenFramework,
                     CreatedOn = DateTime.Now,
-                    ModifiedBy = ApplicationUser.Empty,
+                    ModifiedBy = ApplicationUser.OpenFramework,
                     ModifiedOn = DateTime.Now,
                     Web = string.Empty,
                     Fax = string.Empty,
@@ -323,40 +323,35 @@ namespace OpenFrameworkV3.Core.Companies
                     endDate = string.Format(CultureInfo.InvariantCulture, @"""{0:dd/MM/yyyy}""", this.SubscriptionEnd);
                 }
 
+                if(this.DefaultLanguage == null)
+                {
+                    this.DefaultLanguage = Language.SimpleEmpty;
+                }
+
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     @"{{""Id"":{0},
                         ""Name"":""{1}"",
-                        ""RazonSocial"":""{14}"",
-                        ""Code"":""{2}"",
-                        ""LOPD"":{3},
-                        ""SubscriptionStart"":""{4:dd/MM/yyyy}"",
-                        ""SubscriptionEnd"":{5},
-                        ""ContactPerson"":{6},
-                        ""Language"": {7},
-                        ""MainAddress"": {13},
-                        ""CustomFields"":{15},
-                        ""CreatedBy"":{8},
-                        ""CreatedOn"":""{9:dd/MM/yyyy}"",
-                        ""ModifiedBy"":{10},
-                        ""ModifiedOn"":""{11:dd/MM/yyyy}"",
-                        ""Active"":{12}}}",
+                        ""RazonSocial"":""{2}"",
+                        ""Code"":""{3}"",
+                        ""LOPD"":{4},
+                        ""SubscriptionStart"":""{5:dd/MM/yyyy}"",
+                        ""SubscriptionEnd"":{6},
+                        ""ContactPerson"":{7},
+                        ""Language"": {8},
+                        ""MainAddress"": {9},
+                        ""Active"":{10}}}",
                     this.Id,
                     Tools.Json.JsonCompliant(this.Name),
+                    Tools.Json.JsonCompliant(this.RazonSocial),
                     Tools.Json.JsonCompliant(this.Code),
                     ConstantValue.Value(this.LOPD),
                     this.SubscriptionStart,
                     endDate,
                     this.ContactPerson.Json,
                     this.DefaultLanguage.Json,
-                    this.CreatedBy.JsonKeyValue,
-                    this.CreatedOn,
-                    this.ModifiedBy.JsonKeyValue,
-                    this.ModifiedOn,
-                    ConstantValue.Value(this.Active),
                     this.MainAddress.Json,
-                    Tools.Json.JsonCompliant(this.RazonSocial),
-                    this.JsonCustomFields);
+                    ConstantValue.Value(this.Active));
             }
         }
 

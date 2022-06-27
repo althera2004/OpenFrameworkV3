@@ -4,7 +4,7 @@
 	"Features": { "Attachs": true },
 	"Description": "Client",
     "Layout": {
-        "Icon": "fa fa-exclamation",
+        "Icon": "fad fa-user-tie",
         "Label": "Client",
         "LabelPlural": "Clients",
         "Description": {
@@ -28,10 +28,12 @@
             "FormId": "Custom",
             "Layout": 1,
             "EditAction": "FormPage",
+			"CustomAjaxSource": "Item_CustomerCompany_GetAll",
 			"Columns": [
-                { "DataProperty": "Code", "Width": 150   },
-                { "DataProperty": "Name" },
-                { "DataProperty": "Date", "Width": 100, "Align": "center" }
+                { "DataProperty": "Code", "ReplacedBy": "C", "Width": 100   },
+                { "DataProperty": "Name", "ReplacedBy": "N" },
+                { "DataProperty": "Date", "ReplacedBy": "D", "Width": 100, "Align": "center" },
+                { "DataProperty": "Total", "ReplacedBy": "T", "Width": 100, "Align": "right" }
             ],
             "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
         }
@@ -61,6 +63,11 @@
 							"Fields": [
 								{ "Name": "Date" }
 							]
+						},
+						{
+							"ItemList": "CustomerCompanyInstance",
+							"ListId": "ByCustomerCompany",
+							"FilterFields": [ { "Field": "CustomerCompany" } ]
 						}
 					]
 				}

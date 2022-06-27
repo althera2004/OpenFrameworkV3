@@ -1,2 +1,2 @@
-﻿var IncidenciaTipo = ["No definida", "Incidència", "Modificar dades", "tercero", "cuarto"];
+﻿var IncidenciaTipo = ["No definida", "Incidència", "Modificar dades", "Nou desenvolupament", "Consulta", "Altres"];
 var InstanciaTipo = ["No definido", "OpenFramework v1", "Custom" , "OpenFramework v2"];

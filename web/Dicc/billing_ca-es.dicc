@@ -1,0 +1,128 @@
+﻿Billing::Facturació
+Billing_Invoice::Factura
+Billing_Invoices::Factures
+Billing_List::Llistat de factures
+Billing_Header_Number::#
+Billing_Header_Date::Data
+Billing_Header_BaseAmount::Base Imp.
+Billing_Header_TotalIVA::IVA
+Core_Billing_Header_Discount::Dto.
+Billing_Header_Payer::Pagador
+Billing_Header_Subject::Descripció
+Billing_Header_Total::Total
+Billing_Header_Status::Estat
+Billing_Label_InvoicesCount:: Número de factures
+Billing_Concept::Preus propis
+Billing_ConceptList::Llistat de conceptes
+Billing_ConceptCategory::Categoria
+Billing_Concept_Name::Concepte
+Billing_Concept_Price::Preu
+Billing_Concept_IVA::IVA
+Billing_Concept_PVP::PVP
+Billing_Concept_FixedPrice::A preu per unitat
+Billing_Concept_FreePrice::Import lliure
+Billing_IVA_1::Exempt
+Billing_IVA_2::Super reduït 4%
+Billing_IVA_3::Reduït 10%
+Billing_IVA_4::General 21%
+Core_BankAccount::Compte bancari
+Core_BankAccounts::Comptes bancaris
+Core_BankAccount_List::Llistat de comptes bancaris
+Core_BankAccount_Header_IBAN::IBAN
+Core_BankAccount_Header_Swift::Swift
+Core_BankAccount_Header_BankName::Entitat
+Core_BankAccount_Header_Alias::Alias
+Core_BankAccount_Header_Main::Principal
+Core_BankAccount_Title_Main::Compte principal
+Core_BankAccount_Title_NoMain::Compte no principal
+Core_BankAccount_Message_IsMain::Aquest compte és el principal
+Core_BankAccount_Label_BankName::Entitat
+Core_BankAccount_Label_Alias::Alias
+Core_BankAccount_Label_IBAN::IBAN
+Core_BankAccount_Label_Swift::SWIFT
+Core_BankAccount_Label_Main::Compte principal
+Core_BankAccount_Title_Edit::Editar compte bancari
+Core_BankAccount_Title_Add::Afegir compte bancari
+Core_BankAccount_Btn_Add::Afegir compte
+Core_BankAccount_ErrorMessage_BankNameRequired:: S'ha d'indicar l'entitat bancària
+Core_BankAccount_ErrorMessage_IBANRequired:: S'ha d'indicar l'IBAN
+Core_BankAccount_ErrorMessage_SWIFTRequired:: S'ha d'indicar el codi SWIFT
+Core_BankAccount_ErrorMessage_PaymentTypeRequired::S'ha d'indicar el tipus de pagament
+Billing_Invoice_Status_0::Esborrany
+Billing_Invoice_Status_1::Confirmada
+Billing_Invoice_Status_2::Enviada
+Billing_Invoice_Status_3::Cobrada
+Billing_Invoice_Status_4::Rebutjada
+Billing_Invoice_Status_5::Anul·lada
+Billing_Concept::Concepte
+Billing_Concept_PDF_Header_Category::Categoria
+Billing_Concept_PDF_Header_Concept::Concepto
+Billing_Concept_PDF_Header_PVP::P.V.P.
+Billing_Concept_PDF_Title::Preus de conceptes
+Billing_Concepts::Conceptes
+Billing_Concept_List::Llistat de conceptes
+Billing_Concept_Title_Add::Afegir concepte
+Billing_Concept_Title_Edit::Editar concepte
+Billing_Concept_Btn_Add::Afegir concepte
+Billing_Concept_Label_Description::Descripció
+Billing_Concept_Label_Amount::Import base
+Billing_Concept_Label_CategoryId::Categoria
+Billing_Concept_Label_IVA::IVA
+Billing_Categories::Categories
+Billing_Category_List::Llistat de categories
+Billing_Category_Btn_Add::Afegir categoria
+Billing_Category_Description::Categoria
+Billing_Category_Label_Description::Nom
+Billing_Category_Title_Add::Afegir categoria
+Billing_Category_Title_Edit::Editar categoria
+Core_BankAccount_ErrorMessage_IBANMalformed::El codi IBAN no té la forma correcta
+Core_BankAccount_ErrorMessage_IBANNotValid::El codi IBAN no és vàlid
+Core_Billing_BtnNewInvoice::Crear factura proforma
+Billing_InvoiceNew::Nova factura
+Billing_Invoice_Message_Creating::Creant factura
+Billing_InvoiceLine_Title_Edit::Editar línea
+Billing_InvoiceLine_Title_Delete::Eliminar línea
+Billing_Label_Date::Data
+Billing_Label_DateVto::Data venciment
+Billing_Label_Customer::Client
+Billing_Label_BankAccount::Compte bancari
+Billing_Label_PaymentMethod::Forma de pagament
+Billing_PaymentMethod_0::Efectiu
+Billing_PaymentMethod_1::Tranferencia bancària
+Billing_PaymentMethod_2::Tarjeta bancària
+Billing_PaymentMethod_3::Domiciliació bancària
+Billing_Invoice_Title_InvoiceData::Dades factura
+Billing_Invoice_ErrorDateRequired::La data de factura es obliatòria
+Billing_Invoice_ErrorDateMalformed::La data de dactura no és vàlida
+Billing_Invoice_ErrorDateVtoRequired::La data de venciment es obliatòria
+Billing_Invoice_ErrorDateVtoMalformed::La data de venciment no és vàlida
+Billing_Invoice_ErrorCrossDates::La data de venciment no pot ser anterior a la data de la factura
+Billing_Invoice_ErrorPaymentMethodRequired::La forma de pagament es obliatòria
+Billing_Invoice_ErrorCustomerRequired::S'ha d'indicar el client
+Billing_AddLine::Afegir línia
+Billing_Receipt_HeaderPDF_Description::Descripció
+Billing_Receipt_HeaderPDF_Quantity::Quantitat
+Billing_Receipt_HeaderPDF_Amount::Preu U.
+Billing_Receipt_HeaderPDF_Base::Base I.
+Billing_Receipt_HeaderPDF_IVA::IVA
+Billing_Receipt_HeaderPDF_Total::Total
+Billing_ErrorMessage_NoLines::No es pot confirmar la factura sense línies
+Billing_Message_Confirm::La factura serà confirmada i no es podrá modificar
+Billing_Receipt::Rebut
+Core_BankAccount_Label_ContractId::Id acreedor
+Core_BankAccount_Label_PaymentType::Tipus de cobrament
+Core_BackAccount_Label_PRE::Fitxer de descripció de la càrrega
+Billing_MassBtn::Accions en massa
+Billing_Message_PrintProforma::Imprimint proforma
+Billing_Invoice_FooterCurrency::Preus expressats en euros
+Billing_MassBtn::Accione en massa
+Billing_MassTitle::Accions disponibles
+Billing_MassBtn_Confirm::Confirmar proformes
+Billing_MassBtn_Delete::Eliminar proformes
+Billing_MassBtn_SepaPreview::Previsualitzar SEPA
+Billing_MassBtn_CreateSEPA::Crear SEPA
+Billing_MassBtn_MailSend::Enviar per mail
+Billing_MassBtn_MarkAsRefused::Marcar com a retornades
+Billing_MassBtn_Print::Imprimir
+Billing_Message_ConfirmingInvoice::Confirmant proforma
+Billing_NumFacturaPDF::Factura nº

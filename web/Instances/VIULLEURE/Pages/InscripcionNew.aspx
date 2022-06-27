@@ -1,1 +1,0 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="InscripcionNew.aspx.cs" Inherits="OpenFramework.Web.Async.InscripcionNew" %>

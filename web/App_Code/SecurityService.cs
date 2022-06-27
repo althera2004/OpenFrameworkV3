@@ -32,9 +32,9 @@ public class SecurityService : WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public ActionResult LogOn(string data)
+    public ActionResult LogOn(string credential)
     {
-        var dataClean = Basics.Base64Decode(data).Replace("||||", "¶");
+        var dataClean = Basics.Base64Decode(credential).Replace("||||", "¶");
         var parts = dataClean.Split('¶');
         return ApplicationUser.LogOn(parts[0], parts[1], parts[2]);
     }

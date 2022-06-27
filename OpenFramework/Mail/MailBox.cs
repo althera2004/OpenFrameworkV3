@@ -40,20 +40,20 @@ namespace OpenFrameworkV3.Mail
         public string MailAddress { get; set; }
 
         /// <summary>Name of sender</summary>
-        [JsonProperty("Name")]
-        public string Name { get; set; }
+        [JsonProperty("SenderName")]
+        public string SenderName { get; set; }
 
         /// <summary>Name of user</summary>
-        [JsonProperty("User")]
-        public string User { get; set; }
+        [JsonProperty("MailUser")]
+        public string MailUser { get; set; }
 
         /// <summary>Password of user</summary>
-        [JsonProperty("Password")]
-        public string Password { get; set; }
+        [JsonProperty("MailPassword")]
+        public string MailPassword { get; set; }
 
         /// <summary>Protocol of mailbox</summary>
-        [JsonProperty("Protocol")]
-        public string Protocol { get; set; }
+        [JsonProperty("MailBoxType")]
+        public string MailBoxType { get; set; }
 
         /// <summary>Reader port</summary>
         [JsonProperty("ReaderPort")]
@@ -66,6 +66,10 @@ namespace OpenFrameworkV3.Mail
         /// <summary>Reaing port</summary>
         [JsonProperty("SSL")]
         public bool SSL { get; set; }
+
+        /// <summary>Reaing port</summary>
+        [JsonProperty("Main")]
+        public bool Main { get; set; }
 
         /// <summary>Active</summary>
         [JsonProperty("Active")]
@@ -84,19 +88,27 @@ namespace OpenFrameworkV3.Mail
                     Server = string.Empty,
                     SendPort = 0,
                     ReaderPort = 0,
-                    Name = string.Empty,
-                    Password = string.Empty,
-                    Protocol = string.Empty,
-                    User = string.Empty,
+                    SenderName = string.Empty,
+                    MailPassword = string.Empty,
+                    MailBoxType = string.Empty,
+                    MailUser = string.Empty,
                     Active = false,
                     SSL = false,
                 };
             }
         }
 
-        public static MailBox ByCompanyId(long companyId, string instanceName)
+        public string Json
         {
-            var res = new MailBox();
+            get
+            {
+                return "{}";
+            }
+        }
+
+        public static ReadOnlyCollection<MailBox> ByCompanyId(long companyId, string instanceName)
+        {
+            var res = new List<MailBox>();
             var cns = Persistence.ConnectionString(instanceName);
             if(!string.IsNullOrEmpty(cns))
             {
@@ -115,21 +127,21 @@ namespace OpenFrameworkV3.Mail
                                 if(rdr.HasRows)
                                 {
                                     rdr.Read();
-                                    res = new MailBox
+                                    res.Add(new MailBox
                                     {
                                         Id = rdr.GetInt64(ColumnsMailBoxGet.Id),
                                         Code = rdr.GetString(ColumnsMailBoxGet.Code).Trim(),
                                         MailAddress = rdr.GetString(ColumnsMailBoxGet.MailAddress).Trim(),
                                         Server = rdr.GetString(ColumnsMailBoxGet.Server).Trim(),
-                                        Name = rdr.GetString(ColumnsMailBoxGet.Name).Trim(),
-                                        User = rdr.GetString(ColumnsMailBoxGet.MailUser).Trim(),
-                                        Password = rdr.GetString(ColumnsMailBoxGet.MailPassword).Trim(),
-                                        Protocol = rdr.GetString(ColumnsMailBoxGet.MailBoxType).Trim(),
+                                        SenderName = rdr.GetString(ColumnsMailBoxGet.Name).Trim(),
+                                        MailUser = rdr.GetString(ColumnsMailBoxGet.MailUser).Trim(),
+                                        MailPassword = rdr.GetString(ColumnsMailBoxGet.MailPassword).Trim(),
+                                        MailBoxType = rdr.GetString(ColumnsMailBoxGet.MailBoxType).Trim(),
                                         ReaderPort = rdr.GetInt32(ColumnsMailBoxGet.ReadPort),
                                         SendPort = rdr.GetInt32(ColumnsMailBoxGet.SendPort),
                                         SSL = rdr.GetBoolean(ColumnsMailBoxGet.SSL),
                                         Active = rdr.GetBoolean(ColumnsMailBoxGet.Active)
-                                    };
+                                    });
                                 }
                             }
                         }
@@ -144,7 +156,7 @@ namespace OpenFrameworkV3.Mail
                 }
             }
 
-            return res;
+            return new ReadOnlyCollection<MailBox>(res);
         }
 
         public static ReadOnlyCollection<MailBox> Load(string instanceName)
@@ -172,9 +184,9 @@ namespace OpenFrameworkV3.Mail
                                         Code = rdr.GetString(ColumnsMailBoxGet.Code).Trim(),
                                         MailAddress = rdr.GetString(ColumnsMailBoxGet.MailAddress).Trim(),
                                         Server = rdr.GetString(ColumnsMailBoxGet.Server).Trim(),
-                                        User = rdr.GetString(ColumnsMailBoxGet.MailUser).Trim(),
-                                        Password = rdr.GetString(ColumnsMailBoxGet.MailPassword).Trim(),
-                                        Protocol = rdr.GetString(ColumnsMailBoxGet.MailBoxType).Trim(),
+                                        MailUser = rdr.GetString(ColumnsMailBoxGet.MailUser).Trim(),
+                                        MailPassword = rdr.GetString(ColumnsMailBoxGet.MailPassword).Trim(),
+                                        MailBoxType = rdr.GetString(ColumnsMailBoxGet.MailBoxType).Trim(),
                                         ReaderPort = rdr.GetInt32(ColumnsMailBoxGet.ReadPort),
                                         SendPort = rdr.GetInt32(ColumnsMailBoxGet.SendPort),
                                         SSL = false,
@@ -231,9 +243,9 @@ namespace OpenFrameworkV3.Mail
                         cmd.Parameters.Add(DataParameter.Input("@ReadPort", this.ReaderPort));
                         cmd.Parameters.Add(DataParameter.Input("@SendPort", this.SendPort));
                         cmd.Parameters.Add(DataParameter.Input("@MailUser", this.MailAddress, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@MailPassword", this.Password, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@MailPassword", this.MailPassword, 50));
                         cmd.Parameters.Add(DataParameter.Input("@Description", string.Empty, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@Name", this.Name, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@Name", this.SenderName, 50));
                         cmd.Parameters.Add(DataParameter.Input("@SSL", this.SSL));
                         cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));
                         try

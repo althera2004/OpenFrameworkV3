@@ -18,6 +18,7 @@ namespace OpenFrameworkV3.Core
     using OpenFrameworkV3.Core.Activity;
     using OpenFrameworkV3.Core.Configuration;
     using OpenFrameworkV3.Core.ItemManager;
+    using OpenFrameworkV3.Tools;
 
     public partial class Instance : IDisposable
     {
@@ -27,6 +28,11 @@ namespace OpenFrameworkV3.Core
         ~Instance() => Dispose(false);
 
         private List<ItemDefinition> definitions;
+
+        public static string Logo (string instanceName)
+        {
+            return string.Format(CultureInfo.InvariantCulture, "/Instances/{0}/Logo.png", instanceName);
+        }
 
         public static string InstanceName
         {
@@ -301,7 +307,7 @@ namespace OpenFrameworkV3.Core
             }}",
                     this.Id,
                     this.Name,
-                    this.Config.ConnectionString);
+                    Basics.Base64Encode(this.Config.ConnectionString));
 
                 return res;
             }

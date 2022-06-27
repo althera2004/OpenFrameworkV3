@@ -3,7 +3,7 @@
     "ItemName": "Instancia",
 	"Description": "Instancia implementada",
     "Layout": {
-        "Icon": "fa fa-cog",
+        "Icon": "fad fa-cubes",
         "Label": "Instància",
         "LabelPlural": "Instancias",
         "Description": {
@@ -32,7 +32,10 @@
                 { "DataProperty": "Url", "Width": 300 },
                 { "DataProperty": "Tipo", "Width": 150, "Render": "Instancia_Column_Tipo", "Align": "left" }
             ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ],
+			"Buttons": [
+				{ "Name": "Confirmar", "Label": "Confirmar", "Icon": "green fal fa-globe", "Function": "EXTRAESCOLAR_ConfirmarInscripcion"}
+			]
         }
 	],
 	"Forms": [
@@ -56,6 +59,11 @@
 					"Id": "basic",
 					"Label": "Dades Bàsiques",
 					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Url" }
+							]
+						},
 						{
 							"ItemList": "CustomerCompanyInstance",
 							"ListId": "ByInstance",

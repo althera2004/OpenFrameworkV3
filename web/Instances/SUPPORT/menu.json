@@ -1,1 +1,14 @@
-[]
+[
+	{ "Leaf": true, "Item": "Instancia" },
+	{ "Leaf": true, "Item": "CustomerCompany" },
+	{ "Leaf": true, "Item": "CustomerCompanyPerson" },
+  {
+    "Label": "Tasques",
+	"Icon": "fad fa-tasks",
+    "Options": [
+      { "Leaf": true, "Item": "Incidencia", "ListId": "Incidencias" },
+      { "Leaf": true, "Item": "Incidencia", "ListId": "Datos" },
+      { "Leaf": true, "Item": "Incidencia", "ListId": "NewDevelopment" }
+    ]
+  }
+]

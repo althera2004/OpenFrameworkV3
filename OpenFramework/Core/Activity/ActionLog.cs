@@ -136,7 +136,88 @@ namespace OpenFrameworkV3.Core.Activity
                 output.WriteLine(data);
             }
         }
-        
+        public static string TraceItemDataGet(string instanceName, string itemName, long itemId)
+        {
+            var res = new StringBuilder("[");
+
+            string fileName = string.Format(
+                CultureInfo.InvariantCulture,
+                "{0}_{1}.log",
+                itemName,
+                itemId);
+
+            string path = HttpContext.Current.Request.PhysicalApplicationPath;
+
+            if (!path.EndsWith("\\", StringComparison.OrdinalIgnoreCase))
+            {
+                path = string.Format(CultureInfo.InvariantCulture, "{0}\\Log\\{1}\\", path, instanceName);
+            }
+            else
+            {
+                path = string.Format(CultureInfo.InvariantCulture, "{0}Log\\{1}\\", path, instanceName);
+            }
+
+            Basics.VerifyFolder(path);
+            string completeFileName = string.Format(
+                CultureInfo.InvariantCulture,
+                "{0}{1}",
+                path,
+                fileName);
+
+            if (File.Exists(completeFileName))
+            {
+                using (var input = new StreamReader(completeFileName))
+                {
+                    res.Append(input.ReadToEnd());
+                }
+            }
+            else
+            {
+                res.Append("{\"Message\":\"Ho hi ha traces\"}");
+            }
+
+            res.Append("]");
+            return res.ToString();
+        }
+
+        public static void TraceItemData(string instanceName, string itemName, long itemId, string data)
+        {
+            if (!LogEnabled)
+            {
+                return;
+            }
+
+            string fileName = string.Format(
+                CultureInfo.InvariantCulture,
+                "{0}_{1}.log",
+                itemName,
+                itemId);
+
+            string path = HttpContext.Current.Request.PhysicalApplicationPath;
+
+            if (!path.EndsWith("\\", StringComparison.OrdinalIgnoreCase))
+            {
+                path = string.Format(CultureInfo.InvariantCulture, "{0}\\Log\\{1}\\", path, instanceName);
+            }
+            else
+            {
+                path = string.Format(CultureInfo.InvariantCulture, "{0}Log\\{1}\\", path, instanceName);
+            }
+
+            Basics.VerifyFolder(path);
+            string completeFileName = string.Format(
+                CultureInfo.InvariantCulture,
+                "{0}{1}",
+                path,
+                fileName);
+
+            using (var output = new StreamWriter(completeFileName, true, Encoding.UTF8))
+            {
+                output.WriteLine(data);
+            }
+
+        }
+
         public static void Trace(string data, string instanceName, string itemName, long itemId, long companyId)
         {
             if (!LogEnabled)

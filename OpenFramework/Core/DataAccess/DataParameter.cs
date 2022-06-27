@@ -336,6 +336,18 @@ namespace OpenFrameworkV3.Core.DataAccess
             };
         }
 
+        /// <summary>Gets a output SQL Parameter with integer value</summary>
+        /// <param name="name">Parameter name</param>
+        /// <returns>SQL parameter</returns>
+        public static SqlParameter OutputBool(string name)
+        {
+            return new SqlParameter(name, SqlDbType.Bit)
+            {
+                Direction = ParameterDirection.Output,
+                Value = DBNull.Value
+            };
+        }
+
         /// <summary>Gets a output SQL Parameter with long value</summary>
         /// <param name="name">Parameter name</param>
         /// <returns>SQL parameter</returns>

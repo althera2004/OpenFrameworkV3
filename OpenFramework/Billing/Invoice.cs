@@ -1139,8 +1139,8 @@ namespace OpenFrameworkV3.Billing
                         cmd.Connection = cnn;
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        var dateFrom = Tools.DateFormat.FromStringddMMyyy(from);
-                        var dateTo = Tools.DateFormat.FromStringddMMyyy(to);
+                        var dateFrom = Tools.DateFormat.FromStringddMMyyyy(from);
+                        var dateTo = Tools.DateFormat.FromStringddMMyyyy(to);
                         var status0 = status.IndexOf('0') != -1;
                         var status1 = status.IndexOf('1') != -1;
                         var status2 = status.IndexOf('2') != -1;
@@ -2982,7 +2982,7 @@ namespace OpenFrameworkV3.Billing
             {
                 Host = mailBox.Server,
                 Port = mailBox.SendPort,
-                Credentials = new System.Net.NetworkCredential(mailBox.User, mailBox.Password),
+                Credentials = new System.Net.NetworkCredential(mailBox.MailUser, mailBox.MailPassword),
                 EnableSsl = false
             };
 

@@ -1,0 +1,802 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Main.master.cs" Inherits="Main" %>
+
+<!DOCTYPE html>
+
+<html lang="ca-es">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title><%=this.Title %></title>
+
+		<meta name="description" content="OpenFramework" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="/assets/font-awesome/4.5.0/css/pro.min.css" />
+
+
+		<!-- text fonts -->
+		<link rel="stylesheet" type="text/css" href="/assets/css/fonts.googleapis.com.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" type="text/css" href="/assets/css/ace.min.css" class="ace-main-stylesheet" <%=this.MainAceStyle %> />
+	<link rel ="stylesheet" type="text/css" href="/css/Main.css" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="/assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
+		<![endif]-->
+		<link rel="stylesheet" type="text/css" href="/assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" type="text/css" href="/assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datepicker3.min.css" />
+		
+
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="/assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+		<style type="text/css">
+			
+
+
+
+			/* some elements used in demo only */
+			.spinner-preview {
+				width: 100px;
+				height: 100px;
+				text-align: center;
+				margin-top: 60px;
+			}
+			
+			.dropdown-preview {
+				margin: 0 5px;
+				display: inline-block;
+			}
+			.dropdown-preview  > .dropdown-menu {
+				display: block;
+				position: static;
+				margin-bottom: 5px;
+			}
+			
+			.panel-form .panel-heading {
+				border:none;
+				font-size: 14px;
+			}
+			
+			.panel-form-heading {
+				border: 1px dashed #ccc;
+				border-width:0 0 1px 0;				
+			}
+			
+			.panel-form .panel-title {
+				padding:2px;
+				font-size:16px;
+				font-weight:bold;
+			}
+			
+			.panel-title-detail 
+			{
+				color:#777;
+				font-size:14px;
+				font-weight:bold;
+				margin-left:8px;
+			}
+			
+			.panel-title a:hover { text-decoration:none; }
+		</style>
+
+		<!-- ace settings handler -->
+		<script src="/assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="/assets/js/html5shiv.min.js"></script>
+		<script src="/assets/js/respond.min.js"></script>
+		<![endif]-->
+    <asp:ContentPlaceHolder id="ContentStyles" runat="server"></asp:ContentPlaceHolder>	
+    <asp:ContentPlaceHolder id="ContentScriptVars" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body class="no-skin <%=this.PageType %>">
+    <form id="form1" runat="server">
+		<div id="navbar" class="navbar navbar-default ace-save-state navbar-fixed-top">
+			<div class="navbar-container ace-save-state" id="navbar-container">
+				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+					<span class="sr-only">Toggle sidebar</span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+				</button>
+
+				<div class="navbar-header pull-left">
+					<a class="navbar-brand"><small><%= this.Instance.Name %>&nbsp;<span class="hidden-1000"> / <%=this.Company.Name %></span></small></a>
+				</div>
+
+				<div class="navbar-buttons navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="grey dropdown-modal">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-tasks"></i>
+								<span class="badge badge-grey">4</span>
+							</a>
+
+							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-check"></i>
+									4 Tasks to complete
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar">
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">Software Update</span>
+													<span class="pull-right">65%</span>
+												</div>
+
+												<div class="progress progress-mini">
+													<div style="width:65%" class="progress-bar"></div>
+												</div>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">Hardware Upgrade</span>
+													<span class="pull-right">35%</span>
+												</div>
+
+												<div class="progress progress-mini">
+													<div style="width:35%" class="progress-bar progress-bar-danger"></div>
+												</div>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">Unit Testing</span>
+													<span class="pull-right">15%</span>
+												</div>
+
+												<div class="progress progress-mini">
+													<div style="width:15%" class="progress-bar progress-bar-warning"></div>
+												</div>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">Bug Fixes</span>
+													<span class="pull-right">90%</span>
+												</div>
+
+												<div class="progress progress-mini progress-striped active">
+													<div style="width:90%" class="progress-bar progress-bar-success"></div>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="#">
+										See tasks with details
+										<i class="ace-icon fa fa-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="purple dropdown-modal">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-bell icon-animated-bell"></i>
+								<span class="badge badge-important">8</span>
+							</a>
+
+							<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-exclamation-triangle"></i>
+									8 Notifications
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar navbar-pink">
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">
+														<i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
+														New Comments
+													</span>
+													<span class="pull-right badge badge-info">+12</span>
+												</div>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<i class="btn btn-xs btn-primary fa fa-user"></i>
+												Bob just signed up as an editor ...
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">
+														<i class="btn btn-xs no-hover btn-success fa fa-shopping-cart"></i>
+														New Orders
+													</span>
+													<span class="pull-right badge badge-success">+8</span>
+												</div>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">
+														<i class="btn btn-xs no-hover btn-info fa fa-twitter"></i>
+														Followers
+													</span>
+													<span class="pull-right badge badge-info">+11</span>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="#">
+										See all notifications
+										<i class="ace-icon fa fa-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="green">
+							<a href="#">
+								<i class="ace-icon fa fa-calendar-alt"></i>
+							</a>
+						</li>
+
+						<li class="blue dropdown-modal">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-comments icon-animated-vertical"></i>
+								<span class="badge badge-success">5</span>
+							</a>
+
+							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-comments"></i>
+									5 Messages
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar">
+										<li>
+											<a href="#" class="clearfix">
+												<img src="/assets/images/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Alex:</span>
+														Ciao sociis natoque penatibus et auctor ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>a moment ago</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="/assets/images/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Susan:</span>
+														Vestibulum id ligula porta felis euismod ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>20 minutes ago</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="/assets/images/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Bob:</span>
+														Nullam quis risus eget urna mollis ornare ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>3:15 pm</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="/assets/images/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Kate:</span>
+														Ciao sociis natoque eget urna mollis ornare ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>1:33 pm</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="/assets/images/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Fred:</span>
+														Vestibulum id penatibus et auctor  ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>10:09 am</span>
+													</span>
+												</span>
+											</a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="inbox.html">
+										See all messages
+										<i class="ace-icon fa fa-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="light-blue dropdown-modal">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" id="UserAvatar" src="/assets/images/avatars/user.jpg" alt="Jason's Photo" />
+								<span class="user-info">
+									<small>Welcome,</small>
+									<span id="ActualUserName"></span>
+								</span>
+
+								<i class="ace-icon fa fa-caret-down"></i>
+							</a>
+
+							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li><a id="HeaderMenuProfileLink" onclick="GoProfilePage();"><i class="ace-icon fa fa-user"></i> Profile</a></li>
+								<li class="divider"></li>
+								<li><a href="#"><i class="ace-icon fa fa-power-off"></i> Logout</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div><!-- /.navbar-container -->
+		</div>
+
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.loadState('main-container')}catch(e){}
+			</script>
+
+			<div id="sidebar" class="sidebar responsive ace-save-state sidebar-fixed sidebar-scroll">
+				<script type="text/javascript">
+					try{ace.settings.loadState('sidebar')}catch(e){}
+				</script>
+
+				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+						<button class="btn btn-success" aria-label="Green button">
+							<i class="ace-icon fad fa-signal"></i>
+						</button>
+						<button class="btn btn-info" aria-label="Blue button">
+							<i class="ace-icon fad fa-pencil"></i>
+						</button>
+						<button class="btn btn-warning" aria-label="Yellow button">
+							<i class="ace-icon fad fa-users"></i>
+						</button>
+						<button class="btn btn-danger" aria-label="Red button">
+							<i class="ace-icon fad fa-cogs"></i>
+						</button>						
+						<button type="button" class="btn btn-danger" style="width:90%;" onclick="PopupUrgentLaunch();" aria-label="Urgent">
+							<i class="fad fa-exclamation-circle"></i>&nbsp;Urgent
+						</button>
+					</div>
+
+					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span>
+
+						<span class="btn btn-info"></span>
+
+						<span class="btn btn-warning"></span>
+
+						<span class="btn btn-danger"></span>
+
+						<span class="btn btn-danger" style="width: 80%;font-size: 14px;"><i class="fa fa-exclamation-circle"></i></span>
+					</div>
+				</div><!-- /.sidebar-shortcuts -->
+
+				<ul class="nav nav-list"></ul><!-- /.nav-list -->
+
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+			</div>
+
+			<div class="main-content">
+				<div class="main-content-inner">
+					<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li class="breadcrumb-home-icon fa fa-cog">
+								<a href="#">Home</a>
+							</li>
+							<%= this.BreadCrumb.Render %>
+						</ul><!-- /.breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Cercar ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- /.nav-search -->
+					</div>
+
+					<div class="page-content" style="position: static;right:0;left:inherit;">
+						<div class="ace-settings-container" id="ace-settings-container">
+							<div class="btn btn-app btn-xs btn-info ace-settings-btn" id="ace-settings-btn">
+								<i class="fad fa-pencil-ruler bigger-130"></i>
+							</div>
+
+							<div class="ace-settings-box clearfix" id="ace-settings-box">
+								<div class="pull-left">
+                                    <ul id="MenuCore" style="text-align: left;list-style:none;margin:0;">
+                                        <li><a href="#"><i class="fad fa-tachometer bigger-110" style="width: 25px;"></i> Gestión de instancia</a></li>
+                                        <li><a href="#" onclick="Core_ReloadDefinitions();"><i class="fad fa-cubes bigger-110" style="width: 25px;"></i> Recargar definiciones</a></li>
+                                        <li><a href="#"><i class="fad fa-book bigger-110" style="width: 25px;"></i> Recargar diccionario</a></li>
+                                        <li><a href="#"><i class="fad fa-users bigger-110" style="width: 25px;"></i> Recargar permisos</a></li>
+                                        <li><a href="#" onclick="Core_ReloadMenu();"><i class="fad fa-list bigger-110" style="width: 25px;"></i> Recargar menú</a></li>
+                                        <li><a href="#"><i class="fad fa-bell bigger-110" style="width: 25px;"></i> Recargar alertas</a></li>
+                                        <li><a href="#"><i class="fad fa-user bigger-110" style="width: 25px;"></i> Suplantar usuario</a></li>
+                                        <li><a href="#"><i class="fad fa-edit bigger-110" style="width: 25px;"></i> Modo edición</a></li>
+                                    </ul>
+								</div>
+							</div><!-- /.ace-settings-box -->
+						</div><!-- /.ace-settings-container -->
+						
+						
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<asp:ContentPlaceHolder id="ContentWorkSpace" runat="server"></asp:ContentPlaceHolder>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+				
+                <div id="logofooter" class="noselect breadcrumbs-fixed">
+                    <div class="col-lg-4 col-md-4 hidden-sm hidden-xs" id="FooterStatus" style="text-align: left; visibility: visible;">
+                        Modificat per:&nbsp;<strong><span id="FooterStatusModifiedBy"></span></strong>&nbsp;<i class="fa fa-eye blue" onclick="GetTrace(ItemData.OriginalItemData.Id, ItemDefinition.ItemName, Instance.Name);"></i><br>
+                        Data:&nbsp;<strong><span id="FooterStatusModifiedOn"></span></strong>
+                    </div>
+                    <div id="FooterButton" class="col-lg-8 col-md-8 col-sm-12 col-xs-12" style="text-align: right; height: 30px;">                       
+                        <button class="btn btn-danger" type="button" id="FormBtnDelete"><i class="fa fa-trash bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;">Eliminar</span></button>
+                        <button class="btn btn-success" type="button" id="FormBtnSave" disabled="disabled" onclick="ItemData.Save();" title="No hay cambios por guardar"><i class="fa fa-check bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;">Guardar</span></button>
+                        <button class="btn" type="button" id="FormBtnCancel"><i class="fa fa-arrow-left bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;">Volver</span></button>
+                        <span id="widths" style="float: left; display: none;">
+                            <span class="show-xs">XS</span>
+                            <span class="show-sm">SM</span>
+                            <span class="show-md">MD</span>
+                            <span class="show-lg">LG</span>
+                        </span>
+                    </div>
+                </div>
+			</div><!-- /.main-content -->
+
+			
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse" style="bottom:55px;">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script src="/assets/js/jquery-2.1.4.min.js"></script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script src="/assets/js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="/assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="/assets/js/lodash.js"></script>
+		<script src="/assets/js/jquery-ui.custom.min.js"></script>
+		<script src="/assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="/assets/js/bootbox.js"></script>
+		<script src="/assets/js/jquery.easypiechart.min.js"></script>
+		<script src="/assets/js/notify.js"></script>
+		<script src="/assets/js/spin.js"></script>
+		<script src="/assets/js/bootstrap-datepicker.min.js"></script>
+		<script charset="utf-8" type="text/javascript" src="/assets/js/bootstrap-datepicker.ca.js"></script>
+		<script src="/Dicc/ca-es.js"></script>
+		<script src="/Instances/<%=this.Instance.Name %>/Scripts/FixedLists.js"></script>
+		<script src="/js/base64.js"></script>
+		<script src="/js/common.js"></script>
+		<script src="/js/MasterEvents.js"></script>
+		<script src="/assets/js/moment.min.js"></script>
+		<script src="/js/layout.js"></script>
+		<script src="/js/navigation.js"></script>
+		<script src="/js/FK.js"></script>
+		<script src="/js/Core.js"></script>
+		<script src="/js/PopupsRender.js"></script>
+
+		<!-- ace scripts -->
+		<script src="/assets/js/ace-elements.min.js"></script>
+		<script src="/assets/js/ace.min.js"></script>
+
+		
+        <asp:ContentPlaceHolder id="ContentScriptFiles" runat="server"></asp:ContentPlaceHolder>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			var debugConsole = true;
+			var PageType = "<%=this.PageType%>";
+			var ListSources = [];
+			var FK = [];
+            var Instance = LocalStorageGetJson("Instance");
+            var Company = LocalStorageGetJson("Company");
+            var ApplicationUser = LocalStorageGetJson("ApplicationUser");
+        </script>
+        <asp:ContentPlaceHolder id="ContentScripts" runat="server"></asp:ContentPlaceHolder>
+		<script type="text/javascript">
+			ActiveLayout();
+			$("#ActualUserName").html(ApplicationUser.Profile.Name);
+            $("#UserAvatar").attr("src", "/Instances/" + Instance.Name + "/Data/Core_Users/" + ApplicationUser.Id + "/avatar.jpg");
+			RenderMenu();
+
+			if (typeof ItemDefinition !== "undefined") {
+				MenuSelectOption(ItemDefinition.ItemName + "_" + ListId);
+			}
+
+			if (typeof CustomActions === "function") {
+				CustomActions();
+            }
+        </script>
+    </form>
+	<div id="right-menu" class="modal aside" data-body-scroll="false" data-offset="true" data-placement="right" data-fixed="true" data-backdrop="false" tabindex="-1">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header no-padding">
+												<div class="table-header" style="position:fixed;width:100%;">
+													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+														<span class="white">&times;</span>
+													</button>
+													<i class="fa fa-question-circle"></i>&nbsp;Ajuda
+												</div>
+											</div>
+
+											<div class="modal-body">
+												<h3 class="lighter">Custom Elements and Content</h3>
+
+												<br />
+												With no modal backdrop
+												
+											</div>
+										</div><!-- /.modal-content -->
+
+										<button class="aside-trigger btn btn-info btn-app btn-xs ace-settings-btn" data-target="#right-menu" data-toggle="modal" type="button">
+											<i data-icon1="fa-question-circle" data-icon2="fa-chevron-right" class="ace-icon fa fa-question-circle bigger-110 icon-only"></i>
+										</button>
+									</div><!-- /.modal-dialog -->
+								</div>
+	<script type="text/javascript">
+		$(window).trigger("resize");
+		if (PageType === "PageView") {
+			if (typeof ItemData.OriginalItemData !== "undefined") {
+				if (ItemDefinition.ForeignValues.length > 0) {
+					PageLoadingShow();
+				}
+                else {
+                    ItemData.ItemDefinition = ItemDefinition;
+                }
+			} else {
+				ItemData.ItemDefinition = ItemDefinition;
+            }
+		}
+    </script>
+	<style type="text/css">
+		
+/*
+The loaders use CSS custom properties (variables) to control the attributes of the loaders
+*/
+:root{
+	--loader-width: 120px;
+	--loader-height: 120px;
+	--loader-color-primary: #649fdd;
+	--loader-color-secondary: #eee;
+	--line-width: 7px;
+	--animation-duration: 2s;
+	--loader-initial-scale: 0.1;
+}
+.loader,.loader:before,.loader:after{
+	box-sizing: border-box;
+	flex-grow: 0;
+	flex-shrink: 0;
+}
+/*
+In order to get optimal results, please only change the 
+variables above and don't change anything in the actual loader code
+*/
+	
+	
+
+
+@keyframes momentum {
+    0%   { 
+        transform: rotate(0deg);  
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+.loader.quantum-spinner {
+    --primary-circle-offset: calc(((var(--loader-width,100px) * 0.2) / 2) - var(--line-width,4px));
+    --secondary-circle-offset: calc(((var(--loader-width,100px) * 0.4) / 2) - var(--line-width,4px)); /*- (var(--line-width,4px) * 2)*/
+    position: relative;
+    width: var(--loader-width, 100px);
+    height: var(--loader-height, 100px);
+    transform-origin: center center;
+    border-radius: 50%;
+    border: var(--line-width, 4px) solid rgba(0,0,0,0);
+    border-top-color: var(--loader-color-primary, #33f);
+    animation: momentum var(--animation-duration, 1s) linear infinite; 
+}
+
+.quantum-spinner:before {
+    content: "";
+    position: absolute;
+    transform-origin: center center;
+    top: var(--primary-circle-offset,10px);
+    left: var(--primary-circle-offset,10px);
+    width: calc(var(--loader-width,100px) * 0.8);
+    height: calc(var(--loader-height,100px) * 0.8);
+    border-radius: 50%;
+    border: var(--line-width,4px) solid rgba(0,0,0,0);
+    border-top-color: var(--loader-color-primary, #33f);
+    opacity: 0.7;
+    filter: hue-rotate(3eg);
+    animation: momentum calc(var(--animation-duration, 1s) * 2) linear infinite; 
+}
+
+.quantum-spinner:after {
+    content: "";
+    position: absolute;
+    top: var(--secondary-circle-offset,20px);
+    left: var(--secondary-circle-offset,20px);
+    width: calc(var(--loader-width,100px) * 0.6);
+    height: calc(var(--loader-height,100px) * 0.6);
+    border-radius: 50%;
+    transform-origin: center center;
+    border: var(--line-width,4px) solid rgba(0,0,0,0);
+    border-top-color: var(--loader-color-primary, #33f);
+    opacity: 0.3;
+    filter: hue-rotate(6eg);
+    animation: momentum var(--animation-duration, 1s) linear infinite; 
+}
+	</style>
+    <div id="PageLoadingMask" style="position: absolute; top: 50%; left: 50%; margin: 0; height: 100%; width: 100%;margin-left:-60px;margin-top:-60px; z-index: 999; display: none;">
+		<div class="loader quantum-spinner"></div>
+    </div>
+
+	<div id="LauncherButtons" style="display:none;">
+        <div id="chronotime"></div>
+        <a href="#" id="DocumentLink" target="_blank">document link</a>
+        <a href="#PopupQR" role="button" data-toggle="modal" id="63045619"> QR </a>
+        <a href="#PopupUserConversion" role="button" data-toggle="modal" id="LauncherPopupUserConversion"> User </a>
+        <a href="#PopupDirty" role="button" data-toggle="modal" id="LauncherPopupDirty"> Dirty </a>
+        <a href="#PopupExportList" role="button" data-toggle="modal" id="LauncherPopupExportList"> Exrpot </a>
+        <a href="#PopupWorking" role="button" data-toggle="modal" id="LauncherPopupWorking"> Working </a>
+        <a href="#PopupSignQR" role="button" data-toggle="modal" id="LauncherPopupSignQR"> Working </a>
+        <a href="#PopupMap" role="button" data-toggle="modal" id="LauncherPopupMap"> Map </a>
+        <a href="#PopupWarning" role="button" data-toggle="modal" id="LauncherPopupWaring"> Warning </a>
+        <a href="#PopupConfirm" role="button" data-toggle="modal" id="LauncherPopupConfirm"> Confirm </a>
+        <a href="#PopupInfo" role="button" data-toggle="modal" id="LauncherPopupInfo"> Info </a>
+        <a href="#PopupSaveInfo" role="button" data-toggle="modal" id="LauncherSavePopupInfo"> Info </a>
+        <a href="#PopupSuccess" role="button" data-toggle="modal" id="LauncherPopupSuccess"> Success </a>
+        <a href="#PopupUploadFile" role="button" data-toggle="modal" id="LauncherPopupUploadFile"> Upload file </a>
+        <a href="#PopupDelete" role="button" data-toggle="modal" id="LauncherPopupDelete"> Item delete </a>
+        <a href="#PopupActivate" role="button" data-toggle="modal" id="LauncherPopupActivate"> Item activate </a>
+        <a href="#PopupDefault" role="button" data-toggle="modal" id="LauncherPopupDefault"> Default </a>
+        <a href="#PopupItem" role="button" data-toggle="modal" id="LauncherPopupItem"> Item </a>
+        <a href="#PopupImage" role="button" data-toggle="modal" id="LaucherPopupImage"> Image </a>
+        <a href="#PopupImageGallery" role="button" data-toggle="modal" id="LaucherPopupImageGallery"> ImageGallery </a>
+        <a href="#PopupFAQs" role="button" data-toggle="modal" id="LauncherPopupFAQs"> faqs  </a>
+        <a href="#PopupContactPerson" role="button" data-toggle="modal" id="LauncherPopupContactPerson"> ContactPerson  </a>
+        <a href="#PopupBAR" role="button" data-toggle="modal" id="LauncherPopupBAR"> BAR  </a>
+        <a href="#PopupChangePassword" role="button" data-toggle="modal" id="LauncherPopupChangePassword"> Ch Pass  </a>
+        <a href="#PopupDocumentHistory" role="button" data-toggle="modal" id="LauncherPopupDocumentHistory"> History  </a>
+        <a href="#PopupDocumentGallery" role="button" data-toggle="modal" id="LauncherPopupDocumentGallery"> Gallery  </a>
+        <a href="#PopupCalendar" role="button" data-toggle="modal" id="LauncherPopupCalendar"> Calendar  </a>
+        <a href="#PopupItemCalendar" role="button" data-toggle="modal" id="LauncherPopupItemCalendar"> ItemCalendar  </a>
+    </div>
+    <div id="PopupsContentHolder"></div>
+	
+
+    <div id="PopupDefault" class="modal in" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width:800px;">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        <span id="PopupDefaultTitle">Default modal title</span>
+                    </div>
+                </div>
+                <div class="modal-body" style="overflow-x:hidden;max-height:460px;padding-bottom:0;padding-top:5px;">
+                    <div id="PopupDefaultPersistentFields"></div>
+                    <div id="PopupDefaultBody"></div>
+                </div>
+                <div class="modal-footer" id="PopupDefaultFooter">
+                    <span id="PopupErrorDiv" style="color:#f00;float:left;display:none;"></span>
+                    <button class="btn btn-sm btn-success" id="PopupDefaultBtnOk" onclick="SavePopup();">
+                        <i class="ace-icon fa fa-check"></i>
+                        ok
+                    </button>
+                    <button class="btn btn-sm btn-danger" id="PopupDefaultBtnDelete" onclick="DeletePopupDefault();">
+                        <i class="ace-icon fa fa-times"></i>
+                        delete
+                    </button>
+                    <button class="btn btn-sm" data-dismiss="modal" id="PopupDefaultBtnCancel" onclick="PopupDefault_Context.actual=null;">
+                        <i class="ace-icon fa fa-ban"></i>
+                        cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

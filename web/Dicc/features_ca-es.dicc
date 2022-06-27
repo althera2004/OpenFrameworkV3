@@ -1,0 +1,105 @@
+﻿Feature_Attachment_TabTitle::Adjunts
+Feature_WhatYouMissed::Allò que t'has perdut
+Feature_WhatYouMissed_HeaderList_Date::Data
+Feature_WhatYouMissed_HeaderList_Category::Categoria
+Feature_WhatYouMissed_HeaderList_Affected::ítem implicat
+Feature_WhatYouMissed_HeaderList_Concept::Concepte
+Feature_DocumentSign_NotSigned::Manca signar el document
+Common_Feature_Alert_AfterLogin_Popup_Title::Aquestes tasques requereixen una acció inmediata
+Features_FAQs_PopupDelete_Title::Eliminar FAQ
+Features_FAQs_Publish::Publicar
+Feature_Alert_DataDescripcion::Ítem implicat
+Feature_Alert_LargeDescription::Descripció
+Feature_Alert_Responsible::Responsable
+Feature_DocumentSign_NoCreated::Abans de signar un document s'ha de generar
+Feature_DocumentSign_ReSign::El document ja està signat. Vol tornar a signar-ho?
+Feature_FAQs::FAQs activadas
+Feature_FAQs_Tooltip::FAQs activadas
+Feature_FAQs_Tooltip_Off::FAQs desctivadas
+Feature_FAQs_Header_Answer::Respuesta
+Feature_FAQs_Header_ItemName::Ítem
+Feature_FAQs_Header_Question::Pregunta
+Feature_FAQs_Header_Status::Estat
+Feature_FAQs_Label_Answer::Resposta
+Feature_FAQs_Label_Published::Publicada al portal
+Feature_FAQs_Label_Question::Pregunta
+Feature_FAQs_Label_Target::Objetiu
+Feature_FAQs_Label_Theme::Tema
+Feature_FAQs_Status_Published::Publicada
+Feature_FAQs_Status_Unpublished::No publicada
+Feature_News::Noticies
+Feature_News_Add::Afegir noticia
+Feature_News_Header_ItemName::Tema
+Feature_News_Header_Publisher::Autor
+Feature_News_Header_Status::Estat
+Feature_News_Header_Title::Títol
+Feature_News_Status_Published::Publicada
+Feature_Tags::Tags
+Feature_Tags_None::No hi ha tags
+Feature_Tags_NoNumber::No hi ha tags que comencin per un número
+Feature_Tags_Void::No hi ha tags que comencin per
+Features_Alerts::Alertes
+Features_FAQs::Preguntas frecuentes (FAQs)
+Features_FAQs_BtnAdd::Afegir FAQ
+Features_FAQs_Popup_Title_Edit::Modificar FAQ
+Features_FAQs_Popup_Title_New::Afegir FAQ
+Features_Follow::Permetre seguimient
+Features_Mail_Send::Enviar per mail
+Features_Title::Funcionalitats
+Feature_AdminRestriction::Restringit a administradors
+Feature_Attachs::Permet afegir adjunts
+Feature_Attachs_Tooltip::Admet adjunts
+Feature_Attachs_Tooltip_Off::Sense adjunts
+Feature_Following::Permetre seguiment
+Feature_Following_Tooltip::Permet possar en seguiment
+Feature_Following_Tooltip_Off::No permet seguiment
+Feature_Geolocation::Permetre geolocalització
+Feature_Geolocation_Tooltip::Geolocalitzable
+Feature_Geolocation_Tooltip_Off::No geolocalizable
+Feature_Messaging_List::Missatges rebuts
+Feature_Messaging_Check_SetAsImportant::Marcar com a important
+Feature_Messaging_Label_Subject::Assumpte
+Feature_Messaging_Label_Message::Missatge
+Feature_Messaging_Label_SendTo::Enviar a
+Feature_Messaging_Check_FromBoss::Des de direcció
+Feature_Messaging_Label_Create::Enviar missatge
+Feature_Messaging_Title_FromBoss::Missatge envïat des de direcció, cal una resposta
+Feature_Messaging_Message_Saving::Envïant missatge
+Feature_Messaging_Message_Saved::Missatge enviat correctament
+Feature_Messaging_Message_NoMessaged::No hi ha cap missatge
+Feature_BlockAction_Label_SendTo::Usuari a bloquejar
+Core_BlockAction_Add::Bloquejar usuari
+Feature_Messagin_IconTitle::Enviar missatge urgent al professional
+Feature_BlockAction_IconTitle::Bloquejar al professional fins que no resolgui l'alerta
+Feature_Document_AddWarning::La creació d'un nou document substiruirà el vigent actual.<br />Vol continuar?
+Feature_Sticky::Recordatori
+Feature_Sticking_HeaderTitle::Recordatoris
+Feature_Sticking_Add::Afegir recordatori
+Feature_Sticky_Label_SendTo::Que ho vegi
+Feature_Sticky_Label_Message::Missatge				  
+Core_Instance_Portal::Portal
+Core_Instance_ScopeView::Visualització per àmbits activada
+Feature_BankAccount_TabTitle::Comptes bancaris
+Feature_BankAccount_BtnAdd::Afegir compte bancari
+Feature_BankAccount_HeaderEntidad::Entitat
+Feature_BankAccount_HeaderIBAN::IBAN
+Feature_BankAccount_HeaderSwift::SWIFT
+Feature_BankAccount_HeaderPrincipal::Principal
+Feature_BankAccount_HeaderAlias::Alias
+Feature_Sign_Uploading::Registrant signatura...
+Feature_Sign_Firmafy_LoginMessage::Accedint a plataforma Firmafy
+Feature_Sign_Firmafy_GetUserIdMessage::Obtenint usuari
+Feature_Sign_Firmafy_SendDocumentMessage::Enviant sol·licitut de signatura
+Feature_Sign_Wacom_NotAvailable::Comprovi que el dispositiu està endollat a l'equip. I que a la pantalla surt el dibuix de la imatge.
+Feature_Sign_Wacom_NotAvailable2::Pot veure |aquí| el document per a descarregar i signar a ma.
+Feature_Sign_Popup_Title::Signar document
+Feature_Sign_QR_Title::Signar document amb QR
+Feature_Sign_QR_Instructions::Escanegi aquest codi QR amb el seu dispositiu mòvil i segueixi les instruccions per a signar...
+Feature_CreditCard_Label_Merchantd::MerchantId
+Feature_CreditCard_Label_AccountId::AccountId
+Feature_CreditCard_Label_SharedSecret::SharedSecret
+Feature_CreditCard_Label_ServiceUrl::ServiceUrl
+Feature_CreditCard_Label_Main::Principal
+Feature_CreditCard_Label_SandBox::Pruebas
+Feature_CreditCard_SavingConfig::Desant configuració de tarjeta
+Feature_CreditCard_SaveSuccess_Message::Configuració desada amb èxit

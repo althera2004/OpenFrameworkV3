@@ -29,5 +29,9 @@ namespace OpenFrameworkV3.Core.ItemManager.ItemForm
         /// <summary>Gets or sets a value inditcaitng tab identifier when button is showed</summary>
         [JsonProperty("Tab")]
         public string Tab { get; set; }
+
+        /// <summary>Gets or sets a value inditcaitng tab identifier when button is showed</summary>
+        [JsonProperty("Group")]
+        public string Group { get; set; }
     }
 }

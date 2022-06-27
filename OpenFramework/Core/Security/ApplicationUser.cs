@@ -20,13 +20,17 @@ namespace OpenFrameworkV3.Core.Security
     using OpenFrameworkV3.Core.Bindings;
     using OpenFrameworkV3.Core.DataAccess;
     using OpenFrameworkV3.Core.ItemManager;
-    
+    using OpenFrameworkV3.Core.Navigation;
+
+
     public class ApplicationUser
     {
         /// <summary>Scope view of application user</summary>
         private ScopeView scopeView;
 
         private List<Grant> grants;
+
+        private MenuShortcut shortcuts;
 
         public ReadOnlyCollection<ScopeView.Data> ScopeView
         {
@@ -232,13 +236,7 @@ namespace OpenFrameworkV3.Core.Security
         {
             get
             {
-                return string.Format(
-                    CultureInfo.InvariantCulture,
-                    @"{{""Id"":{0},""Profile"":{{""ApplicationUserId"": {0}, ""Name"":""{1}"", ""LastName"":""{2}"", ""LastName2"":""{3}""}}}}",
-                    this.Id,
-                    Tools.Json.JsonCompliant(this.Profile.Name),
-                    Tools.Json.JsonCompliant(this.Profile.LastName),
-                    Tools.Json.JsonCompliant(this.Profile.LastName2));
+                return string.Format(CultureInfo.InvariantCulture, @"{{""Id"":{0},""Profile"":{1}}}", this.Id, this.Profile.JsonSimple);
             }
         }
 
@@ -283,7 +281,75 @@ namespace OpenFrameworkV3.Core.Security
 
         public string Email { get; set; }
 
+        public void GetShortcuts(long applicationUserId, long companyId, string instanceName)
+        {
+            var cns = Persistence.ConnectionString(instanceName);
+            if (!string.IsNullOrEmpty(cns))
+            {
+                /* CREATE PROCEDURE [dbo].[Core_ShortCuts_ByUser] 
+                 *   @ApplicationUserId bigint,
+                 *   @CompanyId bigint */
+                using(var cmd = new SqlCommand("Core_ShortCuts_ByUser"))
+                {
+                    using(var cnn = new SqlConnection(cns))
+                    {
+                        cmd.Connection = cnn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));
+                        cmd.Parameters.Add(DataParameter.Input("@CompanyId", companyId));
+                        try
+                        {
+                            cmd.Connection.Open();
+                            using (var rdr = cmd.ExecuteReader())
+                            {
+                                if (rdr.HasRows)
+                                {
+                                    rdr.Read();
+
+                                    if (!rdr.IsDBNull(0))
+                                    {
+                                        var itemBlue = Persistence.ItemDefinitionByName(rdr.GetString(0), instanceName);
+                                        this.shortcuts.Blue = new Shortcut
+                                        {
+                                            Label = itemBlue.Layout.LabelPlural,
+                                            Icon = itemBlue.Layout.Icon,
+                                            Link = rdr.GetString(1),
+                                            ShortcutType = ShortcutTypes.Blue
+                                        };
+                                    }
+
+                                    if (!rdr.IsDBNull(2))
+                                    {
+                                        var itemRed = Persistence.ItemDefinitionByName(rdr.GetString(2), instanceName);
+                                        this.shortcuts.Red = new Shortcut
+                                        {
+                                            Label = itemRed.Layout.LabelPlural,
+                                            Icon = itemRed.Layout.Icon,
+                                            Link = rdr.GetString(3),
+                                            ShortcutType = ShortcutTypes.Red
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            if(cmd.Connection.State != ConnectionState.Closed)
+                            {
+                                cmd.Connection.Close();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public static ApplicationUser ById(long applicationUserId, string instanceName)
+        {
+            return ById(applicationUserId, Constant.DefaultId, instanceName);
+        }
+
+        public static ApplicationUser ById(long applicationUserId, long companyId, string instanceName)
         {
             var res = ApplicationUser.Empty;
             var cns = Persistence.ConnectionString(instanceName);
@@ -327,6 +393,11 @@ namespace OpenFrameworkV3.Core.Security
                                     res.Active = rdr.GetBoolean(ColumnsUserGet.Active);
 
                                     res.grants = Grant.ByUser(res.Id, 1, instanceName).ToList();
+
+                                    if (companyId != Constant.DefaultId)
+                                    {
+                                        res.GetShortcuts(applicationUserId, companyId, instanceName);
+                                    }
 
                                 }
                             }
@@ -430,11 +501,22 @@ namespace OpenFrameworkV3.Core.Security
                         cmd.Parameters.Add(DataParameter.Input("@UserName", userName, 50));
                         cmd.Parameters.Add(DataParameter.Input("@Password", password, 50));
                         cmd.Parameters.Add(DataParameter.OutputInt("@Result"));
+                        cmd.Parameters.Add(DataParameter.OutputBool("@Locked"));
+                        cmd.Parameters.Add(DataParameter.OutputBool("@Corporative"));
+                        cmd.Parameters.Add(DataParameter.OutputBool("@Multicompany"));
+                        cmd.Parameters.Add(DataParameter.OutputLong("@CompanyId"));
                         try
                         {
                             cmd.Connection.Open();
                             cmd.ExecuteNonQuery();
-                            res.SetSuccess(cmd.Parameters["@Result"].Value);
+                            res.SetSuccess(string.Format(
+                                CultureInfo.InvariantCulture,
+                                @"{{""Id"": {0}, ""Locked"":{1}, ""Corporative"":{2}, ""Multicompany"":{2}, ""CompanyId"":{4}}}",
+                                cmd.Parameters["@Result"].Value,
+                                ConstantValue.Value(Convert.ToBoolean(cmd.Parameters["@Locked"].Value)),
+                                ConstantValue.Value(Convert.ToBoolean(cmd.Parameters["@Corporative"].Value)),
+                                ConstantValue.Value(Convert.ToBoolean(cmd.Parameters["@Multicompany"].Value)),
+                                cmd.Parameters["@CompanyId"].Value));
                         }
                         catch (Exception ex)
                         {

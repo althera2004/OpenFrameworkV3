@@ -195,7 +195,7 @@ namespace OpenFrameworkV3.Core.Security
                                             //{
                                             //    if (string.IsNullOrEmpty(user.ExternalUsers))
                                             //    {
-                                            Menu.Load(instance.Config.CodedQueryClean, instanceName);
+                                            Menu.Load(user.Id, result.CompanyId, instance.Config.CodedQueryClean, instanceName);
                                             //    }
                                             //    else
                                             //    {
@@ -356,7 +356,7 @@ namespace OpenFrameworkV3.Core.Security
                                             ApplicationDictionary.CreateJavascriptFile(user.Language.Iso, instanceName);
                                             //if (string.IsNullOrEmpty(user.ExternalUsers))
                                             //{
-                                                Menu.Load(instance.Config.CodedQueryClean, instanceName);
+                                            Menu.Load(userId, result.CompanyId, instance.Config.CodedQueryClean, instanceName);
                                             //}
                                             //else
                                             //{

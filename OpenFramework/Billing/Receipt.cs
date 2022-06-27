@@ -359,8 +359,8 @@ namespace OpenFrameworkV3.Billing
                         cmd.Connection = cnn;
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        var dateFrom = Tools.DateFormat.FromStringddMMyyy(from);
-                        var dateTo = Tools.DateFormat.FromStringddMMyyy(to);
+                        var dateFrom = Tools.DateFormat.FromStringddMMyyyy(from);
+                        var dateTo = Tools.DateFormat.FromStringddMMyyyy(to);
                         cmd.Parameters.Add(DataParameter.Input("@DateFrom", dateFrom));
                         cmd.Parameters.Add(DataParameter.Input("@DateTo", dateTo));
                         cmd.Parameters.Add(DataParameter.Input("@Pendiente", pendiente));

@@ -472,7 +472,7 @@ namespace OpenFrameworkV3.Export
                             case "datetime":
                                 if(parameter.Value.Equals("FromQuery", StringComparison.OrdinalIgnoreCase))
                                 {
-                                    cmd.Parameters.Add(DataParameter.Input(parameter.Name, DateFormat.FromStringddMMyyy(parameters[parameter.Name])));
+                                    cmd.Parameters.Add(DataParameter.Input(parameter.Name, DateFormat.FromStringddMMyyyy(parameters[parameter.Name])));
                                 }
                                 else if(parameter.Value.Equals("FromSession", StringComparison.OrdinalIgnoreCase))
                                 {

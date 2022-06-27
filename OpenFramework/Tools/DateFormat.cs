@@ -12,6 +12,27 @@ namespace OpenFrameworkV3.Tools
 
     public static class DateFormat
     {
+        public static DateTime? FromString(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return null;
+            }
+
+            if(value.IndexOf('Z') != -1)
+            {
+                return FromStringZulu(value);
+            }
+
+            var res = FromStringyyyyMMdd(value);
+
+            if(res == null)
+            {
+                res = FromStringddMMyyyy(value);
+            }
+
+            return res;
+        }
         public static DateTime? FromStringZulu(string value)
         {
             if (string.IsNullOrEmpty(value))
@@ -27,7 +48,7 @@ namespace OpenFrameworkV3.Tools
 
         }
 
-        public static DateTime? FromStringddMMyyy(string value)
+        public static DateTime? FromStringddMMyyyy(string value)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -288,6 +309,28 @@ namespace OpenFrameworkV3.Tools
             }
 
             return FormatTimePicker(date.Value);
+        }
+
+        public static DateTime? TextToDate(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return null;
+            }
+
+            if (text.IndexOf("T") != -1)
+            {
+                var partsT = text.Split('T')[0].Replace('-', '/').Split('/');
+                return DateTime.ParseExact(partsT[2] + "/" + partsT[1] + "/" + partsT[0], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+
+            var parts = text.Split('/');
+            if (parts.Length == 3)
+            {
+                return DateTime.ParseExact(text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+
+            return null;
         }
     }
 }

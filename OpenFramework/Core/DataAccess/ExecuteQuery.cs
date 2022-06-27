@@ -166,7 +166,7 @@ namespace OpenFrameworkV3.Core.DataAccess
                 {
                     if (this.parameters != null)
                     {
-                        foreach (SqlParameter parameter in this.parameters)
+                        foreach (var parameter in this.parameters)
                         {
                             cmd.Parameters.Add(parameter);
                         }

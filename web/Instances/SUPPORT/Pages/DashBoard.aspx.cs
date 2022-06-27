@@ -1,4 +1,4 @@
-﻿namespace OpenFrameworkV2.Web.Support.Pages
+﻿namespace OpenFrameworkV3.Web.Instances.Support
 {
     using System;
     using System.Collections.Generic;
@@ -9,16 +9,25 @@
 
     public partial class DashBoard : Page
     {
-        /// <summary>Master page</summary>
         private Main master;
+
+        public string InstanceName
+        {
+            get
+            {
+                return this.master.Instance.Name;
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             this.master = this.Master as Main;
-            this.master.BreadCrumb.Add("Inici");
-            this.master.BreadCrumb.SetTitle("Inici: " + this.master.Company.Name);
 
-            this.master.AddScript("/Instances/Support/Pages/DashBoard.js");
+
+            var title = "Dashboard";
+            this.master.SetTitle(this.master.Company.Name + " - " + title);
+            this.master.SetPageType("PageView");
+            this.master.SetPageType("Dashboard");
         }
     }
 }

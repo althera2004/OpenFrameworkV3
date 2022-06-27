@@ -11,6 +11,7 @@ namespace OpenFrameworkV3.Core.DataAccess
     using OpenFrameworkV3.Core.Activity;
     using OpenFrameworkV3.Core.Enums;
     using OpenFrameworkV3.Core.ItemManager;
+    using OpenFrameworkV3.Tools;
 
     /// <summary>Implements SQLValue class</summary>
     public static class SqlValue
@@ -46,7 +47,7 @@ namespace OpenFrameworkV3.Core.DataAccess
                         return Value(Convert.ToInt64(data, CultureInfo.GetCultureInfo("en-us")));
                     case ItemFieldDataType.Money:
                     case ItemFieldDataType.Decimal:
-                        if(data.GetType().Name.Equals("decimal", StringComparison.OrdinalIgnoreCase) ||
+                        if (data.GetType().Name.Equals("decimal", StringComparison.OrdinalIgnoreCase) ||
                             data.GetType().Name.Equals("int32", StringComparison.OrdinalIgnoreCase))
                         {
                             return Value(Convert.ToDecimal(data.ToString()));
@@ -81,12 +82,24 @@ namespace OpenFrameworkV3.Core.DataAccess
                     case ItemFieldDataType.Time:
                     case ItemFieldDataType.NullableDateTime:
                     case ItemFieldDataType.NullableTime:
-
                         if (data.GetType().Name.Equals("DateTime", StringComparison.OrdinalIgnoreCase))
                         {
                             var date = (DateTime)data;
                             date = date.AddHours(1);
-                            return string.Format(CultureInfo.GetCultureInfo("en-us"), "'{0:yyyy/MM/dd}'", date);
+                            return string.Format(CultureInfo.GetCultureInfo("es-es"), "'{0:yyyy-dd-MM}'", date);
+                        }
+
+                        if (data.GetType().Name.Equals("String", StringComparison.OrdinalIgnoreCase))
+                        {
+                            var realData = DateFormat.FromString(data as string);
+                            if (realData != null)
+                            {
+                                return string.Format(CultureInfo.GetCultureInfo("es-es"), "'{0:yyyy-dd-MM}'", realData);
+                            }
+                            else
+                            {
+                                return "null";
+                            }
                         }
 
                         return Value(Convert.ToDateTime(data.ToString(), CultureInfo.GetCultureInfo("es-es")));

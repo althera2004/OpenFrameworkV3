@@ -1,0 +1,466 @@
+﻿Añadir::добавлять
+Avatar::Avatar
+Chosen_default_multiple_text::Seleccione opciones
+Chosen_default_no_result_text::No hay resultados
+Chosen_default_single_text::Selecione una opcion
+Common_No_Access_Title::No tiene acceso al elemento que intenta visualizar
+Common_No_Access_Message::Se han registrado los siguientes datos por motivos de seguridad
+Common_No_Access::Acceso no permitido
+Common_Accept::Aceptar
+Common_Action_Success::Operación realizada con éxito
+Common_Activate_Popup_BtnOk::Activar
+Common_Activate_Popup_Question::¿Desea activar
+Common_Activate_Popup_Title::Activar registro
+Common_Activated::Activado
+Common_Active::Activo
+Common_Active_Plural::Activo
+Common_Activity::Actividad
+Common_ActualMonth::Mes actual
+Common_Add::Añadir
+Common_Administration::Administración
+Common_Alerts::Avisos
+Common_All::Todos
+Common_All_Female::Toda
+Common_All_Female_Plural::Todas
+Common_All_Male::Todo
+Common_All_Male_Plural::Todos
+Common_AlreadyExists::Ya existe
+Common_Attach_BtnAdd::Añadir documento
+Common_Attach_BtnDownloadAll::Descargar todo
+Feature_Attachment_TabTitle::Adjuntos
+Common_Attach_TabTitle::Documentos adjuntos
+Common_Back::возвращение
+Common_Cancel::отменить
+Common_CanNotDelete::No se puede eliminar
+Common_Change::изменение
+Common_Chronometer_Hours::horas
+Common_Chronometer_Minutes::minutos
+Common_Chronometer_Seconds::segundos	
+Common_Close::близко
+Common_Color_Blue::Azúl
+Common_Color_Green::Verde
+Common_Color_Red::Rojo
+Common_Color_Yellow::Amarillo
+Common_Comparer_eq::igual a
+Common_Comparer_eqgt::mayor o igual que
+Common_Comparer_eqlt::menor o igual que
+Common_Comparer_gt::mayor que
+Common_Comparer_lt::menor que
+Common_ComparerSign_eq::=
+Common_ComparerSign_eqgt::>=
+Common_ComparerSign_eqlt::<=
+Common_ComparerSign_gt::>
+Common_ComparerSign_lt::<
+Common_Configuration::Panel de control
+Common_CreatedBy::Generado por
+Common_Dashboard::Visión general
+Common_DashboardReset::Reestablecer original
+Common_Date::Fecha
+Common_DateClose::Fecha cierre
+Common_DateExecution::F. prevista
+Common_Day::Día
+Common_DayPart_Afternon::Tarde
+Common_DayPart_Morning::Mañana
+Common_Days::Días
+Common_Delete::Eliminar
+Common_Delete_Popup_BtnOk::Eliminar
+Common_Delete_Popup_Question::¿Desea eliminar
+Common_Delete_Popup_Title::Eliminar registro
+Common_DeleteMessage::¿Seguro que quiere eliminar
+Common_DualListBox_Filtered::Filtrado
+Common_DualListBox_ShowingAll:Todos {0}
+Common_Edit::Editar
+Common_Empty::Vacío
+Common_EmptyList::Lista vacía
+Common_Error::Error
+Common_Error_Application::Se ha producido un error en la aplicación
+Common_Error_BeforeStart::La fecha no puede ser anterior a la de inicio
+Common_Error_DateMalformed::La fecha no es correcta
+Common_Error_EmailMalformed::Email incorrecto
+Common_Error_IncorrectMail::El correo es incorrecto
+Common_Error_IncorrectPassword::Contraseña no válida
+Common_Error_Kernel_Delete::No se puede eliminar porque es parte básica de la aplicación
+Common_Error_Kernel_Edit::No se puede modificar porque es parte básica de la aplicación
+Common_Error_LastActive::No se puede eliminar porque es la única definida
+Common_Error_MaximumToday::La fecha no puede ser posterior a hoy
+Common_Error_MinimumOneAction::Escoger una opción
+Common_Error_MoneyMalformed::No es un valor correcto
+Common_Error_NameAlreadyExists::Ya existe
+Common_Error_NoAccess::El elemento seleccionado no está disponible
+Common_Error_NoCalibrationsDefined::No hay calibraciones definidas
+Common_Error_NoDeletable::No se puede eliminar
+Common_Error_NoEditable::No se puede modificar
+Common_Error_NoFileSelected::Se ha de seleccionar un fichero
+Common_Error_NoVerificationsDefined::No hay verificaciones definidas
+Common_Error_UnsupportedFile::Tipo de documento no admitido
+Common_Error_UserCanNotAccess::El usuario no tiene permisos para acceder a la aplicación
+Common_ErrorMessage_CanNotDelete::No se puede eliminar
+Common_ErrorMessage_InUse::No se puede eliminar porque está en uso
+Common_ErrorMessage_IsSelected::Ya está seleccionado
+Common_Exit::Salir
+Common_External::Externo
+Common_Favorites::En seguimiento
+Common_Filter::Filtrar
+Common_FinishDate::Finalización
+Common_Form_Errors::Revise los datos del formulario
+Common_From::Desde
+Common_Grants_NoAccess::Sin acceso al ítem
+Common_Help::помощь
+Common_Here::aquí
+Common_Home::инициирование
+Common_ImagePopup_Btn_Select::Seleccionar imagen
+Common_ImagePopup_Title_ActualImage::Actual
+Common_ImagePopup_Title_New::Añadir imagen
+Common_ImagePopup_Title_NewImage::Nueva imagen
+Common_ImagePopup_Title_Update::Sustituir imagen
+Common_Import::Importar
+Common_Import_AcceptData::Aceptar datos y realizar carga
+Common_Import_DropFile1::Arrastrar fichero
+Common_Import_DropFile2::para importar
+Common_Import_DropFile3::ó clickar
+Common_Import_Error_NoField::El campo <strong>{0}</strong> no está en el fichero.
+Common_Import_Error_NoFKFound::No existe <strong>{0}</strong> como {1} en el sistema.
+Common_Import_Error_RequiredField::El campo <strong>{0}</strong> es obligatorio.
+Common_Import_ErrorHeader_Field::Campo
+Common_Import_ErrorHeader_Line::Línea
+Common_Import_ErrorHeader_Message::Mensaje
+Common_Import_Errors::Se han encontrado errores en el fichero
+Common_Import_Explanation::Al final de la página encontrará las instrucciones para la importación.
+Common_Import_Go::Realizando importación
+Common_Import_InstructionsTitle::Instrucciones
+Common_Import_ReadSuccessTitle::Previsualización de datos a cargar
+Common_Import_ReloadFile::Volver a cargar el fichero
+Common_Inactive::Inactivo
+Common_Inactive_Plural::Inactivos
+Common_Info::Información
+Common_Internal::Interno
+Common_Label_Days::días
+Common_Label_Months::meses
+Common_Label_Weeks::semanas
+Common_Label_Years::años
+Common_LastWeek::Última semana
+Common_ListPdf::Imprimir
+Common_LoadingData::Cargando datos...
+Common_Logout::Salir
+Common_Reload::Mostrar
+Common_Unload::Ocultar
+Common_Map_Accuracy::Precisar
+Common_Map_GeolocationSaved::Geoposición guardada
+Common_Map_Latitude::Latitud
+Common_Map_Longitude::Longitud
+Common_Map_NewLatitude::Nueva latitud
+Common_Map_NewLongitude::Nueva longitud
+Common_Map_NoData::No hay definida información de geolocalización.
+Common_Map_Resolve::Geoposicionar
+Common_Map_Suggestion::Dirección orientativa
+Common_Message_Deleting::Eliminando...
+Common_Message_FormErrors::Revise los datos del formulario
+Common_Message_Saving::Guardando...
+Common_ModifiedBy::Modificado por
+Common_Modify::Modificar
+Common_Month::Mes
+Common_MonthName_April::Abril
+Common_MonthName_August::Agosto
+Common_MonthName_December::Diciembre
+Common_MonthName_February::Febrero
+Common_MonthName_January::Enero
+Common_MonthName_July::Julio
+Common_MonthName_June::Junio
+Common_MonthName_March::Marzo
+Common_MonthName_May::Mayo
+Common_MonthName_November::Noviembre
+Common_MonthName_October::Octubre
+Common_MonthName_September::Septiembre
+Common_Months::Meses
+Common_Name::Usuario
+Common_New::новый
+Common_Next::после
+Common_No::No
+Common_NoAlerts::<strong>¡Felicidades!</strong><br />No hay ninguna alerta pendiente
+Common_NoData::No hay datos
+Common_NoF12::Sólo administradores tienen permitida esta acción
+Common_NoGrants::Usuario sin permisos
+Common_NoGrants_Explanation::Póngase en contacto con el administrador de la aplicación en la siguiente dirección de correo
+Common_None::Ninguno
+Common_None_Female::Ninguna
+Common_None_Male::Ninguno
+Common_NoRefresh::Use los controles de navegación de la aplicación
+Common_NotSet_Female::No especificada
+Common_NotSet_Male::No especificado
+Common_NowText::Ahora mismo
+Common_Period::Periodo
+Common_PeriodAll::Todo el periodo
+Common_Premium_Module::Módulo PREMIUM
+Common_Previous::предыдущий
+Common_PrintExcel::Imprimir en Excel
+Common_PrintPdf::Imprimir en PDF
+Common_Profile::Perfil
+Common_RegisterCount::Nº registros
+Common_Report_Rendering::Generando informe...
+Common_Required::Obligatorio
+Common_Responsible::Responsable
+Common_RightClickNotAllowed::Botón derecho no permitido
+Common_Save::экономить
+Common_Search::Buscar
+Common_Search_Filter::Filtro de búsqueda
+Common_Searching::Buscando...
+Common_Select::выбрать
+Common_SelectAll todos::Seleccionar todos
+Common_Selected::Seleccionado
+Common_SelectOne::выбрать
+Common_Error_NoGantt::Error, no se puede crear el diagrama Gantt
+Common_BrowserUpgrade::Please upgrade your browser, because your current browser lacks some new features we need!
+Common_SessionTimeoutMessage::Se ha superado el tiempo de inactividad
+Common_Settings::Preferencias
+Common_ShowAll::Ver todo
+Common_Status::Estado
+Common_Target::Objetivo
+Common_Task::Tarea
+Common_ThisMonth::Este mes
+Common_ThisWeek::esta semana
+Common_TiemoutSessionTitle::La sesión ha terminado
+Common_TimeoutSessionMessage::Se ha superado el tiempo permitido de inactividad
+Common_Title_Views::Visualizaciones
+Common_To:Hasta
+Common_Today::Hoy
+Common_Total::Total
+Common_Unactivated::Desactivado
+Common_Unfollow::Dejar de seguir
+Common_Follow::Poner en seguimiento
+Common_Update::Modificar
+Common_Upload_BtnOK::Subir
+Common_Upload_BtnReSelect::Seleccionar otro fichero
+Common_Upload_BtnSelect::Seleccionar fichero
+Common_Upload_Label_CreatedOn::Subido
+Common_Upload_Label_MIME::Tipo
+Common_Upload_Label_NewName::Nombre
+Common_Upload_Label_Size::Tamaño
+Common_Upload_List_Header_Description::Descripción
+Common_Upload_List_Header_Size::Tamaño
+Common_Upload_List_Header_UploadedOn::Fecha
+Common_Upload_NoSavedData::Primero se deben guardar los datos
+Common_Upload_Popup_Title::Subir fichero
+Common_Upload_Popup_Title_Prefix::Subir fichero de
+Common_Upload_Popup_TitleAttach::Adjuntar fichero
+Common_Upload_Success_Message::Se ha guardado con el nombre
+Common_Upload_Success_Message2::en el servidor.
+Common_Upload_Success_Title::Fichero subido con éxito
+Common_Upload_Title_ActualFile::Fichero actual
+Common_Upload_Title_NewFile::Nuevo fichero
+Common_Upload_Tooltip_Delete::Eliminar
+Common_Upload_Tooltip_Download::Descargar
+Common_Upload_Tooltip_View::Ver
+Common_Upload_UnknowType::Tipo de fichero desconocido
+Common_User_Admin::Administrador
+Common_User_Core::Core
+Common_User_External::Externo
+Common_User_Locked::Bloqueado
+Common_User_Primary::Primario
+Common_User_Technical::Técnico
+Common_UserPreferences::Preferencias del usuario
+Common_UserProfile::Perfil del usuario
+Common_View::Ver
+Common_ViewAll::Ver todo
+Common_VoidData::Sin datos
+Common_VoidSearchResult::La búsqueda no ha encontrado datos
+Common_Warning::Aviso
+Common_Warning_BrowserOld::Se ha de actializar el navegador
+Common_Warning_ImageRequired::Se ha de seleccionar una imagen
+Common_Warning_ImageTooBig:: Imagen muy grande <br />Se ha de reducir el tamaño.
+Common_Warning_MimeType::tipus de arxiu no admès
+Common_Warning_Undelete::No se puede eliminar porque tiene registros asociados
+Common_Week::Semana
+Common_WeekDayName_Friday::Viernes
+Common_WeekDayName_Monday::Lunes
+Common_WeekDayName_Saturday::Sábado
+Common_WeekDayName_Sunday::Domingo
+Common_WeekDayName_Thursday::Jueves
+Common_WeekDayName_Tuesday::Martes
+Common_WeekDayName_Wednesday::Miércoles
+Common_WeekDayShortName_Friday::Viernes
+Common_WeekDayShortName_Monday::lu
+Common_WeekDayShortName_Saturday::sa
+Common_WeekDayShortName_Sunday::dm
+Common_WeekDayShortName_Thursday::ju
+Common_WeekDayShortName_Tuesday::ma
+Common_WeekDayShortName_Wednesday::mi
+Common_Welcome::Bienvenido
+Common_Welcome_Female::Bienvenida
+Common_Welcome_Male::Bienvenido
+Common_Working::Acción en proceso
+Common_Year::Año
+Common_Years::Años
+Common_Yes::Sí
+CompanyProfile::Datos de empresa
+Email::Correo
+Fin::Fin
+Item_Action_Popup_Details_Title::Detalles de la acción
+Item_Alert_ListHeader_Description::Descripción
+Item_Alert_ListHeader_Reason::Motivo
+Item_Alerts::Avisos
+Item_Attach_DiskFreeLabel1::Disponible el 
+Item_Attach_DiskFreeLabel2::% de asignación de disco
+Item_Attach_DiskQuote::Cuota de disco asignada:
+Item_Attach_FreeDisk::Espacio disponible
+Item_Attach_Popup_Delete_Question::¿Eliminar el adjunto?
+Item_Attach_Popup_Delete_Title::Eliminar adjunto
+Item_Attachment_Btn_New::Añadir documento
+Item_Attachment_CreateDate::Subido el
+Item_Attachment_Description::Descripción
+Item_Attachment_Header_CreateDate::Subido el
+Item_Attachment_Header_Description::Descripción
+Item_Attachment_Header_FileName::Fichero
+Item_Attachment_Header_Size::Tamaño
+Item_Attachment_Popup_Warning::Esta acción no se puede deshacer
+Item_Attachment_SectionTitle::Documentos adjuntos
+Item_Attachment_Size::Tamaño
+Item_Backup::Back-Up
+Item_Backup_Explain::Explicar que es un backup para poder hacer una restauración o migrar datos a otra aplicación y tal...
+Item_Company_Button_CompanyAddressBAR::Gestión de direcciones
+Item_Company_Help_Address::Indicar la dirección, incluye el tipo de vía
+Item_Company_Help_BAR_Addresses::Gestión de direcciones
+Item_Company_Help_City::Indicar la población
+Item_Company_Help_Common_SelectAddress::Seleccionar dirección
+Item_Company_Help_Email::Indicar la dirección de correo electrónico
+Item_Company_Help_Fax::Indicar el número de fax
+Item_Company_Help_Mobile::Indicar el número de móvil
+Item_Company_Help_Name::Nombre de la empresa
+Item_Company_Help_Nif::Indicar el NIF
+Item_Company_Help_Pais::Seleccionar el país
+Item_Company_Help_Phone::Indicar el número de teléfono
+Item_Company_Help_Provincia::Indicar la provincia
+Item_Company_Help_ZipCode::Indicar el código postal
+Item_Company_Logo::Logo
+Item_Company_Tab_Countries::Países
+Item_Company_Tab_DiskQuote::Uso de disco
+Item_Company_Tab_Principal::Datos principales
+Item_Company_Tab_Traces::Trazas
+Item_CompanyAddress_FieldLabel_Address::Dirección
+Item_CompanyAddress_FieldLabel_Cellular::Móvil
+Item_CompanyAddress_FieldLabel_City::Población
+Item_CompanyAddress_FieldLabel_Country::País
+Item_CompanyAddress_FieldLabel_PostalCode::C.P.
+Item_CompanyAddress_FieldLabel_Province::Dirección
+Item_CompanyAddress_FieldLabel_Province::Provincia
+Item_CompanyAddress_FielLabel_Phone::Teléfono
+Item_CompanyAddress_Header_Address::Dirección
+Item_CompanyAddress_PopupDelete_Message::¿Eliminar la dirección?
+Item_CompanyAddress_PopupTile_Add::Añadir dirección
+Item_CompanyAddress_PopupTile_Edit::Editar la dirección
+Item_CompanyAddress_PopupTitle::Seleccionar una dirección principal
+Item_CompanyAddress_ToolTip_SetAsPrincipal::Establecer como principal
+Item_CompanyCountries_Status_Availables::Países disponibles
+Item_CompanyCountries_Status_Selected::Países seleccionados
+Item_CompanyCountry_Button_Discard::Descartar países
+Item_CompanyCountry_Button_Select::Seleccionar países
+Item_CompanyCountry_FieldLabel_Name::Nombre
+Item_CompanyData::Datos Empresa
+Item_CompanyData_Button_ChangeLogo::Cambiar el logo
+Item_CompanyData_Error_Message_PhoneOrCellular::Indicar el teléfono fijo o el móvil
+Item_CompanyData_FieldLabel_Address::Dirección
+Item_CompanyData_FieldLabel_Cellular::Móvil
+Item_CompanyData_FieldLabel_City::Localidad
+Item_CompanyData_FieldLabel_Country::País
+Item_CompanyData_FieldLabel_Email::Correo
+Item_CompanyData_FieldLabel_Fax::Fax
+Item_CompanyData_FieldLabel_Phone::Teléfono
+Item_CompanyData_FieldLabel_PostalAddress::C.P.
+Item_CompanyData_FieldLabel_Province::Provincia
+Item_CompanyData_Popup_ImageDelete_Title::Eliminar la imagen
+Item_CompanyProfile_FieldLabel_Name::Nombre
+Item_CompanyProfile_FieldLabel_Nif::NIF
+Item_Profile::Perfil de usuario/a
+Item_Profile_FieldLabel_Address::Dirección
+Item_Profile_FieldLabel_Email::Correo
+Item_Profile_FieldLabel_Language::Idioma
+Item_Profile_FieldLabel_Name::Nombre
+Item_Profile_FieldLabel_Phone::Teléfono
+Item_Profile_ShortCuts::Botones de ayuda rápida
+Item_Profile_ShowHelp::Ayuda en línea
+Item_Profile_Title_PersonalData::Datos personales
+Item_Reports::Informes
+Item_Review::Revisión dirección
+Item_ScheduledTasks::Tareas previstas
+Item_Tace_ListHeader_Date::Fecha
+Item_Tace_ListHeader_Name::Nombre
+Item_Tace_ListHeader_Reason::Motivos
+Item_Tace_ListHeader_Trace::Traza
+Item_Tace_ListHeader_User::Usuario/a
+Item_Trace::Traza
+Item_Trace_Active::Activación
+Item_Trace_Created::Creación
+Item_Trace_Delete::Eliminación
+Item_Trace_LastActions::Últimas acciones
+Item_Trace_Modify::Modificación
+Item_Trace_Unactive::Desactivación
+Item_Trace_Update::Actualización
+Item_Trace_Updated::Actualización
+Item_Traces::Trazas
+Item_User::Usuario/a
+Item_User_ActualPassword::Contraseña actual
+Item_User_Btn_ResetPassword::Regenerar
+Item_User_Button_New::Añadir
+Item_User_ChangePassword::Cambiar la contraseña
+Item_User_ErrorMessage_PaswordsNoMatch::Las contraseñas no coinciden
+Item_User_FieldLabel_PasswordConfirm::Confirmar la contraseña
+Item_User_Help_PrimaryUser::A este usuario no se le pueden modificar los permisos
+Item_User_Help_ResetPassword::Se enviará la nueva contraseña al correo del usuario
+Item_User_List_Header_Email::Correo
+Item_User_List_Header_EmployeeName::Empleado/a
+Item_User_List_Header_Grant::Permiso
+Item_User_List_Header_Read::Lectura
+Item_User_List_Header_UserName::Usuario/a
+Item_User_List_Header_Write::Modificación
+Item_User_Message_AfterChangePassword::Al cambiar la contraseña, se cerrará la sesión para reiniciar con la nueva contraseña
+Item_User_Message_GrantsAvaiable::Se ha activado la pestaña de permisos. Por favor, activa los permisos necesarios para que el usuario pueda utilizar la aplicación.
+Item_User_Message_ResetPassword_Ok::Contraseña regenerada correctamente. Se ha enviado un correo al usuario/a con las instrucciones de acceso a la aplicación.
+Item_User_Message_WelcommeMailSent::Se ha enviado un correo al usuario/a con las instrucciones de acceso a la aplicación.
+Item_User_NewPassword::Nueva contraseña
+Item_User_PopupDelete_Message::¿Eliminar?
+Item_User_Profile_Title_Settings::Configuración
+Item_User_Rol::Rol
+Item_User_Suicide::Un/a usuario/a no se puede eliminar a si mismo/a
+Item_User_Tab_Grants::Permisos
+Item_User_Tab_Password::Contraseña
+Item_User_Tab_Principal::Datos básicos
+Item_User_Title_Account::Gestión de la cuenta
+Item_User_Title_Add::Ficha del/la Usuari/a
+Item_User_Title_ResetPassword::Regenerar la contraseña
+Item_Users::Usuarios/as
+MailTemplate_ResetPassword_DefaultBody::Se ha reestablecido su contraseña en ISSUS.<br />Acceder a la siguiente url http://issus.scrambotika.com/ <br/> User:<b>{0}</b><br/>Password:<b>{1}</b>
+MailTemplate_ResetPassword_Error::No se pudo reiniciar la contraseña
+MailTemplate_ResetPassword_Subject::Reinicio de contraseña en ISSUS
+NumericDecimalSeparator::,
+NumericMilesSeparator::.
+Popup_ExportList_Btn_CSV::CSV
+Popup_ExportList_Btn_Excel::Excel
+Popup_ExportList_Btn_PDF::PDF
+Popup_ExportList_Title::Exportar listado
+por::por
+Principal::Principal
+Resumen::Resúmen
+semana::semana
+Servicio::Servicio
+Tipo::Tipo
+User_Admin::Administrador
+User_PrimaryUser::Super Usuario/a
+Common_Dirty_Popup_Title::Cambios sin guardar
+Common_ImageGallery_Popup_Title::Añadir imagen a la galería
+Common_ImageGallery_Popup_Title_ActualImage::Seleccionar imagen
+Common_ImageGallery_AddImage::Añadir imagen
+Common_Btn_ViewImage::Ver imagen
+Common_Btn_UploadImage::Subir imagen
+Common_Btn_DeleteImage::Eliminar imagen
+Common_Btn_UploadDocument::Subir documento
+Common_Btn_DownloadDocument::Descargar documento
+Common_Btn_DeleteDocument::Eliminar documento
+Common_Btn_GoUrl::Visitar enlace
+Common_Btn_SendMail::Enviar email
+Common_Message_SaveItemFirst::Antes hay que guardar los datos
+Common_Continue::Continuar
+Common_SaveAndContinue::Guardar y continuar
+Common_DirtyTable_Header_FieldName::Dato
+Common_DirtyTable_Header_Original::Valor original
+Common_DirtyTable_Header_Actual::Valor actual
+Common_DirtyTable_Message::Algunos datos han cambiado y no se han guardado.
+Common_Feature_Geolocation_Button::Mostrar mapa

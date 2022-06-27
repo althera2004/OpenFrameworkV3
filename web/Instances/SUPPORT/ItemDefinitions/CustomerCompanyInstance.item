@@ -29,9 +29,11 @@
             "FormId": "Custom",
             "Layout": 1,
             "EditAction": "FormPage",
+			"ForcedHeight": 300,
 			"Columns": [
                 { "DataProperty": "InstanceId" }
             ],
+            "Parameters": [ {"Name": "CustomerCompanyId", "Value": "#actualItemId#"}, {"Name": "Active", "Value": "1"} ],
             "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
         },
         {
@@ -39,9 +41,11 @@
             "FormId": "Custom",
             "Layout": 1,
             "EditAction": "FormPage",
+			"ForcedHeight": 300,
 			"Columns": [
                 { "DataProperty": "CustomerCompanyId" }
             ],
+            "Parameters": [ {"Name": "InstanceId", "Value": "#actualItemId#"}, {"Name": "Active", "Value": "1"} ],
             "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
         }
 	]

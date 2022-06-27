@@ -1,0 +1,141 @@
+﻿Billing::Facturación
+Billing_Invoice::Factura
+Billing_Invoices::Facturas
+Billing_List::Listado de facturas
+Billing_Header_Number::#
+Billing_Header_Date::Fecha
+Billing_Header_BaseAmount::Base Imp.
+Billing_Header_TotalIVA::IVA
+Core_Billing_Header_Discount::Dto.
+Billing_Header_Payer::Pagador
+Billing_Header_Subject::Descripción
+Billing_Header_Total::Total
+Billing_Header_Status::Estado
+Billing_Label_InvoicesCount:: Número de facturas
+Billing_Concept::Precios propios
+Billing_ConceptList::Listado de conceptos
+Billing_ConceptCategory::Categoria
+Billing_Concept_Name::Concepto
+Billing_Concept_Price::Precio
+Billing_Concept_IVA::IVA
+Billing_Concept_PVP::PVP
+Billing_Concept_FixedPrice::A precio por unidad
+Billing_Concept_FreePrice::Importe libre
+Core_BankAccount::Cuenta bancaria
+Core_BankAccounts::Cuentas bancarias
+Core_BankAccount_List::Listado de cuentas bancarias
+Core_BankAccount_Header_IBAN::IBAN
+Core_BankAccount_Header_Swift::Swift
+Core_BankAccount_Header_BankName::Entidad
+Core_BankAccount_Header_Alias::Alias
+Core_BankAccount_Header_Main::Principal
+Core_BankAccount_Title_Main::Cuenta principal
+Core_BankAccount_Title_NoMain::Cuenta no principal
+Core_BankAccount_Message_IsMain::Esta cuenta es la principal
+Core_BankAccount_Label_BankName::Entidd
+Core_BankAccount_Label_Alias::Alias
+Core_BankAccount_Label_IBAN::IBAN
+Core_BankAccount_Label_Swift::SWIFT
+Core_BankAccount_Label_Main::Cuenta principal
+Core_BankAccount_Title_Edit::Editar cuenta bancaria
+Core_BankAccount_Title_Add::Afegir cuenta bancaria
+Core_BankAccount_Btn_Add::Aladir cuenta
+Core_BankAccount_ErrorMessage_BankNameRequired::La entidad bancaria es obligatoria
+Core_BankAccount_ErrorMessage_IBANRequired::El código IBAN es obligatorio
+Core_BankAccount_ErrorMessage_SWIFTRequired::El código SWIFT es obligatorio
+Billing_Invoice_Status_0::Proforma
+Billing_Invoice_Status_1::Confirmada
+Billing_Invoice_Status_2::Enviada
+Billing_Invoice_Status_3::Cobrada
+Billing_Invoice_Status_4::Rechazada
+Billing_Invoice_Status_5::Anulada
+Billing_Concept::Concepto
+Billing_Concept_PDF_Header_Category::Categoria
+Billing_Concept_PDF_Header_Concept::Concepto
+Billing_Concept_PDF_Header_PVP::P.V.P.
+Billing_Concept_PDF_Title::Preucios de conceptos
+Billing_Concepts::Conceptos
+Billing_Concept_List::Listado de conceptos
+Billing_Concept_Title_Add::Añadir concepto
+Billing_Concept_Title_Edit::Editar concepto
+Billing_Concept_Btn_Add::Añadir concepto
+Billing_Concept_Label_Description::Descripción
+Billing_Concept_Label_Amount::Import base
+Billing_Concept_Label_CategoryId::Categoria
+Billing_Concept_Label_IVA::IVA
+Billing_IVA_1::Exento
+Billing_IVA_2::Super reducido 4%
+Billing_IVA_3::Reducido 10%
+Billing_IVA_4::General 21%
+Billing_Categories::Categorias
+Billing_Category_List::Listado de categorias
+Billing_Category_Btn_Add::Añadir categoria
+Billing_Category_Description::Categoria
+Billing_Category_Label_Description::Nombre
+Billing_Category_Title_Add::Añadir categoria
+Billing_Category_Title_Edit::Editar categoria
+Core_BankAccount_ErrorMessage_IBANMalformed::El código IBAN no tiene un formato correcto
+Core_BankAccount_ErrorMessage_IBANNotValid::El código IBAN no es válido
+Core_Billing_BtnNewInvoice::Crear factura proforma
+Billing_InvoiceNew::Nueva factura
+Billing_Invoice_Message_Creating::Creando factura
+Billing_InvoiceLine_Title_Edit::Editar línea
+Billing_InvoiceLine_Title_Delete::Eliminar línea
+Billing_Label_Date::Fecha
+Billing_Label_DateVto::Fecha vencimiento
+Billing_Label_Customer::Cliente
+Billing_Label_BankAccount::Cuenta bancaria
+Billing_Label_PaymentMethod::Forma de pago
+Billing_PaymentMethod_0::Efectivo
+Billing_PaymentMethod_1::Tranferencia bancaria
+Billing_PaymentMethod_2::Tarjeta bancaria
+Billing_PaymentMethod_3::Domiciliación bancaria
+Billing_Invoice_Title_InvoiceData::Datos factura
+Billing_Invoice_ErrorDateRequired::La fecha de factura es obliatoria
+Billing_Invoice_ErrorDateMalformed::La fecha de factura no es válida
+Billing_Invoice_ErrorDateVtoRequired::La fecha de vencimiento es obliatoria
+Billing_Invoice_ErrorDateVtoMalformed::La fecha de vencimiento no es válida
+Billing_Invoice_ErrorCrossDates::La fecha de vencimiento no puede ser anterior a la fecha de la factura
+Billing_Invoice_ErrorPaymentMethodRequired::La forma de pago es obliatoria
+Billing_Invoice_ErrorCustomerRequired::El cliente es obligatorio
+Billing_AddLine::Añadir línea
+Billing_Receipt_HeaderPDF_Description::Descripción
+Billing_Receipt_HeaderPDF_Quantity::Cantidad
+Billing_Receipt_HeaderPDF_Amount::Precio U.
+Billing_Receipt_HeaderPDF_Base::Base I.
+Billing_Receipt_HeaderPDF_IVA::IVA
+Billing_Receipt_HeaderPDF_Total::Total
+Billing_ErrorMessage_NoLines::No se puede confirmar la factura sin líneas
+Billing_Message_Confirm::La factura será confirmada y no se podrá modificar
+Billing_Receipt::Recibo
+Core_BankAccount_Label_ContractId::Id acreedor
+Core_BankAccount_Label_PaymentType::Tipo de cobro
+Core_BackAccount_Label_PRE::Fichero de descripción de la carga
+Billing_Message_PrintProforma::Imprimiendo proforma
+Billing_Recibos::Ver recibos
+Billing_AutoGenerate::Generación de facturas
+Billing_AutoGenerateWorking::Generando facturas
+Billing_AutoGenerate_Error_NoMonth::Se ha de indicar el mes
+Billing_AutoGenerate_Error_NoYear::Se ha de indicar el año
+Core_Billing_Header_PriceUnit::Precio&nbsp;U.
+Core_Billing_Header_BI::Base&nbsp;I.
+Core_Billing_QuoteConceptLine::Concepto
+Billing_Invoice_Label_TotalBaseImponible::Total base imponible
+Billing_Invoice_Label_TotalIVA::Total IVA
+Billing_Invoice_Label_TotalFacturaPDF::Total factura
+Billing_Invoice_Label_Date::Fecha
+Billing_Invoice_Label_DateVto::Fecha vencimiento
+Billing_Invoice_FooterCurrency::Precios expresados en euros
+Billing_Message_PrintProforma::Imprimiendo proforma
+Billing_Invoice_FooterCurrency::Precios expresados en euros
+Billing_MassBtn::Acciones en bloque
+Billing_MassTitle::Acciones disponibles
+Billing_MassBtn_Confirm::Confirmar proformas
+Billing_MassBtn_Delete::Eliminar proformas
+Billing_MassBtn_SepaPreview::Previsualizar SEPA
+Billing_MassBtn_CreateSEPA::Crear SEPA
+Billing_MassBtn_MailSend::Enviar por mail
+Billing_MassBtn_MarkAsRefused::Marcar como devueltas
+Billing_MassBtn_Print::Imprimir
+Billing_Message_ConfirmingInvoice::Confirmando proforma
+Billing_NumFacturaPDF::Factura nº

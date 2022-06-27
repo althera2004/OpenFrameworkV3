@@ -6,14 +6,19 @@
 // --------------------------------
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using OpenFrameworkV3;
+using OpenFrameworkV3.Core.Activity;
 using OpenFrameworkV3.Core.DataAccess;
+using OpenFrameworkV3.Core.ItemManager;
 using OpenFrameworkV3.Core.ItemManager.ItemList;
+using OpenFrameworkV3.Core.Security;
 using OpenFrameworkV3.Tools;
 
 /// <summary>
@@ -50,10 +55,154 @@ public class ItemService : WebService
     }
 
 
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult GetTraces(string itemName, long itemId, string instanceName)
+    {
+        var res = ActionResult.NoAction;
+        try
+        {
+            var data = ActionLog.TraceItemDataGet(instanceName, itemName, itemId);
+            res.SetSuccess(data);
+        }
+        catch(Exception ex)
+        {
+            res.SetFail(ex);
+        }
+
+        return res;
+    }
+
 
     [WebMethod(EnableSession = true)]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string GetFK(string itemName, string token,long companyId, string instanceName)
+    public ActionResult Save(long itemDefinitionId, long itemId,string itemData, long applicationUserId, long companyId, string instanceName)
+    {
+        var res = ActionResult.NoAction;
+        var serializer = new JavaScriptSerializer();
+        serializer.RegisterConverters(new[] { new DynamicJsonConverter() });
+
+        var user = ApplicationUser.ById(applicationUserId, instanceName);
+
+        var itemDefinition = Persistence.ItemDefinitionById(itemDefinitionId, instanceName);
+
+        var dataToSave = new ItemData();
+        var dataOriginal = new ItemData();
+        var sqlData = string.Empty;
+        var fields = string.Empty;
+        var values = string.Empty;
+
+        dynamic obj = serializer.Deserialize(itemData, typeof(object));
+        foreach(var data in obj)
+        {
+            var fieldName = data["Field"];
+            var original = data["Original"];
+            var actual = data["Actual"];
+
+            dataOriginal.Add(new KeyValuePair<string, object>(fieldName, original));
+            dataToSave.Add(new KeyValuePair<string, object>(fieldName, actual));
+
+            var field = itemDefinition.Fields.First(f => f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase));
+            sqlData += ", " + fieldName + " = " + SqlValue.Value(field, actual);
+
+            fields += "," + fieldName;
+            values += "," + SqlValue.Value(field, actual);
+        }
+
+        if (itemId > 0)
+        {
+            var query = string.Format(
+                CultureInfo.InvariantCulture,
+                "UPDATE Item_{0} SET CompanyId={4}, ModifiedBy={2}, ModifiedOn= GETUTCDATE() {3} WHERE Id = {1}",
+                itemDefinition.ItemName,
+                itemId,
+                applicationUserId,
+                sqlData,
+                companyId);
+
+            var cmd = new ExecuteQuery
+            {
+                ConnectionString = Persistence.ConnectionString(instanceName),
+                QueryText = query
+            };
+
+            res = cmd.ExecuteCommand;
+            if (res.Success)
+            {
+                res.SetSuccess(string.Format(CultureInfo.InvariantCulture,"UPDATE|{0}", itemId));
+                if (res.Success)
+                {
+                    var trace = string.Format(
+                        CultureInfo.InvariantCulture,
+                        @"{4},{{{4}{3}{3}""user"":""{0}"",{4}{3}{3}""date"": ""{1:dd/MM/yyyy hh:mm:ss}"",{4}{3}{3}""changes"":{2}}}",
+                        user.Profile.FullName,
+                        DateTime.UtcNow,
+                        itemData,
+                        '\t',
+                        '\n');
+                    ActionLog.TraceItemData(instanceName, itemDefinition.ItemName, itemId, trace);
+                }
+            }
+        }
+        else
+        {
+            var query = string.Format(
+               CultureInfo.InvariantCulture,
+               "INSERT INTO Item_{0} (CompanyId, Active, CreatedBy, CreatedOn, ModifiedBy, ModifiedOn {3}) VALUES ({5}, 1,{2},GETUTCDATE(),{2},GETUTCDATE(){4}); SELECT SCOPE_IDENTITY();",
+               itemDefinition.ItemName,
+               itemId,
+               applicationUserId,
+               fields,
+               values,
+               companyId);
+
+            using (var cmd = new SqlCommand(query))
+            {
+                using (var cnn = new SqlConnection(Persistence.ConnectionString(instanceName)))
+                {
+                    cmd.Connection = cnn;
+                    cmd.CommandType = System.Data.CommandType.Text;
+                    try
+                    {
+                        cmd.Connection.Open();
+                        var id = Convert.ToInt64(cmd.ExecuteScalar());
+                        res.SetSuccess(string.Format(CultureInfo.InvariantCulture, "INSERT|{0}", id));
+                        if (res.Success)
+                        {
+                            var trace = string.Format(
+                                CultureInfo.InvariantCulture,
+                                @"{4},{{{4}{3}{3}""user"":""{0}"",{4}{3}{3}""date"": ""{1:dd/MM/yyyy hh:mm:ss}"",{4}{3}{3}""changes"":{2}}}",
+                                user.Profile.FullName,
+                                DateTime.UtcNow,
+                                itemData,
+                                '\t',
+                                '\n');
+                            ActionLog.TraceItemData(instanceName, itemDefinition.ItemName, id, trace);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        res.SetFail(ex);
+                    }
+                    finally
+                    {
+                        if (cmd.Connection.State != System.Data.ConnectionState.Closed)
+                        {
+                            cmd.Connection.Close();
+                        }
+                    }
+                }
+            };
+        }
+
+        
+        
+        return res;
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetFK(string itemName, string token, long companyId, string instanceName)
     {
         var data = Json.EmptyJsonList;
         if (itemName.Equals("Core_User", StringComparison.OrdinalIgnoreCase))

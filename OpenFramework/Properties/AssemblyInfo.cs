@@ -8,11 +8,11 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("AltheraFramework")]
+[assembly: AssemblyTitle("OpenFramework")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("OpenFramework")]
-[assembly: AssemblyProduct("OpenFramework Core")]
+[assembly: AssemblyProduct("OpenFrameworkV3")]
 [assembly: AssemblyCopyright("OpenFramework 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
