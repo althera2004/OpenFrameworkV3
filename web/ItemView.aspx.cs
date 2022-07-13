@@ -29,7 +29,7 @@ public partial class ItemView : Page
     {
         get
         {
-            return this.master.Instance.Name;
+            return this.master.InstanceName;
         }
     }
 
@@ -42,7 +42,7 @@ public partial class ItemView : Page
         this.ItemId = this.master.CodedQuery.GetByKey<long>("Id");
 
 
-        var itemDefinition = Persistence.ItemDefinitionByName(this.ItemName, this.master.Instance.Name);
+        var itemDefinition = Persistence.ItemDefinitionByName(this.ItemName, this.master.InstanceName);
         this.ItemDefinitionId = itemDefinition.Id;
         var listDefinition = itemDefinition.Lists.First();
         if (itemDefinition.Lists.Any(l => l.Id.Equals(this.ListId, StringComparison.OrdinalIgnoreCase)))
@@ -51,7 +51,6 @@ public partial class ItemView : Page
         }
 
         var title = listDefinition.Title ?? itemDefinition.Layout.LabelPlural;
-        this.master.SetTitle(this.master.Company.Name + " - " + title);
         this.master.SetPageType("PageView");
     }
 }

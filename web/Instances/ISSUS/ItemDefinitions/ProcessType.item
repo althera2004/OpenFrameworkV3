@@ -1,0 +1,54 @@
+﻿{
+    "Id": 16,
+    "ItemName": "ProcessType",
+	"Description": "Tipo de proceso",
+    "Layout": {
+        "Icon": "fad fa-cogs",
+        "Label": "Tipus procés",
+        "LabelPlural": "Tipus procés",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 100, "Required": true },
+		{ "Name": "Core", "Label": "Core", "Type": "boolean" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name", "Linkable": true }
+            ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Id": "basic",
+					"Label": "dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

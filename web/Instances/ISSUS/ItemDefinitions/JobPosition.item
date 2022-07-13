@@ -1,0 +1,94 @@
+﻿{
+    "Id": 11,
+    "ItemName": "JobPosition",
+	"Description": "Càrrec",
+    "Layout": {
+        "Icon": "fad fa-cogs",
+        "Label": "Càrrec",
+        "LabelPlural": "Càrrecs",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "JobPosition" }, { "ItemName": "Department" } ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150 },
+		{ "Name": "JobPositionId", "Label": "Responsable", "Type": "long" },
+		{ "Name": "DepartmentId", "Label": "Departament", "Type": "long" },
+		{ "Name": "Responsabilitats", "Label": "Responsabilitats", "Type": "textarea" },
+		{ "Name": "Notes", "Label": "Notes", "Type": "textarea" },
+		{ "Name": "FormacioAcademica", "Label": "Formació Academica", "Type": "textarea" },
+		{ "Name": "FormacioEspecifica", "Label": "Formació Especifica", "Type": "textarea" },
+		{ "Name": "ExperienciaLaboral", "Label": "Experiencia laboral", "Type": "textarea" },
+		{ "Name": "Habilitats", "Label": "Habilitats", "Type": "textarea" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name" },
+                { "DataProperty": "JobPositionId", "Width": 300 },
+                { "DataProperty": "DepartmentId", "Width": 300 }
+            ],
+            "Parameters": [ {"Name": "Active", "Value": "1"} ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "DepartmentId" },
+								{ "Name": "JobPositionId" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Responsabilitats" },
+								{ "Name": "Notes" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "FormacioAcademica" },
+								{ "Name": "FormacioEspecifica" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "ExperienciaLaboral" },
+								{ "Name": "Habilitats" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

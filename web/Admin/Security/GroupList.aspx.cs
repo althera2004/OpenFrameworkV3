@@ -11,27 +11,20 @@
         /// <summary>Master page</summary>
         public Main master;
 
-        public string QueryBase
-        {
-            get
-            {
-                return this.master.QueryBase;
-            }
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             this.master = this.Master as Main;
             this.master.BreadCrumb.Add("Administració");
-            this.master.BreadCrumb.AddEncryptedLink("Seguridad", "/Admin/Security/Default.aspx");
-            this.master.BreadCrumb.AddLeaf("Grupos");
-            this.master.BreadCrumb.SetTitle("Seguridad: " + this.master.Company.Name);
+            this.master.BreadCrumb.AddEncryptedLink("Seguretat", "/Admin/Security/Default.aspx");
+            this.master.BreadCrumb.AddLeaf("Grups");
+            this.master.BreadCrumb.SetTitle("Seguretat: "); ;
+            this.master.SetPageType("pageAdmin");
             this.GetGroups();
         }
 
         private void GetGroups()
         {
-            var groups = Group.All(this.master.Company.Id, this.master.Instance.Name);
+            var groups = Group.All(this.master.CompanyId, this.master.InstanceName);
             var res = new StringBuilder();
             foreach(var group in groups)
             {

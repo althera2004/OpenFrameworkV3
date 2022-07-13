@@ -763,7 +763,7 @@ function PageList(config) {
                 cellData = rowData[dataKeyName];
                 if (HasPropertyValue(field.FixedListName) === true) {
                     if (typeof rowData[dataKeyName] !== "undefined" && rowData[dataKeyName] !== null) {
-                        cellData = eval(field.FixedListName + "[" + rowData[dataKeyName] + "]");
+                        cellData = FixedLists[field.FixedListName][rowData[dataKeyName]];
                     }
                 }
 
@@ -846,7 +846,7 @@ function PageList(config) {
                 cellData = rowData[dataKeyName];
                 if (HasPropertyValue(field.FixedListName) === true) {
                     if (typeof rowData[dataKeyName] !== "undefined" && rowData[dataKeyName] !== null) {
-                        cellData = eval(field.FixedListName + "[" + rowData[dataKeyName] + "]");
+                        cellData = FixedLists[field.FixedListName][rowData[dataKeyName]];
                     }
                 }
 
@@ -1723,9 +1723,15 @@ function GetDataFromListDefinitionStandaloneGo(data) {
         "success": function (msg) {
             var data = null;
             eval("data = " + msg.d + ";");
-			console.log("GetDataFromListDefinitionStandaloneGo",data.ItemName);
-            if (debugConsole === true) { console.time("TableFillData", data.ItemName + " --> " + data.ListId); }
-            GetDataCallBack(data);
+
+            if (typeof data.data === "string") {
+                Notify(data.data, "error");
+            }
+            else {
+                console.log("GetDataFromListDefinitionStandaloneGo", data.ItemName);
+                if (debugConsole === true) { console.time("TableFillData", data.ItemName + " --> " + data.ListId); }
+                GetDataCallBack(data);
+            }
         },
         "error": function (msg) {
             console.log(msg.responseText);

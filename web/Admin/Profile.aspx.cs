@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Admin_Profile : System.Web.UI.Page
+public partial class Admin_Profile : Page
 {
     private Main master;
 
@@ -13,7 +13,7 @@ public partial class Admin_Profile : System.Web.UI.Page
     {
         get
         {
-            return this.master.Instance.Name;
+            return this.master.InstanceName;
         }
     }
 

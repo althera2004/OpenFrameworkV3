@@ -23,7 +23,6 @@ public partial class Instances_SUPPORT_Pages_List : Page
         this.master = this.Master as Main;
         this.master.BreadCrumb.Add("Tasques");
         this.master.BreadCrumb.AddLeaf("Incidències");
-        this.master.SetTitle(this.master.Company.Name + " - Incidències");
         this.master.SetPageType("PageList");
     }
 }

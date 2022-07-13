@@ -211,6 +211,7 @@
     <Compile Include="Core\Bindings\ColumnsMailBoxGet.cs" />
     <Compile Include="Core\Bindings\ColumnsProfileByApplicationUserId.cs" />
     <Compile Include="Core\Bindings\ColumnsUserGet.cs" />
+    <Compile Include="Core\Companies\CompanySecurityConfig.cs" />
     <Compile Include="Core\Configuration\BillingConfig.cs" />
     <Compile Include="Core\Configuration\Config.cs" />
     <Compile Include="Core\Configuration\CustomConfig.cs" />

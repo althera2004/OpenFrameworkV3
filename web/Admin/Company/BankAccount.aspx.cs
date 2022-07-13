@@ -4,7 +4,7 @@
 // </copyright>
 // <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
-namespace OpenFrameworkV2.Web.Admin.Company
+namespace OpenFrameworkV3.Web.Admin.Company
 {
     using System;
     using System.Web.UI;
@@ -30,12 +30,12 @@ namespace OpenFrameworkV2.Web.Admin.Company
             this.master.BreadCrumb.Add("Administració");
             this.master.BreadCrumb.AddEncryptedLink("Configuració de companyia", "/Admin/Company/");
             this.master.BreadCrumb.AddLeaf("Cuentas bancarias");
-            this.master.BreadCrumb.SetTitle("Companyia: " + this.master.Company.Name);
+            this.master.BreadCrumb.SetTitle("Companyia: " );
 
             this.master.AddScript("/js/jquery.mask.js");
             this.master.AddScript("/Admin/Company/BankAccount.js");
 
-            var bankAccounts = CompanyBankAccount.ByCompany(this.master.Company.Id, this.master.Instance.Name);
+            var bankAccounts = CompanyBankAccount.ByCompany(this.master.CompanyId, this.master.InstanceName);
 
             this.BankAccounts = CompanyBankAccount.JsonList(bankAccounts);
             this.master.SetPageType("pageAdmin");

@@ -42,7 +42,6 @@
             $(".panel-body").height($(window).height() - 237);
         }
 
-
         window.onresize = function () {
             ResizeWorkArea();
         }

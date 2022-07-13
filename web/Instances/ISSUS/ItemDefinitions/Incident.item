@@ -1,0 +1,197 @@
+﻿{
+    "Id": 9,
+    "ItemName": "Incident",
+	"Description": "Incidència",
+    "Layout": {
+        "Icon": "fad fa-exclamation-triangle",
+        "Label": "Incidència",
+        "LabelPlural": "Incidències",
+        "Description": {
+            "Pattern": "{0}-{1}",
+            "Fields": [
+                { "Name": "Code" },
+                { "Name": "Title" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "Instancia" }, {"ItemName": "CustomerCompany" } ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Fecha", "Label": "Fecha", "Type": "datetime" },
+		{ "Name": "Code", "Label": "Codi", "Type": "text", "Length": 15 },
+		{ "Name": "Title", "Label": "Nom", "Type": "text", "Length": 150 },
+		{ "Name": "Tipo", "Label": "Tipus", "Type": "FixedList", "FixedListName": "IncidenciaTipo" },
+		{ "Name": "InstanciaId", "Label": "Instància", "Type": "long" },
+		{ "Name": "CustomerCompanyId", "Label": "Client", "Type": "long" },
+		{ "Name": "Sintomas", "Label": "Sintomas", "Type": "textarea" }
+    ],
+    "Lists": [
+        {
+            "Id": "Incidencias",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"ButtonAddLabel": "Obrir nova incidència",
+			"Columns": [
+                { "DataProperty": "Code", "Width": 150 },
+                { "DataProperty": "InstanciaId", "Width": 150 },
+                { "DataProperty": "CustomerCompanyId", "Width": 150 },
+                { "DataProperty": "Title" },
+                { "DataProperty": "Fecha", "Width": 100, "Align": "center" },
+                { "DataProperty": "Tipo", "Width": 200, "Align": "left" }
+            ],
+            "Parameters": [ {"Name": "Tipo", "Value": "1"}, {"Name": "Active", "Value": "1"} ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        },
+        {
+            "Id": "Datos",
+            "FormId": "Custom",
+            "Layout": 1,
+			"Title": "Modificació de dades",
+            "EditAction": "FormPage",
+			"ButtonAddLabel": "Nova modificació de dades",
+			"Columns": [
+                { "DataProperty": "Code", "Width": 100 },
+                { "DataProperty": "InstanciaId", "Width": 150 },
+                { "DataProperty": "CustomerCompanyId", "Width": 150 },
+                { "DataProperty": "Title" },
+                { "DataProperty": "Fecha", "Width": 100, "Align": "center" },
+                { "DataProperty": "Tipo", "Width": 200, "Align": "left" }
+            ],
+            "Parameters": [ {"Name": "Tipo", "Value": "2"}, {"Name": "Active", "Value": "1"} ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        },
+        {
+            "Id": "NewDevelopment",
+            "FormId": "Custom",
+            "Layout": 1,
+			"Title": "Nou desenvolupament",
+            "EditAction": "FormPage",
+			"ButtonAddLabel": "Afegir nou desenvolupament",
+			"Columns": [
+                { "DataProperty": "Code", "Width": 150 },
+                { "DataProperty": "InstanciaId", "Width": 150 },
+                { "DataProperty": "CustomerCompanyId", "Width": 150 },
+                { "DataProperty": "Title" },
+                { "DataProperty": "Fecha", "Width": 100, "Align": "center" },
+                { "DataProperty": "Tipo", "Width": 200, "Align": "left" }
+            ],
+            "Parameters": [ {"Name": "Tipo", "Value": "3"}, {"Name": "Active", "Value": "1"} ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        },
+        {
+            "Id": "Consultas",
+            "FormId": "Custom",
+            "Layout": 1,
+			"Title": "Consultes",
+            "EditAction": "FormPage",
+			"ButtonAddLabel": "Afegir nou desenvolupament",
+			"Columns": [
+                { "DataProperty": "Code", "Width": 150 },
+                { "DataProperty": "InstanciaId", "Width": 150 },
+                { "DataProperty": "CustomerCompanyId", "Width": 150 },
+                { "DataProperty": "Title" },
+                { "DataProperty": "Fecha", "Width": 100, "Align": "center" },
+                { "DataProperty": "Tipo", "Width": 200, "Align": "left" }
+            ],
+            "Parameters": [ {"Name": "Tipo", "Value": "4"}, {"Name": "Active", "Value": "1"} ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        },
+        {
+            "Id": "Altres",
+            "FormId": "Custom",
+            "Layout": 1,
+			"Title": "Consultes",
+            "EditAction": "FormPage",
+			"ButtonAddLabel": "Altres tasques",
+			"Columns": [
+                { "DataProperty": "Code", "Width": 150 },
+                { "DataProperty": "InstanciaId", "Width": 150 },
+                { "DataProperty": "CustomerCompanyId", "Width": 150 },
+                { "DataProperty": "Title" },
+                { "DataProperty": "Fecha", "Width": 100, "Align": "center" },
+                { "DataProperty": "Tipo", "Width": 200, "Align": "left" }
+            ],
+            "Parameters": [ {"Name": "Tipo", "Value": "5"}, {"Name": "Active", "Value": "1"} ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        },
+        {
+            "Id": "ByInstancia",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"ForcedHeight": 500,
+			"ButtonAddLabel": "Nova modificació de dades",
+			"Columns": [
+                { "DataProperty": "Code", "Width": 150 },
+                { "DataProperty": "CustomerCompanyId", "Width": 150 },
+                { "DataProperty": "Title" },
+                { "DataProperty": "Fecha", "Width": 100, "Align": "center" },
+                { "DataProperty": "Tipo", "Width": 200, "Align": "left" }
+            ],
+            "Parameters": [ {"Name": "InstanciaId", "Value": "#actualItemId#"}, {"Name": "Active", "Value": "1"} ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Actions": [
+				{ "Label" : "Cerrar","Icon": "fa fa-times", "Action": "Close2", "Group": "Estado" },
+				{ "Label" : "Reportar", "Icon": "fa fa-cog",   "Action": "Close", "Group": "Reportar" },
+				{ "Label" : "Asignar",  "Icon": "fa fa-user",  "Action": "Assing" },
+				{ "Label" : "Imprimir", "Icon": "fa fa-print", "Action": "Print", "Group": "Reportar" },
+				{ "Label" : "Bloquear", "Icon": "fa fa-lock",  "Action": "Lock", "Group": "Estado" },
+				{ "Label" : "Eliminar",  "Icon": "fa fa-times", "Group": "Traces",  "Action": "Lock", "Tab": "history" },
+				{ "Label" : "Enviar por mail",  "Icon": "fa fa-envelope",  "Group": "Traces", "Action": "Lock", "Tab": "history" },
+				{ "Label" : "History",  "Icon": "fa fa-lock",  "Action": "Lock", "Tab": "history" }
+			],
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Code" },
+								{ "Name": "Title", "ColSpan": 2 },
+								{ "Name": "Fecha" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "CustomerCompanyId" },
+								{ "Name": "InstanciaId" },
+								{ "Name": "Tipo" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Sintomas" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "history",
+					"Label": "Història",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "History" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

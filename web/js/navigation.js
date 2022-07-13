@@ -293,8 +293,11 @@ function GoUserNew() {
 }
 
 function GoUserView(userId) {
-    var query = "&id=" + userId;
-    var url = "/Admin/ApplicationUserView.aspx?" + $.base64.encode(guid() + query);
+    var query = "&I=" + Instance.Name;
+    query += "&C=" + Company.Id;
+    query += "&U=" + userId;
+    url += "?" + $.base64.encode(guid() + query);
+    var url = "/Admin/Security/User.aspx?" + $.base64.encode(guid() + query);
     document.location = url;
 }
 

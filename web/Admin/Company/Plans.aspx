@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Plans.aspx.cs" Inherits="OpenFrameworkV2.Web.Admin.Company.Plans" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Plans.aspx.cs" Inherits="OpenFrameworkV3.Web.Admin.Company.Plans" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="StylesHead" Runat="Server">
 </asp:Content>

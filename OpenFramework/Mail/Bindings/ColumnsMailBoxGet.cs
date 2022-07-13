@@ -28,8 +28,9 @@
             public readonly static int ModifiedByLastName2 = 19;
             public readonly static int ModifiedOn = 20;
             public readonly static int Active = 21;
-            public readonly static int Name = 22;
+            public readonly static int SenderName = 22;
             public readonly static int SSL = 23;
+            public readonly static int Main = 24;
         }
     }
 }

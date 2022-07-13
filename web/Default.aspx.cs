@@ -160,7 +160,6 @@ public partial class Default : Page
     /// <param name="e">Event's arguments</param>
     protected void Page_Load(object sender, EventArgs e)
     {
-        Session.Clear();
         if (this.Request.UserLanguages != null)
         {
             this.LanguageBrowser = this.Request.UserLanguages[0];

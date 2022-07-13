@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Default" %>
 
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang="ca-es">
     <head>
         <meta charset="utf-8" />
         <title><%=this.InstanceName %> - Open Framework</title>
@@ -121,6 +121,7 @@
             <script src="/assets/js/html5shiv.js"></script>
             <script src="/assets/js/respond.min.js"></script>
         <![endif]-->
+		<script type="text/javascript" src="/assets/js/purify.js"></script>
         <script type="text/javascript" src="/assets/js/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="/js/base64.js"></script>
         <script type="text/javascript" src="/assets/js/jquery.virtualKeyboard.js"></script>

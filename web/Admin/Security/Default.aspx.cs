@@ -1,27 +1,27 @@
-﻿namespace OpenFrameworkV2.Web.Admin.Security
+﻿namespace OpenFrameworkV3.Web.Admin.Security
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
     using System.Web.UI;
+    using System.Web.UI.WebControls;
+    using OpenFrameworkV3.Core.Companies;
 
     public partial class Default : Page
     {
         /// <summary>Master page</summary>
         public Main master;
 
-        public string QueryBase
-        {
-            get
-            {
-                return this.master.QueryBase;
-            }
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             this.master = this.Master as Main;
             this.master.BreadCrumb.Add("Administració");
-            this.master.BreadCrumb.AddLeaf("Seguridad");
-            this.master.BreadCrumb.SetTitle("Seguridad: " + this.master.Company.Name);
+            this.master.BreadCrumb.AddLeaf("Seguretat");
+            this.master.BreadCrumb.SetTitle("Seguretat: ");
+            this.master.SetPageType("pageAdmin");
+
+            var securityConfig = Company.ById(this.master.CompanyId, this.master.InstanceName);
         }
     }
 }

@@ -5,6 +5,7 @@ localStorage.removeItem("Company");
 localStorage.removeItem("Menu");
 localStorage.removeItem("ace_state_id-sidebar-toggle-icon");
 localStorage.removeItem("ace_state_id-sidebar");
+localStorage.removeItem("LAC");
 
 var landpage = "";
 var instanceName = "";
@@ -48,10 +49,10 @@ $(document).ready(function () {
     $("#BtnRemember").remove();
     $(".TxtUserName").focus();
     $(".TxtPassword").vkb({ "IsPassword": true });
-	$(".TxtUserName").val("");
-	$(".TxtPassword").val("");
+	//$(".TxtUserName").val("");
+	//$(".TxtPassword").val("");
     $(".TxtName").on("keyup", TxtNameChanged);
-    $('img').on('dragstart', function (event) { event.preventDefault(); });
+    $("img").on("dragstart", function (event) { event.preventDefault(); });
 });
 
 $(document).keypress(function (e) {
@@ -316,7 +317,7 @@ function getIp() {
         console.log(data);
 
         ip = data.ip;
-        $("#IpSpan").html(ip);
+        $("#IpSpan").html(DOMPurify.sanitize(ip));
     });
 }
 

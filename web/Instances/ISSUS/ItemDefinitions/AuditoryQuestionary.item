@@ -1,0 +1,38 @@
+﻿{
+    "Id": 3,
+    "ItemName": "AuditoryQuestionary",
+	"Description": "Qüestionari",
+    "Layout": {
+        "Icon": "fad fa-question",
+        "Label": "Qüestionari",
+        "LabelPlural": "Qüestionaris",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [  ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 100 },
+		{ "Name": "ProcessId", "Label": "Procés", "Type": "long", "FK": true },
+		{ "Name": "NormaId", "Label": "Norma", "Type": "long", "FK": true }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name" },
+                { "DataProperty": "ProcessId", "Width": 200 },
+                { "DataProperty": "NormaId", "Width": 150 }
+            ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	]
+}

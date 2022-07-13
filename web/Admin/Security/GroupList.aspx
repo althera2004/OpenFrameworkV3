@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="GroupList.aspx.cs" Inherits="OpenFrameworkV3.Web.Admin.Security.GroupList" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="StylesHead" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentStyles" Runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentWorkSpace" Runat="Server">
    <div class="row">
         <div class="col-lg-12" id="BankAccountList">
             <div class="hpanel hblue">
@@ -42,6 +42,17 @@
         </div>
     </div>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="ScriptsPlaceHolder" runat="server">
-    pageType = "admin";
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentScripts" runat="server">
+    <script type="text/javascript">
+        function ResizeWorkArea() {
+            $(".panel-body").height($(window).height() - 237);
+        }
+
+
+        window.onresize = function () {
+            ResizeWorkArea();
+        }
+
+        MenuSelectOption("1002");
+    </script>
 </asp:Content>

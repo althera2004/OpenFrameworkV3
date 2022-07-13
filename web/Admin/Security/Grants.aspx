@@ -1,8 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Grants.aspx.cs" Inherits="OpenFrameworkV3.Web.Admin.Security.Grants" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="StylesHead" Runat="Server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentWorkSpace" Runat="Server">
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel hblue">
@@ -50,19 +48,18 @@
         </div>
     </div>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="ScriptsPlaceHolder" runat="server">
-    var pageType = "Admin";
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentScripts" runat="server">
+    <script type="text/javascript">
+        $("#checkbox1").on("click", checkbox1Clicked);
 
-    $("#checkbox1").on("click", checkbox1Clicked);
-
-    function checkbox1Clicked() {
-        console.log($("#checkbox1").prop("checked"));
-        if($("#checkbox1").prop("checked") === true){
-            $(".RBMFA").visible();
+        function checkbox1Clicked() {
+            console.log($("#checkbox1").prop("checked"));
+            if($("#checkbox1").prop("checked") === true){
+                $(".RBMFA").visible();
+            }
+            else {
+                $(".RBMFA").invisible();
+            }
         }
-        else {
-            $(".RBMFA").invisible();
-        }
-    }
-
+    </script>
 </asp:Content>

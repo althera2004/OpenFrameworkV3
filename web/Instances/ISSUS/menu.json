@@ -1,0 +1,26 @@
+[
+	{
+		"Label": "Panell de control",
+		"Icon": "fad fa-tasks",
+		"Options": [
+			{ "Leaf": true, "Item": "Norma" },
+			{ "Leaf": true, "Item": "AuditoryQuestionary" },
+			{ "Leaf": true, "Item": "Department" },
+			{ "Leaf": true, "Item": "JobPosition" },
+			{ "Leaf": true, "Item": "Provider" },
+			{ "Leaf": true, "Item": "Customer" },
+			{ "Leaf": true, "Item": "CostHabitual" },
+			{ "Leaf": true, "Item": "Unitat" }
+		]
+	},
+	{ "Leaf": true, "Item": "Document" },
+	{ "Leaf": true, "Item": "Process" },
+	{ "Leaf": true, "Item": "Learning" },
+	{ "Leaf": true, "Item": "Equipment" },
+	{ "Leaf": true, "Item": "Incident" },
+	{ "Leaf": true, "Item": "Action" },
+	{ "Leaf": true, "Item": "Objective" },
+	{ "Leaf": true, "Item": "Indicador" },
+	{ "Leaf": true, "Item": "Auditory" },
+	{ "Leaf": true, "Item": "Risc" }
+]

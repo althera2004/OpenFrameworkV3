@@ -21,8 +21,87 @@ namespace OpenFrameworkV3.Core.DataAccess
     /// <summary>Implements save actions for item into database</summary>
     public static class Save
     {
+        public static ActionResult SaveBarItem(string itemName, long id, string description, long applicationUserId, long companyId, string instanceName)
+        {
+            var res = ActionResult.NoAction;
+            var cns = Persistence.ConnectionString(instanceName);
+            if (!string.IsNullOrEmpty(cns))
+            {
+                try
+                {
+                    var query = string.Format(
+                        CultureInfo.InvariantCulture,
+                        "UPDATE Item_{0} SET Name = '{1}', ModifiedBy = {3}, ModifiedOn = GETDATE() WHERE Id = {2}",
+                        itemName,
+                        description,
+                        id,
+                        applicationUserId);
+
+                    if (id == Constant.DefaultId)
+                    {
+                        query = string.Format(
+                            CultureInfo.InvariantCulture,
+                            @"INSERT INTO Item_{0} (CompanyId, Name, CreatedBy, ModifiedBy, CreatedOn, ModifiedOn, Active)
+                                VALUES ({1},'{2}',{3},{3},GETDATE(),GETDATE(),1)",
+                            itemName,
+                            companyId,
+                            description,
+                            applicationUserId);
+                    }
+
+                    var command = new ExecuteQuery
+                    {
+                        ConnectionString = cns,
+                        QueryText = query
+                    };
+
+                    res = command.ExecuteCommand;
+                }
+                catch (Exception ex)
+                {
+                    res.SetFail(ex);
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>Inactivate item from BAR on database</summary>
+        /// <param name="itemName">Name of item</param>
+        /// <param name="id">Item identifier</param>
+        /// <param name="applicationUserId">Identifier of user that performs actions</param>
+        /// <param name="instanceName">Name of instance</param>
+        /// <returns></returns>
+        public static ActionResult SaveBarDelete(string itemName, long id, long applicationUserId, string instanceName)
+        {
+            var res = ActionResult.NoAction;
+            var cns = Persistence.ConnectionString(instanceName);
+            if (!string.IsNullOrEmpty(cns))
+            {
+                try
+                {
+                    res = new ExecuteQuery
+                    {
+                        ConnectionString = cns,
+                        QueryText = string.Format(
+                        CultureInfo.InvariantCulture,
+                        @"UPDATE Item_{0} SET Active = 0, ModifiedBy = {1}, ModifiedOn = GETDATE() WHERE Id = {2}",
+                        itemName,
+                        applicationUserId,
+                        id)
+                    }.ExecuteCommand;
+                }
+                catch (Exception ex)
+                {
+                    res.SetFail(ex);
+                }
+            }
+
+            return res;
+        }
+
         /// <summary>Inserts item data into database</summary>
-        /// <param name="itemBuilder">Item instance</param>
+        /// <param name="itemDefinitionName">Item instance</param>
         /// <param name="instanceName">String connection to database</param>
         /// <param name="userId">User identifier</param> 
         /// <param name="companyId">Identifier of actual company</param> 

@@ -1,0 +1,70 @@
+﻿{
+    "Id": 19,
+    "ItemName": "CostHabitual",
+	"Description": "CostHabitual",
+    "Layout": {
+        "Icon": "fad fa-ruler",
+        "Label": "Cost habitual",
+        "LabelPlural": "Costos habituals",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [  ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 50 },
+		{ "Name": "Amount", "Label": "Import", "Type": "int" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name" },
+                { "DataProperty": "Amount", "Width": 80 }
+            ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name", "Linkable": true },
+                { "DataProperty": "Amount", "Width": 90, "Align": "right" }
+            ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Id": "basic",
+					"Label": "dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" },
+								{ "Name": "Amount" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

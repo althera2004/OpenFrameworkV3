@@ -58,12 +58,39 @@ function FillComboFromFK(comboId, fkItemName, selectedId) {
 
     var options = "<option value=\"-1\">" + Dictionary.Common_SelectOne + "</option>";
     for (var o = 0; o < fkValues.length; o++) {
-        options += "<option value=\"" + fkValues[o].Id + "\">" + fkValues[o].Description + "</option>";
+        if (fkValues[o].Id === selectedId || fkValues[o].Active === true) {
+            options += "<option value=\"" + fkValues[o].Id + "\">" + fkValues[o].Description + "</option>";
+        }
     }
 
     $("#" + comboId).html(options);
 
     if (typeof selectedId !== "undefined") {
         $("#" + comboId).val(selectedId);
+    }
+}
+
+function GetFKById(itemName, id) {
+    var res = null;
+
+    if (typeof FK[itemName] !== "undefined") {
+        var data = FK[itemName].Data.filter(function (el) {
+            return el.Id === id;
+        });
+
+        res = data[0];
+    }
+
+    return res;
+}
+
+function UpdateFK(itemName, id, description) {
+    if (typeof FK[itemName] !== "undefined") {
+        for (var x = 0; x < FK[itemName].Data.length; x++) {
+            if (FK[itemName].Data[x].Id === id) {
+                FK[itemName].Data[x].Description = description;
+                break;
+            }
+        }
     }
 }

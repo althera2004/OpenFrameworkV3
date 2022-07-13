@@ -275,8 +275,8 @@ namespace OpenFrameworkV3.Core.Navigation
 
                 var companyOption = new MenuOption
                 {
-                    Id = 1001,
-                    OptionId = 1001,
+                    Id = 1000,
+                    OptionId = 1000,
                     ItemName = "Core_CompanyProfile",
                     Label = "Core_CompanyProfile_MenuLabel",
                     Leaf = true,
@@ -303,19 +303,32 @@ namespace OpenFrameworkV3.Core.Navigation
 
                     administrationOptions.Add(new MenuOption
                     {
-                        Id = 1010,
-                        OptionId = 1010,
-                        ItemName = "Core_Group",
-                        Label = "Core_Traces_MenuLabel",
+                        Id = 1003,
+                        OptionId = 1003,
+                        ItemName = "Core_Security",
+                        Label = "Core_Security_MenuLabel",
                         Leaf = true,
-                        DestinationPage = "/Admin/TracesList.aspx"
+                        DestinationPage = "/Admin/Security"
                     });
+
+                    if (applicationUser.Core)
+                    {
+                        administrationOptions.Add(new MenuOption
+                        {
+                            Id = 1004,
+                            OptionId = 1004,
+                            ItemName = "Core_Feature_Dictionary",
+                            Label = "Core_Feature_Dictionary_Label",
+                            Leaf = true,
+                            DestinationPage = "/Admin/Funcionality/Dictionary.aspx"
+                        });
+                    }
 
                     administrationOptions.Add(new MenuOption
                     {
                         Id = 1011,
                         OptionId = 1011,
-                        ItemName = "Core_Group",
+                        ItemName = "Core_Backup",
                         Label = "Core_BackUp_MenuLabel",
                         Leaf = true,
                         DestinationPage = "/Admin/BackupHome.aspx"
@@ -332,10 +345,7 @@ namespace OpenFrameworkV3.Core.Navigation
                             Leaf = true,
                             DestinationPage = "/Admin/ImportHome.aspx"
                         });
-                    }
 
-                    if (applicationUser.AdminUser)
-                    {
                         var groupsOption = new MenuOption
                         {
                             Id = 1002,

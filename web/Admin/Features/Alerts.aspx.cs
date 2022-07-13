@@ -1,4 +1,4 @@
-﻿namespace OpenFrameworkV2.Web.Admin.Funcionality
+﻿namespace OpenFrameworkV3.Web.Admin.Feature
 {
     using System;
     using System.Web.UI;
@@ -13,7 +13,7 @@
             this.master = this.Master as Main;
             this.master.BreadCrumb.Add("Admin");
             this.master.BreadCrumb.AddLeaf("Alertas");
-            this.master.BreadCrumb.SetTitle("Companyia: " + this.master.Company.Name);
+            this.master.BreadCrumb.SetTitle("Companyia: ");
 
             this.master.AddScript("/vendor/fooTable/dist/footable.all.min.js");
         }

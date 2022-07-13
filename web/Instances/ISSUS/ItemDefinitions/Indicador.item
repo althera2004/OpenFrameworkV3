@@ -1,0 +1,141 @@
+﻿{
+    "Id": 10,
+    "ItemName": "Indicador",
+	"Description": "Indicadors",
+    "Layout": {
+        "Icon": "fad fa-traffic-light-stop",
+        "Label": "Indicador",
+        "LabelPlural": "Indicadors",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "Process" }, {"ItemName": "Unitat" } ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 100 },
+		{ "Name": "Description", "Label": "Descripció", "Type": "textarea" },
+		{ "Name": "Responsible", "Label": "Responsable", "Type": "applicationUser" },
+		{ "Name": "DateStart", "Label": "Inici", "Type": "datetime" },
+		{ "Name": "Meta", "Label": "Meta", "Type": "FixedList", "FixedListName": "IndicadorMeta" },
+		{ "Name": "MetaValue", "Label": "Meta valor", "Type": "decimal", "Precission": 6 },
+		{ "Name": "Alarma", "Label": "Alarma", "Type": "FixedList", "FixedListName": "IndicadorAlarma" },
+		{ "Name": "AlarmaValue", "Label": "Alarma valor", "Type": "decimal", "Precission": 6 },
+		{ "Name": "Periodicity", "Label": "Periodicitat", "Type": "int" },
+		{ "Name": "Calculo", "Label": "Càlcul", "Type": "textarea" },
+		{ "Name": "UnitatId", "Label": "Unitat", "Type": "long" },
+		{ "Name": "ProcessId", "Label": "Procés", "Type": "long" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"ButtonAddLabel": "Afegir indicador",
+			"Columns": [
+                { "DataProperty": "Name" },
+                { "DataProperty": "DateStart", "Width": 100 },
+                { "DataProperty": "ProcessId", "Width": 200, "Align": "left" },
+                { "DataProperty": "Responsible", "Width": 200, "Align": "left" }
+            ],
+            "Parameters": [ {"Name": "Active", "Value": "1"} ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "DateStart" },
+								{ "Name": "Responsible" },
+								
+								{ "Name": "Periodicity" },
+								{ "Name": "ProcessId" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Calculo" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Meta" },
+								{ "Name": "MetaValue", "Layout": "NoLabel" },
+								{ "Name": "Alarma" },
+								{ "Name": "AlarmaValue", "Layout": "NoLabel" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "metagraphic" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "UnitatId", "Layout": "BAR" },
+								{ "Type": "Blank", "ColSpan": 2 }
+							]
+						}
+					]
+				},
+				{
+					"Id": "records",
+					"Label": "Registres",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "records" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "graphics",
+					"Label": "Gràfics",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "graphics" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "history",
+					"Label": "Història",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "History" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

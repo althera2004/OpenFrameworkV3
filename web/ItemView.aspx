@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="ItemView.aspx.cs" Inherits="ItemView" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="ItemView.aspx.cs" Inherits="ItemView" EnableSessionState="False" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentStyles" Runat="Server">
 </asp:Content>
@@ -38,6 +38,7 @@
 
         var Form = new PageForm({ "ItemId": ItemDefinitionId, "FormId": FormId });
         var ItemData = new Item();
+        ItemData.ItemDefinition = ItemDefinition;
         Form.Init();
         Form.Render("Form");
 
@@ -62,7 +63,7 @@
         /* Obtener FK */
         // --------------------
         // Si tiene FL hay que esperar los FK antes de obtener los datos y rellenar el formulario
-        if (ItemDefinition.ForeignValues.length > 0) {
+        if (HasArrayValues(ItemDefinition.ForeignValues)) {
             for (var fk = 0; fk < ItemDefinition.ForeignValues.length; fk++) {
                 GetFKItem(ItemDefinition.ForeignValues[fk].ItemName);
             }

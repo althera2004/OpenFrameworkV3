@@ -51,9 +51,9 @@ public partial class Main : MasterPage
     private List<string> scripts;
 
     /// <summary>Gets actual instance</summary>
-    public Instance Instance { get; private set; }
+    public string InstanceName { get; private set; }
 
-    public Company Company { get; private set; }
+    public long CompanyId { get; private set; }
 
     /// <summary>Gets de breadcrumb elements</summary>
     public BreadCrumb BreadCrumb { get; private set; }
@@ -67,10 +67,8 @@ public partial class Main : MasterPage
         Instance.CheckPersistence();
         this.BreadCrumb = new BreadCrumb();
         this.CodedQuery = new CodedQuery(this.Request.QueryString);
-        var instanceName = this.CodedQuery.GetByKey<string>("I");
-        var companyId = this.CodedQuery.GetByKey<long>("C");
-        this.Instance = Persistence.InstanceByName(instanceName);
-        this.Company = Company.ById(companyId, instanceName);
+        this.InstanceName = this.CodedQuery.GetByKey<string>("I");
+        this.CompanyId = this.CodedQuery.GetByKey<long>("C");
     }
 
     protected void Page_Load(object sender, EventArgs e)

@@ -1,9 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="OpenFrameworkV2.Web.Admin.Security.Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="OpenFrameworkV3.Web.Admin.Security.Default" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="StylesHead" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentStyles" Runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" Runat="Server">
-    <div class="row">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentScriptVars" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentWorkSpace" Runat="Server"><div class="row">
         <div class="col-lg-12">
             <div class="hpanel hgreen">
                 <div class="panel-heading hbuilt">
@@ -11,7 +12,7 @@
                 </div>
                 <div class="panel-body" style="padding: 6px;">
                     <label class="col-sm-12">
-                        <input type="checkbox" checked="" value="option1" id="RBCaducidad1" name="RBHistory">
+                        <input type="checkbox" checked="" style="margin:5px 0 0 0!important;" value="option1" id="RBCaducidad1" name="RBHistory">
                         Verificar con código QR el acceso a la configuración de seguridad.
                     </label>
                 </div>
@@ -46,12 +47,12 @@
         <div class="col-lg-4">
             <div class="hpanel hgreen">
                 <div class="panel-heading hbuilt">
-                    Configuración general
+                    Política de contraseñas
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" style="height: 100px; font-size: 16px;" class=" col-xs-12 btn btn-app btn-success" onclick="GoEncryptedPage('/Admin/Security/General.aspx');">
-                            <i class="fa fa-building"></i>&nbsp;&nbsp;Datos básicos&nbsp;&nbsp;</button>
+                        <button type="button" style="height: 100px; font-size: 16px;" class="AdminCompanyButton  col-xs-12 btn btn-app btn-success" onclick="GoEncryptedPage('/Admin/Security/General.aspx');">
+                            <i class="fa fa-key"></i>&nbsp;&nbsp;Política de contraseñas&nbsp;&nbsp;</button>
                     </p>
                 </div>
             </div>
@@ -63,8 +64,8 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" style="height: 100px; font-size: 16px;" class=" col-xs-12 btn btn-app btn-success" onclick="GoEncryptedPage('/Admin/Security/AccessPolicy.aspx');">
-                            <i class="fa fa-lock"></i>&nbsp;&nbsp;Política de acceso&nbsp;&nbsp;</button>
+                        <button type="button" style="height: 100px; font-size: 16px;" class="AdminCompanyButton  col-xs-12 btn btn-app btn-success" onclick="GoEncryptedPage('/Admin/Security/AccessPolicy.aspx');">
+                            <i class="fa fa-user-lock"></i>&nbsp;&nbsp;Política de acceso&nbsp;&nbsp;</button>
                     </p>
                 </div>
             </div>
@@ -76,8 +77,8 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" style="height: 100px; font-size: 16px;" class=" col-xs-12 btn btn-app btn-success" onclick="GoEncryptedPage('/Admin/Security/Grants.aspx');">
-                            <i class="fa fa-lock"></i>&nbsp;&nbsp;Permisos de usuarios&nbsp;&nbsp;</button>
+                        <button type="button" style="height: 100px; font-size: 16px;" class="AdminCompanyButton  col-xs-12 btn btn-app btn-success" onclick="GoEncryptedPage('/Admin/Security/Grants.aspx');">
+                            <i class="fa fa-user-shield"></i>&nbsp;&nbsp;Permisos de usuarios&nbsp;&nbsp;</button>
                     </p>
                 </div>
             </div>
@@ -91,7 +92,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" style="height:100px;font-size:16px;" class=" col-xs-12 btn btn-app btn-info"  onclick="GoEncryptedPage('/Admin/Security/UserList.aspx');">
+                        <button type="button" style="height:100px;font-size:16px;" class="AdminCompanyButton  col-xs-12 btn btn-app btn-info"  onclick="GoEncryptedPage('/Admin/Security/UserList.aspx');">
                             <i class="fa fa-user"></i>&nbsp;&nbsp;Usuarios&nbsp;&nbsp;</button>
                     </p>
                 </div>
@@ -104,7 +105,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" style="height:100px;font-size:16px;" class=" col-xs-12 btn btn-app btn-info" onclick="GoEncryptedPage('/Admin/Security/GroupList.aspx');">
+                        <button type="button" style="height:100px;font-size:16px;" class="AdminCompanyButton  col-xs-12 btn btn-app btn-info" onclick="GoEncryptedPage('/Admin/Security/GroupList.aspx');">
                             <i class="fa fa-users"></i>&nbsp;&nbsp;Grupos&nbsp;&nbsp;</button>
                     </p>
                 </div>
@@ -117,7 +118,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" style="height:100px;font-size:16px;" class=" col-xs-12 btn btn-app btn-info" onclick="GoEncryptedPage('/Instances/Storage/Pages/DashboardOcupacion.aspx?YWM9MSZvcHRpb25JZD0w');">
+                        <button type="button" style="height:100px;font-size:16px;" class="AdminCompanyButton  col-xs-12 btn btn-app btn-info" onclick="GoEncryptedPage('/Instances/Storage/Pages/DashboardOcupacion.aspx?YWM9MSZvcHRpb25JZD0w');">
                             <i class="fa fa-user-circle"></i>&nbsp;&nbsp;Usuarios externos&nbsp;&nbsp;</button>
                     </p>
                 </div>
@@ -125,6 +126,10 @@
         </div>
     </div>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="ScriptsPlaceHolder" runat="server">
-    pageType = "admin";
+<asp:Content ID="Content4" ContentPlaceHolderID="ContentScriptFiles" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content5" ContentPlaceHolderID="ContentScripts" Runat="Server">
+    <script type="text/javascript">
+        MenuSelectOption("1003");
+    </script>
 </asp:Content>

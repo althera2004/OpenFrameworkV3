@@ -159,6 +159,10 @@ namespace OpenFrameworkV3.Core.Companies
                                 }
                             }
                         }
+                        catch(Exception ex)
+                        {
+
+                        }
                         finally
                         {
                             if (cmd.Connection.State != ConnectionState.Closed)

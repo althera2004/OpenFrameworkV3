@@ -12,9 +12,9 @@
         {
             this.master = this.Master as Main;
             this.master.BreadCrumb.Add("Administració");
-            this.master.BreadCrumb.AddEncryptedLink("Seguridad", "/Admin/Security/Default.aspx");
-            this.master.BreadCrumb.AddLeaf("Configuración general");
-            this.master.BreadCrumb.SetTitle("Seguridad: " + this.master.Company.Name);
+            this.master.BreadCrumb.AddEncryptedLink("Seguretat", "/Admin/Security/Default.aspx");
+            this.master.BreadCrumb.AddLeaf("Permissos");
+            this.master.BreadCrumb.SetTitle("Seguretat: ");
 
             this.master.AddScript("/Admin/Security/Grants.js");
         }

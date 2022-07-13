@@ -24,7 +24,6 @@ public partial class Instances_SUPPORT_Pages_Form : Page
         this.master.BreadCrumb.Add("Tasques");
         this.master.BreadCrumb.Add("Incidències");
         this.master.BreadCrumb.Add("Weke weke 0001");
-        this.master.SetTitle(this.master.Company.Name + " - Incidències");
         this.master.SetPageType("pageForm");
     }
 }

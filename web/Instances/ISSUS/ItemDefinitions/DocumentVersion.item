@@ -1,0 +1,116 @@
+﻿{
+    "Id": 6,
+    "ItemName": "Document",
+	"Features": { "Attachs": true },
+	"Description": "Documentació",
+    "Layout": {
+        "Icon": "fad fa-book",
+        "Label": "Document",
+        "LabelPlural": "Documents",
+        "Description": {
+            "Pattern": "{0} - {1}",
+            "Fields": [
+                { "Name": "Code" },
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "DocumentCategory"} ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Code", "Label": "Codi", "Type": "text", "Length": 15, "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150, "Required": true },
+		{ "Name": "FAlta", "Label": "Data alta", "Type": "datetime" },
+		{ "Name": "FRevisio", "Label": "Data revisió", "Type": "datetime" },
+		{ "Name": "Revisio", "Label": "Revisió", "Type": "int" },
+		{ "Name": "Document", "Label": "Document", "Type": "documentFile" },
+		{ "Name": "DocumentCategoryId", "Label": "Categoria", "Type": "long", "FK": true },
+		{ "Name": "Conservacio", "Label": "Conservació", "Type": "int" },
+		{ "Name": "ConservacioTime", "Label": "Durada", "Type": "FixedList", "FixedListName": "DocumentConservacioTime" },
+		{ "Name": "Origin", "Label": "Origen", "Type": "FixedList", "FixedListName": "DocumentOrigin" },
+		{ "Name": "Location", "Label": "Ubicació", "Type": "text", "Length": 150 },
+		{ "Name": "RevisionReason", "Label": "Motiu del canvi", "Type": "textarea" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Code", "Width": 100   },
+                { "DataProperty": "Name" },
+                { "DataProperty": "DocumentCategoryId", "Width": 150 },
+                { "DataProperty": "Origin", "Width": 90 },
+                { "DataProperty": "Location", "Width": 150 },
+                { "DataProperty": "Revisio", "Width": 50, "Label": "Rev." },
+                { "DataProperty": "FAlta", "Width": 90 }
+            ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Code" },
+								{ "Name": "Name" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "FAlta" },
+								{ "Name": "FRevisio", "Label": "D.Revisió" },
+								{ "Name": "Revisio" },
+								{ "Type": "Button", "Id": "BtnRevisio", "Action": "DOCUMENT_NewRevision", "Label": "Revisar", "Icon": "fal fa-cog", "Help": "Ayudita pal usuario tonto" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Document" },
+								{ "Type": "Blank" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "DocumentCategoryId", "ColSpan": 2 },
+								{ "Name": "Conservacio" },
+								{ "Name": "ConservacioTime" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Origin" },
+								{ "Type": "Blank", "ColSpan": 3 }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Location" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "RevisionReason" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

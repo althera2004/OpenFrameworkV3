@@ -2,10 +2,12 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ca-es">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
+    <title>OpenFramework - Init</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
     <script src="/assets/js/jquery-2.1.4.min.js"></script>
     
     <script type="text/javascript" charset="utf-8" src ="/js/base64.js"></script>
@@ -13,10 +15,19 @@
     <script type="text/javascript" charset="utf-8" src ="/js/common.js"></script>
         <script>
             var PageType = "Init";
+            // Instance
             var Instance = <%=this.Instance.Config.JsonData %>;
-            var user = <%=this.ApplicationUser.JsonSimple %>;
+
+            // User
+            var user = <%=this.ApplicationUser.Json %>;
+
+            // Company
             var Company = <%=this.Company.Json %>;
+
+            // ItemDefinitions
             var ItemDefinitions = <%= this.ItemDefinitions  %>;
+
+            // Menu
             var Menu = <%=this.MenuJson %>;
 
             localStorage.setItem("Instance", JSON.stringify(Instance));
@@ -26,11 +37,16 @@
             localStorage.setItem("Menu", JSON.stringify(Menu));
 
             if (Company.Id > 0) {
+                //GoLandingPage();
+            }
+
+            function GoLandingPage() {
                 GoEncryptedPage("/Instances/" + Instance.Name + "/Pages/DashBoard.aspx");
             }
         </script>
 </head>
 <body>
     <asp:Literal runat="server" ID="LtCompanies"></asp:Literal>
+    <button type="button" onclick="GoLandingPage()">Continuar</button>
 </body>
 </html>

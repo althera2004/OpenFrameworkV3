@@ -36,9 +36,12 @@
             var dataValue = null;
             var itemField = GetFieldDefinition(fieldName, itemDefinition);
 
-            switch (itemField.Type.toLowerCase()) {
+            switch (itemField.Type.toLowerCase()) {               
                 case "datetime":
-                    if (typeof data[fieldName] === "string") {
+                    if (typeof data[fieldName] === "undefined") {
+                        dataValue = null;
+                    }
+                    else if (typeof data[fieldName] === "string") {
                         dataValue = data[fieldName];
                     }
                     else {
@@ -82,6 +85,14 @@
                 $(this).val(dataValue);
             }
         });
+
+        $.each($(".simple-slider"), function () {
+            var fieldName = $(this)[0].id.split('_')[0];
+            var dataValue = data[fieldName];
+            console.log(fieldName, dataValue);
+            document.getElementById(fieldName + "_Slider").noUiSlider.set([dataValue, null]);
+            $("#" + fieldName + "_Slider").data("loaded", 1);
+        });
     }
 
     this.FormDefinitionDefault = function () {
@@ -122,8 +133,14 @@
         $(".form-control").on("change", ItemUpdateData);
         $(".datepicker").on("change", ItemUpdateData);
         $(".datepicker").localDatePicker();
+        $(".form-radio").on("click", ItemUpdateDataFormRadio);
         $(".input-group-button_url").on("click", GroupButtonUrlClicked);
         console.log("Life cycle", "RenderForm end " + ListSources.length);
+        InitSliders();
+
+        if ($(".CmbAppplicationUsers").length > 0) {
+            FillCmbApplicationUsers();
+        }
     }
 
     this.RenderFooterActions = function () {
@@ -297,6 +314,15 @@
                     res += RenderFieldBlank(span);
                     continue;
                 }
+                if (field.Type === "Free") {
+                    res += RenderFieldFree(span, field.Id);
+                    continue;
+                }
+
+                if (field.Type === "Button") {
+                    res += RenderFieldButton(span, field);
+                    continue;
+                }
 
                 res += this.RenderField(field, span);
             }
@@ -362,7 +388,14 @@
             var field = FieldByName(this.ItemDefinition, fieldForm.Name)
 
             if (field !== null) {
-                res += this.RenderFieldLabel(field, fieldForm);
+
+                if (HasPropertyValue(fieldForm.Layout)) {
+                    if (fieldForm.Layout !== "NoLabel") {
+                        res += this.RenderFieldLabel(field, fieldForm);
+                    }
+                } else {
+                    res += this.RenderFieldLabel(field, fieldForm);}
+
                 var finalSpan = span;
                 if (HasPropertyValue(fieldForm.ColSpan)) {
                     finalSpan = span * fieldForm.ColSpan;
@@ -373,12 +406,19 @@
                         res += RenderFieldDate(field, finalSpan);
                         break;
                     case "long":
+                    case "int":
                         if (IsFK(this.ItemDefinition, field.Name)) {
-                            res += RenderFieldFK(field, finalSpan);
+                            res += RenderFieldFK(field, finalSpan, fieldForm);
                         }
                         else {
                             res += RenderFieldNumeric(field, finalSpan);
                         }
+                        break;
+                    case "decimal":
+                        res += RenderFieldDecimal(field, finalSpan, fieldForm);
+                        break;
+                    case "money":
+                        res += RenderFieldMoney(field, finalSpan, fieldForm);
                         break;
                     case "fixedlist":
                         res += RenderFieldFixedList(field, finalSpan, fieldForm);
@@ -386,14 +426,35 @@
                     case "textarea":
                         res += RenderFieldTextArea(field, finalSpan, fieldForm);
                         break;
-                    case "bool":
-                        res += RenderFieldCheckBox(field, finalSpan, fieldForm);
+                    case "boolean":
+                        if (HasPropertyValue(fieldForm.Layout)) {
+                            switch (fieldForm.Layout.toLowerCase()) {
+                                case "check": res += RenderFieldCheckBox(field, finalSpan, fieldForm); break;
+                                case "radio": res += RenderFieldRadioButton(field, finalSpan, fieldForm); break;
+                            }
+                        }
+                        else {
+                            res += RenderFieldCheckBox(field, finalSpan, fieldForm);
+                        }
+
                         break;
                     case "url":
                         res += RenderFieldUrl(field, finalSpan, fieldForm);
                         break;
-                    default:
+                    case "documentfile":
+                        res += RenderFieldDocumentFile(field, finalSpan, fieldForm);
+                        break;
+                    case "applicationuser":
+                        res += RenderFieldApplicationUser(field, finalSpan, fieldForm);
+                        break;
+                    case "range":
+                        res += RenderFieldRange(field, finalSpan);
+                        break;
+                    case "text":
                         res += RenderFieldText(field, finalSpan);
+                        break;
+                    default:
+                        res += field.Name;
                         break;
                 }
 
@@ -407,21 +468,38 @@
     }
 
     this.RenderFieldLabel = function (field, fieldForm) {
+
+        if (HasPropertyValue(fieldForm.Layout)) {
+            if (fieldForm.Layout === "Splited") {
+                return "";
+            }
+        }
+
         res = "";
+        var hidden = GetPropertyValue(fieldForm.Hidden, false) ? " style=\"visibility:hidden;\"" : "";
         var label = fieldForm.Label;
-        var required = fieldForm.Required ? "<span id=\"" + field.Name + "_LabelRequired\" class=\"formFieldRequired\">*</span>" : "";
+        var required = GetPropertyValue(field.Required, false) ? "<span id=\"" + field.Name + "_LabelRequired\" class=\"formFieldRequired\">*</span>" : "";
 
         if (typeof label === "undefined" || label === null) {
             label = field.Label;
         }
 
-        res += "<label id=\"" + field.Name + "_Label\" class=\"col-sm-1 control-label\">" + label + required + "</label>";
+        res += "<label id=\"" + field.Name + "_Label\" class=\"col-sm-1 control-label\"" + hidden + ">" + label + required + "</label>";
         return res;
     }
 }
 
+function RenderFieldApplicationUser(field, span, fieldForm) {
+    var res = "";
+    res += "<div class=\"col-sm-" + (span - 1) + "\">";
+    res += "<select id=\"" + field.Name + "\" class=\"form-control CmbAppplicationUsers\">";
+    res += "</select>";
+    res += "</div>";
+    return res;
+}
+
 function RenderFieldUrl(field, span, fieldForm) {
-    res = "";
+    var res = "";
     res += "<div class=\"col-sm-" + (span - 1) + "\">";
     res += "  <div class=\"input-group date\">";
     res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control\" autocomplete=\"off\">";
@@ -432,59 +510,133 @@ function RenderFieldUrl(field, span, fieldForm) {
 }
 
 function RenderFieldText(field, span) {
-    res = "";
+    var res = "";
     res += "<div class=\"col-sm-" + (span - 1) + "\">";
-    res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control\" value=\"" + field.Type + "\" />";
+    res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control\" value=\"\" />";
+    res += "</div>";
+    return res;
+}
+
+function RenderFieldDocumentFile(field, span, fieldForm) {
+    var res = "";
+    var config = GetPropertyValue(fieldForm.Config, "LVADUSH");
+
+    res += "<div class=\"col-sm-" + (span - 1) + "\">";
+    res += "  <div class=\"input-group date\">";
+    res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control\" autocomplete=\"off\" readonly=\"readonly\">";
+
+    if (config.indexOf("A") !== -1) {
+        res += "    <span id=\"" + field.Name + "_BtnView\" class=\"input-group-addon\" title=\"Veure\"><i class=\"fa fa-eye\"></i></span>";
+    }
+
+    if (config.indexOf("U") !== -1) {
+        res += "    <span id=\"" + field.Name + "_BtnUpload\" class=\"input-group-addon\" title=\"Pujar\"><i class=\"fa fa-upload\"></i></span>";
+    }
+
+    if (config.indexOf("D") !== -1) {
+        res += "    <span id=\"" + field.Name + "_BtnDelete\" class=\"input-group-addon\" title=\"Eliminar\"><i class=\"fa fa-times grey\"></i></span>";
+    }
+
+    if (config.indexOf("S") !== -1) {
+        res += "    <span id=\"" + field.Name + "_BtnSign\" class=\"input-group-addon\" title=\"Signar\"><i class=\"fa fa-file-signature\"></i></span>";
+    }
+
+    if (config.indexOf("H") !== -1) {
+        res += "    <span id=\"" + field.Name + "_BtnHistory\" class=\"input-group-addon\ title=\"Veure historial\"><i class=\"fa fa-list\"></i></span>";
+    }
+
+    res += "  </div>";
     res += "</div>";
     return res;
 }
 
 function RenderFieldCheckBox(field, span) {
-    res = "";
+    var res = "";
     res += "<div class=\"col-sm-" + (span - 1) + "\">";
     res += "    <input type=\"checkbox\" id=\"" + field.Name + "\" class=\"form-control\" />";
     res += "</div>";
     return res;
 }
 
-function RenderFieldTextArea(field, span) {
-    res = "";
+function RenderFieldRadioButton(field, span) {
+    var res = "";
     res += "<div class=\"col-sm-" + (span - 1) + "\">";
-    res += "    <textarea id=\"" + field.Name + "\" class=\"form-control\" value=\"" + field.Type + "\" rows=\"3\"></textarea>";
+    res += "    <input type=\"radio\" name=\"" + field.Name + "\" id=\"" + field.Name + "_No\" class=\"form-radio form-radio-" + field.Name + "\" />&nbsp;" + Dictionary.Common_No;
+    res += "&nbsp;&nbsp;&nbsp;";
+    res += "    <input type=\"radio\" name=\"" + field.Name + "\" id=\"" + field.Name + "_Yes\" class=\"form-radio form-radio-" + field.Name + "\" />&nbsp;" + Dictionary.Common_Yes;
+    res += "</div>";
+    return res;
+}
+
+function RenderFieldTextArea(field, span, fieldForm) {
+    var splited = false;
+    if (HasPropertyValue(fieldForm.Layout) === true) {
+        if (fieldForm.Layout === "Splited") {
+            splited = true;
+        }
+    }
+
+    var span = splited ? span : span - 1;
+
+
+    var rows = GetPropertyValue(fieldForm.Rows, 3);
+    var res = "";
+    res += "<div class=\"col-sm-" + span + "\">";
+    if (splited) {
+        res += "<label>" + field.Label + "</label>";
+    }
+    res += "    <textarea id=\"" + field.Name + "\" class=\"form-control\" value=\"" + field.Type + "\" rows=\"" + rows + "\"></textarea>";
     res += "</div>";
     return res;
 }
 
 function RenderFieldNumeric(field, span) {
-    res = "";
+    var res = "";
     res += "<div class=\"col-sm-" + (span - 1) + "\">";
-    res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control\" value=\"" + field.Type + "\" />";
+    res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control\" value=\"\" />";
     res += "</div>";
     return res;
 }
 
-function RenderFieldFK(field, span) {
-    res = "";
-    res += "<div class=\"col-sm-" + (span - 1) + "\">";
+function RenderFieldFK(field, span, fieldForm) {
+    var bar = false;
+    if (HasPropertyValue(fieldForm.Layout)) {
+        if (fieldForm.Layout === "BAR") {
+            bar = true;
+        }
+    }
+
+    var res = "";
+
+    var hidden = GetPropertyValue(fieldForm.Hidden, false) ? " style=\"visibility:hidden;\"" : "";
+
+    res += "<div class=\"col-sm-" + (span - 1) + "\"" + hidden + ">";
+    if (bar === true) {
+        res += "  <div class=\"input-group BAR\">";
+    }
     res += "    <select id=\"" + field.Name + "\" class=\"form-control\">";
     res += "    </select>";
+    if (bar === true) {
+
+        res += "    <span id=\"" + field.Name + "_Btn\" data-itemdefinition=\"" + field.Name.split("Id")[0] + "\" class=\"input-group-addon\" onclick=\"PopupBAR('" + field.Name.split("Id")[0] + "')\"><i class=\"fa fa-ellipsis-h\"></i></span>";
+        res += "</div>";
+    }
     res += "</div>";
     return res;
 }
 
 function RenderFieldFixedList(field, span, fieldForm) {
-    var list = null;
-    eval("list = " + field.FixedListName + ";");
-    res = "";
+    var list = FixedLists[field.FixedListName];
+    var res = "";
 
-    if (fieldForm.FixedListMode === "RadioList") {
+    if (fieldForm.Layout === "Radio") {
         res += "<div class=\"col-sm-" + (span - 1) + "\" style=\"min-height:36px;\">";
         res += "    <input id=\"" + field.Name + "\" type=\"text\" style=\"display:none;\" class=\"form-control\" value=\"" + field.Type + "\" />";
 
-
         if (list !== null) {
-            for (var x = 0; x < list.length; x++) {
-                if (x > 0) {
+            // Empieza desde 1 porque 0 es "no definit"
+            for (var x = 1; x < list.length; x++) {
+                if (x > 1) {
                     res += "&nbsp;&nbsp;&nbsp;&nbsp;";
                 }
 
@@ -519,18 +671,139 @@ function RenderFieldFixedList(field, span, fieldForm) {
 }
 
 function RenderFieldDate(field, span) {
-    res = "";
+    var res = "";
     res += "<div class=\"col-sm-" + (span - 1) + "\">";
     res += "  <div class=\"input-group date\" style=\"width:112px;\">";
     res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control datepicker\" autocomplete=\"off\" style=\"width:85px;\">";
-    res += "    <span id=\"" + field.Name + "_Btn\" class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></span>";
+    res += "    <span id=\"" + field.Name + "BtnDatepicker\" class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></span>";
+    res += "  </div>";
+    res += "</div>";
+    return res;
+}
+
+function RenderFieldDecimal(field, span, fieldForm) {
+    var precission = 3;
+    if (HasPropertyValue(field.Precission)) {
+        precission = field.Precission;
+    }
+
+    var res = "";
+    res += "<div class=\"col-sm-" + (span - 1) + "\">";
+    res += "  <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control format-money\" data-precision=\"" + precission + "\">";
+    res += "</div>";
+    return res;
+}
+
+function RenderFieldMoney(field, span, fieldForm) {
+    var res = "";
+    res += "<div class=\"col-sm-" + (span - 1) + "\">";
+    res += "  <div class=\"input-group date\" style=\"width:112px;\">";
+    res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control format-money\">";
+    res += "    <span id=\"" + field.Name + "_Btn\" class=\"input-group-addon\"><i class=\"fa fa-euro\"></i></span>";
     res += "  </div>";
     res += "</div>";
     return res;
 }
 
 function RenderFieldBlank(span) {
-    res = "";
-    res += "<div class=\"col-sm-" + (span - 1) + "\">blank</div>";
+    var res = "";
+    res += "<div class=\"col-sm-" + (span - 1) + "\">&nbsp;</div>";
     return res;
+}
+
+function RenderFieldFree(span, id) {
+    var res = "";
+    res += "<div id=\"" + id + "\" class=\"col-sm-" + (span - 1) + "\">" + id + "</div>";
+    return res;
+}
+
+function RenderFieldButton(span, field) {
+    var icon = "";
+    if (HasPropertyValue(field.Icon)) {
+        icon = "<i class=\"" + field.Icon + "\"></i>&nbsp;";
+    }
+
+    var title = "";
+    if (HasPropertyValue(field.Help)) {
+        title = " title=\"" + field.Help + "\"";
+    }
+
+    var action = "";
+    if (HasPropertyValue(field.Action)) {
+        action = " onclick=\"" + field.Action + "();\"";
+    }
+
+    var res = "";
+    res += "<div id=\"" + field.Id + "_Div\" class=\"col-sm-" + (span - 1) + "\">";
+    res += "<button id=\"" + field.Id + "\" type=\"button\" style=\"padding-top:0;padding-bottom:0;\" class=\"btn btn-xs btn-info\"" + action + title + ">" + icon + field.Label + "</button>";
+    res += "</div>";
+    return res;
+}
+
+function RenderFieldRange(field, span) {
+    var res = "";
+    res += "<div class=\"col-sm-" + (span - 1) + "\">";
+    res += "  <input type=\"hidden\" id=\"" + field.Name + "\" />";
+    res += "  <label class=\"col-xs-2\" id=\"" + field.Name + "_Value\">0</label>";
+    res += "  <div style=\"border:1px solid red;\" class=\"col-xs-10 simple-slider\" id=\"" + field.Name + "_Slider\" data-loaded=\"0\" data-min=\"" + field.Values[0] + "\" data-max=\"" + field.Values[1] + "\"/></span>";
+    res += "</div>";
+
+    return res;
+}
+
+function FillCmbApplicationUsers() {
+
+}
+
+function FieldToLabel(fieldName) {
+    if ($("#" + fieldName).length === 0) {
+        return false;
+    }
+
+    $("#" + fieldName + "_Labeled").remove();
+    if ($("#" + fieldName + ":checkbox").length > 0) {
+        $("#" + fieldName + "Label").prepend($("#" + fieldName).prop("checked") === true ? "<i class=\"fa fa-check-square green\" title=\"" + Dictionary.Common_Yes + "\"></i>" : "<i class=\"fa fa-square\" title=\"" + Dictionary.Common_No + "\"></i>");
+        $("#" + fieldName).remove();
+    }
+    else if ($("#Div" + fieldName + " select").length > 0) {
+        $("#" + fieldName).hide();
+        $("#" + fieldName + "_chosen").hide();
+        $("#" + fieldName).after("<span id=\"" + fieldName + "_Labeled\">" + $("#" + fieldName + " option:selected").text()) + "</span>";
+    }
+    else if ($("#" + fieldName + "Select").length > 0) {
+        $("#" + fieldName).hide();
+        $("#" + fieldName + "Select").hide();
+        $("#" + fieldName).after("<span id=\"" + fieldName + "_Labeled\">" + $("#" + fieldName + "Select option:selected").text()) + "</span>";
+    }
+    else if ($("#" + fieldName + " :selected").length > 0) {
+        var text = $("#" + fieldName + " :selected").text();
+        $("#" + fieldName).append(text);
+    }
+    else {
+        $("#" + fieldName).hide();
+        $("#" + fieldName + "BtnDatepicker").hide();
+
+        var value = $("#" + fieldName).val();
+        if (typeof itemData !== "undefined" && itemData !== null) {
+            if (HasPropertyValue(itemData[fieldName])) {
+                value = itemData[fieldName];
+            }
+        }
+
+        $("#" + fieldName).after("<span id=\"" + fieldName + "_Labeled\">" + value + "</span>");
+    }
+
+    var label = $("#" + fieldName + "Label");
+    if (typeof label[0] !== "undefined") {
+        if (label[0].textContent.indexOf('*') !== -1) {
+            label.html(label[0].textContent.split('*')[0]);
+        }
+    }
+
+    $("#AuxButton-" + fieldName).remove();
+
+    if ($("#" + fieldName + "BtnMoneyAddon").length > 0) {
+        $("#" + fieldName + "BtnMoneyAddon").remove();
+        $("#" + fieldName + "_Labeled").html(ToMoneyFormat(StringToNumber($("#" + fieldName).val())) + "&nbsp;&euro;");
+    }
 }

@@ -1,4 +1,4 @@
-﻿namespace OpenFrameworkV2.Web.Admin.Company
+﻿namespace OpenFrameworkV3.Web.Admin.Company
 {
     using System;
     using System.Linq;
@@ -11,6 +11,7 @@
         private Main master;
 
         public MailBox Main { get; private set; }
+
         public MailBox ThirdParty { get; private set; }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -19,11 +20,12 @@
             this.master.BreadCrumb.Add("Administració");
             this.master.BreadCrumb.AddEncryptedLink("Configuració de companyia", "/Admin/Company/");
             this.master.BreadCrumb.AddLeaf("Correos electrónicos");
-            this.master.BreadCrumb.SetTitle("Companyia: " + this.master.Instance.Name);
+            this.master.BreadCrumb.SetTitle("Companyia: " + this.master.InstanceName);
+            this.master.SetPageType("pageAdmin");
 
             this.master.AddScript("/Admin/Company/MailBoxes.js");
 
-            var mailBoxes = MailBox.ByCompanyId(this.master.Company.Id, this.master.Instance.Name);
+            var mailBoxes = MailBox.ByCompanyId(this.master.CompanyId, this.master.InstanceName);
 
             if(mailBoxes.Any(m => m.Main == true))
             {

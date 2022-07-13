@@ -1,6 +1,7 @@
 ﻿function CustomActions() {
     console.log("wwww");
 
+
     $("#ChkSameAddress").on("click", MAILBOXES_ChkSameAddress_Changed);
     MAILBOXES_ChkSameAddress_Changed();
 }
@@ -10,32 +11,96 @@ function MAILBOXES_ChkSameAddress_Changed() {
         $("#Third_MailAddress").disable();
         $("#Third_SenderName").disable();
         $("#Third_Server").disable();
+        $("#ThirdMailBoxType").disable();
         $("#Third_MailUser").disable();
         $("#Third_MailPassword").disable();
         $("#Third_SendPort").disable();
+        $("#ThirdBtnSendTest").disable();
+        $("#ThirdBtnCheck").disable();
     }
     else {
         $("#Third_MailAddress").enable();
         $("#Third_SenderName").enable();
         $("#Third_Server").enable();
+        $("#ThirdMailBoxType").enable();
         $("#Third_MailUser").enable();
         $("#Third_MailPassword").enable();
         $("#Third_SendPort").enable();
+        $("#Third_SSL").enable();
+        $("#ThirdBtnSendTest").enable();
+        $("#ThirdBtnCheck").enable();
     }
 }
 
 function MAILBOXES_CheckBlackListMain() {
-    MAILBOXES_CheckBlackList($("#MainMailMadress").val().split('@')[1]);
+    if ($("#MainMailMadress").val() === "") {
+        PopupWarning("S'ha d'inidicar l'adreça de mail", Dictionary.Common_Warning);
+    }
+    else {
+        MAILBOXES_CheckBlackList($("#MainMailMadress").val().split('@')[1]);
+    }
 }
 
 function MAILBOXES_CheckBlackList(domainName) {
     window.open("https://mxtoolbox.com/SuperTool.aspx?action=blacklist%3a" + domainName);
 }
 
+function MAILBOXES_Validate() {
+    var ok = true;
+    var errorMessages = [];
+
+    if ($("#MainMailMadress").val() === "") {
+        ok = false;
+        errorMessages.push("Direccion obligatoria");
+    } else {
+        if (validateEmail($("#MainMailMadress").val()) === false) {
+            ok = false;
+            errorMessages.push("Direccion no válida");
+        }
+    }
+
+    if ($("#MainServer").val() === "") {
+        ok = false;
+        errorMessages.push("servidor obligatoria");
+    }
+
+    if ($("#MainMailUser").val() === "") {
+        ok = false;
+        errorMessages.push("usuario obligatoria");
+    }
+
+    if ($("#MainMailPassword").val() === "") {
+        ok = false;
+        errorMessages.push("password obligatoria");
+    }
+
+    if ($("#MainSendPort").val() === "") {
+        ok = false;
+        errorMessages.push("puerto obligatoria");
+    }
+
+    if (ok === false) {
+        var errorText = "Revise los siguientes datos:<ul>";
+        for (var e = 0; e < errorMessages.length; e++) {
+            errorText += "<li>" + errorMessages[e] + "</li>";
+        }
+
+        errorText += "</ul>";
+        PopupWarning(errorText, Dictionary.Common_Warning);
+    }
+
+    return ok;
+}
+
 function MAILBOXES_SaveMain() {
+
+    if (MAILBOXES_Validate() === false) {
+        return;
+    }
+
     var newMailBox = {
-        "Id": mainAddress.Id,
-        "CompanyId": mainAddress.CompanyId,
+        "Id": typeof mainAddress.Id === "undefined" ? -1 : mainAddress.Id,
+        "CompanyId": Company.Id,
         "Main": true,
         "MailAddress": $("#MainMailMadress").val(),
         "SenderName": $("#MainSenderName").val(),
@@ -43,7 +108,7 @@ function MAILBOXES_SaveMain() {
         "MailPassword": $("#MainMailPassword").val(),
         "Server": $("#MainServer").val(),
         "SendPort": $("#MainSendPort").val() * 1,
-        "ReadPort": mainAddress.ReadPort,
+        "ReadPort": typeof mainAddress.ReadPort === "undefined" ? 0 : mainAddress.ReadPort,
         "MailBoxType": $("#MainMailBoxType").val(),
         "SSL": $("#MainSSL").prop("checked") === true,
         "Description": "",
@@ -65,13 +130,23 @@ function MAILBOXES_SaveMain() {
         "data": JSON.stringify(data, null, 2),
         "success": function (msg) {
             console.log(msg);
-            mainAddress = newMailBox;
 
-            Swal.fire({
-                "icon": msg.d.Success ? 'success' : 'error',
-                "title": msg.d.Success ? "Good job!" : "Oh!",
-                "text": msg.d.Success ? msg.d.ReturnValue : msg.d.MessageError
-            });
+            if (msg.d.Success === true) {
+
+                var action = msg.d.ReturnValue.split('|')[0];
+                var id = msg.d.ReturnValue.split('|')[1];
+
+                mainAddress = newMailBox;
+                mainAddress.Id = id * 1;
+
+                var text = "Dirección de correo " + (action === "UPDATE" ? "modificada" : "añadida") + " correctamente.";
+
+                $("#MainBtnSave").notify(text, { "position": "top", "className": "success" });
+            }
+            else {
+                PopupWarning(msg.d.MessageError, Dictionary.Common_Warning);
+            }
+
         },
         "error": function (msg) {
             PopupWarning(msg.responseText);

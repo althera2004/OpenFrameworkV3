@@ -21,11 +21,12 @@ public partial class InitSession : Page
 
     /// <summary>Encoded query string</summary>
     public CodedQuery CodedQuery { get; private set; }
+
     public string ItemDefinitions
     {
         get
         {
-            return OpenFrameworkV3.Core.Instance.JsonDefinitions(this.Instance.Name);
+            return Instance.JsonDefinitions(this.Instance.Name);
         }
     }
 

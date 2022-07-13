@@ -1,0 +1,158 @@
+﻿{
+    "Id": 14,
+    "ItemName": "Objective",
+	"Description": "Objectius",
+    "Layout": {
+        "Icon": "fad fa-location",
+        "Label": "Objectiu",
+        "LabelPlural": "Objectius",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "Indicador"} ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 100 },
+		{ "Name": "Description", "Label": "Descripció", "Type": "textarea" },
+		{ "Name": "Responsible", "Label": "Responsable", "Type": "applicationUser" },
+		{ "Name": "DateStart", "Label": "Inici", "Type": "datetime" },
+		{ "Name": "DatePreview", "Label": "Data prevista", "Type": "datetime" },
+		{ "Name": "Indicador", "Label": "Indicador vinculat", "Type": "boolean" },
+		{ "Name": "Meta", "Label": "Meta", "Type": "FixedList", "FixedListName": "ObjectiuMeta" },
+		{ "Name": "MetaValue", "Label": "Meta valor", "Type": "decimal", "Precission": 6 },
+		{ "Name": "Periodicity", "Label": "Periodicitat", "Type": "int" },
+		{ "Name": "Methodology", "Label": "Metodologia", "Type": "textarea" },
+		{ "Name": "Resources", "Label": "Recursos", "Type": "textarea" },
+		{ "Name": "IndicadorId", "Label": "Indicador", "Type": "long" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"ButtonAddLabel": "Afegir objectiu",
+			"Columns": [
+                { "DataProperty": "Name" },
+                { "DataProperty": "DateStart", "Width": 100, "Align": "center" },
+                { "DataProperty": "DatePreview", "Width": 100, "Align": "center" },
+                { "DataProperty": "Responsible", "Width": 250, "Align": "left" }
+            ],
+            "Parameters": [ {"Name": "Active", "Value": "1"} ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Actions": [
+				{ "Label" : "Cerrar","Icon": "fa fa-times", "Action": "Close2", "Group": "Estado" },
+				{ "Label" : "Reportar", "Icon": "fa fa-cog",   "Action": "Close", "Group": "Reportar" },
+				{ "Label" : "Asignar",  "Icon": "fa fa-user",  "Action": "Assing" },
+				{ "Label" : "Imprimir", "Icon": "fa fa-print", "Action": "Print", "Group": "Reportar" },
+				{ "Label" : "Bloquear", "Icon": "fa fa-lock",  "Action": "Lock", "Group": "Estado" },
+				{ "Label" : "Eliminar",  "Icon": "fa fa-times", "Group": "Traces",  "Action": "Lock", "Tab": "history" },
+				{ "Label" : "Enviar por mail",  "Icon": "fa fa-envelope",  "Group": "Traces", "Action": "Lock", "Tab": "history" },
+				{ "Label" : "History",  "Icon": "fa fa-lock",  "Action": "Lock", "Tab": "history" }
+			],
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Description" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Responsible" },
+								{ "Name": "DateStart" },
+								{ "Name": "DatePreview" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Indicador", "Layout": "Radio" },
+								{ "Type": "Free", "Id": "MetaField", "Colspan": 2 },
+								{ "Name": "Periodicity" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Methodology" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Resources" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "actions",
+					"Label": "Accions",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "actions" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "records",
+					"Label": "Registres",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "Accions" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "graphics",
+					"Label": "Gràfics",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "graphics" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "history",
+					"Label": "Històric",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "history" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

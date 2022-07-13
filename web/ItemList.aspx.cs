@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.UI;
 using OpenFrameworkV3;
+using OpenFrameworkV3.Core.ItemManager.ItemList;
 
 public partial class ItemList : Page
 {
@@ -24,7 +25,7 @@ public partial class ItemList : Page
     {
         get
         {
-            return this.master.Instance.Name;
+            return this.master.InstanceName;
         }
     }
 
@@ -34,12 +35,16 @@ public partial class ItemList : Page
         this.ItemName = this.master.CodedQuery.GetByKey<string>("Item");
         this.ListId = this.master.CodedQuery.GetByKey<string>("List");
 
-        var itemDefinition = Persistence.ItemDefinitionByName(this.ItemName, this.master.Instance.Name);
+        var itemDefinition = Persistence.ItemDefinitionByName(this.ItemName, this.master.InstanceName);
         this.ItemDefinitionId = itemDefinition.Id;
-        var listDefinition = itemDefinition.Lists.First(l => l.Id.Equals(this.ListId, StringComparison.OrdinalIgnoreCase));
+        var listDefinition = new List();
+        if (itemDefinition.Lists.Any(l => l.Id.Equals(this.ListId, StringComparison.OrdinalIgnoreCase)))
+        {
+            listDefinition = itemDefinition.Lists.First(l => l.Id.Equals(this.ListId, StringComparison.OrdinalIgnoreCase));
+        }
+
         var title = listDefinition.Title ?? itemDefinition.Layout.LabelPlural;
         this.master.BreadCrumb.AddLeaf(title);
-        this.master.SetTitle(this.master.Company.Name + " - " + title);
         this.master.SetPageType("PageList");
     }
 }

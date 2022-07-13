@@ -11,6 +11,7 @@ namespace OpenFrameworkV3.Mail
     using System.Collections.ObjectModel;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Globalization;
     using Newtonsoft.Json;
     using OpenFrameworkV3.Core.Activity;
     using OpenFrameworkV3.Core.DataAccess;
@@ -131,9 +132,10 @@ namespace OpenFrameworkV3.Mail
                                     {
                                         Id = rdr.GetInt64(ColumnsMailBoxGet.Id),
                                         Code = rdr.GetString(ColumnsMailBoxGet.Code).Trim(),
+                                        Main = rdr.GetBoolean(ColumnsMailBoxGet.Main),
                                         MailAddress = rdr.GetString(ColumnsMailBoxGet.MailAddress).Trim(),
                                         Server = rdr.GetString(ColumnsMailBoxGet.Server).Trim(),
-                                        SenderName = rdr.GetString(ColumnsMailBoxGet.Name).Trim(),
+                                        SenderName = rdr.GetString(ColumnsMailBoxGet.SenderName).Trim(),
                                         MailUser = rdr.GetString(ColumnsMailBoxGet.MailUser).Trim(),
                                         MailPassword = rdr.GetString(ColumnsMailBoxGet.MailPassword).Trim(),
                                         MailBoxType = rdr.GetString(ColumnsMailBoxGet.MailBoxType).Trim(),
@@ -215,57 +217,126 @@ namespace OpenFrameworkV3.Mail
             var cns = Persistence.ConnectionString(instanceName);
             if(!string.IsNullOrEmpty(cns))
             {
-                /* CREATE PROCEDURE Core_MailBox_Save
-                 *   @CompanyId bigint,
-                 *   @Code nchar(20),
-                 *   @MailAddress nvarchar(150),
-                 *   @Server nchar(100),
-                 *   @MailBoxType nvarchar(10),
-                 *   @ReadPort int,
-                 *   @SendPort int,
-                 *   @MailUser nvarchar(100),
-                 *   @MailPassword nvarchar(50),
-                 *   @Description nvarchar(100),
-                 *   @ApplicationUserId bigint,
-                 *   @Name nvarchar(50)
-                 *   @SSL bit */
-                using(var cmd = new SqlCommand("Core_MailBox_Save"))
+
+                if (this.Id <= 0)
                 {
-                    using(var cnn = new SqlConnection(cns))
+                    /* CREATE PROCEDURE [dbo].[Core_MailBox_Insert]
+                     *   @Id bigint output,
+                     *   @CompanyId bigint,
+                     *   @Main bit,
+                     *   @Code nchar(20),
+                     *   @MailAddress nvarchar(150),
+                     *   @SenderName nvarchar(100),
+                     *   @Server nchar(100),
+                     *   @MailBoxType nvarchar(10),
+                     *   @ReadPort int,
+                     *   @SendPort int,
+                     *   @SSL bit,
+                     *   @MailUser nvarchar(100),
+                     *   @MailPassword nvarchar(50),
+                     *   @Description nvarchar(100),
+                     *   @ApplicationUserId bigint */
+                    using (var cmd = new SqlCommand("Core_MailBox_Insert"))
                     {
-                        cmd.Connection = cnn;
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add(DataParameter.Input("@CompanyId", this.CompanyId));
-                        cmd.Parameters.Add(DataParameter.Input("@Code", this.Code, 20));
-                        cmd.Parameters.Add(DataParameter.Input("@MailAddress", this.MailAddress, 150));
-                        cmd.Parameters.Add(DataParameter.Input("@Server", this.Server, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@MailBoxType", "SMTP", 10));
-                        cmd.Parameters.Add(DataParameter.Input("@ReadPort", this.ReaderPort));
-                        cmd.Parameters.Add(DataParameter.Input("@SendPort", this.SendPort));
-                        cmd.Parameters.Add(DataParameter.Input("@MailUser", this.MailAddress, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@MailPassword", this.MailPassword, 50));
-                        cmd.Parameters.Add(DataParameter.Input("@Description", string.Empty, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@Name", this.SenderName, 50));
-                        cmd.Parameters.Add(DataParameter.Input("@SSL", this.SSL));
-                        cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));
-                        try
+                        using (var cnn = new SqlConnection(cns))
                         {
-                            cmd.Connection.Open();
-                            cmd.ExecuteNonQuery();
-                            res.SetSuccess();
-                        }
-                        catch(Exception ex)
-                        {
-                            res.SetFail(ex);
-                        }
-                        finally
-                        {
-                            if(cmd.Connection.State != ConnectionState.Closed)
+                            cmd.Connection = cnn;
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Add(DataParameter.OutputLong("@Id"));
+                            cmd.Parameters.Add(DataParameter.Input("@CompanyId", this.CompanyId));
+                            cmd.Parameters.Add(DataParameter.Input("@Main", this.Main));
+                            cmd.Parameters.Add(DataParameter.Input("@Code", this.Code, 20));
+                            cmd.Parameters.Add(DataParameter.Input("@MailAddress", this.MailAddress, 150));
+                            cmd.Parameters.Add(DataParameter.Input("@SenderName", this.SenderName, 100));
+                            cmd.Parameters.Add(DataParameter.Input("@Server", this.Server, 150));
+                            cmd.Parameters.Add(DataParameter.Input("@MailBoxType", this.MailBoxType, 10));
+                            cmd.Parameters.Add(DataParameter.Input("@ReadPort", this.ReaderPort));
+                            cmd.Parameters.Add(DataParameter.Input("@SendPort", this.SendPort));
+                            cmd.Parameters.Add(DataParameter.Input("@SSL", this.SSL));
+                            cmd.Parameters.Add(DataParameter.Input("@MailUser", this.MailUser, 100));
+                            cmd.Parameters.Add(DataParameter.Input("@MailPassword", this.MailPassword, 50));
+                            cmd.Parameters.Add(DataParameter.Input("@Description", string.Empty, 100));
+                            cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));
+                            try
                             {
-                                cmd.Connection.Close();
+                                cmd.Connection.Open();
+                                cmd.ExecuteNonQuery();
+                                this.Id = Convert.ToInt64(cmd.Parameters["@Id"].Value);
+                                res.SetSuccess(string.Format(CultureInfo.InvariantCulture, "INSERT|{0}", this.Id));
+                            }
+                            catch (Exception ex)
+                            {
+                                res.SetFail(ex);
+                            }
+                            finally
+                            {
+                                if (cmd.Connection.State != ConnectionState.Closed)
+                                {
+                                    cmd.Connection.Close();
+                                }
                             }
                         }
                     }
+                }
+                else
+                {
+                    /* CREATE PROCEDURE [dbo].[Core_MailBox_Update]
+                     *   @Id bigint,
+                     *   @CompanyId bigint,
+                     *   @Main bit,
+                     *   @Code nchar(20),
+                     *   @MailAddress nvarchar(150),
+                     *   @SenderName nvarchar(100),
+                     *   @Server nchar(100),
+                     *   @MailBoxType nvarchar(10),
+                     *   @ReadPort int,
+                     *   @SendPort int,
+                     *   @SSL bit,
+                     *   @MailUser nvarchar(100),
+                     *   @MailPassword nvarchar(50),
+                     *   @Description nvarchar(100),
+                     *   @ApplicationUserId bigint */
+                    using (var cmd = new SqlCommand("Core_MailBox_Update"))
+                    {
+                        using (var cnn = new SqlConnection(cns))
+                        {
+                            cmd.Connection = cnn;
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Add(DataParameter.Input("@Id", this.Id));
+                            cmd.Parameters.Add(DataParameter.Input("@CompanyId", this.CompanyId));
+                            cmd.Parameters.Add(DataParameter.Input("@Main", this.Main));
+                            cmd.Parameters.Add(DataParameter.Input("@Code", this.Code, 20));
+                            cmd.Parameters.Add(DataParameter.Input("@MailAddress", this.MailAddress, 150));
+                            cmd.Parameters.Add(DataParameter.Input("@SenderName", this.SenderName, 100));
+                            cmd.Parameters.Add(DataParameter.Input("@Server", this.Server, 150));
+                            cmd.Parameters.Add(DataParameter.Input("@MailBoxType", this.MailBoxType, 10));
+                            cmd.Parameters.Add(DataParameter.Input("@ReadPort", this.ReaderPort));
+                            cmd.Parameters.Add(DataParameter.Input("@SendPort", this.SendPort));
+                            cmd.Parameters.Add(DataParameter.Input("@SSL", this.SSL));
+                            cmd.Parameters.Add(DataParameter.Input("@MailUser", this.MailUser, 100));
+                            cmd.Parameters.Add(DataParameter.Input("@MailPassword", this.MailPassword, 50));
+                            cmd.Parameters.Add(DataParameter.Input("@Description", string.Empty, 100));
+                            cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));
+                            try
+                            {
+                                cmd.Connection.Open();
+                                cmd.ExecuteNonQuery();
+                                res.SetSuccess(string.Format(CultureInfo.InvariantCulture, "UPDATE|{0}", this.Id));
+                            }
+                            catch (Exception ex)
+                            {
+                                res.SetFail(ex);
+                            }
+                            finally
+                            {
+                                if (cmd.Connection.State != ConnectionState.Closed)
+                                {
+                                    cmd.Connection.Close();
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
 

@@ -65,5 +65,6 @@ namespace OpenFrameworkV3.Core.Bindings
 		public const int DataText2 = 54;
 		public const int DataText3 = 55;
 		public const int DataText4 = 56;
+		public const int Password = 57;
 	}
 }

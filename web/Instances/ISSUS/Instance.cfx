@@ -1,0 +1,50 @@
+{
+    "ConnectionString": "Data Source=hw120.dinaserver.com;Initial Catalog=openf_ISSUS;User Id=openf_ISSUS;Password=P@ssw0rd;",
+    "Id": 2,
+    "Name": "ISSUS",
+    "Description": "Gestió de ISO:9000",
+    "DeleteAction": "Inactive",
+    "SessionTimeout": "15m",
+    "MultiCompany": true,
+    "ListNumRows": 50,
+    "DefaultLanguage": "es-es",
+    "Security": {
+        "IPAccess": false,
+        "IPAccessMail": "asistencia@openframework.es",
+        "PasswordComplexity": "Strong",
+        "MustChangePassword": false,
+        "Traceability": "item",
+        "GrantPermission": "ByUser",
+        "FailedAttempts": 3,
+        "MinimumPasswordLength": 6,
+        "GroupUserMain": false
+    },
+    "Profile": {
+        "Twiter": true,
+        "LinkedIn": true,
+        "Facebook": false,
+        "Instagram": false,
+        "BirthDate": true,
+        "Mobile": true,
+        "IdentificationCard": true,
+        "NameFormat": 2,
+        "Gender": true,
+        "PhoneEmergency": true,
+        "EmailAlternative": true,
+        "Web": false,
+        "Nacionality": true,
+        "Fax": true,
+        "Address": true,
+        "Signature": false,
+        "PreferencesEnabled": false,
+        "ActivityEnabled": false,
+        "FollowEnabled": false
+    },    
+    "CompanyProfile": {
+        "CompanyAddressEnabled": false,
+        "BankAccountEnabled": false,
+        "ContactPersonEnabled": false,
+        "CustomConfig": false,
+        "CustomFields":[]
+    }
+}

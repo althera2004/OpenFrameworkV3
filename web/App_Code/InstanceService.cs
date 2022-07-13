@@ -36,6 +36,23 @@ public class InstanceService : WebService
     }
 
     [WebMethod]
+    public ActionResult DictionaryGetCorpus(string language, string instanceName)
+    {
+        var res = ActionResult.NoAction;
+        try
+        {
+            var data = ApplicationDictionary.GetCorpus(language, instanceName);
+            res.SetSuccess(data);
+        }
+        catch (Exception ex)
+        {
+            res.SetFail(ex);
+        }
+
+        return res;
+    }
+
+    [WebMethod]
     public ActionResult ReloadInstance(string instanceName)
     {
         var res = ActionResult.NoAction;

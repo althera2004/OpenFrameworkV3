@@ -398,9 +398,9 @@ namespace OpenFrameworkV3.Core.DataAccess
                 }
             }
             catch (Exception ex)
-            {
+            {                
                 ExceptionManager.Trace(ex as Exception, "AltheraFramework.DataAccess.SqlStream.SQLToJSONSimple(" + cmd.CommandText + ")");
-                return ex.Message;
+                return string.Format(CultureInfo.InvariantCulture, @"""{0}""", ex.Message);
             }
             finally
             {

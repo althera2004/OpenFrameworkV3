@@ -101,7 +101,7 @@
 .pageAdmin #nav-search,
 .Dashboard #logofooter,
 .Dashboard #nav-search,
-.pageAdmin #logofooter { display:none!important; }
+.pageAdmin #logofooter { display:none; }
 
 .panel-tools {
     display: inline-block;
@@ -246,3 +246,21 @@ textarea.form-control { font-size:12px; }
 .modal-footer button { border-radius:4px; margin-left: 8px;}
 
 .user-menu a { cursor:pointer; }
+
+.bgred { background-color: #DD5A43 !important; } 
+
+.slider-container { margin-top:6px; }
+
+.noUi-horizontal { height:8px; }
+.noUi-touch-area { height: 10px; }
+.noUi-horizontal .noUi-handle { height:18px; right:-11px;}
+.noUi-horizontal .noUi-tooltip { bottom: -120%; }
+.noUi-connect { background-color: #6FB3E0; }
+.noUi-connects { left:-12px;}
+.noUi-pips-horizontal { padding:0; height:0; }
+.noUi-handle:before, .noUi-handle:after { height:8px; top:4px; background-color:#438eb9; }
+
+.formFieldRequired { color: red; }
+
+.btn-icon { border:none; background:transparent; }
+.btn-icon:disabled { border:none; opacity: 0.3 }

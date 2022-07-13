@@ -1,0 +1,85 @@
+﻿{
+    "Id": 18,
+    "ItemName": "Risc",
+	"Description": "Desenvolupament",
+    "Layout": {
+        "Icon": "fad fa-exclamation-circle",
+        "Label": "Risc",
+        "LabelPlural": "Riscos",
+        "Description": {
+            "Pattern": "{0}-{1}",
+            "Fields": [
+                { "Name": "Code" },
+                { "Name": "Title" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"Name": "Instancia" }, {"Name": "CustomerCompany" } ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Fecha", "Label": "Fecha", "Type": "datetime" },
+		{ "Name": "Code", "Label": "Codi", "Type": "text", "Length": 15 },
+		{ "Name": "Title", "Label": "Nom", "Type": "text", "Length": 150 },
+		{ "Name": "Tipo", "Label": "Tipus", "Type": "int" },
+		{ "Name": "InstanciaId", "Label": "Instància", "Type": "long" },
+		{ "Name": "CustomerCompanyId", "Label": "Client", "Type": "long" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"ButtonAddLabel": "Obrir nou desenvolupament",
+			"Columns": [
+                { "DataProperty": "Code", "Width": 150   },
+                { "DataProperty": "InstanciaId", "Width": 150 },
+                { "DataProperty": "Title" },
+                { "DataProperty": "Fecha", "Width": 100, "Align": "center" },
+                { "DataProperty": "Tipo", "Width": 200, "Align": "left", "Render": "Development_Column_Tipo" }
+            ],
+            "Parameters": [ {"Name": "Tipo", "Value": "1"}, {"Name": "Active", "Value": "1"} ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Code" },
+								{ "Name": "Title" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "InstanciaId" },
+								{ "Name": "Tipo" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "CustomerCompanyId" },
+								{ "Name": "Fecha" },
+								{ "Type": "Blank" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,99 @@
+﻿{
+    "Id": 15,
+    "ItemName": "Process",
+	"Description": "Desenvolupament",
+    "Layout": {
+        "Icon": "fad fa-cogs",
+        "Label": "Procés",
+        "LabelPlural": "Processos",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "JobPosition"}, {"ItemName": "ProcessType"} ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150 },
+		{ "Name": "JobPositionId", "Label": "Responsable", "Type": "long" },
+		{ "Name": "ProcessTypeId", "Label": "Tipus", "Type": "long" },
+		{ "Name": "PhaseStart", "Label": "Inici", "Type": "textarea" },
+		{ "Name": "PhaseDevelopment", "Label": "Desenvolupament", "Type": "textarea" },
+		{ "Name": "PhaseEnd", "Label": "Fí", "Type": "textarea" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name" },
+                { "DataProperty": "JobPositionId", "Width": 250 },
+                { "DataProperty": "ProcessTypeId", "Width": 200 }
+            ],
+            "Parameters": [ {"Name": "Active", "Value": "1"} ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Dades bàsiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "JobPositionId" },
+								{ "Name": "ProcessTypeId", "Layout": "BAR" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "PhaseStart", "Rows": 5, "Layout": "Splited" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "PhaseDevelopment", "Rows": 5, "Layout": "Splited" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "PhaseEnd", "Rows": 5, "Layout": "Splited" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "indicadors",
+					"Label": "Indicadors",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "indicadors" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

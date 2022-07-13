@@ -15,7 +15,7 @@
         {
             get
             {
-                return this.master.Instance.Name;
+                return this.master.InstanceName;
             }
         }
 
@@ -25,7 +25,6 @@
 
 
             var title = "Dashboard";
-            this.master.SetTitle(this.master.Company.Name + " - " + title);
             this.master.SetPageType("PageView");
             this.master.SetPageType("Dashboard");
         }

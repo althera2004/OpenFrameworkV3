@@ -1,0 +1,93 @@
+﻿{
+    "Id": 1,
+    "ItemName": "Action",
+	"Description": "Acció",
+    "Layout": {
+        "Icon": "fad fa-hand-point-right",
+        "Label": "Acció",
+        "LabelPlural": "Accions",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [  ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150 },
+		{ "Name": "Description", "Label": "Descripció", "Type": "textarea" },
+		{ "Name": "ActionType", "Label": "Tipus", "Type": "fixedlist", "FixedListName": "ActionType" },
+		{ "Name": "Origin", "Label": "Origen", "Type": "fixedlist", "FixedListName": "ActionOrigin" },
+		{ "Name": "ReporterType", "Label": "Origen", "Type": "fixedlist", "FixedListName": "ReporterType" },
+		{ "Name": "DepartmentId", "Label": "Departament", "Type": "long", "FK": true },
+		{ "Name": "ProviderId", "Label": "Proveïdor", "Type": "long", "FK": true },
+		{ "Name": "CustomerId", "Label": "Client", "Type": "long", "FK": true }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name" },
+                { "DataProperty": "ActionType", "Width": 300 },
+                { "DataProperty": "Origin", "Width": 150 }
+            ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ],
+			"Buttons": [
+				{ "Name": "Print", "Label": "Imprimit", "Icon": "green fal fa-file-pdf", "Function": "EXTRAESCOLAR_ConfirmarInscripcion"}
+			]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name", "ColSpan": 2 },
+								{ "Name": "Tipo", "FixedListMode": "DropDown" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Dades Bàsiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Url" }
+							]
+						},
+						{
+							"ItemList": "CustomerCompanyInstance",
+							"ListId": "ByInstance",
+							"FilterFields": [ { "Field": "Instancia" } ]
+						}
+					]
+				},
+				{
+					"Id": "Incidencias",
+					"Label": "Incidencias",
+					"Rows": [
+						{
+							"ItemList": "Incidencia",
+							"ListId": "ByInstancia",
+							"FilterFields": [ { "Field": "Instancia" } ]
+						}
+					]
+				}
+			]
+		}
+	]
+}

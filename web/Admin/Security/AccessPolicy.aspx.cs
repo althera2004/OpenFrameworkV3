@@ -13,11 +13,10 @@
         {
             this.master = this.Master as Main;
             this.master.BreadCrumb.Add("Administració");
-            this.master.BreadCrumb.AddEncryptedLink("Seguridad", "/Admin/Security/");
-            this.master.BreadCrumb.Add("Política de acceso");
-            this.master.BreadCrumb.SetTitle("Seguridad: " + this.master.Company.Name);
-
-            //Policy = AccessPolicy(this.master.Company.Id, this.master.Instance.Name);
+            this.master.BreadCrumb.AddEncryptedLink("Seguretat", "/Admin/Security/Default.aspx");
+            this.master.BreadCrumb.AddLeaf("Política d'accés");
+            this.master.BreadCrumb.SetTitle("Seguretat: ");
+            this.master.SetPageType("pageAdmin");
         }
     }
 }

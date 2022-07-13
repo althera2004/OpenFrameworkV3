@@ -547,6 +547,7 @@ Core_ImgUpload_BadFormatTitle::El archivo no es una imagen.
 Core_ImgUpload_MaxSizeText::Image size should not exceed 100Kb!
 Core_ImgUpload_MaxSizeTitle::File too big!
 Core_Import_MenuLabel::Importaciones
+Core_Security_MenuLabel::Seguridad
 Core_Instance_BasicData::Configuración general
 Core_Instance_CommunicationsJSON::Configuración JSON
 Core_Instance_ConfigurationJSON::Fichero de configuración

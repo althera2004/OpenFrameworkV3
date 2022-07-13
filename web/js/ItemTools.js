@@ -33,8 +33,6 @@ function Item(config) {
 		return res;
 	}
 
-
-
 	this.ItemDifferencesToSave = function () {
 		var res = [];
 
@@ -90,6 +88,14 @@ function Item(config) {
 		}
 	}
 
+	this.Delete = function () {
+		PopupDeleteContext.ItemDefinition = ItemDefinition;
+		PopupDeleteContext.ItemId = this.OriginalItemData.Id;
+		PopupDeleteContext.Message = this.GetDescription();
+		PopupRenderDelete();
+		$("#LauncherPopupDelete").click();
+    }
+
 	this.Save = function () {
 		if (_.isEqual(this.OriginalItemData, this.ActualData)) {
 			alert("iguales");
@@ -133,6 +139,10 @@ function Item(config) {
 							$("#BreadCrumbLabel").html(ItemData.GetDescription());
 							$("#FormBtnSave").disable();
 							$("#FormBtnSave").attr("title", "No hay cambios por guardar");
+
+							// Actualizar footer status
+							$("#FooterStatusModifiedBy").html(ApplicationUser.Profile.FullName);
+							$("#FooterStatusModifiedOn").html(TodayText());
 						}
 						else {
 							NotifySaveError(msg.d.MessageError);
@@ -349,6 +359,9 @@ function ItemListById(itemDefinition, id) {
 			return result[0];
 		}
 	}
+	else {
+		return DefaultListDefinition(itemDefinition);
+    }
 
 	return null;
 }
@@ -418,6 +431,9 @@ function GetItemDataJson(itemName, itemId, callBack) {
 			FillComboFromFK(FKNames[x] + "Id", FKNames[x], -1);
 		}
 
+
+		$("#FooterStatusModifiedBy").html(ApplicationUser.Profile.FullName);
+		$("#FooterStatusModifiedOn").html(TodayText());
 		PageLoadingHIde();
     }
 }
@@ -461,8 +477,37 @@ function FillFormItemFromJson(data) {
     }
 }
 
+function ItemUpdateDataFormRadio(sender) {
+	var id = sender.target.id.split('_')[0];
+	var value = null;
+
+	if (sender.target.id.split('_')[1] === "No") {
+		if ($("#" + sender.target.id).prop("checked") === true) {
+			value = false;
+        }
+	}
+
+	if (sender.target.id.split('_')[1] === "Yes") {
+		if ($("#" + sender.target.id).prop("checked") === true) {
+			value = true;
+		}
+	}
+
+	ItemData.UpdateData(id, value);
+}
+
 function ItemUpdateData(sender) {
-	var id = sender.currentTarget.id
+	var id = "";
+
+	if (HasPropertyValue(sender.currentTarget)) {
+		id = sender.currentTarget.id;
+	}
+	else if (HasPropertyValue(sender.id)) {
+		id = sender.id;
+	}
+	else {
+		id = sender;
+    }
 
 	var value = $("#" + id).val();
 	var field = FieldByName(ItemDefinition, id);
@@ -471,13 +516,14 @@ function ItemUpdateData(sender) {
 	switch (dataType.toLowerCase()) {
 		case "long":
 		case "int":
+		case "range":
 		case "fixedlist":
 			value = value * 1;
 			break;
 		case "datetime":
 			value = GetDate(value, "/", true);
 			break;
-		case "bool":
+		case "boolean":
 			value = $("#" + id).prop("checked") === true;
 			break;
 		default:
@@ -609,5 +655,61 @@ function PopupTracesRender(data) {
 		"Title": "Traces d'activitats",
 		"BtnDelete": false,
 		"BtnOk": false
+	});
+}
+
+function DefaultListDefinition(itemDefinition) {
+	var columns = [];
+	for (var f = 0; f < itemDefinition.Fields; f++) {
+		if (itemDefinition.Fields[f].Name === "Id") {
+			continue;
+		}
+
+		columns.push({ "DataProperty": itemDefinition.Fields[f] });
+	}
+
+	var res =
+	{
+		"Id": "Custom",
+		"FormId": "Custom",
+		"Layout": 1,
+		"EditAction": "FormPage",
+		"Columns": columns
+	};
+
+	return res;
+}
+
+function Item_Inactivate(itemName, itemId) {
+	PopupDeleteContext.ItemDefinition = ItemDefinitionByName(itemName);
+	PopupDeleteContext.ItemId = itemId;
+	PopupRenderDelete();
+	$("#LauncherPopupDelete").click();
+}
+
+function Item_InactivateConfirm() {
+	//public ActionResult Inactivate (string itemName, long itemId, long applicationUserId,long companyId, string instanceName)
+	var data = {
+		"itemId": PopupDeleteContext.ItemId,
+		"itemName": PopupDeleteContext.ItemDefinition.ItemName,
+		"applicationUserId": ApplicationUser.Id,
+		"companyId": Company.Id,
+		"instanceName": Instance.Name
+	};
+
+	$.ajax({
+		"type": "POST",
+		"url": "/Async/ItemService.asmx/Inactivate",
+		"contentType": "application/json; charset=utf-8",
+		"dataType": "json",
+		"data": JSON.stringify(data, null, 2),
+		"success": function (msg) {
+			$("#PopupDeleteBtnCancel").click();
+			PopupRenderDeleteResponse();
+			$("#LauncherPopupDeleteResponse").click();
+		},
+		"error": function (msg) {
+			NotifySaveError(msg.responseText);
+		}
 	});
 }

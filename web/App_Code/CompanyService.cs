@@ -66,7 +66,7 @@ public class CompanyService : WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public ActionResult MailBox(MailBox mailBox, long applicationUserId, string instanceName)
+    public ActionResult MailBoxSave(MailBox mailBox, long applicationUserId, string instanceName)
     {
         return mailBox.Save(applicationUserId, instanceName);
     }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Alerts.aspx.cs" Inherits="OpenFrameworkV2.Web.Admin.Funcionality.Alerts" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Alerts.aspx.cs" Inherits="OpenFrameworkV3.Web.Admin.Feature.Alerts" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="StylesHead" Runat="Server">
     <link type="text/css" rel="stylesheet" href="/vendor/fooTable/footable.core.min.css" />

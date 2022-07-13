@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Signatures.aspx.cs" Inherits="OpenFrameworkV2.Web.Admin.Company.Signatures" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Signatures.aspx.cs" Inherits="OpenFrameworkV3.Web.Admin.Company.Signatures" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentStyles" Runat="Server">
 </asp:Content>

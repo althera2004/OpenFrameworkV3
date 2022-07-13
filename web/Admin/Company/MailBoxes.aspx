@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="MailBoxes.aspx.cs" Inherits="OpenFrameworkV2.Web.Admin.Company.MailBoxes" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="MailBoxes.aspx.cs" Inherits="OpenFrameworkV3.Web.Admin.Company.MailBoxes" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentStyles" Runat="Server">
 </asp:Content>
@@ -84,9 +84,9 @@
 
                 <div class="panel-footer">
                     <label>Acciones:</label>&nbsp;
-                    <button class="btn btn-xs btn-info" onclick="MAILBOXES_SaveMain();">Guardar</button>
-                    <button class="btn btn-xs btn-info">Envío de comprobación</button>
-                    <button class="btn btn-danger btn-xs" onclick="MAILBOXES_CheckBlackListMain();">Comprobar Black List</button>
+                    <button type="button" id="MainBtnSave" class="btn btn-xs btn-info" onclick="MAILBOXES_SaveMain();">Guardar</button>
+                    <button type="button" id="MainBtnSendTest" class="btn btn-xs btn-info">Envío de comprobación</button>
+                    <button type="button" id="MainBtnCheck" class="btn btn-danger btn-xs" onclick="MAILBOXES_CheckBlackListMain();">Comprobar Black List</button>
                 </div>
             </div>
         </div>
@@ -102,7 +102,7 @@
                     <form method="get" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-xs-12">
-                                <input type="checkbox" id="ChkSameAddress" <%=this.ThirdParty.Id < 1 ? " checked=\"checked\"" : string.Empty  %> />
+                                <input type="checkbox" style="margin:5px 0 0 0!important;" id="ChkSameAddress" <%=this.ThirdParty.Id < 1 ? " checked=\"checked\"" : string.Empty  %> />
                                 Usar la misma dirección de correo que para envíos a usuarios.</label>
                         </div>
                         <div class="form-group">
@@ -146,6 +146,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label">Tipo</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="ThirdMailBoxType" value="<%=this.ThirdParty.MailBoxType%>" />
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-lg-2 control-label">Puerto de envío</label>
 
                                 <div class="col-lg-10">
@@ -167,9 +174,9 @@
 
                 <div class="panel-footer">
                     <label>Acciones:</label>&nbsp;
-                    <button class="btn btn-xs btn-info">Guardar</button>
-                    <button class="btn btn-xs btn-info">Envío de comprobación</button>
-                    <button class="btn btn-danger btn-xs">Comprobar Black List</button>
+                    <button type="button" id="ThirdBtnSave" class="btn btn-xs btn-info">Guardar</button>
+                    <button type="button" id="ThirdBtnSendTest" class="btn btn-xs btn-info">Envío de comprobación</button>
+                    <button type="button" id="ThirdBtnCheck" class="btn btn-danger btn-xs">Comprobar Black List</button>
                 </div>
             </div>
         </div>

@@ -36,6 +36,7 @@ function ListButtonRow(dataId, icon, color, action, title, name) {
 }
 
 function MenuSelectOption(optionId) {
+    console.log("MenuSelectOption", optionId);
     $("#" + optionId).addClass("active")
     $("#" + optionId).parent().parent().addClass("active");
     $("#" + optionId).parent().parent().addClass("open");
@@ -86,6 +87,25 @@ function RenderSubmenuOption(option) {
         id = option.ItemName + "_" + option.ListId;
     }
 
+    if (id === "1000") {
+        linkAction = " onclick=\"GoEncryptedPage('/admin/Company/',[]);\"";
+    }
+
+    if (id === "1001") {
+        linkAction = " onclick=\"GoEncryptedPage('/admin/Security/UserList.aspx',[]);\"";
+    }
+
+    if (id === "1002") {
+        linkAction = " onclick=\"GoEncryptedPage('/admin/Security/GroupList.aspx',[]);\"";
+    }
+
+    if (id === "1003") {
+        linkAction = " onclick=\"GoEncryptedPage('/admin/Security',[]);\"";
+    }
+
+    if (id === "1004") {
+        linkAction = " onclick=\"GoEncryptedPage('/admin/Features/Dictionary.aspx',[]);\"";
+    }
 
     res = "<li id=\"" + id + "\">";
     res += "  <a " + linkAction + ">";
@@ -232,4 +252,61 @@ function GroupButtonUrlClicked(sender) {
     else {
         PopupWarning("<strong>" + url + "</strong> no és una url vàlida.", Dictionary.Common_Warning);
     }
+}
+
+function InitSliders() {
+    
+    $(".simple-slider").each(function (index) {
+        var id = $(this)[0].id;
+        var min = $("#" + id).data("min");
+        var max = $("#" + id).data("max");
+
+        var slider = document.getElementById(id);
+
+        function filterPips(value, type) {
+            return value % 5 ? 2 : 1;
+        }
+
+        noUiSlider.create(slider, {
+            start: [-1],
+            //tooltips: [
+            //    wNumb({ decimals: 0 })
+            //],
+            connect: 'lower',
+            step: 1,
+            range: {
+                'min': [0],
+                'max': [26]
+            },
+            pips: {
+                filter: filterPips,
+                mode: 'steps',
+                density: 10,
+                stepped: true
+            }
+        });
+
+        slider.noUiSlider.on('update', function (values, handle) {
+            var realId = id.split('_')[0];
+            $("#" + realId + "_Value").html(values * 100 / 100);
+            $("#" + realId).val(values * 100 / 100);
+            var loaded = $("#" + id).data("loaded");
+
+
+            var CanUpdate = false;
+            if (loaded === 1) { CanUpdate = true; }
+            if (HasPropertyValue(ItemData.OriginalItemData)) {
+                if (ItemData.OriginalItemData.Id < 0) {
+                    CanUpdate = true;
+                }
+            }
+            else {
+                CanUpdate = true;
+            }
+
+            if(CanUpdate === true) {
+                ItemUpdateData(realId);
+            }
+        });
+    });
 }

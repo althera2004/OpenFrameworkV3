@@ -175,6 +175,101 @@ namespace OpenFrameworkV3
             return dictionaryFinal;
         }
 
+        /// <summary>Load a dictionary</summary>
+        /// <param name="language">Code of language</param>
+        /// <param name="instanceName">Name of instance</param>
+        /// <returns>A dictionary class with text for fixed labels</returns>
+        public static string GetCorpus(string language, string instanceName)
+        {
+            var instance = Persistence.InstanceByName(instanceName);
+            var dictionary = LoadValuesFromFile("Core", language);
+
+            var featuresDictionary = LoadValuesFromFile("Features", language);
+            foreach (var value in featuresDictionary)
+            {
+                if (dictionary.ContainsKey(value.Key))
+                {
+                    dictionary[value.Key] = value.Value;
+                }
+                else
+                {
+                    dictionary.Add(value.Key, value.Value);
+                }
+            }
+
+            if (instance.Config.Billing != null)
+            {
+                var billingDictionary = LoadValuesFromFile("Billing", language);
+                foreach (var value in billingDictionary)
+                {
+                    if (dictionary.ContainsKey(value.Key))
+                    {
+                        dictionary[value.Key] = value.Value;
+                    }
+                    else
+                    {
+                        dictionary.Add(value.Key, value.Value);
+                    }
+                }
+            }
+
+            var instanceDictionaryFile = string.Format(CultureInfo.InvariantCulture, @"{0}\core_{1}.dicc", Instance.Path.Dictionary(instanceName), language);
+            if (File.Exists(instanceDictionaryFile))
+            {
+                var instanceDictionary = LoadValuesFromFile(instanceDictionaryFile);
+                foreach (var value in instanceDictionary)
+                {
+                    if (dictionary.ContainsKey(value.Key))
+                    {
+                        dictionary[value.Key] = value.Value;
+                    }
+                    else
+                    {
+                        dictionary.Add(value.Key, value.Value);
+                    }
+                }
+            }
+
+            foreach (var itemDefinition in instance.ItemDefinitions)
+            {
+                var itemName = itemDefinition.ItemName;
+                var itemDictionaryFile = string.Format(CultureInfo.InvariantCulture, @"{0}\{1}_{2}.dicc", Instance.Path.Dictionary(instanceName), itemName, language);
+                var itemDictionary = LoadValuesFromFile(itemDictionaryFile);
+                foreach (var value in itemDictionary)
+                {
+                    var finalKey = itemName + "_" + value.Key;
+                    if (dictionary.ContainsKey(finalKey))
+                    {
+                        dictionary[finalKey] = value.Value;
+                    }
+                    else
+                    {
+                        dictionary.Add(finalKey, value.Value);
+                    }
+                }
+            }
+
+            var items = from pair in dictionary
+                        orderby pair.Key ascending
+                        select pair;
+
+            var res = new StringBuilder("[");
+            var first = true;
+            foreach (var item in items)
+            {
+                res.AppendFormat(
+                    CultureInfo.InvariantCulture,
+                    @"{2}{{""Key"":""{0}"", ""Value"":""{1}""}}",
+                    item.Key,
+                    Tools.Json.JsonCompliant(item.Value),
+                    first ? string.Empty : ",");
+                first = false;
+            }
+
+            res.Append("]");
+            return res.ToString();
+        }
+
         /// <summary>Try to get a label from dictionary</summary>
         /// <param name="key">Key of dictionary</param>
         /// <returns>Label based on key or key notation</returns>

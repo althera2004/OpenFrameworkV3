@@ -2,103 +2,95 @@
 
 <!DOCTYPE html>
 
-<html lang="ca-es">
+<html lang="ca-es" xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<meta charset="utf-8" />
-		<title><%=this.Title %></title>
+    <meta charset="utf-8" />
+    <title><%=this.Title %></title>
+    <meta name="description" content="OpenFramework" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-		<meta name="description" content="OpenFramework" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/font-awesome/4.5.0/css/pro.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/nouislider.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/fonts.googleapis.com.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/ace.min.css" class="ace-main-stylesheet" <%=this.MainAceStyle %> />
+    <link rel="stylesheet" type="text/css" href="/css/Main.css" />
 
-		<!-- bootstrap & fontawesome -->
-		<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
-		<link rel="stylesheet" type="text/css" href="/assets/font-awesome/4.5.0/css/pro.min.css" />
-
-
-		<!-- text fonts -->
-		<link rel="stylesheet" type="text/css" href="/assets/css/fonts.googleapis.com.css" />
-
-		<!-- ace styles -->
-		<link rel="stylesheet" type="text/css" href="/assets/css/ace.min.css" class="ace-main-stylesheet" <%=this.MainAceStyle %> />
-	<link rel ="stylesheet" type="text/css" href="/css/Main.css" />
-
-		<!--[if lte IE 9]>
+    <!--[if lte IE 9]>
 			<link rel="stylesheet" href="/assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
 		<![endif]-->
-		<link rel="stylesheet" type="text/css" href="/assets/css/ace-skins.min.css" />
-		<link rel="stylesheet" type="text/css" href="/assets/css/ace-rtl.min.css" />
-		<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datepicker3.min.css" />
-		
+    <link rel="stylesheet" type="text/css" href="/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datepicker3.min.css" />
 
-		<!--[if lte IE 9]>
+
+    <!--[if lte IE 9]>
 		  <link rel="stylesheet" href="/assets/css/ace-ie.min.css" />
 		<![endif]-->
 
-		<!-- inline styles related to this page -->
-		<style type="text/css">
-			
+    <!-- inline styles related to this page -->
+    <style type="text/css">
+    	/* some elements used in demo only */
+    	.spinner-preview {
+    		width: 100px;
+    		height: 100px;
+    		text-align: center;
+    		margin-top: 60px;
+    	}
 
+    	.dropdown-preview {
+    		margin: 0 5px;
+    		display: inline-block;
+    	}
 
+    		.dropdown-preview > .dropdown-menu {
+    			display: block;
+    			position: static;
+    			margin-bottom: 5px;
+    		}
 
-			/* some elements used in demo only */
-			.spinner-preview {
-				width: 100px;
-				height: 100px;
-				text-align: center;
-				margin-top: 60px;
-			}
-			
-			.dropdown-preview {
-				margin: 0 5px;
-				display: inline-block;
-			}
-			.dropdown-preview  > .dropdown-menu {
-				display: block;
-				position: static;
-				margin-bottom: 5px;
-			}
-			
-			.panel-form .panel-heading {
-				border:none;
-				font-size: 14px;
-			}
-			
-			.panel-form-heading {
-				border: 1px dashed #ccc;
-				border-width:0 0 1px 0;				
-			}
-			
-			.panel-form .panel-title {
-				padding:2px;
-				font-size:16px;
-				font-weight:bold;
-			}
-			
-			.panel-title-detail 
-			{
-				color:#777;
-				font-size:14px;
-				font-weight:bold;
-				margin-left:8px;
-			}
-			
-			.panel-title a:hover { text-decoration:none; }
-		</style>
+    	.panel-form .panel-heading {
+    		border: none;
+    		font-size: 14px;
+    	}
 
-		<!-- ace settings handler -->
-		<script src="/assets/js/ace-extra.min.js"></script>
+    	.panel-form-heading {
+    		border: 1px dashed #ccc;
+    		border-width: 0 0 1px 0;
+    	}
 
-		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+    	.panel-form .panel-title {
+    		padding: 2px;
+    		font-size: 16px;
+    		font-weight: bold;
+    	}
 
-		<!--[if lte IE 8]>
+    	.panel-title-detail {
+    		color: #777;
+    		font-size: 14px;
+    		font-weight: bold;
+    		margin-left: 8px;
+    	}
+
+    	.panel-title a:hover {
+    		text-decoration: none;
+    	}
+    </style>
+
+    <!-- ace settings handler -->
+    <script src="/assets/js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
 		<script src="/assets/js/html5shiv.min.js"></script>
 		<script src="/assets/js/respond.min.js"></script>
 		<![endif]-->
-    <asp:ContentPlaceHolder id="ContentStyles" runat="server"></asp:ContentPlaceHolder>	
-    <asp:ContentPlaceHolder id="ContentScriptVars" runat="server"></asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="ContentStyles" runat="server"></asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="ContentScriptVars" runat="server"></asp:ContentPlaceHolder>
 </head>
 <body class="no-skin <%=this.PageType %>">
     <form id="form1" runat="server">
@@ -115,7 +107,8 @@
 				</button>
 
 				<div class="navbar-header pull-left">
-					<a class="navbar-brand"><small><%= this.Instance.Name %>&nbsp;<span class="hidden-1000"> / <%=this.Company.Name %></span></small></a>
+					<a class="navbar-brand">
+						<small><span id="LayoutInstanceName">&nbsp;</span>&nbsp;/&nbsp;<span class="hidden-1000" id="LayoutCompanyName"></span></small></a>
 				</div>
 
 				<div class="navbar-buttons navbar-header pull-right" role="navigation">
@@ -450,6 +443,7 @@
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
 					<i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
 				</div>
+				<div id="chronotime"></div>
 			</div>
 
 			<div class="main-content">
@@ -481,9 +475,9 @@
 							<div class="ace-settings-box clearfix" id="ace-settings-box">
 								<div class="pull-left">
                                     <ul id="MenuCore" style="text-align: left;list-style:none;margin:0;">
-                                        <li><a href="#"><i class="fad fa-tachometer bigger-110" style="width: 25px;"></i> Gestión de instancia</a></li>
+                                        <li><a href="#" onclick="GoEncryptedPage('/Admin/Instance/Default.aspx');"><i class="fad fa-tachometer bigger-110" style="width: 25px;"></i> Gestión de instancia</a></li>
                                         <li><a href="#" onclick="Core_ReloadDefinitions();"><i class="fad fa-cubes bigger-110" style="width: 25px;"></i> Recargar definiciones</a></li>
-                                        <li><a href="#"><i class="fad fa-book bigger-110" style="width: 25px;"></i> Recargar diccionario</a></li>
+                                        <li><a href="#" onclick="GoEncryptedPage('/Admin/Features/Dictionary.aspx');"><i class="fad fa-book bigger-110" style="width: 25px;"></i> Recargar diccionario</a></li>
                                         <li><a href="#"><i class="fad fa-users bigger-110" style="width: 25px;"></i> Recargar permisos</a></li>
                                         <li><a href="#" onclick="Core_ReloadMenu();"><i class="fad fa-list bigger-110" style="width: 25px;"></i> Recargar menú</a></li>
                                         <li><a href="#"><i class="fad fa-bell bigger-110" style="width: 25px;"></i> Recargar alertas</a></li>
@@ -511,7 +505,7 @@
                         Data:&nbsp;<strong><span id="FooterStatusModifiedOn"></span></strong>
                     </div>
                     <div id="FooterButton" class="col-lg-8 col-md-8 col-sm-12 col-xs-12" style="text-align: right; height: 30px;">                       
-                        <button class="btn btn-danger" type="button" id="FormBtnDelete"><i class="fa fa-trash bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;">Eliminar</span></button>
+                        <button class="btn btn-danger" type="button" id="FormBtnDelete" onclick="ItemData.Delete();"><i class="fa fa-trash bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;">Eliminar</span></button>
                         <button class="btn btn-success" type="button" id="FormBtnSave" disabled="disabled" onclick="ItemData.Save();" title="No hay cambios por guardar"><i class="fa fa-check bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;">Guardar</span></button>
                         <button class="btn" type="button" id="FormBtnCancel"><i class="fa fa-arrow-left bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;">Volver</span></button>
                         <span id="widths" style="float: left; display: none;">
@@ -551,6 +545,7 @@
 		<!--[if lte IE 8]>
 		  <script src="/assets/js/excanvas.min.js"></script>
 		<![endif]-->
+		<script src="/assets/js/purify.js"></script>
 		<script src="/assets/js/lodash.js"></script>
 		<script src="/assets/js/jquery-ui.custom.min.js"></script>
 		<script src="/assets/js/jquery.ui.touch-punch.min.js"></script>
@@ -561,22 +556,25 @@
 		<script src="/assets/js/bootstrap-datepicker.min.js"></script>
 		<script charset="utf-8" type="text/javascript" src="/assets/js/bootstrap-datepicker.ca.js"></script>
 		<script src="/Dicc/ca-es.js"></script>
-		<script src="/Instances/<%=this.Instance.Name %>/Scripts/FixedLists.js"></script>
+		<script src="/Instances/<%=this.InstanceName %>/Scripts/FixedLists.js"></script>
 		<script src="/js/base64.js"></script>
 		<script src="/js/common.js"></script>
 		<script src="/js/MasterEvents.js"></script>
 		<script src="/assets/js/moment.min.js"></script>
+		<script src="/assets/js/nouislider.js"></script>
+		<script src="/assets/js/wNumb.min.js"></script>
 		<script src="/js/layout.js"></script>
 		<script src="/js/navigation.js"></script>
 		<script src="/js/FK.js"></script>
 		<script src="/js/Core.js"></script>
 		<script src="/js/PopupsRender.js"></script>
+		<script src="/js/ItemTools.js"></script>
 
 		<!-- ace scripts -->
 		<script src="/assets/js/ace-elements.min.js"></script>
 		<script src="/assets/js/ace.min.js"></script>
 
-		
+		<%= this.Scripts %>
         <asp:ContentPlaceHolder id="ContentScriptFiles" runat="server"></asp:ContentPlaceHolder>
 
 		<!-- inline scripts related to this page -->
@@ -587,23 +585,18 @@
 			var FK = [];
             var Instance = LocalStorageGetJson("Instance");
             var Company = LocalStorageGetJson("Company");
-            var ApplicationUser = LocalStorageGetJson("ApplicationUser");
+			var ApplicationUser = LocalStorageGetJson("ApplicationUser");
+
+			$("#LayoutInstanceName").html(Instance.Name);
+			$("#LayoutCompanyName").html(Company.Name);
         </script>
-        <asp:ContentPlaceHolder id="ContentScripts" runat="server"></asp:ContentPlaceHolder>
 		<script type="text/javascript">
 			ActiveLayout();
 			$("#ActualUserName").html(ApplicationUser.Profile.Name);
             $("#UserAvatar").attr("src", "/Instances/" + Instance.Name + "/Data/Core_Users/" + ApplicationUser.Id + "/avatar.jpg");
 			RenderMenu();
-
-			if (typeof ItemDefinition !== "undefined") {
-				MenuSelectOption(ItemDefinition.ItemName + "_" + ListId);
-			}
-
-			if (typeof CustomActions === "function") {
-				CustomActions();
-            }
         </script>
+        <asp:ContentPlaceHolder id="ContentScripts" runat="server"></asp:ContentPlaceHolder>
     </form>
 	<div id="right-menu" class="modal aside" data-body-scroll="false" data-offset="true" data-placement="right" data-fixed="true" data-backdrop="false" tabindex="-1">
 									<div class="modal-dialog">
@@ -635,7 +628,7 @@
 		$(window).trigger("resize");
 		if (PageType === "PageView") {
 			if (typeof ItemData.OriginalItemData !== "undefined") {
-				if (ItemDefinition.ForeignValues.length > 0) {
+                if (HasArrayValues(ItemDefinition.ForeignValues)) {
 					PageLoadingShow();
 				}
                 else {
@@ -645,6 +638,16 @@
 				ItemData.ItemDefinition = ItemDefinition;
             }
 		}
+
+        if (PageType === "PageList" || PageType === "PageView") {
+			if (typeof ItemDefinition !== "undefined") {
+				MenuSelectOption(ItemDefinition.ItemName + "_" + ListId);
+			}
+		}
+
+        if (typeof CustomActions === "function") {
+            CustomActions();
+        }
     </script>
 	<style type="text/css">
 		
@@ -732,7 +735,6 @@ variables above and don't change anything in the actual loader code
     </div>
 
 	<div id="LauncherButtons" style="display:none;">
-        <div id="chronotime"></div>
         <a href="#" id="DocumentLink" target="_blank">document link</a>
         <a href="#PopupQR" role="button" data-toggle="modal" id="63045619"> QR </a>
         <a href="#PopupUserConversion" role="button" data-toggle="modal" id="LauncherPopupUserConversion"> User </a>
@@ -744,6 +746,8 @@ variables above and don't change anything in the actual loader code
         <a href="#PopupWarning" role="button" data-toggle="modal" id="LauncherPopupWaring"> Warning </a>
         <a href="#PopupConfirm" role="button" data-toggle="modal" id="LauncherPopupConfirm"> Confirm </a>
         <a href="#PopupInfo" role="button" data-toggle="modal" id="LauncherPopupInfo"> Info </a>
+        <a href="#PopupLoginAndContinue" role="button" data-toggle="modal" data-backdrop="static" data-keyboard="false" id="LauncherPopupLoginAndContinue"> LoginAndContinue </a>
+        <a href="#PopupDeleteResponse" role="button" data-toggle="modal" data-backdrop="static" data-keyboard="false" id="LauncherPopupDeleteResponse"> DeleteResponse </a>
         <a href="#PopupSaveInfo" role="button" data-toggle="modal" id="LauncherSavePopupInfo"> Info </a>
         <a href="#PopupSuccess" role="button" data-toggle="modal" id="LauncherPopupSuccess"> Success </a>
         <a href="#PopupUploadFile" role="button" data-toggle="modal" id="LauncherPopupUploadFile"> Upload file </a>
@@ -763,8 +767,6 @@ variables above and don't change anything in the actual loader code
         <a href="#PopupItemCalendar" role="button" data-toggle="modal" id="LauncherPopupItemCalendar"> ItemCalendar  </a>
     </div>
     <div id="PopupsContentHolder"></div>
-	
-
     <div id="PopupDefault" class="modal in" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content" style="width:800px;">
@@ -798,5 +800,12 @@ variables above and don't change anything in the actual loader code
             </div>
         </div>
     </div>
+	<script type="text/javascript" src="/js/chronometer.js"></script>
+	<script type="text/javascript">
+		var LACStatus = localStorage.getItem("LAC");
+		if (LACStatus === "true") {
+			PopupLoginAndContinue();
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,77 @@
+﻿{
+    "Id": 8,
+    "ItemName": "Equipment",
+	"Features": { "Attachs": true },
+	"Description": "Equips",
+    "Layout": {
+        "Icon": "fad fa-cubes",
+        "Label": "Equip",
+        "LabelPlural": "Equips",
+        "Description": {
+            "Pattern": "{0} - {1}",
+            "Fields": [
+                { "Name": "Name" },
+                { "Name": "Email" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [  ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150 },
+		{ "Name": "Email", "Label": "Email", "Type": "email", "Length": 150 },
+		{ "Name": "Phone", "Label": "Telèfon", "Type": "text", "Length": 15 },
+		{ "Name": "Reporter", "Label": "Reportador", "Type": "bool", "DataFormat": {"Name": "ToBooleanCheck" }},
+		{ "Name": "Informed", "Label": "Informat", "Type": "bool", "DataFormat": {"Name": "ToBooleanCheck" }}
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name", "Linkable": true },
+                { "DataProperty": "Email", "Width": 300 },
+                { "DataProperty": "Phone", "Width": 120 },
+				{ "DataProperty": "Reporter", "Width": 100, "Align": "center" },
+				{ "DataProperty": "Informed", "Width": 100, "Align": "center" }
+            ],
+            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" },
+								{ "Name": "Email", "Colspan": 2 }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Phone" },
+								{ "Name": "Reporter" },
+								{ "Name": "Informed" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

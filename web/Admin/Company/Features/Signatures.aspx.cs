@@ -1,4 +1,4 @@
-﻿namespace OpenFrameworkV2.Web.Admin.Company
+﻿namespace OpenFrameworkV3.Web.Admin.Company
 {
     using System;
     using System.Web.UI;
@@ -19,7 +19,7 @@
             this.master.BreadCrumb.Add("Administració");
             this.master.BreadCrumb.AddEncryptedLink("Configuració de companyia", "/Admin/Company/");
             this.master.BreadCrumb.AddLeaf("Firmas");
-            this.master.BreadCrumb.SetTitle("Companyia: " + this.master.Instance.Name);
+            this.master.BreadCrumb.SetTitle("Companyia: ");
 
             this.master.AddScript("/vendor/jquery-flot/jquery.flot.js");
             this.master.AddScript("/vendor/jquery-flot/jquery.flot.resize.js");

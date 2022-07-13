@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="OpenFrameworkV2.Web.Admin.Company.Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="OpenFrameworkV3.Web.Admin.Company.Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentStyles" Runat="Server">
     <style type="text/css">
@@ -206,7 +206,6 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentScripts" runat="server">
     <script type="text/javascript">
-        pageType = "PageAdmin";
-        MenuSelectOption("AdminCompany");
+        MenuSelectOption("1000");
     </script>
 </asp:Content>

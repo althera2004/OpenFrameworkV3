@@ -29,6 +29,8 @@ namespace OpenFrameworkV3.Core.Companies
         private List<CompanyContactPerson> contactPersons;
         private Dictionary<string, object> customFields;
 
+        private CompanySecurityConfig SecurityConfig;
+
         public ReadOnlyDictionary<string, object> CustomFiels
         {
             get
@@ -340,7 +342,8 @@ namespace OpenFrameworkV3.Core.Companies
                         ""ContactPerson"":{7},
                         ""Language"": {8},
                         ""MainAddress"": {9},
-                        ""Active"":{10}}}",
+                        ""SecurityConfig"": {10},
+                        ""Active"":{11}}}",
                     this.Id,
                     Tools.Json.JsonCompliant(this.Name),
                     Tools.Json.JsonCompliant(this.RazonSocial),
@@ -351,6 +354,7 @@ namespace OpenFrameworkV3.Core.Companies
                     this.ContactPerson.Json,
                     this.DefaultLanguage.Json,
                     this.MainAddress.Json,
+                    this.SecurityConfig.Json,
                     ConstantValue.Value(this.Active));
             }
         }
@@ -634,6 +638,8 @@ namespace OpenFrameworkV3.Core.Companies
 
                                     res.adresses = CompanyPostalAddress.ByCompany(res.Id, instanceName).ToList();
                                     res.contactPersons = CompanyContactPerson.ByCompany(res.Id, instanceName).ToList();
+
+                                    res.SecurityConfig = CompanySecurityConfig.Get(res.Id, instanceName);
                                 }
                             }
 

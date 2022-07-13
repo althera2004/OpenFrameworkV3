@@ -97,6 +97,10 @@ namespace OpenFrameworkV3.Core.Security
         [XmlElement(Type = typeof(bool), ElementName = "Core")]
         public bool Core { get; set; }
 
+        /// <summary>Gets or sets an encoded password</summary>
+        [XmlElement(Type = typeof(string), ElementName = "Password")]
+        public string Password { get; set; }
+
         /// <summary>Gets or sets a value indicating whether if user is administrator user</summary>
         [XmlElement(Type = typeof(bool), ElementName = "AdminUser")]
         public bool AdminUser { get; set; }
@@ -258,21 +262,25 @@ namespace OpenFrameworkV3.Core.Security
                     this.grants = new List<Grant>();
                 }
 
+                var profileJson = (this.Profile ?? Profile.Empty).Json;
+
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     @"{{
-                        ""Id"":0,
+                        ""Id"":{0},
                         ""Email"":""{1}"",
-                        ""Core"":{2},
-                        ""AdminUser"":{3},
-                        ""Profile"":{4},
-                        ""Grants"":{5}
+                        ""Password"":""{2}"",
+                        ""Core"":{3},
+                        ""AdminUser"":{4},
+                        ""Profile"":{5},
+                        ""Grants"":{6}
                     }}",
                     this.Id,
-                    this.Email.ToLowerInvariant(),
+                    (this.Email ?? string.Empty).ToLowerInvariant(),
+                    (this.Password ?? string.Empty),
                     ConstantValue.Value(this.Core),
                     ConstantValue.Value(this.AdminUser),
-                    this.Profile.Json,
+                    profileJson,
                     Grant.JsonList(new ReadOnlyCollection<Grant>(this.grants)));
             }
         }
@@ -289,9 +297,9 @@ namespace OpenFrameworkV3.Core.Security
                 /* CREATE PROCEDURE [dbo].[Core_ShortCuts_ByUser] 
                  *   @ApplicationUserId bigint,
                  *   @CompanyId bigint */
-                using(var cmd = new SqlCommand("Core_ShortCuts_ByUser"))
+                using (var cmd = new SqlCommand("Core_ShortCuts_ByUser"))
                 {
-                    using(var cnn = new SqlConnection(cns))
+                    using (var cnn = new SqlConnection(cns))
                     {
                         cmd.Connection = cnn;
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -334,7 +342,7 @@ namespace OpenFrameworkV3.Core.Security
                         }
                         finally
                         {
-                            if(cmd.Connection.State != ConnectionState.Closed)
+                            if (cmd.Connection.State != ConnectionState.Closed)
                             {
                                 cmd.Connection.Close();
                             }
@@ -387,8 +395,11 @@ namespace OpenFrameworkV3.Core.Security
                                     };
 
                                     res.AdminUser = rdr.GetBoolean(ColumnsUserGet.AdminUser);
+                                    res.Core = rdr.GetBoolean(ColumnsUserGet.Core);
                                     res.Corporative = rdr.GetBoolean(ColumnsUserGet.Coporative);
                                     res.Email = rdr.GetString(ColumnsUserGet.Email);
+
+                                    res.Password = Tools.Basics.Base64Encode(rdr.GetString(ColumnsUserGet.Password));
 
                                     res.Active = rdr.GetBoolean(ColumnsUserGet.Active);
 
@@ -450,7 +461,6 @@ namespace OpenFrameworkV3.Core.Security
                                             Iso = rdr.GetString(ColumnsUserGet.LanguageISO),
                                             Name = rdr.GetString(ColumnsUserGet.LanguageName)
                                         },
-
                                         Profile = new Profile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnsUserGet.Id),
@@ -460,6 +470,7 @@ namespace OpenFrameworkV3.Core.Security
                                         },
                                         AdminUser = rdr.GetBoolean(ColumnsUserGet.AdminUser),
                                         Corporative = rdr.GetBoolean(ColumnsUserGet.Coporative),
+                                        Core = rdr.GetBoolean(ColumnsUserGet.Core),
                                         Email = rdr.GetString(ColumnsUserGet.Email),
                                         Active = rdr.GetBoolean(ColumnsUserGet.Active)
                                     };
@@ -533,6 +544,67 @@ namespace OpenFrameworkV3.Core.Security
                 }
             }
 
+            return res;
+        }
+
+        public ActionResult Insert(long applicationUserId, long companyId, string instanceName)
+        {
+            var res = ActionResult.NoAction;
+            /* CREATE PROCEDURE Core_User_Insert
+             *   @Id bigint output,
+             *   @Email nvarchar(100),
+             *   @Password nvarchar(50),
+             *   @Language bigint,
+             *   @FirstName nvarchar(50),
+             *   @LastName nvarchar(50),
+             *   @LastName2 nvarchar(50),
+             *   @IMEI nvarchar(20),
+             *   @CompanyId bigint,
+             *   @ApplicationUserId bigint */
+
+            var cns = Persistence.ConnectionString(instanceName);
+            if (!string.IsNullOrEmpty(cns))
+            {
+                using (var cmd = new SqlCommand("Core_User_Insert"))
+                {
+                    using (var cnn = new SqlConnection(cns))
+                    {
+                        cmd.Connection = cnn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(DataParameter.OutputLong("@Id"));
+                        cmd.Parameters.Add(DataParameter.Input("@Email", this.Email, 100));
+                        cmd.Parameters.Add(DataParameter.Input("@Password", "pass", 50));
+                        cmd.Parameters.Add(DataParameter.Input("@Language", this.Language.Id));
+                        cmd.Parameters.Add(DataParameter.Input("@FirstName", this.Profile.Name, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@LastName", this.Profile.LastName, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@LastName2", this.Profile.LastName2, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@IMEI", this.Profile.IMEI, 20));
+                        cmd.Parameters.Add(DataParameter.Input("@CompanyId", companyId));
+                        cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));
+                        try
+                        {
+                            cmd.Connection.Open();
+                            cmd.ExecuteNonQuery();
+                            this.Id = Convert.ToInt64(cmd.Parameters["@Id"].Value);
+                        }
+                        finally
+                        {
+                            if (cmd.Connection.State != ConnectionState.Closed)
+                            {
+                                cmd.Connection.Close();
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            return res;
+        }
+
+        public ActionResult Update(long applicationUserId, long companyId, string instanceName)
+        {
+            var res = ActionResult.NoAction;
             return res;
         }
     }

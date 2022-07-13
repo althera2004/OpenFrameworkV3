@@ -29,9 +29,22 @@ using OpenFrameworkV3.Tools;
 [ScriptService]
 public class ItemService : WebService
 {
-
     public ItemService()
     {
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult ItemBarSave(string itemName, long id, string description, long applicationUserId, long companyId, string instanceName)
+    {
+        return OpenFrameworkV3.Core.DataAccess.Save.SaveBarItem(itemName, id, description, applicationUserId, companyId, instanceName);
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult ItemBarDelete(string itemName, long id, long applicationUserId, string instanceName)
+    {
+        return OpenFrameworkV3.Core.DataAccess.Save.SaveBarDelete(itemName, id, applicationUserId, instanceName);
     }
 
     [WebMethod(EnableSession = true)]
@@ -54,6 +67,12 @@ public class ItemService : WebService
         return res.Replace("\n", "<br />").Replace("\r", string.Empty);
     }
 
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult Inactivate (string itemName, long itemId, long applicationUserId,long companyId, string instanceName)
+    {
+        return OpenFrameworkV3.Core.DataAccess.Save.Inactivate(itemName, itemId, companyId, applicationUserId, instanceName);
+    }
 
     [WebMethod(EnableSession = true)]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]

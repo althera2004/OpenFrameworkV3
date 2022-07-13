@@ -57,14 +57,7 @@ namespace OpenFrameworkV3.Core
 
         public static void CheckPersistence()
         {
-            //var instanceName = ConfigurationManager.AppSettings["InstanceName"] as string;
-            //if(HttpContext.Current.Request.UserHostName.ToUpperInvariant().IndexOf("OPENFRAMEWORK") != -1)
-            //{
-            //    instanceName = HttpContext.Current.Request.UserHostName.Split('.')[0];
-            //}
-
-            var instanceName = InstanceName;
-
+            var instanceName = Instance.InstanceName;
             if (!Persistence.InstanceExists(instanceName))
             {
                 var instance = Instance.LoadDefinition(instanceName, true);
