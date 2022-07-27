@@ -310,3 +310,55 @@ function InitSliders() {
         });
     });
 }
+
+function ToMoneyFormat(value, decimals, nullable) {
+    if (nullable === true && value === null) {
+        return "";
+    }
+
+    if (typeof decimals === "undefined" || decimals === null) {
+        decimals = 2;
+    }
+
+    var pow = 100;
+    if (typeof decimals !== 'undefined') {
+        pow = Math.pow(10, decimals);
+    }
+
+    value = parseFloat(Math.round(value * pow) / pow).toFixed(decimals);
+    var res = value;
+    var entera = "";
+    var enteraRes = "";
+    var decimal = "";
+
+    entera = value.split(".")[0];
+    decimal = value.split(".")[1];
+    if (typeof decimal === "undefined") {
+        decimal = "0";
+    }
+
+    while (decimal.length < decimals) {
+        decimal += "0";
+    }
+
+    while (entera.length > 0) {
+        if (entera.length < 4) {
+            enteraRes = entera + "." + enteraRes;
+            entera = "";
+        }
+        else {
+            enteraRes = entera.substr(entera.length - 3, 3) + Dictionary.NumericMilesSeparator + enteraRes;
+            entera = entera.substr(0, entera.length - 3);
+        }
+    }
+
+    if (decimals === 0) {
+        return enteraRes.substr(0, enteraRes.length - 1);
+    }
+
+    res = enteraRes.substr(0, enteraRes.length - 1) + Dictionary.NumericDecimalSeparator + decimal;
+
+    res = res.split('-.').join('-');
+
+    return res;
+}

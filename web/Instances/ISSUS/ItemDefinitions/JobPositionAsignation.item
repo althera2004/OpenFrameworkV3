@@ -1,0 +1,128 @@
+﻿{
+    "Id": 25,
+    "ItemName": "JobPositionAsignation",
+	"Description": "Asignacions",
+    "Layout": {
+        "Icon": "fad fa-user-hard-hat",
+        "Label": "Assignació de càrrec",
+        "LabelPlural": "Assignacions de càrrecs",
+        "Description": {
+            "Pattern": "{0}&nbsp;{1}",
+            "Fields": [
+                { "Name": "Name" },
+                { "Name": "LastName" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ { "ItemName": "JobPosition" },{ "ItemName": "Employee" } ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "JobPositionId", "Label": "Càrrec", "Type": "long", "FK": true },
+		{ "Name": "EmployeeId", "Label": "Empleat/da", "Type": "long", "FK": true },
+		{ "Name": "FechaAlta", "Label": "Data alta", "Type": "datetime" },
+		{ "Name": "FechaBaja", "Label": "Data baixa", "Type": "datetime" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"ForcedHeight": 300,
+			"Columns": [
+                { "DataProperty": "JobPositionId", "Width": 200 },
+                { "DataProperty": "EmployeeId" },
+                { "DataProperty": "FechaAlta", "Width": 90 },
+                { "DataProperty": "FechaBaja", "Width": 90 }
+            ],
+            "Parameters": [ {"Name": "Active", "Value": "1"} ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        },
+        {
+            "Id": "ByJobpositionId",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"ForcedHeight": 300,
+			"Columns": [
+                { "DataProperty": "EmployeeId" },
+                { "DataProperty": "FechaAlta", "Width": 90 },
+                { "DataProperty": "FechaBaja", "Width": 90 }
+            ],
+            "Parameters": [ {"Name": "JobPositionId", "Value": "#actualItemId#"}, {"Name": "Active", "Value": "1"} ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        },
+        {
+            "Id": "ByEmployeeId",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"ForcedHeight": 300,
+			"Columns": [
+                { "DataProperty": "JobPositionId" },
+                { "DataProperty": "FechaAlta", "Width": 90 },
+                { "DataProperty": "FechaBaja", "Width": 90 }
+            ],
+            "Parameters": [ {"Name": "EmployeeId", "Value": "#actualItemId#"}, {"Name": "Active", "Value": "1"} ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" },
+								{ "Name": "LastName", "ColSpan": 2 },
+								{ "Name": "NIF" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Dades personal",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Phone" },
+								{ "Name": "Email", "ColSpan": 2 }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "PostalAddress" },
+								{ "Name": "LocationPostalCodeId" }
+							]
+						},						
+						{
+							"Fields": [
+								{ "Name": "Notes", "Layout": "Splited" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "formacio",
+					"Label": "Formació",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Free", "Id": "FA" },
+								{ "Name": "FAR", "ColSpan": 2 },
+								{ "Name": "FARApte" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,15 +1,14 @@
 ﻿{
     "Id": 12,
     "ItemName": "Learning",
-	"Description": "Instancies de clients",
+	"Description": "Formació",
     "Layout": {
         "Icon": "fad fa-graduation-cap",
         "Label": "Formació",
         "LabelPlural": "Formació",
         "Description": {
-            "Pattern": "{0}-{1}",
+            "Pattern": "{0}",
             "Fields": [
-                { "Name": "Code" },
                 { "Name": "Name" }
             ]
         },
@@ -18,35 +17,102 @@
 	"ForeignValues": [  ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
-		{ "Name": "InstanceId", "Label": "Instància", "Type": "long", "FK": true },
-		{ "Name": "CustomerCompanyId", "Label": "Client", "Type": "long", "FK": true },
-		{ "Name": "PostalAddress", "Label": "Adreça", "Type": "postaladress" },
-		{ "Name": "BillingAdress", "Label": "Adreça Facturació", "Type": "postaladress" }
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 100 },
+		{ "Name": "Formador", "Label": "Formador/a", "Type": "text", "Length": 100 },
+		{ "Name": "Notes", "Label": "Notes", "Type": "textarea" },
+		{ "Name": "Objectiu", "Label": "Objectiu", "Type": "textarea" },
+		{ "Name": "Metodologia", "Label": "Metodologia", "Type": "textarea" },
+		{ "Name": "DatePreview", "Label": "Data prevista", "Type": "datetime" },
+		{ "Name": "DateRealStart", "Label": "Data inici", "Type": "datetime" },
+		{ "Name": "DateRealFinish", "Label": "Data fi", "Type": "datetime" },
+		{ "Name": "Hours", "Label": "Hores", "Type": "int" },
+		{ "Name": "Amount", "Label": "Cost", "Type": "money" },
+		{ "Name": "Status", "Label": "Estat", "Type": "FixedList", "FixedListName": "LearningStatus" }
     ],
     "Lists": [
         {
-            "Id": "ByCustomerCompany",
+            "Id": "Custom",
             "FormId": "Custom",
             "Layout": 1,
             "EditAction": "FormPage",
 			"ForcedHeight": 300,
 			"Columns": [
-                { "DataProperty": "InstanceId" }
+                { "DataProperty": "Name", "Search": true, "Orderable": true },
+                { "DataProperty": "DatePreview", "Width": 90, "Label": "D.prevista", "Orderable": true },
+                { "DataProperty": "DateRealFinish", "Width": 90, "Orderable": true },
+                { "DataProperty": "Status", "Width": 110, "Orderable": true },
+                { "DataProperty": "Amount", "Width": 90, "Orderable": true }
             ],
-            "Parameters": [ {"Name": "CustomerCompanyId", "Value": "#actualItemId#"}, {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
-        },
-        {
-            "Id": "ByInstance",
-            "FormId": "Custom",
-            "Layout": 1,
-            "EditAction": "FormPage",
-			"ForcedHeight": 300,
-			"Columns": [
-                { "DataProperty": "CustomerCompanyId" }
-            ],
-            "Parameters": [ {"Name": "InstanceId", "Value": "#actualItemId#"}, {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Parameters": [ {"Name": "Active", "Value": "1"} ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Dades bàsiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "DatePreview" },
+								{ "Name": "Hours" },
+								{ "Name": "Amount" },
+								{ "Name": "Status" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Formador", "ColSpan": 2 },
+								{ "Name": "DateRealStart" },
+								{ "Name": "DateRealFinish" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Objectiu", "Layout": "Splited", "Rows": 6 }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Metodologia", "Layout": "Splited", "Rows": 6 }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Notes", "Layout": "Splited", "Rows": 6 }
+							]
+						}
+					]
+				},
+				{
+					"Id": "assistents",
+					"Label": "Assistents",
+					"Rows": [
+						{
+							"Id": "assistentsRow",
+							"Label": "Assistents",
+							"ItemList": "LearningAssistant",
+							"ListId": "ByLearning",
+							"FilterFields": [ { "Field": "Learning" } ]
+						}
+					]
+				}
+			]
+		}
 	]
 }

@@ -60,13 +60,14 @@ function INSTANCE_RenderFixedLists() {
     var lists = Object.keys(FixedLists);
     var res = "";
     for (var x = 0; x < lists.length; x++) {
+        res += "<div class=\"col-xs-6\">";
         res += "<strong>" + lists[x] + ":</strong>&nbsp;<ul style=\"padding-left:24px;\">";
         var list = FixedLists[lists[x]];
         for (var y = 0; y < list.length; y++) {
             res += "<li><i style=\"color:#777;\">(" + y +")</i>&nbsp;"  + list[y] + "</li>";
         }
 
-        res += "</ul><hr>";
+        res += "</ul></div>";
     }
 
     $("#FixedListsDiv").html(res);

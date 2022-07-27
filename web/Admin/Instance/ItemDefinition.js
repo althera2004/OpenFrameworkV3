@@ -1,10 +1,91 @@
-﻿window.onload = function () {
+﻿var CodeMirror_Context = {
+    "SQL": null,
+    "JavaScript": null
+};
+
+window.onload = function () {
     $("#nav-search").remove();
     $("#ItemDefinitionId").html(ItemDefinition.Id);
+    $("#ItemDefinitionIcon").html("<i class=\"" + ItemDefinition.Layout.Icon + " blue\" style=\"font-size:30px;\"></i>");
     $("#ItemDefinitionName").html(ItemDefinition.ItemName);
+    $("#TxtLayoutLabel").val(ItemDefinition.Layout.Label);
+    $("#TxtLayoutLabelPlural").val(ItemDefinition.Layout.LabelPlural);
+    $("#ItemDefinitionDescription").html(ItemDefinition.Description);
     $("#BreadCrumbLabel").html("Ìtem: " + ItemDefinition.Id + " - " + ItemDefinition.ItemName);
     ITEMDEFINITION_RenderFields();
     ITEMDEFINTNITION_CreateSQL();
+    ITEMDEFINITION_RenderScript();
+
+    $("#tabSelect-sql").on("click", ITEMDEFINITION_RenderScriptRefresh);
+    $("#tabSelect-scripts").on("click", ITEMDEFINITION_RenderScriptRefresh);
+}
+
+function ITEMDEFINITION_RenderScript(sender) {
+
+    /*CodeMirror(document.querySelector('#Editor'), {
+        lineNumbers: true,
+        tabSize: 2,
+        value: 'console.log("Hello, World");'
+    });
+
+    CodeMirror(document.querySelector('#ItemSQLCreate'), {
+        lineNumbers: true,
+        tabSize: 2,
+        value: sqlScript
+    });*/
+
+    /*var sqlScript = $("#ItemSQLCreate").html();
+    $("#ItemSQLCreate").html("");
+    var myCodeMirror = CodeMirror(document.body, {
+        value: sqlScript,
+        mode: "javascript"
+    });*/
+
+    if (CodeMirror_Context.SQL === null) {
+        console.log("CREATE", "SQL");
+        var mime = 'text/x-mariadb';
+        // get mime type
+        if (window.location.href.indexOf('mime=') > -1) {
+            mime = window.location.href.substr(window.location.href.indexOf('mime=') + 5);
+        }
+        var editor = CodeMirror.fromTextArea(document.getElementById('ItemSQLCreate'), {
+            mode: mime,
+            indentWithTabs: true,
+            smartIndent: true,
+            lineNumbers: true,
+            matchBrackets: true,
+            autofocus: true,
+            extraKeys: { "Ctrl-Space": "autocomplete" },
+            hintOptions: {
+                tables: {
+                    users: ["name", "score", "birthDate"],
+                    countries: ["name", "population", "size"]
+                }
+            }
+        });
+        CodeMirror_Context.SQL = editor;
+    }
+
+    if (CodeMirror_Context.JavaScript === null) {
+        console.log("CREATE", "Javascript");
+        var editor = CodeMirror.fromTextArea(document.getElementById("Editor"), {
+            mode: "text/javascript",
+            lineNumbers: true,
+            matchBrackets: true,
+            continueComments: "Enter",
+            extraKeys: { "Ctrl-Q": "toggleComment" }
+        });
+        CodeMirror_Context.JavaScript = editor;
+    }
+}
+
+function ITEMDEFINITION_RenderScriptRefresh(sender) {
+    if (sender.currentTarget.id === "tabSelect-sql") {
+        setTimeout(function () { CodeMirror_Context.SQL.refresh(); }, 10);
+    }
+    if (sender.currentTarget.id === "tabSelect-scripts") {
+        setTimeout(function () { CodeMirror_Context.JavaScript.refresh(); }, 10);
+    }
 }
 
 function ITEMDEFINITION_RenderFields() {
@@ -137,5 +218,5 @@ function ITEMDEFINTNITION_CreateSQL() {
     res += "    ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]\n";
     res += "  ) ON[PRIMARY]";
 
-    $("#ItemSQLCreate").html(res);
+    $("#ItemSQLCreate").val(res);
 }

@@ -1,6 +1,41 @@
 ﻿var actualFKItem = "";
 var FKLoaded = 0;
 
+function GetFKApplicationUsers(callback) {
+    var data = {
+        "companyId": Company.Id,
+        "instanceName": Instance.Name
+    };
+    $.ajax({
+        "type": "POST",
+        "url": "/Async/ItemService.asmx/GetFKApplicationUsers",
+        "contentType": "application/json; charset=utf-8",
+        "dataType": "json",
+        "data": JSON.stringify(data, null, 2),
+        "success": function (msg) {            
+            var result = null;
+            eval("result = " + msg.d.split('\n').join('').split('\r').join("<br />") + ";");
+            FK["ApplicationUser"] = { "Data": result, "Token": guid() };
+
+            if (typeof callback !== "undefined" && callback !== null) {
+                callback(result);
+            }
+
+
+            var res = "<option value=\"-1\" selected=\"selected\">Seleccionar</option>";
+            for (var x = 0; x < FK.ApplicationUser.Data.length; x++) {
+                var user = FK.ApplicationUser.Data[x];
+                res += "<option value=\"" + user.Id + "\">" + user.Value + "</option>";
+            }
+
+            $(".CmbAppplicationUsers").html(res);
+        },
+        "error": function (msg) {
+            console.log(msg.responseText);
+        }
+    });
+}
+
 function GetFKItem(itemName, callback) {
     // console.log("GetFKItem", itemName);
     actualFKItem = itemName;

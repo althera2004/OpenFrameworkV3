@@ -1,0 +1,63 @@
+﻿{
+    "Id": 26,
+    "ItemName": "AuditoryQuestionaryQuestion",
+	"Description": "Qüestionari",
+    "Layout": {
+        "Icon": "fad fa-question",
+        "Label": "Pregunta",
+        "LabelPlural": "Preguntes",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "AuditoryQuestionary"} ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 100 },
+		{ "Name": "AuditoryQuestionaryId", "Label": "Qüestionaru", "Type": "long", "FK": true },
+		{ "Name": "Question", "Label": "Pregunta", "Type": "textarea" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "AuditoryQuestionaryId", "Width": 300 },
+                { "DataProperty": "Question" }
+            ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				
+				{
+					"Id": "basic",
+					"Label": "Dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "AuditoryQuestionaryId" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Question", "Layout": "Splited" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

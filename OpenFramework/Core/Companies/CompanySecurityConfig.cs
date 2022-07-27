@@ -59,7 +59,7 @@
                     IPAccess = false,
                     PasswordComplexity = 0,
                     PasswordCaducity = false,
-                    PasswordCaducityDays  =0,
+                    PasswordCaducityDays = 0,
                     PasswordRepeat = false,
                     Traceability = 0,
                     GrantPermission = 0,

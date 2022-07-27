@@ -1,0 +1,82 @@
+﻿{
+    "Id": 2002,
+    "ItemName": "LocationProvince",
+    "Layout": {
+        "Icon": "fa fa-map-marked",
+        "Label": "Província",
+        "LabelPlural": "Províncies",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "LocationComunidad"} ],
+    "PrimaryKeys": [ ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Code", "Label": "Codi", "Type": "text", "Length": 5 },
+        { "Name": "Name", "Label": "Nom", "Type": "text", "Length": 50, "Required": true },
+        { "Name": "LocationComunidadId", "Label": "Comunitat", "Type": "long", "ColumnDataType": "Text", "FK": true }
+    ],
+	"Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+			"Importable": true,
+            "EditAction": 3,
+            "Columns": [
+                { "DataProperty": "Code", "Search": true, "Orderable": true, "Linkable": true, "Width": 100 },
+                { "DataProperty": "Name", "Search": true, "Orderable": true, "Linkable": true },
+                { "DataProperty": "LocationComunidadId","Width": 150, "Linkable": true }
+            ]
+        },
+        {
+			"Id": "ByComunidad",
+			"FormId": "Custom",
+			"Layout": 1,
+			"Exportable": false,
+			"EditAction": 4,
+			"Title": "Províncies",
+			"Parameters": [ {"Name": "LocationComunidadId", "Value": "#actualItemId#"} ],
+			"Columns": [
+                { "DataProperty": "Code", "ReplacedBy": "C", "Search": true, "Orderable": true, "Linkable": true },
+                { "DataProperty": "Name", "ReplacedBy": "N", "Search": true, "Orderable": true, "Linkable": true, "Width": 100 }
+          ]
+        }
+    ],
+    "Forms": [
+        {
+            "Id": "Custom",
+            "FormType": "Custom",
+            "DefaultSelected": true,
+            "Tabs": [
+                {
+                    "Label": "Datos",
+                    "Id": "Data",
+                    "Rows": [
+                        {
+                            "Fields": [
+                                { "Name": "Name" }
+                            ]
+                        },
+                        {
+                            "Fields": [
+                                { "Name": "Code" },
+                                { "Name": "LocationComunidadId", "ColSpan": 2 }
+                            ]
+                        },
+						{
+						  "ItemList": "LocationLocalidad",
+						  "ListId": "ByProvincia",
+						  "FilterFields": [ { "Field": "LocationProvinciaId" } ]
+						}
+                    ]
+                }
+            ]
+        }
+    ]
+}

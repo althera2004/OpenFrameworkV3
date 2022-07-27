@@ -250,22 +250,25 @@ namespace OpenFrameworkV3.Core.DataAccess
 
                 if (referedField != null)
                 {
-                    var joinClause = string.Format(
-                        CultureInfo.InvariantCulture,
-                        @"LEFT JOIN Item_{0} J{1} WITH(NOLOCK) ON J{1}.Id = Item.{0}Id{2}",
-                        referedField.ItemName,
-                        joinCount,
-                        Environment.NewLine);
-                    innerJoin.Append(joinClause);
+                    foreach (var f in referedField)
+                    {
+                        var joinClause = string.Format(
+                            CultureInfo.InvariantCulture,
+                            @"LEFT JOIN Item_{0} J{1} WITH(NOLOCK) ON J{1}.Id = Item.{0}Id{2}",
+                            f.ItemName,
+                            joinCount,
+                            Environment.NewLine);
+                        innerJoin.Append(joinClause);
 
-                    res.AppendFormat(
-                        CultureInfo.InvariantCulture,
-                        "ISNULL(J{0}.{1},'') AS {2}",
-                        joinCount,
-                        referedField.Name,
-                        field.Name);
+                        res.AppendFormat(
+                            CultureInfo.InvariantCulture,
+                            "ISNULL(J{0}.{1},'') AS {2}",
+                            joinCount,
+                            f.Name,
+                            field.Name);
 
-                    joinCount++;
+                        joinCount++;
+                    }
                 }
                 else
                 {
@@ -435,21 +438,41 @@ namespace OpenFrameworkV3.Core.DataAccess
                 var queryField = string.Empty;
                 if (referedField != null)
                 {
-                    var joinClause = string.Format(
-                        CultureInfo.InvariantCulture,
-                        @"LEFT JOIN Item_{0} J{1} WITH(NOLOCK) ON J{1}.Id = Item.{0}Id{2}",
-                        referedField.ItemName,
-                        joinCount,
-                        Environment.NewLine);
-                    innerJoin.Append(joinClause);
+                    var joinItemns = referedField.GroupBy(x => x.ItemName).Select(x => x.FirstOrDefault());
 
-                    res.Append("'\"").Append(field.Name).Append("\":{\"Id\":' + ISNULL(CAST(Item.");
-                    res.Append(field.Name);
-                    res.Append(" AS nvarchar(20)),'null') +',\"Value\":\"' + REPLACE(ISNULL(J").Append(joinCount).Append(".");
-                    res.Append(referedField.Name);
-                    res.Append(",''),'''','\''') + '\"},' +");
+                    foreach (var itemName in joinItemns)
+                    {
+                        var joinClause = string.Format(
+                            CultureInfo.InvariantCulture,
+                            @"LEFT JOIN Item_{0} J{1} WITH(NOLOCK) ON J{1}.Id = Item.{0}Id{2}",
+                            itemName.ItemName,
+                            joinCount,
+                            Environment.NewLine);
+                        innerJoin.Append(joinClause);
 
-                    joinCount++;
+                        res.Append("'\"").Append(field.Name).Append("\":{\"Id\":' + ISNULL(CAST(Item.");
+                        res.Append(field.Name);
+                        res.Append(" AS nvarchar(20)),'null') +',\"Value\":\"'");
+                        var first = true;
+                        foreach (var f in referedField)
+                        {
+                            if (first)
+                            {
+                                first = false;
+                            }
+                            else
+                            {
+                                res.Append(" + ' ' + ");
+                            }
+
+                            res.Append(" + REPLACE(ISNULL(J").Append(joinCount).Append(".");
+                            res.Append(f.Name);
+                            res.Append(",''),'''','\''')");
+                        }
+                        res.Append("+'\"},' + ");
+
+                        joinCount++;
+                    }
                 }
                 else
                 {

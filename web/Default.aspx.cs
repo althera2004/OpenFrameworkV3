@@ -36,13 +36,7 @@ public partial class Default : Page
     {
         get
         {
-            if (string.IsNullOrEmpty(this.instanceName))
-            {
-                instanceName = ConfigurationManager.AppSettings["InstanceName"].ToString();
-            }
-
-            Session["InstanceName"] = instanceName;
-            return instanceName;
+            return this.instance.Name;
         }
     }
 
@@ -51,12 +45,6 @@ public partial class Default : Page
     {
         get
         {
-            if (string.IsNullOrEmpty(this.instanceName))
-            {
-                instanceName = ConfigurationManager.AppSettings["InstanceName"].ToString();
-            }
-
-            Session["InstanceName"] = instanceName;
             return this.instance.Config.Security.MFA;
         }
     }
@@ -71,14 +59,10 @@ public partial class Default : Page
     {
         get
         {
-            //var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             Assembly web = Assembly.LoadFrom(this.Request.PhysicalApplicationPath + @"\Bin\OpenFramework.dll");
             AssemblyName webName = web.GetName();
-
             string version = webName.Version.ToString();
-
             return String.Format("- version {0}", version);
-
         }
     }
 
@@ -146,6 +130,8 @@ public partial class Default : Page
         }
     }
 
+    public string ServerTest { get; private set; }
+
     public string LanguageBrowser { get; private set; }
 
     public string IP { get; private set; }
@@ -175,16 +161,16 @@ public partial class Default : Page
             if (serverName.IndexOf(".openframework") != -1)
             {
                 this.instanceName = this.Request.Url.Host.Split('.')[0].ToUpperInvariant();
+                this.ServerTest = this.Request.Url.Host.Split('.')[0].ToUpperInvariant();
             }
             else
             {
+                this.ServerTest = "Vaya!";
                 this.instanceName = ConfigurationManager.AppSettings["InstanceName"].ToUpperInvariant();
             }
         }
 
         this.instance = Persistence.InstanceByName(Instance.InstanceName);
-        this.Session["InstanceName"] = this.instanceName;
-        this.Session["Instance"] = this.instance;
         this.IP = this.GetUserIP();
         if (this.instance.Config.Security.IPAccess)
         {
@@ -198,6 +184,8 @@ public partial class Default : Page
             //    }
             //}
         }
+
+        ServerTest = this.instance.Name;
 
         CleanTemporalFiles();
         this.ObtainLandPage();

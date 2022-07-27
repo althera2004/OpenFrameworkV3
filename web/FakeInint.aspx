@@ -15,7 +15,7 @@
         <script>
             var pageType = "fake";
             var Instance = <%=this.Instance.Config.JsonData %>;
-            var user = <%=this.ActualUser.JsonSimple %>;
+            var user = <%=this.ActualUser.Json %>;
             var Company = <%=this.Company.Json %>;
             var ItemDefinitions = <%= this.ItemDefinitions  %>;
 
@@ -48,12 +48,10 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div onclick="GoEncryptedPage('/Instances/Support/Pages/DashBoard.aspx',[]);">
-            zzzzzzzzzz
-        </div>
+        <asp:TextBox runat="server" ID="TxtInstanceName"></asp:TextBox>
+        <asp:LinkButton runat="server" ID="LnkReload" OnClick="LnkReload_Click">Reload</asp:LinkButton>
         <asp:Literal runat="server" ID="LtCns"></asp:Literal>
 
-        <div onclick="ReloadInstance();">aaaa</div>
         <hr />
         
         <asp:Literal runat="server" ID="LtLink"></asp:Literal>

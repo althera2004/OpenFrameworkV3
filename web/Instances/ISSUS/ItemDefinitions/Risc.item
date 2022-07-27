@@ -31,7 +31,6 @@
             "FormId": "Custom",
             "Layout": 1,
             "EditAction": "FormPage",
-			"ButtonAddLabel": "Obrir nou desenvolupament",
 			"Columns": [
                 { "DataProperty": "Code", "Width": 150   },
                 { "DataProperty": "InstanciaId", "Width": 150 },
@@ -40,7 +39,7 @@
                 { "DataProperty": "Tipo", "Width": 200, "Align": "left", "Render": "Development_Column_Tipo" }
             ],
             "Parameters": [ {"Name": "Tipo", "Value": "1"}, {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [

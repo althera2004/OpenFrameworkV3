@@ -24,8 +24,7 @@
 
         ListSources.push(new PageList({
             "ListDefinition": ListDefinition,
-            "listDefinitionId": ListDefinition.Id,
-            "listId": ListDefinition.Id,
+            "ListId": ListDefinition.Id,
             "ItemName": ItemDefinition.ItemName,
             "ItemDefinition": ItemDefinition,
             "CustomAjaxSource": ListDefinition.CustomAjaxSource,
@@ -38,12 +37,21 @@
         ListSources[0].RenderPageList();
         ListSources[0].GetData();
 
+
+        ListsItemSearch.push({
+            "Tabid": "0",
+            "ItemName": ListSources[0].ItemName,
+            "ListId": ListSources[0].ListId,
+            "ColumnsIndex": [],
+            "Items": []
+        });
+
         function ResizeWorkArea() {
             $(".panel-body").height($(window).height() - 237);
         }
 
         window.onresize = function () {
             ResizeWorkArea();
-        }
+        }        
     </script>
 </asp:Content>

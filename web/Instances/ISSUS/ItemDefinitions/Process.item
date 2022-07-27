@@ -31,12 +31,12 @@
             "Layout": 1,
             "EditAction": "FormPage",
 			"Columns": [
-                { "DataProperty": "Name" },
-                { "DataProperty": "JobPositionId", "Width": 250 },
-                { "DataProperty": "ProcessTypeId", "Width": 200 }
+                { "DataProperty": "Name", "Search": true, "Orderable": true },
+                { "DataProperty": "JobPositionId", "Width": 250, "Search": true },
+                { "DataProperty": "ProcessTypeId", "Width": 200, "Search": true }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting":  {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [

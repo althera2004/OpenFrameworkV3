@@ -29,7 +29,7 @@
 			"Columns": [
                 { "DataProperty": "Name", "Linkable": true }
             ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [

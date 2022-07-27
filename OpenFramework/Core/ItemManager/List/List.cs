@@ -37,7 +37,7 @@ namespace OpenFrameworkV3.Core.ItemManager.ItemList
 
         /// <summary>Configuration of sorting of list's columns</summary>
         [JsonProperty("Sorting")]
-        private Sorting[] sorting;
+        public Sorting Sorting;
 
         /// <summary>Parameters for a custom data extraction</summary>
         [JsonProperty("Parameters")]
@@ -61,7 +61,7 @@ namespace OpenFrameworkV3.Core.ItemManager.ItemList
                 {
                     Id = string.Empty,
                     columns = null,
-                    sorting = null,
+                    Sorting = null,
                     editAction = string.Empty,
                     layout = string.Empty
                 };
@@ -222,21 +222,6 @@ namespace OpenFrameworkV3.Core.ItemManager.ItemList
                 }
 
                 return new ReadOnlyCollection<Column>(this.columns);
-            }
-        }
-
-        /// <summary> Gets the sorting configuration of columns</summary>
-        [JsonIgnore]
-        public ReadOnlyCollection<Sorting> Sorting
-        {
-            get
-            {
-                if(this.sorting == null)
-                {
-                    return new ReadOnlyCollection<Sorting>(new List<Sorting>());
-                }
-
-                return new ReadOnlyCollection<Sorting>(this.sorting);
             }
         }
 

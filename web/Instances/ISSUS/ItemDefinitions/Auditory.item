@@ -7,7 +7,7 @@
         "Label": "Auditoria",
         "LabelPlural": "Auditories",
         "Description": {
-            "Pattern": "{0}-{1}",
+            "Pattern": "{0}",
             "Fields": [
                 { "Name": "Name" }
             ]
@@ -28,7 +28,7 @@
 			"Columns": [
                 { "DataProperty": "Name" }
             ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	]
 }

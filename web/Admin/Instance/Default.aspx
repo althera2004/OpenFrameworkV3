@@ -13,6 +13,16 @@
             width:100%;
             padding:6px;
         }
+
+        input[type=checkbox] {
+            margin: 5px 0 0 0 !important;
+            height: 15px !important;
+        }
+
+        h4 {
+            margin-top:12px;
+            border-bottom:1px dashed;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentScriptVars" Runat="Server">
@@ -36,7 +46,7 @@
                 <li id="tabSelect-fixedLists" class="tabSelect"><a data-toggle="tab" href="#tab-fixedLists" aria-expanded="false">Llistes</a></li>
                 <li id="tabSelect-scripts" class="tabSelect"><a data-toggle="tab" href="#tab-scripts" aria-expanded="false">Scripts</a></li>
                 <li id="tabSelect-dictionary" class="tabSelect"><a data-toggle="tab" href="#tab-dictionary" aria-expanded="false">Diccionari</a></li>
-                <li id="tabSelect-profile" class="tabSelect"><a data-toggle="tab" href="#tab-features" aria-expanded="false">Perfil d'usuari</a></li>
+                <li id="tabSelect-profile" class="tabSelect"><a data-toggle="tab" href="#tab-profile" aria-expanded="false">Perfil d'usuari</a></li>
             </ul>
             <div class="tab-content" id="FormContent">
                 <div id="tab-common" class="tab-pane active">
@@ -65,7 +75,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-5">
-                                    <button type="button" class="btn btn-info" onclick="ReloadInstance();"><i class="fa fa-recycle"></i>&nbsp;Recargar</button></div>
+                                    <button type="button" class="btn btn-info" onclick="ReloadInstance();"><i class="fa fa-recycle"></i>&nbsp;Recargar</button>
+                                </div>
                             </div>
                             <div class="row">
                                 <label class="col-sm-2">Usuaris externs:&nbsp;</label>
@@ -117,19 +128,22 @@
                         <div id="FixedListsDiv"></div>
                     </div>
                 </div>
-                <div id="tab-scripts" class="tab-pane">                    
+                <div id="tab-scripts" class="tab-pane">
                     <div class="hpanel">
-                       <dl>
- <dt><dfn>happiness</dfn></dt>
- <dd class="pronunciation">/ˈhæpinəs/</dd>
- <dd class="part-of-speech"><i><abbr>n.</abbr></i></dd>
- <dd>The state of being happy.</dd>
- <dd>Good fortune; success. <q>Oh <b>happiness</b>! It worked!</q></dd>
- <dt><dfn>rejoice</dfn></dt>
- <dd class="pronunciation">/rɪˈdʒɔɪs/</dd>
- <dd><i class="part-of-speech"><abbr>v.intr.</abbr></i> To be delighted oneself.</dd>
- <dd><i class="part-of-speech"><abbr>v.tr.</abbr></i> To cause one to be delighted.</dd>
-</dl>
+                        <dl>
+                            <dt><dfn>happiness</dfn></dt>
+                            <dd class="pronunciation">/ˈhæpinəs/</dd>
+                            <dd class="part-of-speech"><i>
+                                <abbr>n.</abbr></i></dd>
+                            <dd>The state of being happy.</dd>
+                            <dd>Good fortune; success. <q>Oh <b>happiness</b>! It worked!</q></dd>
+                            <dt><dfn>rejoice</dfn></dt>
+                            <dd class="pronunciation">/rɪˈdʒɔɪs/</dd>
+                            <dd><i class="part-of-speech">
+                                <abbr>v.intr.</abbr></i> To be delighted oneself.</dd>
+                            <dd><i class="part-of-speech">
+                                <abbr>v.tr.</abbr></i> To cause one to be delighted.</dd>
+                        </dl>
                     </div>
                 </div>
                 <div id="tab-dictionary" class="tab-pane">
@@ -137,7 +151,102 @@
                     </div>
                 </div>
                 <div id="tab-profile" class="tab-pane">
-                    <div class="hpanel">
+                    <h4>Nom de l'usuari</h4>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="radio" checked="" value="0" id="RBUserName0" name="RBUserName" /> Nom complert
+                            </label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="radio" checked="" value="1" id="RBUserName1" name="RBUserName" /> Nom i congnoms
+                            </label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label>
+                                <input type="radio" checked="" value="2" id="RBUserName2" name="RBUserName" /> Nom, primer cognom i segon cognom
+                            </label>
+                        </div>
+                    </div>
+                    <h4>Dades personals</h4>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="0" id="RBPersonalData1" name="RBPersonalData" /> Gènere
+                            </label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="1" id="RBPersonalData2" name="RBPersonalData" /> D.naixement
+                            </label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="2" id="RBPersonalData3" name="RBPersonalData" /> NIF/NIE/Passaport
+                            </label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="2" id="RBPersonalData4" name="RBPersonalData" /> Nacionalitat
+                            </label>
+                        </div>
+                    </div>
+                    <h4>Dades de contacte</h4>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="0" id="RBContactData1" name="RBContactData" /> Email principal
+                            </label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="1" id="RBContactData2" name="RBContactData" /> Email alternatiu
+                            </label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="0" id="RBContactData3" name="RBContactData" /> Telèfon
+                            </label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="1" id="RBContactData4" name="RBContactData" /> Mòbil
+                            </label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="2" id="RBContactData5" name="RBContactData" /> Fax
+                            </label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="2" id="RBContactData6" name="RBContactData" /> Telèfon emergències
+                            </label>
+                        </div>
+                    </div>
+                    <h4>Xarxes socials</h4>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="0" id="RBSocial1" name="RBSocial" /> LinkedIn
+                            </label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="1" id="RBSocial2" name="RBSocial" /> Twitter
+                            </label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="2" id="RBSocial3" name="RBSocial" /> Instagram
+                            </label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>
+                                <input type="checkbox" checked="" value="2" id="RBSocial4" name="RBSocial" /> Facebook
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>

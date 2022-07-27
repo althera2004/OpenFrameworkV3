@@ -713,3 +713,15 @@ function Item_InactivateConfirm() {
 		}
 	});
 }
+
+function ItemDefinition_HasFeature(itemDefinition, feature) {
+	if (typeof itemDefinition !== "undefined" && itemDefinition !== null) {
+		if (typeof itemDefinition.Features !== "undefined" && itemDefinition.Features !== null) {
+			if (typeof itemDefinition.Features[feature] !== "undefined" && itemDefinition.Features[feature] !== null) {
+				return itemDefinition.Features[feature];
+            }
+        }
+    }
+
+	return false;
+}

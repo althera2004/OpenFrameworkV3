@@ -37,7 +37,7 @@
             localStorage.setItem("Menu", JSON.stringify(Menu));
 
             if (Company.Id > 0) {
-                //GoLandingPage();
+                GoLandingPage();
             }
 
             function GoLandingPage() {

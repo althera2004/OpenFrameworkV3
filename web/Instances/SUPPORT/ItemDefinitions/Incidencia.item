@@ -7,7 +7,7 @@
         "Label": "Incidència",
         "LabelPlural": "Incidències",
         "Description": {
-            "Pattern": "{0}-{1}",
+            "Pattern": "{0} - {1}",
             "Fields": [
                 { "Name": "Code" },
                 { "Name": "Title" }
@@ -22,6 +22,8 @@
 		{ "Name": "Code", "Label": "Codi", "Type": "text", "Length": 15 },
 		{ "Name": "Title", "Label": "Nom", "Type": "text", "Length": 150 },
 		{ "Name": "Tipo", "Label": "Tipus", "Type": "FixedList", "FixedListName": "IncidenciaTipo" },
+		{ "Name": "Origen", "Label": "Origen", "Type": "FixedList", "FixedListName": "IncidenciaOrigen" },
+		{ "Name": "OrigenDescription", "Label": "Descripció", "Type": "text", "Length": 50 },
 		{ "Name": "InstanciaId", "Label": "Instància", "Type": "long" },
 		{ "Name": "CustomerCompanyId", "Label": "Client", "Type": "long" },
 		{ "Name": "Sintomas", "Label": "Sintomas", "Type": "textarea" }
@@ -168,6 +170,13 @@
 					"Rows": [
 						{
 							"Fields": [
+								{ "Name": "Origen" },
+								{ "Name": "OrigenDescription" },
+								{ "Type": "Blank" }
+							]
+						},
+						{
+							"Fields": [
 								{ "Name": "CustomerCompanyId" },
 								{ "Name": "InstanciaId" },
 								{ "Name": "Tipo" }
@@ -175,7 +184,7 @@
 						},
 						{
 							"Fields": [
-								{ "Name": "Sintomas" }
+								{ "Name": "Sintomas", "Layout": "Splited" }
 							]
 						}
 					]

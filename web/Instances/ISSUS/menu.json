@@ -3,12 +3,13 @@
 		"Label": "Panell de control",
 		"Icon": "fad fa-tasks",
 		"Options": [
-			{ "Leaf": true, "Item": "Norma" },
-			{ "Leaf": true, "Item": "AuditoryQuestionary" },
 			{ "Leaf": true, "Item": "Department" },
+			{ "Leaf": true, "Item": "AuditoryQuestionary" },
 			{ "Leaf": true, "Item": "JobPosition" },
+			{ "Leaf": true, "Item": "Employee" },
 			{ "Leaf": true, "Item": "Provider" },
 			{ "Leaf": true, "Item": "Customer" },
+			{ "Leaf": true, "Item": "Norma" },
 			{ "Leaf": true, "Item": "CostHabitual" },
 			{ "Leaf": true, "Item": "Unitat" }
 		]

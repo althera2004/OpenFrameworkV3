@@ -1,0 +1,49 @@
+﻿{
+    "Id": 2001,
+    "ItemName": "LocationComunidad",
+    "Layout": {
+        "Icon": "fa fa-map-marker-alt",
+        "Label": "Comunitat",
+        "LabelPlural": "Comunitats",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "LocationCountry"} ],
+    "PrimaryKeys": [ ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Name", "Label": "Nom", "Type": "text", "Length": 50, "Required": true },
+        { "Name": "LocationCountryId", "Label": "Pais", "Type": "long", "ColumnDataType": "Text", "FK": true }
+    ],
+	"Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": 2,
+			"Columns": [
+                { "DataProperty": "Name", "Search": true, "Orderable": true, "Linkable": true },
+                { "DataProperty": "LocationCountryId", "Width": 200, "Linkable": true }
+            ], 
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        },
+        {
+          "Id": "ByProvincia",
+          "FormId": "Custom",
+          "Layout": 1,
+          "Exportable": false,
+          "EditAction": 2,
+		  "ForceHeight": 500,
+          "Title": "Comunidades",
+          "Parameters": [ {"Name": "LocationCountryId", "Value": "#actualItemId#"} ],
+          "Columns": [
+                { "DataProperty": "Name", "ReplacedBy": "N", "Search": true, "Orderable": true, "Linkable": true }
+          ]
+        }
+	]
+}

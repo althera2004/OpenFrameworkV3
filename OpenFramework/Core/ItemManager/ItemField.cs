@@ -7,6 +7,8 @@
 namespace OpenFrameworkV3.Core.ItemManager
 {
     using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Globalization;
     using System.Linq;
     using Newtonsoft.Json;
@@ -650,7 +652,7 @@ namespace OpenFrameworkV3.Core.ItemManager
         /// <summary>Gets field linked by a foreign key</summary>
         /// <param name="definition">Item source</param>
         /// <returns>Field referred by a foreign key</returns>
-        public ItemField GetReferedField(ItemDefinition definition)
+        public ReadOnlyCollection<ItemField> GetReferedField(ItemDefinition definition)
         {
             if (this.Name.EndsWith("id", StringComparison.OrdinalIgnoreCase) && !this.Name.StartsWith("Core_", StringComparison.OrdinalIgnoreCase))
             {
@@ -658,12 +660,19 @@ namespace OpenFrameworkV3.Core.ItemManager
                 var foreingRelation = definition.ForeignValues.FirstOrDefault(fv => fv.ItemName.Equals(foreignItem));
                 if (foreingRelation != null)
                 {
+                    var res = new List<ItemField>();
                     var referedItem = Persistence.ItemDefinitionByName(foreignItem, definition.InstanceName);
-                    var descriptionField = referedItem.Layout.Description.Fields.First();
-                    var referedField = referedItem.Fields.First(f => f.Name.Equals(descriptionField.Name, StringComparison.OrdinalIgnoreCase));
-                    if (referedField != null)
+                    foreach (var field in referedItem.Layout.Description.Fields) {
+                        var referedField = referedItem.Fields.First(f => f.Name.Equals(field.Name, StringComparison.OrdinalIgnoreCase));
+                        if (referedField != null)
+                        {
+                            res.Add(referedField);
+                        }
+                    }
+
+                    if(res.Count > 0)
                     {
-                        return referedField;
+                        return new ReadOnlyCollection<ItemField>(res);
                     }
                 }
             }

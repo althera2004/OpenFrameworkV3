@@ -1,0 +1,58 @@
+﻿{
+    "Id": 2004,
+    "ItemName": "LocationLocalidad",
+    "Features": {
+      "Persistence": true
+    },
+    "Layout": {
+        "Icon": "fa fa-city",
+        "Label": "Localitat",
+        "LabelPlural": "Localitats",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "LocationProvincia"} ],
+    "PrimaryKeys": [ ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true, "width": 60 },
+        { "Name": "Code", "Label": "Codi", "Type": "text", "Length": 5 },
+        { "Name": "Name", "Label": "Nom", "Type": "text", "Length": 50, "Required": true },
+        { "Name": "Capital", "Label": "Capital", "Type": "boolean", "DataFormat": { "Name": "ToBooleanCheckNull" } },
+        { "Name": "LocationProvinciaId", "Label": "Província", "Type": "long", "Required": true, "ColumnDataType": "Text", "FK": true }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": 3,
+			"PageSize": 50,
+			"Columns": [
+                { "DataProperty": "Code", "Label": "C", "Search": true, "Orderable": true, "Linkable": true, "Width": 80 },
+                { "DataProperty": "Name", "Search": true, "Orderable": true, "Linkable": true },
+                { "DataProperty": "Capital", "Search": true, "NoFilter": true, "Width": 90 },
+                { "DataProperty": "LocationProvinciaId", "Width": 120, "Orderable": true, "Linkable": true }
+            ], 
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        },
+        {
+          "Id": "ByProvincia",
+          "FormId": "Custom",
+          "Layout": 1,
+          "Exportable": false,
+          "EditAction": 3,
+		  "ForceHeight": 500,
+		  "Label": "Localitats de la província",
+          "Parameters": [ {"Name": "LocationProvinciaId", "Value": "#actualItemId#"} ],
+          "Columns": [
+                { "DataProperty": "Code", "ReplacedBy": "C", "Search": true, "Orderable": true, "Linkable": true, "Width": 100, "Align": "right" },
+                { "DataProperty": "Name", "ReplacedBy": "N", "Search": true, "Orderable": true, "Linkable": true }
+          ]
+        }
+	]
+}

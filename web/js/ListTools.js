@@ -21,22 +21,25 @@ function PageList(config) {
     this.TabId = typeof config.TabId !== "undefined" ? config.TabId : "NoTab";
 
     // --------------------- RENDERING
+
+    this.ButtonAddLabel = function () {
+        var res = this.ListDefinition.ButtonAddLabel;
+        if (typeof res === "undefined" || res === null || res === "") {
+            res = Dictionary.Common_Add + " " + this.ItemDefinition.Layout.Label.toLowerCase();
+        }
+
+        return res;
+    }
+
     this.RenderPageList = function () {
         var res = "";
         this.CalculateWidths(this.ListDefinition, this.ItemDefinition);
         var componentPrefix = this.ItemDefinition.ItemName + "_" + this.ListDefinition.Id;
 
-        var Title = this.ItemDefinition.Layout.LabelPlural;
-        if (HasPropertyValue(this.ListDefinition.Title)) {
-            Title = this.ListDefinition.Title;
-        }
+        var Title = GetPropertyValue(this.ListDefinition.Title, this.ItemDefinition.Layout.LabelPlural);
+        var ButtonAddLabel = this.ButtonAddLabel();
 
-        var ButtonAddLabel = "Añadir  " + this.ItemDefinition.Layout.Label;
-        if (HasPropertyValue(this.ListDefinition.ButtonAddLabel)) {
-            ButtonAddLabel = this.ListDefinition.ButtonAddLabel;
-        }
-
-        res += "<div id=\"" + componentPrefix + "_List\">";
+        res += "<div id=\"" + componentPrefix + "_List\" class=\"ListContainer\">";
         res += "  <div class=\"hpanel hblue hpanel-table\" style=\"margin:0;\">";
         res += "    <div class=\"panel-heading hbuilt\">";
         res += "      <span id=\"" + componentPrefix + "_ListTitle\">" + Title + "</span>";
@@ -66,7 +69,7 @@ function PageList(config) {
         res += "    </div><!-- panel-body -->";
 
         res += "    <div class=\"panel-footer panel-footer-list\">";
-        res += "      Nombre de registres: <strong id=\"" + componentPrefix + "_ListCount\"</strong>";
+        res += "      Nombre de registres: <strong id=\"" + componentPrefix + "_ListCount\">&nbsp;-</strong>";
         res += "    </div><!-- panel-body -->";
 
         res += "  </div>";
@@ -82,10 +85,7 @@ function PageList(config) {
 
         var componentPrefix = this.ItemDefinition.ItemName + "_" + this.ListDefinition.Id + "_";
 
-        var BtnAddLabel = this.ListDefinition.ButtonAddLabel;
-        if (typeof BtnAddLabel === "undefined" || BtnAddLabel === null || BtnAddLabel === "") {
-            BtnAddLabel = "Afegir " + this.ItemDefinition.Layout.Label.toLowerCase();
-        }
+        var BtnAddLabel = this.ButtonAddLabel();
 
         if (this.ListDefinition.EditAction === "FormPage") {
             $("#" + componentPrefix + "AddBtn").data("itemDefinitionId", this.ItemDefinition.Id);
@@ -140,7 +140,7 @@ function PageList(config) {
 
                 headerTable += "        </select>";
                 headerTable += "    </div>";
-                headerTable += "<button data-listItem=\"" + this.ItemDefinition.ItemName + "\" data-itemBridge=\"" + this.ItemDefinition.ItemName + "\" data-listId=\"" + this.ListDefinition.Id + "\" data-linkedItem=\"" + itemLinked.ItemName + "\" data-linkedItemHost=\"" + itemLikedHostName + "\" class=\"btn btn-info\" type=\"button\" id=\"ItemLinkBtnAdd" + itemLinked.ItemName + "\" style=\"border:none;height:25px;padding-top:2px;\" onclick=\"$('#ItemLinkBtnAdd" + itemLinked.ItemName + "').attr('disabled', 'disabled');ItemLinkedSetLink(this);\"><i class=\"fa fa-plus\"></i> A&ntilde;adir " + itemLinked.Layout.Label + "</button>";
+                headerTable += "<button data-listItem=\"" + this.ItemDefinition.ItemName + "\" data-itemBridge=\"" + this.ItemDefinition.ItemName + "\" data-listId=\"" + this.ListDefinition.Id + "\" data-linkedItem=\"" + itemLinked.ItemName + "\" data-linkedItemHost=\"" + itemLikedHostName + "\" class=\"btn btn-info\" type=\"button\" id=\"ItemLinkBtnAdd" + itemLinked.ItemName + "\" style=\"border:none;height:25px;padding-top:2px;\" onclick=\"$('#ItemLinkBtnAdd" + itemLinked.ItemName + "').attr('disabled', 'disabled');ItemLinkedSetLink(this);\"><i class=\"fa fa-plus\"></i> " + Dictionary.Common_Add + " " + itemLinked.Layout.Label + "</button>";
                 headerTable += "&nbsp;<span style=\"color:#c00;\" id=\"" + itemLikedHostName + "_Add" + itemLinked.ItemName + "Error\"></span>";
                 headerTable += "</div></div>";
                 headerTable += "<!-- End list itemLinked header -->";
@@ -229,11 +229,11 @@ function PageList(config) {
             }
 
             var labelHeader = column.DataProperty;
+            var field = GetFieldDefinition(column.DataProperty, itemDefinition);
             if (HasPropertyValue(column.Label)) {
                 labelHeader = column.Label;
             }
-            else {
-                var field = GetFieldDefinition(column.DataProperty, itemDefinition);
+            else {                
                 if (field !== null) {
                     labelHeader = field.Label;
                 }
@@ -241,10 +241,18 @@ function PageList(config) {
 
             var style = " style=\"width:" + widths[c] + "px;\"";
             var metaData = "";
+            var action = "";
             var cssClass = " class=\"";
             if (HasPropertyEnabled(column.Orderable)) {
                 cssClass += "sort";
                 metaData += " data-sortfield=\"" + column.DataProperty + "\"";
+
+                if (field !== null) {
+                    metaData += " data-sortType=\"" + field.Type + "\"";
+                }
+
+                metaData += " data-tableId=\"" + this.ItemName + "_" + this.ListId + "\"";
+                action += " onclick=\"List_Sort(this);\"";
             }
 
             if (HasPropertyValue(column.ReplacedBy)) {
@@ -254,10 +262,12 @@ function PageList(config) {
             if (HasPropertyEnabled(column.Search)) {
                 cssClass += " search";
             }
+
             searchColumns.push(c);
             cssClass += "\"";
 
             res += "<th id=\"th" + i + "\"";
+            res += action;
             res += style;
             res += cssClass;
             res += metaData;
@@ -399,7 +409,7 @@ function PageList(config) {
         $("#ListLoading_" + this.ComponentId).hide();
         if (total > 0) {
             $("#" + this.ComponentId + "_ListBody").html(innerHTML);
-            $("#ListDataTableContainer_" + this.ComponentId).show();
+            $("#" + this.ComponentId + "_ListBody").show();
             $("#ListTable_" + this.ComponentId + "_NoData").hide();
         }
         else {
@@ -722,7 +732,7 @@ function PageList(config) {
         if (HasPropertyValue(column.Align)) { style += "text-align:" + column.Align + ";"; }
         style += "\"";
 
-        var editAction = "GoItemView('" + itemDefinition.ItemName + "', " + rowData.Id + ", '" + targetForm + "', [])";
+        var editAction = "GoEncryptedView('" + this.ItemDefinition.ItemName + "', '" + this.ListId + "', " + rowData.Id + ",'" + this.ListDefinition.FormId + "', null)\"";
         if (edition === "Popup") {
             editAction = "PopupItem('" + itemDefinition.ItemName + "', '" + listDefinitionId + "', this.id);";
         }
@@ -731,6 +741,8 @@ function PageList(config) {
         if (HasPropertyValue(column.ReplacedBy)) { dataKeyName = column.ReplacedBy; }
         var cellData = rowData[dataKeyName];
 
+        var searchData = "";
+        var dataOrderData = "";
         var textData = cellData;
         if (typeof column.RenderData !== "undefined" && column.RenderData !== null && column.RenderData !== "") {
             var data = null;
@@ -746,18 +758,17 @@ function PageList(config) {
             }
 
             textData = eval(column.RenderData + "(" + data + "," + JSON.stringify(rowData) + ");");
-            textData;
+            searchData = textData;
         }
 
-        var searchData = "";
         if (typeof column.Linkable !== "undefined" && column.Linkable !== null && column.Linkable === true) {
             var itemName = "";
 
             if (field !== null && !IsFK(field.Name, itemDefinition)) {
-                cellData = "<a id=\"" + rowData.Id + "\" onclick=\"" + editAction + "\">";
+                cellData = "<a id=\"" + rowData.Id + "\" onclick=\"" + editAction + "\" style=\"cursor:pointer;\">";
                 cellData += textData;
                 cellData += "</a>";
-                searchData = rowData[dataKeyName];
+                //searchData = rowData[dataKeyName];
             }
             else if (field.Type === "FixedList") {
                 cellData = rowData[dataKeyName];
@@ -836,7 +847,7 @@ function PageList(config) {
                 }
 
                 cellData = eval(column.RenderData + "(" + data + "," + JSON.stringify(rowData) + ");");
-                searchData = data;
+                searchData = eval(column.RenderData + "(" + data + "," + JSON.stringify(rowData) + ");");
             }
             else if (field === null) {
                 // Dataproperty sin campo
@@ -866,6 +877,26 @@ function PageList(config) {
                     cellData = rowData[dataKeyName];
                     searchData = rowData[dataKeyName];
                 }
+            } else if (field.Type.toLowerCase() === "money") {
+                cellData = ToMoneyFormat(rowData[dataKeyName]);
+            }
+            else if (field.Type.toLowerCase() === "fixedlistmultiple") {
+                var dataValue = rowData[dataKeyName];
+                var listName = field.FixedListName;
+
+                var binary = (dataValue >>> 0).toString(2);
+                var test = "";
+                var first = true;
+                for (var b = binary.length - 1; b >= 0; b--) {
+                    if (binary[b] === '1') {
+                        test += first ? "" : ", ";
+                        test += FixedLists[listName][binary.length - 1 - b];
+                        first = false;
+                    }
+                }
+
+                cellData = test;
+
             }
             else {
                 if (typeof cellData === "object" && cellData !== null) {
@@ -892,10 +923,11 @@ function PageList(config) {
 
 		var tdTitle = "";
 		if(typeof searchData !== "undefined" && searchData !== null && searchData !== "") {
-			tdTitle = "title=\"" + searchData.toString().split('<br />').join('\n');
+            tdTitle = "title=\"" + searchData.toString().split('<br />').join('\n');
+            dataOrderData = " data-orderData=\"" + searchData + "\"";
 		}
 
-        res += "<td" + style + " data-order=\"" + columnIndex + "\"><div class=\"truncate\" style=\"width:" + (columnWidth - 20) + "px;\"" + tdTitle + "\">";
+        res += "<td" + style + " data-order=\"" + columnIndex + "\"" + dataOrderData + "><div class=\"truncate\" style=\"width:" + (columnWidth - 20) + "px;\"" + tdTitle + "\">";
         res += cellData;
         res += "</div></td>";
         return res;
@@ -948,7 +980,33 @@ function PageList(config) {
             params = "&params=" + btoa(unescape(encodeURIComponent(JSON.stringify(SendParameters, null, 0))));
         }
 
-        var url = "/Instances/" + Instance.Name + "/Data/ItemDataBase.aspx?I=" + Instance.Name + "&C=" + Company.Id + "&Action=" + this.CustomAjaxSource + "&listId=" + this.ListDefinition.Id + "&ItemName=" + this.ItemDefinition.ItemName + params;
+        //(string itemName, string listDefinitionId, string parametersList, long companyId, string instanceName)
+        var data = {
+            "itemName": this.ItemName,
+            "listDefinitionId": this.ListId,
+            "parametersList": "",
+            "companyId": Company.Id,
+            "instanceName": Instance.Name
+        }
+
+        $.ajax({
+            "type": "POST",
+            "url": "/Async/ItemService.asmx/GetListCustomAjaxSource",
+            "contentType": "application/json; charset=utf-8",
+            "dataType": "json",
+            "data": JSON.stringify(data, null, 2),
+            "success": function (msg) {
+                var data = null;
+                eval("data = " + msg.d + ";");
+                console.log("TableFillData", data);
+                GetDataCallBack(data);
+            },
+            "error": function (msg) {
+                PopupWarning(msg.responseText);
+            }
+        });
+
+        /*var url = "/Instances/" + Instance.Name + "/Data/ItemDataBase.aspx?I=" + Instance.Name + "&C=" + Company.Id + "&Action=" + this.CustomAjaxSource + "&listId=" + this.ListDefinition.Id + "&ItemName=" + this.ItemDefinition.ItemName + params;
         $.getJSON(url,
             function (data) {
                 //console.time("TableFillData" + data.ListId, data.ItemName + " --> " + data.ListId);
@@ -960,7 +1018,7 @@ function PageList(config) {
                     var data = eval(e.responseText);
                     GetDataCallBack(data);
                 }
-            });
+            });*/
     };
 
     this.GetFinalParameters = function () {
@@ -1264,9 +1322,7 @@ function ListSort(sender) {
 }
 
 function GetDataCallBack(data) {
-    console.log(data.data);
     data.data = data.data.filter(function (v) { return v.Active === true; });
-    console.log(data.data);
     var index = ListPageOnListContextIndex(data.ListId, data.ItemName);
     ListSources[index].Data = ListSources[index].ScopeList(data.data);
     ListSources[index].FilteredData = ListSources[index].Data;
@@ -1285,6 +1341,8 @@ function GetDataCallBack(data) {
     if (eval("typeof " + customCallbackName) === "function") {
         eval(customCallbackName + "(data);");
     }
+
+    List_SortGo("Sort_" + ListSources[index].ItemName + "_" + ListSources[index].ListId);
 }
 
 function SelectMasterDetail(sender) {
@@ -1726,6 +1784,7 @@ function GetDataFromListDefinitionStandaloneGo(data) {
 
             if (typeof data.data === "string") {
                 Notify(data.data, "error");
+                $("#" + data.ItemName + "_" + data.ListId + "_ListCount").html("Error: <i style=\"color:red;\">" + data.data + "</i>");
             }
             else {
                 console.log("GetDataFromListDefinitionStandaloneGo", data.ItemName);
@@ -1741,4 +1800,75 @@ function GetDataFromListDefinitionStandaloneGo(data) {
 
 function ListSetLoading(componentId) {
     console.log("TODO ListSetLoading", componentId);
+}
+
+function List_Sort(sender) {
+    console.log($(sender).data());
+    var listId = $(sender).data("tableid");
+    var dataProperty = $(sender).data("sortfield");
+    var sortType = $(sender).data("sorttype").toLowerCase();
+    var actualOrder = $(sender).hasClass("ASC") ? "DESC" : "ASC";
+    var config = { "actualOrder": actualOrder, "dataProperty": dataProperty, "sortType": sortType };
+    console.clear();
+    console.log("PRE",config);
+    LocalStorageSetJson("Sort_" + listId, config );
+    List_SortGo("Sort_" + listId);
+}
+
+function List_SortGo(configId) {
+    var list = PageListById(configId.split('_')[1], configId.split('_')[2]);
+    if (LocalStorageGetJson("Sort_" + ItemDefinition.ItemName + "_" + ListId) === null) {
+        var x = ItemListById(list.ItemDefinition, list.ListId);
+        console.log("Sorting", x.Sorting);
+
+        var column = x.Columns[x.Sorting.Index - 1];
+        var config = {
+            "actualOrder": x.Sorting.SortingType.toUpperCase(),
+            "dataProperty": column.DataProperty,
+            "sortType": "text"
+        };
+
+        console.log("default config", config);
+
+        LocalStorageSetJson(configId, config);
+
+        return;
+    }
+
+    var config = LocalStorageGetJson(configId);  
+
+    var data = list.Data;
+    var dataProperty = config.dataProperty;
+    var actualOrder = config.actualOrder;
+    var listId = configId.split('_')[1] + "_" + configId.split('_')[2];
+    console.log(data);
+    $("#" + listId + "_ListHead .sort").removeClass("ASC");
+    $("#" + listId + "_ListHead .sort").removeClass("DESC");
+
+    $("#" + listId + "_ListHead [data-sortfield='" + config.dataProperty + "']").addClass(actualOrder);
+    console.log("POST",config);
+
+    switch (config.sortType) {
+        case "money":
+            data.sort(function (a, b) {
+                return (a[dataProperty] < b[dataProperty] ? -1 : 1) * (actualOrder === "DESC" ? -1 : 1);
+            });
+            break;
+        case "datetime":
+            data.sort(function (a, b) {
+                return (GetDate(a[dataProperty], "/", false) < GetDate(b[dataProperty], "/", false) ? -1 : 1) * (actualOrder === "DESC" ? -1 : 1);
+            });
+            break;
+        default:
+            data.sort(function (a, b) {
+
+                return (a[dataProperty] < b[dataProperty] ? -1 : 1) * (actualOrder === "DESC" ? -1 : 1) ;
+            });
+            break;
+    }
+
+    list.Data = data;
+    SearchList();
+
+
 }

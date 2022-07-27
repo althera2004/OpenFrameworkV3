@@ -347,10 +347,9 @@ function PopupBAR_Save() {
         return false;
     }
 
-    // ItemBarSave(string itemName, long id, string description, long applicationUserId, string instanceName)
     var data = {
         "itemName": PopupBAR_Context.ItemDefinition.ItemName,
-        "id": PopupBAR_Context.FormData.id,
+        "id": PopupBAR_Context.FormData.Id,
         "description": $("#PopupBarDescription").val(),
         "applicationUserId": ApplicationUser.Id,
         "companyId": Company.Id,

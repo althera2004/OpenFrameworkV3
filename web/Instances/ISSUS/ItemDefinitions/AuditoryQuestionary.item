@@ -14,12 +14,16 @@
         },
         "EditionType": "inline"
     },
-	"ForeignValues": [  ],
+	"ForeignValues": [ {"ItemName": "Process"} , {"ItemName": "Norma"} ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
 		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 100 },
 		{ "Name": "ProcessId", "Label": "Procés", "Type": "long", "FK": true },
-		{ "Name": "NormaId", "Label": "Norma", "Type": "long", "FK": true }
+		{ "Name": "NormaId", "Label": "Norma", "Type": "long", "FK": true },
+		{ "Name": "ApartadoNorma", "Label": "Apartat", "Type": "text", "Length": 50 },
+		{ "Name": "Notes", "Label": "Notes", "Type": "textarea" },
+		{ "Name": "DisabledBy", "Label": "DisabledBy", "Type": "ApplicationUser" },
+		{ "Name": "DisabledOn", "Label": "DisabledOn", "Type": "DateTime" }
     ],
     "Lists": [
         {
@@ -29,10 +33,47 @@
             "EditAction": "FormPage",
 			"Columns": [
                 { "DataProperty": "Name" },
-                { "DataProperty": "ProcessId", "Width": 200 },
+                { "DataProperty": "ProcessId", "Width": 300 },
                 { "DataProperty": "NormaId", "Width": 150 }
             ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "ProcessId" },
+								{ "Name": "NormaId" },
+								{ "Name": "ApartadoNorma" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Notes", "Layout": "Splited" }
+							]
+						}
+					]
+				}
+			]
+		}
 	]
 }

@@ -39,7 +39,18 @@
                 { "DataProperty": "DepartmentId", "Width": 300 }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        },
+        {
+            "Id": "ByDepartment",
+            "FormId": "Custom",
+            "Layout": 3,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name" }
+            ],
+            "Parameters": [ {"Name": "DepartmentId", "Value": "#actualItemId#"}, {"Name": "Active", "Value": "1"} ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [
@@ -60,7 +71,7 @@
 				},
 				{
 					"Id": "basic",
-					"Label": "dades basiques",
+					"Label": "Dades bàsiques",
 					"Rows": [
 						{
 							"Fields": [
@@ -70,20 +81,20 @@
 						},
 						{
 							"Fields": [
-								{ "Name": "Responsabilitats" },
-								{ "Name": "Notes" }
+								{ "Name": "Responsabilitats", "Layout": "Splited", "Rows": 7 },
+								{ "Name": "Notes", "Layout": "Splited", "Rows": 7 }
 							]
 						},
 						{
 							"Fields": [
-								{ "Name": "FormacioAcademica" },
-								{ "Name": "FormacioEspecifica" }
+								{ "Name": "FormacioAcademica", "Layout": "Splited", "Rows": 7 },
+								{ "Name": "FormacioEspecifica", "Layout": "Splited", "Rows": 7 }
 							]
 						},
 						{
 							"Fields": [
-								{ "Name": "ExperienciaLaboral" },
-								{ "Name": "Habilitats" }
+								{ "Name": "ExperienciaLaboral", "Layout": "Splited", "Rows": 7 },
+								{ "Name": "Habilitats", "Layout": "Splited", "Rows": 7 }
 							]
 						}
 					]

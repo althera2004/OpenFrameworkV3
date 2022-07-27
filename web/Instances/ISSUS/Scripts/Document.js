@@ -19,3 +19,8 @@ function DOCUMENT_OriginChanged() {
 		$("#DocumentProcedenciaId").parent().visible();
 	}
 }
+
+
+function DOCUMENT_FormFillAfter(){
+	DOCUMENT_OriginChanged();
+}

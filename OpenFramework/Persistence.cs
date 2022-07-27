@@ -190,5 +190,19 @@ namespace OpenFrameworkV3
 
             AddConnectionString(instance.Name, instance.Config.ConnectionString);
         }
+
+        public static ReadOnlyCollection<string> Check()
+        {
+            var res = new List<string>();
+            if(instances != null)
+            {
+                foreach(var instance in instances)
+                {
+                    res.Add(instance.Key);
+                }
+            }
+
+            return new ReadOnlyCollection<string>(res);
+        }
     }
 }

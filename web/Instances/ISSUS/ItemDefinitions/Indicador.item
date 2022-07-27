@@ -38,13 +38,13 @@
             "EditAction": "FormPage",
 			"ButtonAddLabel": "Afegir indicador",
 			"Columns": [
-                { "DataProperty": "Name" },
+                { "DataProperty": "Name", "Search": true },
                 { "DataProperty": "DateStart", "Width": 100 },
-                { "DataProperty": "ProcessId", "Width": 200, "Align": "left" },
-                { "DataProperty": "Responsible", "Width": 200, "Align": "left" }
+                { "DataProperty": "ProcessId", "Width": 300, "Align": "left" },
+                { "DataProperty": "Responsible", "Width": 300, "Search": true, "Align": "left" }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [

@@ -14,12 +14,12 @@
         },
         "EditionType": "inline"
     },
-	"ForeignValues": [ {"ItemName": "Indicador"} ],
+	"ForeignValues": [ {"ItemName": "Indicador"}, {"ItemName": "Employee"} ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
 		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 100 },
 		{ "Name": "Description", "Label": "Descripció", "Type": "textarea" },
-		{ "Name": "Responsible", "Label": "Responsable", "Type": "applicationUser" },
+		{ "Name": "EmployeeId", "Label": "Responsable", "Type": "applicationUser" },
 		{ "Name": "DateStart", "Label": "Inici", "Type": "datetime" },
 		{ "Name": "DatePreview", "Label": "Data prevista", "Type": "datetime" },
 		{ "Name": "Indicador", "Label": "Indicador vinculat", "Type": "boolean" },
@@ -28,6 +28,7 @@
 		{ "Name": "Periodicity", "Label": "Periodicitat", "Type": "int" },
 		{ "Name": "Methodology", "Label": "Metodologia", "Type": "textarea" },
 		{ "Name": "Resources", "Label": "Recursos", "Type": "textarea" },
+		{ "Name": "Notes", "Label": "Notes", "Type": "textarea" },
 		{ "Name": "IndicadorId", "Label": "Indicador", "Type": "long" }
     ],
     "Lists": [
@@ -38,13 +39,13 @@
             "EditAction": "FormPage",
 			"ButtonAddLabel": "Afegir objectiu",
 			"Columns": [
-                { "DataProperty": "Name" },
+                { "DataProperty": "Name", "Search": true },
                 { "DataProperty": "DateStart", "Width": 100, "Align": "center" },
                 { "DataProperty": "DatePreview", "Width": 100, "Align": "center" },
-                { "DataProperty": "Responsible", "Width": 250, "Align": "left" }
+                { "DataProperty": "EmployeeId", "Width": 250, "Align": "left", "Search": true }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [
@@ -53,7 +54,7 @@
 			"FormType": "Custom",
 			"DefaultSelected": true,
 			"Actions": [
-				{ "Label" : "Cerrar","Icon": "fa fa-times", "Action": "Close2", "Group": "Estado" },
+				{ "Label" : "Cerrar", "Icon": "fa fa-times", "Action": "Close2", "Group": "Estado" },
 				{ "Label" : "Reportar", "Icon": "fa fa-cog",   "Action": "Close", "Group": "Reportar" },
 				{ "Label" : "Asignar",  "Icon": "fa fa-user",  "Action": "Assing" },
 				{ "Label" : "Imprimir", "Icon": "fa fa-print", "Action": "Print", "Group": "Reportar" },
@@ -84,7 +85,7 @@
 						},
 						{
 							"Fields": [
-								{ "Name": "Responsible" },
+								{ "Name": "EmployeeId" },
 								{ "Name": "DateStart" },
 								{ "Name": "DatePreview" }
 							]
@@ -104,6 +105,11 @@
 						{
 							"Fields": [
 								{ "Name": "Resources" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Notes" }
 							]
 						}
 					]

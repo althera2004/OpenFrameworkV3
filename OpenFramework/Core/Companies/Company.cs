@@ -90,7 +90,8 @@ namespace OpenFrameworkV3.Core.Companies
                     NombreEmpresa = string.Empty,
                     Phone = string.Empty,
                     RazonSocial = string.Empty,
-                    Active = false
+                    Active = false,
+                    SecurityConfig = CompanySecurityConfig.Empty
                 };
             }
         }
@@ -328,6 +329,11 @@ namespace OpenFrameworkV3.Core.Companies
                 if(this.DefaultLanguage == null)
                 {
                     this.DefaultLanguage = Language.SimpleEmpty;
+                }
+
+                if(this.SecurityConfig == null)
+                {
+                    this.SecurityConfig = CompanySecurityConfig.Empty;
                 }
 
                 return string.Format(

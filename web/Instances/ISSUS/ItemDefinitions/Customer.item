@@ -25,9 +25,9 @@
             "Layout": 1,
             "EditAction": "FormPage",
 			"Columns": [
-                { "DataProperty": "Name", "Linkable": true }
+                { "DataProperty": "Name", "Linkable": true, "Search": true, "Orderable": true }
             ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [

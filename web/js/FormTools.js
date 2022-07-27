@@ -6,6 +6,7 @@
     this.ItemName = this.ItemDefinition.ItemName;
     this.Definition = null;
     this.DefaultTabId = '';
+    this.HasApplicationUserFields = false;
 
     this.Init = function () {
         this.Definition = ItemFormById(this.ItemDefinition, this.FormId);
@@ -45,7 +46,7 @@
                         dataValue = data[fieldName];
                     }
                     else {
-                        dataValue = GetDateText(data[fieldName], "/", true);
+                        dataValue = GetDateText(data[fieldName], "/", false);
                     }
                     break;
                 case "long":
@@ -53,7 +54,7 @@
                         var fkItemName = itemField.Name.substr(0, itemField.Name.length - 2);
                         console.log("formtools", fkItemName);
                         FillComboFromFK(itemField.Name, fkItemName, ItemData.OriginalItemData[itemField.Name]);
-                        dataValue = data[fieldName];
+                        dataValue = data[fieldName] === null ? 0 : data[fieldName];
                     }
                     else {
                         dataValue = data[fieldName];
@@ -72,9 +73,13 @@
                 case "fixedlist":
                     dataValue = data[fieldName];
                     var fixedListValue = data[fieldName];
-
                     $("#RB_" + fieldName + "_" + fixedListValue).prop("checked", true);
-
+                    break;
+                case "applicationuser":
+                    dataValue = data[fieldName];
+                    if (dataValue === null) {
+                        dataValue = -1;
+                    }
                     break;
                 default:
                     dataValue = data[fieldName];
@@ -86,6 +91,25 @@
             }
         });
 
+        $.each($(".fixedList_check"), function () {
+            var fieldName = $(this)[0].id.split('_')[0];
+            var dataValue = data[fieldName];
+            console.log(fieldName, (dataValue >>> 0).toString(2));
+
+            var binary = (dataValue >>> 0).toString(2);
+            var test = 0;
+            for (var b = binary.length - 1; b >= 0; b--) {
+                console.log(Math.pow(2, binary.length - 1 - b), binary[b]);
+                if (binary[b] === '1') {
+                    test += Math.pow(2, binary.length - 1 - b);
+                    $("#CK_" + fieldName + "_" + (binary.length - 1 - b)).prop("checked", true);
+                }
+            }
+
+            console.log(dataValue, test);
+
+        });
+
         $.each($(".simple-slider"), function () {
             var fieldName = $(this)[0].id.split('_')[0];
             var dataValue = data[fieldName];
@@ -93,6 +117,20 @@
             document.getElementById(fieldName + "_Slider").noUiSlider.set([dataValue, null]);
             $("#" + fieldName + "_Slider").data("loaded", 1);
         });
+
+        $.each($("input.format-money"), function () {
+            console.log($("#" + this.id).val());
+            $("#" + this.id).val(ToMoneyFormat($("#" + this.id).val()));
+            console.log($("#" + this.id).val());
+        });
+
+        var afterFillAction = itemDefinition.ItemName.toUpperCase() + "_FormFillAfter";
+        var type = eval("typeof " + afterFillAction);
+        if (type === "function") {
+            window[afterFillAction]();
+        }
+
+        $(".TabMustExists").removeClass("TabMustExists");
     }
 
     this.FormDefinitionDefault = function () {
@@ -134,13 +172,18 @@
         $(".datepicker").on("change", ItemUpdateData);
         $(".datepicker").localDatePicker();
         $(".form-radio").on("click", ItemUpdateDataFormRadio);
-        $(".input-group-button_url").on("click", GroupButtonUrlClicked);
+        $(".input-group-button-url").on("click", GroupButtonUrlClicked);
         console.log("Life cycle", "RenderForm end " + ListSources.length);
         InitSliders();
 
         if ($(".CmbAppplicationUsers").length > 0) {
             FillCmbApplicationUsers();
         }
+
+        $("input.format-money").on("keyup", numberDecimalUp);
+        $("input.format-money").on("keydown", numberDecimalDown);
+        $("input.format-money").on("focus", numberDecimalFocus);
+        $("input.format-money").on("blur", moneyBlur);
     }
 
     this.RenderFooterActions = function () {
@@ -243,9 +286,18 @@
             if (this.Definition.Tabs[t].Persistent !== true) {
                 var tab = this.Definition.Tabs[t];
                 var active = realTab === defaultTab ? "active" : " ";
-                res += "<li id=\"tabSelect-" + tab.Id + "\" class=\"tabSelect " + active + "\"><a data-toggle=\"tab\" href=\"#tab-" + tab.Id + "\" aria-expanded=\"false\">" + tab.Label + "</a></li>";
+                var mustExists = "";
+                if (HasPropertyEnabled(tab.MustExists)) {
+                    mustExists = " TabMustExists";
+                }
+
+                res += "<li id=\"tabSelect-" + tab.Id + "\" class=\"tabSelect " + active + mustExists + "\"><a data-toggle=\"tab\" href=\"#tab-" + tab.Id + "\" aria-expanded=\"false\">" + tab.Label + "</a></li>";
                 realTab++;
             }
+        }
+
+        if (ItemDefinition_HasFeature(this.ItemDefinition, "Attachs")) {
+            res += "<li id=\"tabSelect-Attachs\" class=\"tabSelect\"><a data-toggle=\"tab\" href=\"#tab-Attachs\" aria-expanded=\"false\"><i class=\"fa fa-paperclip\"></i>&nbsp;" + Dictionary.Feature_Attachment_TabTitle + "</a></li>";
         }
 
         $("#" + targetId + "Tabs").html(res);
@@ -278,6 +330,15 @@
 
                 realTab++;
             }
+        }
+
+        if (ItemDefinition_HasFeature(this.ItemDefinition, "Attachs")) {
+            res += "<div id=\"tab-Attachs\" class=\"tab-pane\">";
+            res += "<div class=\"hpanel\">";
+            res += "<div class=\"panel-body panel-body-form\">";
+            res += "</div>";
+            res += "</div>";
+            res += "</div>";
         }
 
         $("#" + targetId + "Content").html(res);
@@ -315,7 +376,7 @@
                     continue;
                 }
                 if (field.Type === "Free") {
-                    res += RenderFieldFree(span, field.Id);
+                    res += RenderFieldFree(span, field);
                     continue;
                 }
 
@@ -339,8 +400,8 @@
                 styleHeight = " style=\"height:" + listDefinition.ForcedHeight + "px\"";
             }
 
-            res += "<div id=\"" + itemName + "_" + listDefinition.Id + "_List\">";
-            res += "  <div class=\"hpanel hblue\" style=\"margin:0;\" id=\"" + itemName + "_" + listDefinition.Id + "_PanelBody\">";
+            res += "<div id=\"" + itemName + "_" + listDefinition.Id + "_List\" class=\"ListContainer\">";
+            res += "  <div class=\"hpanel hblue hpanel-table\" style=\"margin:0;\" id=\"" + itemName + "_" + listDefinition.Id + "_PanelBody\">";
             res += "    <div class=\"panel-heading hbuilt\">";
             res += "      <span id=\"" + itemName + "_" + listDefinition.Id + "_ListTitle\"></span>";
             res += "        <div class=\"panel-tools\">";
@@ -390,11 +451,12 @@
             if (field !== null) {
 
                 if (HasPropertyValue(fieldForm.Layout)) {
-                    if (fieldForm.Layout !== "NoLabel") {
+                    if (fieldForm.Layout.toLowerCase().indexOf("nolabel") === -1) {
                         res += this.RenderFieldLabel(field, fieldForm);
                     }
                 } else {
-                    res += this.RenderFieldLabel(field, fieldForm);}
+                    res += this.RenderFieldLabel(field, fieldForm);
+                }
 
                 var finalSpan = span;
                 if (HasPropertyValue(fieldForm.ColSpan)) {
@@ -423,6 +485,9 @@
                     case "fixedlist":
                         res += RenderFieldFixedList(field, finalSpan, fieldForm);
                         break;
+                    case "fixedlistmultiple":
+                        res += RenderFieldFixedListMultiple(field, finalSpan, fieldForm);
+                        break;
                     case "textarea":
                         res += RenderFieldTextArea(field, finalSpan, fieldForm);
                         break;
@@ -438,6 +503,9 @@
                         }
 
                         break;
+                    case "email":
+                        res += RenderFieldEmail(field, finalSpan, fieldForm);
+                        break;
                     case "url":
                         res += RenderFieldUrl(field, finalSpan, fieldForm);
                         break;
@@ -445,6 +513,7 @@
                         res += RenderFieldDocumentFile(field, finalSpan, fieldForm);
                         break;
                     case "applicationuser":
+                        this.HasApplicationUserFields = true;
                         res += RenderFieldApplicationUser(field, finalSpan, fieldForm);
                         break;
                     case "range":
@@ -503,7 +572,18 @@ function RenderFieldUrl(field, span, fieldForm) {
     res += "<div class=\"col-sm-" + (span - 1) + "\">";
     res += "  <div class=\"input-group date\">";
     res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control\" autocomplete=\"off\">";
-    res += "    <span id=\"" + field.Name + "_Btn\" class=\"input-group-addon input-group-button_url\"><i class=\"fa fa-globe\"></i></span>";
+    res += "    <span id=\"" + field.Name + "_Btn\" class=\"input-group-addon input-group-button-url\"><i class=\"fa fa-globe\"></i></span>";
+    res += "  </div>";
+    res += "</div>";
+    return res;
+}
+
+function RenderFieldEmail(field, span, fieldForm) {
+    var res = "";
+    res += "<div class=\"col-sm-" + (span - 1) + "\">";
+    res += "  <div class=\"input-group date\">";
+    res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control\" autocomplete=\"off\">";
+    res += "    <span id=\"" + field.Name + "_Btn\" class=\"input-group-addon input-group-button-emal\"><i class=\"fa fa-envelope\"></i></span>";
     res += "  </div>";
     res += "</div>";
     return res;
@@ -576,12 +656,11 @@ function RenderFieldTextArea(field, span, fieldForm) {
         }
     }
 
-    var span = splited ? span : span - 1;
-
+    var realSpan = splited ? span : span - 1;
 
     var rows = GetPropertyValue(fieldForm.Rows, 3);
     var res = "";
-    res += "<div class=\"col-sm-" + span + "\">";
+    res += "<div class=\"col-sm-" + realSpan + "\">";
     if (splited) {
         res += "<label>" + field.Label + "</label>";
     }
@@ -601,7 +680,7 @@ function RenderFieldNumeric(field, span) {
 function RenderFieldFK(field, span, fieldForm) {
     var bar = false;
     if (HasPropertyValue(fieldForm.Layout)) {
-        if (fieldForm.Layout === "BAR") {
+        if (fieldForm.Layout.indexOf("BAR") !== -1) {
             bar = true;
         }
     }
@@ -629,44 +708,100 @@ function RenderFieldFixedList(field, span, fieldForm) {
     var list = FixedLists[field.FixedListName];
     var res = "";
 
-    if (fieldForm.Layout === "Radio") {
-        res += "<div class=\"col-sm-" + (span - 1) + "\" style=\"min-height:36px;\">";
-        res += "    <input id=\"" + field.Name + "\" type=\"text\" style=\"display:none;\" class=\"form-control\" value=\"" + field.Type + "\" />";
+    var layout = "";
+    if (HasPropertyValue(fieldForm.Layout)) {
+        layout = fieldForm.Layout.toLowerCase();
+    }
 
-        if (list !== null) {
-            // Empieza desde 1 porque 0 es "no definit"
-            for (var x = 1; x < list.length; x++) {
-                if (x > 1) {
-                    res += "&nbsp;&nbsp;&nbsp;&nbsp;";
+    switch (layout) {
+        case "radio":
+            res += "<div class=\"col-sm-" + (span - 1) + "\" style=\"min-height:36px;\">";
+            res += "    <input id=\"" + field.Name + "\" type=\"text\" style=\"display:none;\" class=\"form-control\" value=\"" + field.Type + "\" />";
+
+            if (list !== null) {
+                // Empieza desde 1 porque 0 es "no definit"
+                for (var x = 1; x < list.length; x++) {
+                    if (x > 1) {
+                        res += "&nbsp;&nbsp;&nbsp;&nbsp;";
+                    }
+
+                    res += "<input type=\"radio\" onclick=\"Layout_FixedListRB_Clicked(this);\" name=\"RB_" + field.Name + "\" id=\"RB_" + field.Name + "_" + x + "\" />";
+                    res += "&nbsp;" + list[x];
                 }
-
-                res += "<input type=\"radio\" onclick=\"Layout_FixedListRB_Clicked(this);\" name=\"RB_" + field.Name + "\" id=\"RB_" + field.Name + "_" + x + "\" />";
-                res += "&nbsp;" + list[x];
             }
-        }
-        else {
-            res += "Fixedlist " + field.FixedListName;
-        }
+            else {
+                res += "Fixedlist " + field.FixedListName;
+            }
 
-        res += "</div>";
+            res += "</div>";
+            break;
+        case "check":
+            res += "<div class=\"col-sm-" + (span - 1) + "\" style=\"min-height:36px;\">";
+            res += "    <input id=\"" + field.Name + "\" type=\"text\" style=\"display:none;\" class=\"form-control fixedList_check\" value=\"\" />";
+
+            if (list !== null) {
+                for (var x = 0; x < list.length; x++) {
+                    if (x > 0) {
+                        res += "&nbsp;&nbsp;&nbsp;&nbsp;";
+                    }
+
+                    res += "<label onclick=\"Layout_FixedListCK_Clicked('" + field.Name + "'," + x + ")\">";
+                    res += "  <input type=\"checkbox\" class=\"CK_" + field.Name + "\" style=\"float:left;margin:5px 0 0 0!important;\" id=\"CK_" + field.Name + "_" + x + "\" />";
+                    res += "  <span style=\"float:left;margin-top:3px;margin-left:4px;padding:0\">" + list[x] + "</span>";
+                    res += "</label>";
+                }
+            }
+            else {
+                res += "Fixedlist " + field.FixedListName;
+            }
+
+            res += "</div>";
+            break;
+        default:
+            res += "<div class=\"col-sm-" + (span - 1) + "\">";
+            res += "<select id=\"" + field.Name + "\" class=\"form-control\">";
+            if (list !== null) {
+                for (var x = 0; x < list.length; x++) {
+                    var text = list[x];
+                    if (x === 0) {
+                        text = "Seleccionar";
+                    }
+
+                    res += "<option value=\"" + x + "\">" + text + "</option>";
+                }
+            }
+            res += "</select>";
+            res += "</div>";
+            break;
+    }
+
+    return res;
+}
+
+function RenderFieldFixedListMultiple(field, span, fieldForm) {
+    var list = FixedLists[field.FixedListName];
+    var res = "";
+
+    res += "<div class=\"col-sm-" + (span - 1) + "\" style=\"min-height:36px;\">";
+    res += "    <input id=\"" + field.Name + "\" type=\"text\" style=\"display:none;\" class=\"form-control fixedList_check\" value=\"\" />";
+
+    if (list !== null) {
+        for (var x = 0; x < list.length; x++) {
+            if (x > 0) {
+                res += "&nbsp;&nbsp;&nbsp;&nbsp;";
+            }
+
+            res += "<label onclick=\"Layout_FixedListCK_Clicked('" + field.Name + "'," + x + ")\">";
+            res += "  <input type=\"checkbox\" class=\"CK_" + field.Name + "\" style=\"float:left;margin:5px 0 0 0!important;\" id=\"CK_" + field.Name + "_" + x + "\" />";
+            res += "  <span style=\"float:left;margin-top:3px;margin-left:4px;padding:0\">" + list[x] + "</span>";
+            res += "</label>";
+        }
     }
     else {
-        res += "<div class=\"col-sm-" + (span - 1) + "\">";
-        res += "<select id=\"" + field.Name + "\" class=\"form-control\">";
-        if (list !== null) {
-            for (var x = 0; x < list.length; x++) {
-                var text = list[x];
-                if (x === 0) {
-                    text = "Seleccionar";
-                }
-
-                res += "<option value=\"" + x + "\">" + text + "</option>";
-            }
-        }
-        res += "</select>";
-        res += "</div>";
+        res += "Fixedlist " + field.FixedListName;
     }
 
+    res += "</div>";
     return res;
 }
 
@@ -699,7 +834,7 @@ function RenderFieldMoney(field, span, fieldForm) {
     res += "<div class=\"col-sm-" + (span - 1) + "\">";
     res += "  <div class=\"input-group date\" style=\"width:112px;\">";
     res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control format-money\">";
-    res += "    <span id=\"" + field.Name + "_Btn\" class=\"input-group-addon\"><i class=\"fa fa-euro\"></i></span>";
+    res += "    <span id=\"" + field.Name + "_Btn\" class=\"input-group-addon\"><i class=\"fa fa-euro-sign\"></i></span>";
     res += "  </div>";
     res += "</div>";
     return res;
@@ -711,9 +846,34 @@ function RenderFieldBlank(span) {
     return res;
 }
 
-function RenderFieldFree(span, id) {
+function RenderFieldFree(span, formField) {
     var res = "";
-    res += "<div id=\"" + id + "\" class=\"col-sm-" + (span - 1) + "\">" + id + "</div>";
+    var splited = false;
+    var realSpan = span;
+    var labelSpan = 1;
+
+    if (HasPropertyValue(formField.Layout)) {
+        if (formField.Layout === "Splited") {
+            splited = true;
+            realSpan = 12;
+            labelSpan = 12;
+        }
+    }
+
+    if (splited === true) {
+        res += "<div class=\"col-sm-" + span  + "\">";
+    }
+
+    if (HasPropertyValue(formField.Label)) {
+        res += "<label id=\"" + formField.Id + "_Label\" class=\"col-sm-" + labelSpan + " control-label\">" + formField.Label + "</label>";
+    }
+
+    res += "<div id=\"" + formField.Id + "\" class=\"col-sm-" + realSpan + "\">Free:" + formField.Id + "</div>";
+
+    if (splited === true) {
+        res += "</div>";
+    }
+
     return res;
 }
 
@@ -752,7 +912,6 @@ function RenderFieldRange(field, span) {
 }
 
 function FillCmbApplicationUsers() {
-
 }
 
 function FieldToLabel(fieldName) {

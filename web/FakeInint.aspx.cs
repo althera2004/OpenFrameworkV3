@@ -24,21 +24,12 @@ public partial class FakeInint : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        Instance.CheckPersistence();
-        this.Instance = Persistence.InstanceByName("support");
-        this.ActualUser = ApplicationUser.OpenFramework;
-        this.Company = Company.ById(1, this.Instance.Name);
-
-        this.LtCns.Text = Persistence.ConnectionString("support");
-
-        this.LtLink.Text = "<a href=\"/instances/" + this.Instance.Name + "/Pages/Home.aspx?" + Query(this.Instance.Name, this.Company.Id, string.Empty) + "\">Home.aspx</a>";
-
-
-        this.LtList.Text = "<a href=\"ItemList.aspx?" + Query(this.Instance.Name, this.Company.Id, "&Item=Incidencia&List=Incidencias") + "\">Incidencias</a>";
-        this.LtList.Text += "<br />";
-        this.LtList.Text += "<a href=\"ItemList.aspx?" + Query(this.Instance.Name, this.Company.Id, "&Item=Incidencia&List=Datos") + "\">Datos</a>";
-        this.LtList.Text += "<br />";
-        this.LtList.Text += "<a href=\"ItemList.aspx?" + Query(this.Instance.Name, this.Company.Id, "&Item=Incidencia&List=NewDevelopment") + "\">Nuevo</a>";
+        if (!IsPostBack)
+        {
+            this.Instance = Instance.Empty;
+            this.ActualUser = ApplicationUser.OpenFramework;
+            this.Company = Company.Empty;
+        }
     }
 
     public string Query(string instanceName, long companyId, string extra)
@@ -51,5 +42,22 @@ public partial class FakeInint : System.Web.UI.Page
                    extra);
 
         return Basics.Base64Encode(encodingQuery);
+    }
+
+    protected void LnkReload_Click(object sender, EventArgs e)
+    {
+        Instance.CheckPersistence();
+        this.Instance = Persistence.InstanceByName(this.TxtInstanceName.Text);
+        this.ActualUser = ApplicationUser.OpenFramework;
+        this.Company = Company.ById(1, this.Instance.Name);
+
+        this.LtCns.Text = Persistence.ConnectionString(this.TxtInstanceName.Text);
+
+        this.LtList.Text = Instance.Path.Scripts(this.TxtInstanceName.Text) + "<bR>" + Basics.PathToUrl( Instance.Path.Scripts(this.TxtInstanceName.Text)) + "/FixedList.js";
+        this.LtList.Text += "<br />";
+        this.LtList.Text += "<a href=\"ItemList.aspx?" + Query(this.Instance.Name, this.Company.Id, "&Item=Incidencia&List=Datos") + "\">Datos</a>";
+        this.LtList.Text += "<br />";
+        this.LtList.Text += "<a href=\"ItemList.aspx?" + Query(this.Instance.Name, this.Company.Id, "&Item=Incidencia&List=NewDevelopment") + "\">Nuevo</a>";
+        
     }
 }

@@ -230,6 +230,19 @@ function Layout_FixedListRB_Clicked(sender) {
     ItemData.UpdateData(id, $("#" + id).val() * 1);
 }
 
+function Layout_FixedListCK_Clicked(fieldName, value) {
+    console.log(fieldName, value);
+    console.log($("#CK_" + fieldName + "_" + value).prop("checked"));
+    var res = 0;
+    $(".CK_" + fieldName + ":checked").each(function () {
+        res += Math.pow(2, (this.id.split('_')[2] * 1));
+    });
+
+    $("#" + fieldName).val(res);
+    var realValue = res === 0 ? null : res;
+    ItemData.UpdateData(fieldName, realValue);
+}
+
 
 // --------------------------------
 
@@ -314,3 +327,11 @@ function ReplaceClick(objectId, action) {
     $("#" + objectId).removeAttr("onclick");
     $("#" + objectId).on("click", action);
 }
+
+// money format
+// -------------------------
+$("input.money-bank").on("keyup", numberDecimalUp);
+$("input.money-bank").on("keydown", numberDecimalDown);
+$("input.money-bank").on("focus", numberDecimalFocus);
+$("input.money-bank").on("blur", moneyBlur);
+// -------------------------

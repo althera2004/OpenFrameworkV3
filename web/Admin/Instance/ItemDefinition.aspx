@@ -1,18 +1,41 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="ItemDefinition.aspx.cs" Inherits="OpenFrameworkV3.Web.Admin.Instance.ItemDefinition" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentStyles" Runat="Server">
+    <link rel="stylesheet" href="/assets/css/codemirror.css" />
+
+    <style type="text/css">
+        #TableHeader td {padding:4px;}
+
+        input[type=checkbox] {
+            margin: 5px 0 0 0 !important;
+            height: 15px !important;
+        }
+
+        h4 {
+            margin-top:12px;
+            border-bottom:1px dashed;
+        }
+
+        .CodeMirror-line {margin-left: 0px!important;padding: 0 40px!important;}
+
+        .cm-s-default{ border:1px solid #ccc;}
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentScriptVars" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentWorkSpace" Runat="Server">
     <div class="row" id="PersistentFields">
         <div class="form-group col-xs-12">
-            <div class="row">
-                <label class="col-sm-1 control-label">Id:</label>
-                <div class="col-sm-2"><span id="ItemDefinitionId"></span></div>
-                <label class="col-sm-1 control-label">Nom:</label>
-                <div class="col-sm-2"><span id="ItemDefinitionName"></span></div>
-            </div>
+            <table id="TableHeader">
+                <tr>
+                    <td rowspan="2" style="width:60px;"><span id="ItemDefinitionIcon"></span></td>
+                    <td style="width:60px;">Id: <strong><span id="ItemDefinitionId"></span></strong></td>
+                    <td>Nom: <strong><span id="ItemDefinitionName"></span></strong></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Descripció: <i><span id="ItemDefinitionDescription"></span></i></td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="col-lg-12">
@@ -28,66 +51,70 @@
                 <div id="tab-common" class="tab-pane active">
                     <div class="hpanel">
                         <form class="form-horizontal" role="form">
+                            <h4>Presentació</h4>
                             <div class="row">
-                                <h4>Configuració general:&nbsp;</h4>
-                            </div>
-                            <div class="row">
-                                <label class="col-sm-2">Identificador:&nbsp;</label>
-                                <label class="col-sm-2"><strong>20</strong></label>
-                                <label class="col-sm-1">Nom:&nbsp;</label>
-                                <label class="col-sm-3"><strong id="InstanceName"></strong></label>
-                                <label class="col-sm-1">Idioma:&nbsp;</label>
-                                <label class="col-sm-3"><strong id="InstanceDefaultLanguage"></strong></label>
-                            </div>
-                            <div class="row">
-                                <label class="col-sm-2">Descripció:&nbsp;</label>
-                                <label class="col-sm-10"><strong id="InstanceDescription"></strong></label>
-                            </div>
-                            <div class="row">
-                                <label class="col-sm-2">Multiempresa:&nbsp;</label>
-                                <label class="col-sm-2"><strong id="InstanceMulticompany"></strong></label>
-                                <label class="col-sm-1">Timeout:&nbsp;</label>
-                                <label class="col-sm-3"><strong id="InstanceSessionTimeout"></strong></label>
-                            </div>
-                            <div class="row">
+                                <label class="col-sm-1">Singular:&nbsp;</label>
                                 <div class="col-sm-5">
-                                    <button type="button" class="btn btn-info" onclick="ReloadInstance();"><i class="fa fa-recycle"></i>&nbsp;Recargar</button></div>
-                            </div>
-                            <div class="row">
-                                <label class="col-sm-2">Usuaris externs:&nbsp;</label>
+                                    <input type="text" id="TxtLayoutLabel" class="col-xs-12 col-sm-12 tooltip-info" onblur="this.value=$.trim(this.value);" spellcheck="false" /></div>
+                                <label class="col-sm-1">Plural:&nbsp;</label>
                                 <div class="col-sm-5">
-                                    <ul></ul>
+                                    <input type="text" id="TxtLayoutLabelPlural" class="col-xs-12 col-sm-12 tooltip-info" onblur="this.value=$.trim(this.value);" spellcheck="false" /></div>
+                            </div>
+                            <h4>Funcionalitats</h4>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <label>
+                                        <input type="checkbox" checked="" value="0" id="RBFeature1" name="RBFeature" />
+                                        Adjunts
+                                    </label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>
+                                        <input type="checkbox" checked="" value="1" id="RBFeature2" name="RBFeature" />
+                                        Sticky
+                                    </label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>
+                                        <input type="checkbox" checked="" value="2" id="RBFeature3" name="RBFeature" />
+                                        Seguiment
+                                    </label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>
+                                        <input type="checkbox" checked="" value="2" id="RBFeature4" name="RBFeature" />
+                                        Geolocalització
+                                    </label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>
+                                        <input type="checkbox" checked="" value="2" id="RBFeature5" name="RBFeature" />
+                                        Agendable
+                                    </label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>
+                                        <input type="checkbox" checked="" value="2" id="RBFeature6" name="RBFeature" />
+                                        Asignar usuari
+                                    </label>
                                 </div>
                             </div>
+                            <h4>Traçabilitat</h4>
                             <div class="row">
-                                <h4>Funcionalitats</h4>
-                                <div class="col-xs-6">
-                                    <div class="col-xs-1"></div>
-                                    <div class="col-sm-11"><i class="far fa-ban red"></i>&nbsp;Preguntas frecuentes (FAQs)</div>
+                                <div class="col-sm-2">
+                                    <label>
+                                        <input type="radio" checked="" value="0" id="RBTrace0" name="RBTrace" /> Desactivada
+                                    </label>
                                 </div>
-                                <div class="col-xs-6">
-                                    <div class="col-xs-1"></div>
-                                    <div class="col-sm-11"><i class="far fa-check green"></i>&nbsp;Permetre seguimient</div>
+                                <div class="col-sm-2">
+                                    <label>
+                                        <input type="radio" checked="" value="1" id="RBTrace1" name="RBTrace" /> Opcions bàsiques
+                                    </label>
                                 </div>
-                                <div class="col-xs-6">
-                                    <div class="col-xs-1"></div>
-                                    <div class="col-sm-11"><i class="far fa-check green"></i>&nbsp;Alertes</div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="col-xs-1"></div>
-                                    <div class="col-sm-11"><i class="far fa-ban red"></i>&nbsp;Codi PIN</div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="col-xs-1"></div>
-                                    <div class="col-sm-11"><i class="far fa-ban red"></i>&nbsp;Portal</div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="col-xs-1"></div>
-                                    <div class="col-sm-11"><i class="far fa-ban red"></i>&nbsp;Visualització per àmbits activada</div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="col-xs-1"></div>
-                                    <div class="col-sm-11"><i class="far fa-ban red"></i>&nbsp;Recordatoris</div>
+                                <div class="col-sm-8">
+                                    <label>
+                                        <input type="radio" checked="" value="2" id="RBTrace2" name="RBTrace" /> Complerta
+                                    </label>
                                 </div>
                             </div>
                         </form>
@@ -127,11 +154,59 @@
                 </div>
                 <div id="tab-sql" class="tab-pane">
                     <div class="hpanel">
-                        <pre id="ItemSQLCreate"></pre>
+                        <textarea id="ItemSQLCreate" rows="25"></textarea>
                     </div>
                 </div>
                 <div id="tab-scripts" class="tab-pane">                    
                     <div class="hpanel">
+                        <textarea id="Editor" rows="25">
+// Demo code (the actual new parser character stream implementation)
+
+function StringStream(string) {
+  this.pos = 0;
+  this.string = string;
+}
+
+StringStream.prototype = {
+  done: function() {return this.pos >= this.string.length;},
+  peek: function() {return this.string.charAt(this.pos);},
+  next: function() {
+    if (this.pos &lt; this.string.length)
+      return this.string.charAt(this.pos++);
+  },
+  eat: function(match) {
+    var ch = this.string.charAt(this.pos);
+    if (typeof match == "string") var ok = ch == match;
+    else var ok = ch &amp;&amp; match.test ? match.test(ch) : match(ch);
+    if (ok) {this.pos++; return ch;}
+  },
+  eatWhile: function(match) {
+    var start = this.pos;
+    while (this.eat(match));
+    if (this.pos > start) return this.string.slice(start, this.pos);
+  },
+  backUp: function(n) {this.pos -= n;},
+  column: function() {return this.pos;},
+  eatSpace: function() {
+    var start = this.pos;
+    while (/\s/.test(this.string.charAt(this.pos))) this.pos++;
+    return this.pos - start;
+  },
+  match: function(pattern, consume, caseInsensitive) {
+    if (typeof pattern == "string") {
+      function cased(str) {return caseInsensitive ? str.toLowerCase() : str;}
+      if (cased(this.string).indexOf(cased(pattern), this.pos) == this.pos) {
+        if (consume !== false) this.pos += str.length;
+        return true;
+      }
+    }
+    else {
+      var match = this.string.slice(this.pos).match(pattern);
+      if (match &amp;&amp; consume !== false) this.pos += match[0].length;
+      return match;
+    }
+  }
+};</textarea>
                     </div>
                 </div>
                 <div id="tab-dictionary" class="tab-pane">
@@ -143,6 +218,10 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="ContentScriptFiles" Runat="Server">
+    <!--script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.js"></!--script-->
+    <script type="text/javascript" src="/assets/js/codemirror.js"></script>
+    <script type="text/javascript" src="/assets/js/codemirror_sql.js"></script>
+    <script type="text/javascript" src="/assets/js/codemirror_javascript.js"></script>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="ContentScripts" Runat="Server">
     <script type="text/javascript">

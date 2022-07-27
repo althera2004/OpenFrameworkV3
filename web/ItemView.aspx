@@ -6,7 +6,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentWorkSpace" Runat="Server">
     <div class="row" id="PersistentFields"></div>
-    <div class="col-lg-12">
+    <div class="col-lg-12" style="padding-left:0;">
         <div class="hpanel">
             <ul class="nav nav-tabs" id="FormTabs"></ul>
             <div class="tab-content" id="FormContent"></div>
@@ -62,13 +62,23 @@
 
         /* Obtener FK */
         // --------------------
-        // Si tiene FL hay que esperar los FK antes de obtener los datos y rellenar el formulario
+        // Si tiene FK hay que esperar los FK antes de obtener los datos y rellenar el formulario
+
+        var HasFK = false;
+
         if (HasArrayValues(ItemDefinition.ForeignValues)) {
+            HasFK = true;
             for (var fk = 0; fk < ItemDefinition.ForeignValues.length; fk++) {
                 GetFKItem(ItemDefinition.ForeignValues[fk].ItemName);
             }
         }
-        else {
+
+        if (Form.HasApplicationUserFields) {
+            HasFK = true;
+            GetFKApplicationUsers();
+        }
+
+        if(HasFK === false) {
             GetItemDataJson(ItemDefinition.ItemName, ItemId, FillFormItemFromJson);
         }
         // --------------------

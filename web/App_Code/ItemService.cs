@@ -6,6 +6,7 @@
 // --------------------------------
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
@@ -49,20 +50,75 @@ public class ItemService : WebService
 
     [WebMethod(EnableSession = true)]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetListCustomAjaxSource(string itemName, string listDefinitionId, string parametersList, long companyId, string instanceName)
+    {
+        var res = string.Empty;
+        var instance = Persistence.InstanceByName(instanceName);
+        var itemDefinition = instance.ItemDefinitions.First(d => d.ItemName.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+        var listDefinition = itemDefinition.Lists[0];
+        if (itemDefinition.Lists.Any(l => l.Id.Equals(listDefinitionId, StringComparison.OrdinalIgnoreCase) == true))
+        {
+            listDefinition = itemDefinition.Lists.First(l => l.Id.Equals(listDefinitionId, StringComparison.OrdinalIgnoreCase) == true);
+        }
+
+        if(!string.IsNullOrEmpty(listDefinition.CustomAjaxSource))
+        {
+            using(var cmd = new SqlCommand(listDefinition.CustomAjaxSource))
+            {
+                using(var cnn = new SqlConnection(instance.Config.ConnectionString))
+                {
+                    cmd.Connection = cnn;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(DataParameter.Input("@CompanyId", companyId));
+                    foreach(var parameter in parametersList)
+                    {
+
+                    }
+
+                    var data = SqlStream.SQLJSONStream(cmd);
+
+                    res = string.Format(
+                        CultureInfo.InvariantCulture,
+                        @"{{""data"":{0},""ItemName"":""{1}"",""ListId"":""{2}""}}",
+                        data,
+                        itemName,
+                        listDefinitionId);
+                }
+            }
+        }
+        else
+        {
+            GetList(itemName, listDefinitionId, parametersList, companyId, instanceName);
+        }
+
+
+        return res;
+    }
+
+   [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public string GetList(string itemName, string listDefinitionId, string parametersList,long companyId, string instanceName)
     {
         var instance = Persistence.InstanceByName(instanceName);
         var itemBuilder = instance.ItemDefinitions.First(d => d.ItemName.Equals(itemName, StringComparison.OrdinalIgnoreCase));
         var res = string.Empty;
-        //switch(itemBuilder.DataOrigin)
-        //{
-        //    case DataOrigin.JsonFile:
-        //        res = GetListJsonFile(itemName, listDefinitionId, parametersList, instanceName);
-        //        break;
-        //    default:
-                res = GetListSQL(itemName, listDefinitionId, parametersList,companyId, instanceName);
-        //        break;
-        //}
+        try
+        {
+
+            //switch(itemBuilder.DataOrigin)
+            //{
+            //    case DataOrigin.JsonFile:
+            //        res = GetListJsonFile(itemName, listDefinitionId, parametersList, instanceName);
+            //        break;
+            //    default:
+            res = GetListSQL(itemName, listDefinitionId, parametersList, companyId, instanceName);
+            //        break;
+            //}
+        }
+        catch(Exception ex)
+        {
+            res = string.Format(CultureInfo.InvariantCulture, @"{{""ItemName"":""{1}"", ""ListId"":""{2}"", ""data"":""{0}""}}", Json.JsonCompliant(ex.Message), itemName, listDefinitionId);
+        }
 
         return res.Replace("\n", "<br />").Replace("\r", string.Empty);
     }
@@ -247,6 +303,27 @@ public class ItemService : WebService
             token,
             data,
             itemName);
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetFKApplicationUsers(long companyId, string instanceName)
+    {
+        var users = ApplicationUser.All(companyId, instanceName);
+        var res = new StringBuilder("[");
+        var first = true;
+        foreach(var user in users)
+        {
+            res.AppendFormat(
+                CultureInfo.InvariantCulture,
+                "{0}{1}",
+                first ? string.Empty : ",",
+                user.JsonKeyValue);
+            first = false;
+        }      
+
+        res.Append("]");
+        return res.ToString();
     }
 
     private string GetListJsonFile(string itemName, string listDefinitionId, string parametersList, string instanceName)

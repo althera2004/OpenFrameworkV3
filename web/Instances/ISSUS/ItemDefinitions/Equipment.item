@@ -10,20 +10,28 @@
         "Description": {
             "Pattern": "{0} - {1}",
             "Fields": [
-                { "Name": "Name" },
-                { "Name": "Email" }
+                { "Name": "Code" },
+                { "Name": "Name" }
             ]
         },
         "EditionType": "inline"
     },
-	"ForeignValues": [  ],
+	"ForeignValues": [ {"ItemName": "ScaleDivisionUnit" }, {"ItemName": "Employee" } ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Code", "Label": "Codi", "Type": "text", "Length": 20 },
 		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150 },
-		{ "Name": "Email", "Label": "Email", "Type": "email", "Length": 150 },
-		{ "Name": "Phone", "Label": "Telèfon", "Type": "text", "Length": 15 },
-		{ "Name": "Reporter", "Label": "Reportador", "Type": "bool", "DataFormat": {"Name": "ToBooleanCheck" }},
-		{ "Name": "Informed", "Label": "Informat", "Type": "bool", "DataFormat": {"Name": "ToBooleanCheck" }}
+		{ "Name": "Marca", "Label": "Marca", "Type": "text", "Length": 50 },
+		{ "Name": "Model", "Label": "Model", "Type": "text", "Length": 50 },
+		{ "Name": "NSerie", "Label": "Nºsèrie", "Type": "text", "Length": 50 },
+		{ "Name": "RecordType", "Label": "Registres", "Type": "FixedListMultiple", "FixedListName": "EquipmentRecordType" },
+		{ "Name": "Ubicacio", "Label": "Ubicació", "Type": "text", "Length": 150 },
+		{ "Name": "MeasureRange", "Label": "Rang de mesura", "Type": "decimal", "Precission": 6 },
+		{ "Name": "ScaleDivision", "Label": "Divisió d'escala", "Type": "decimal", "Precission": 6 },
+		{ "Name": "ScaleDivisionUnitId", "Label": "*", "Type": "long", "FK": true },
+		{ "Name": "DateStart", "Label": "D.inici", "Type": "datetime" },
+		{ "Name": "EmployeeId", "Label": "Responsable", "Type": "long", "FK": true },
+		{ "Name": "Notes", "Label": "Notes", "Type": "textarea" }
     ],
     "Lists": [
         {
@@ -32,13 +40,13 @@
             "Layout": 1,
             "EditAction": "FormPage",
 			"Columns": [
-                { "DataProperty": "Name", "Linkable": true },
-                { "DataProperty": "Email", "Width": 300 },
-                { "DataProperty": "Phone", "Width": 120 },
-				{ "DataProperty": "Reporter", "Width": 100, "Align": "center" },
-				{ "DataProperty": "Informed", "Width": 100, "Align": "center" }
+                { "DataProperty": "Name", "Linkable": true,"Orderable": true, "Search": true, "RenderData": "Equipment_Name_Column" },
+                { "DataProperty": "Ubicacio", "Width": 200 },
+                { "DataProperty": "RecordType", "Width": 300, "Search": true },
+				{ "DataProperty": "EmployeeId", "Width": 150, "Search": true },
+                { "DataProperty": "Code", "HiddenList": true }
             ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [
@@ -52,21 +60,107 @@
 					"Rows": [
 						{
 							"Fields": [
-								{ "Name": "Name" },
-								{ "Name": "Email", "Colspan": 2 }
+								{ "Name": "Code" },
+								{ "Name": "Name", "ColSpan": 2 },
+								{ "Type": "Blank" }
 							]
 						}
 					]
 				},
 				{
 					"Id": "basic",
-					"Label": "dades basiques",
+					"Label": "Dades bàsiques",
 					"Rows": [
 						{
 							"Fields": [
-								{ "Name": "Phone" },
-								{ "Name": "Reporter" },
-								{ "Name": "Informed" }
+								{ "Name": "Marca" },
+								{ "Name": "Model", "ColSpan": 2 }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "NSerie" },
+								{ "Name": "Ubicacio", "ColSpan": 2 }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "MeasureRange" },
+								{ "Name": "ScaleDivision" },
+								{ "Name": "ScaleDivisionUnitId", "Layout": "BAR NoLabel" },
+								{ "Name": "DateStart" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "RecordType", "ColSpan": 2 },
+								{ "Name": "EmployeeId" },
+								{ "Type": "Blank" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Notes", "Layout": "Splited" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "calibratge",
+					"Label": "Calibratge",
+					"MustExists": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "calibratge" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "varificacio",
+					"Label": "Verificació",
+					"MustExists": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "varificacio" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "mateniments",
+					"Label": "Mateniments",
+					"MustExists": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "mateniments" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "registres",
+					"Label": "Registres",
+					"MustExists": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "registres" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "reparacions",
+					"Label": "Reparacions",
+					"MustExists": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "reparacions" }
 							]
 						}
 					]

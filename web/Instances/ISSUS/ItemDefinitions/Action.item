@@ -37,7 +37,7 @@
                 { "DataProperty": "ActionType", "Width": 300 },
                 { "DataProperty": "Origin", "Width": 150 }
             ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ],
+            "Sorting": {"Index": 1, "SortingType": "asc"},
 			"Buttons": [
 				{ "Name": "Print", "Label": "Imprimit", "Icon": "green fal fa-file-pdf", "Function": "EXTRAESCOLAR_ConfirmarInscripcion"}
 			]

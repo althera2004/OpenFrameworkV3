@@ -3,7 +3,7 @@
     "ItemName": "CostHabitual",
 	"Description": "CostHabitual",
     "Layout": {
-        "Icon": "fad fa-ruler",
+        "Icon": "fad fa-euro-sign",
         "Label": "Cost habitual",
         "LabelPlural": "Costos habituals",
         "Description": {
@@ -18,21 +18,8 @@
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
 		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 50 },
-		{ "Name": "Amount", "Label": "Import", "Type": "int" }
+		{ "Name": "Amount", "Label": "Import", "Type": "money" }
     ],
-    "Lists": [
-        {
-            "Id": "Custom",
-            "FormId": "Custom",
-            "Layout": 1,
-            "EditAction": "FormPage",
-			"Columns": [
-                { "DataProperty": "Name" },
-                { "DataProperty": "Amount", "Width": 80 }
-            ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
-        }
-	],
     "Lists": [
         {
             "Id": "Custom",
@@ -43,7 +30,7 @@
                 { "DataProperty": "Name", "Linkable": true },
                 { "DataProperty": "Amount", "Width": 90, "Align": "right" }
             ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [
@@ -54,7 +41,7 @@
 			"Tabs": [
 				{
 					"Id": "basic",
-					"Label": "dades basiques",
+					"Label": "Dades bàsiques",
 					"Rows": [
 						{
 							"Fields": [

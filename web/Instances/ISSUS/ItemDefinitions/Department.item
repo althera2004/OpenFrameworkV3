@@ -26,9 +26,9 @@
             "Layout": 1,
             "EditAction": "FormPage",
 			"Columns": [
-                { "DataProperty": "Name", "Linkable": true }
+                { "DataProperty": "Name", "Linkable": true, "Search": true }
             ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [
@@ -38,13 +38,25 @@
 			"DefaultSelected": true,
 			"Tabs": [
 				{
-					"Id": "basic",
-					"Label": "dades basiques",
+					"Persistent": true,
 					"Rows": [
 						{
 							"Fields": [
 								{ "Name": "Name" }
 							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Vinculacions",
+					"Rows": [
+						{
+							"Id": "jobpositionRow",
+							"Label": "Càrrecs",
+							"ItemList": "JobPosition",
+							"ListId": "ByDepartment",
+							"FilterFields": [ { "Field": "Departament" } ]
 						}
 					]
 				}

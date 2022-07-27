@@ -47,7 +47,7 @@
                 { "DataProperty": "Revisio", "Width": 50, "Label": "Rev." },
                 { "DataProperty": "FAlta", "Width": 90 }
             ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [

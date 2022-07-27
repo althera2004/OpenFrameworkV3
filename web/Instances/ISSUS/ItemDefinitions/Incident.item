@@ -42,7 +42,7 @@
                 { "DataProperty": "Tipo", "Width": 200, "Align": "left" }
             ],
             "Parameters": [ {"Name": "Tipo", "Value": "1"}, {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         },
         {
             "Id": "Datos",
@@ -60,7 +60,7 @@
                 { "DataProperty": "Tipo", "Width": 200, "Align": "left" }
             ],
             "Parameters": [ {"Name": "Tipo", "Value": "2"}, {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         },
         {
             "Id": "NewDevelopment",
@@ -78,7 +78,7 @@
                 { "DataProperty": "Tipo", "Width": 200, "Align": "left" }
             ],
             "Parameters": [ {"Name": "Tipo", "Value": "3"}, {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         },
         {
             "Id": "Consultas",
@@ -96,7 +96,7 @@
                 { "DataProperty": "Tipo", "Width": 200, "Align": "left" }
             ],
             "Parameters": [ {"Name": "Tipo", "Value": "4"}, {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         },
         {
             "Id": "Altres",
@@ -114,7 +114,7 @@
                 { "DataProperty": "Tipo", "Width": 200, "Align": "left" }
             ],
             "Parameters": [ {"Name": "Tipo", "Value": "5"}, {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         },
         {
             "Id": "ByInstancia",
@@ -131,7 +131,7 @@
                 { "DataProperty": "Tipo", "Width": 200, "Align": "left" }
             ],
             "Parameters": [ {"Name": "InstanciaId", "Value": "#actualItemId#"}, {"Name": "Active", "Value": "1"} ],
-            "Sorting": [ {"Index": 1, "SortingType": "asc"} ]
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [
