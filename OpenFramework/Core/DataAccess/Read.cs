@@ -443,7 +443,7 @@ namespace OpenFrameworkV3.Core.DataAccess
             {
                 using (var cmd = new SqlCommand(definition.CustomFK))
                 {
-                    using (var cnn = new SqlConnection())
+                    using (var cnn = new SqlConnection(cns))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Connection = cnn;

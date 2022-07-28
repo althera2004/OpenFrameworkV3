@@ -426,6 +426,7 @@
                                     <ul id="MenuCore" style="text-align: left;list-style:none;margin:0;">
                                         <li><a href="#" onclick="GoEncryptedPage('/Admin/Instance/Default.aspx');"><i class="fad fa-tachometer bigger-110" style="width: 25px;"></i> Gestión de instancia</a></li>
                                         <li><a href="#" onclick="Core_ReloadDefinitions();"><i class="fad fa-cubes bigger-110" style="width: 25px;"></i> Recargar definiciones</a></li>
+                                        <li><a href="#" onclick="Core_ReloadPersistenceScripts();"><i class="fad fa-cubes bigger-110" style="width: 25px;"></i> Recargar scripts persistents</a></li>
                                         <li><a href="#" onclick="GoEncryptedPage('/Admin/Features/Dictionary.aspx');"><i class="fad fa-book bigger-110" style="width: 25px;"></i> Recargar diccionario</a></li>
                                         <li><a href="#"><i class="fad fa-users bigger-110" style="width: 25px;"></i> Recargar permisos</a></li>
                                         <li><a href="#" onclick="Core_ReloadMenu();"><i class="fad fa-list bigger-110" style="width: 25px;"></i> Recargar menú</a></li>
@@ -550,6 +551,8 @@
             $("#UserAvatar").attr("src", "/Instances/" + Instance.Name + "/Data/Core_Users/" + ApplicationUser.Id + "/avatar.jpg");
 			RenderMenu();
         </script>
+		<%= this.FKScripts %>
+        
         <asp:ContentPlaceHolder id="ContentScripts" runat="server"></asp:ContentPlaceHolder>
     </form>
 	<div id="right-menu" class="modal aside" data-body-scroll="false" data-offset="true" data-placement="right" data-fixed="true" data-backdrop="false" tabindex="-1">

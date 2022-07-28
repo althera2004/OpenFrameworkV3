@@ -67,14 +67,22 @@
         var HasFK = false;
 
         if (HasArrayValues(ItemDefinition.ForeignValues)) {
-            HasFK = true;
             for (var fk = 0; fk < ItemDefinition.ForeignValues.length; fk++) {
-                GetFKItem(ItemDefinition.ForeignValues[fk].ItemName);
+                var fkItemName = ItemDefinition.ForeignValues[fk].ItemName;
+                var fkItemDefinition = ItemDefinitionByName(fkItemName);
+                if (typeof fkItemDefinition.Features !== "undefined") {
+                    if (fkItemDefinition.Features.Persistence === true) {
+                        continue;
+                    }
+                }
+
+                HasFK = true;
+                GetFKItem(fkItemName);
             }
         }
 
         if (Form.HasApplicationUserFields) {
-            HasFK = true;
+            //HasFK = true;
             GetFKApplicationUsers();
         }
 

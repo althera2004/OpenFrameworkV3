@@ -1,7 +1,7 @@
 ﻿{
     "Id": 25,
     "ItemName": "JobPositionAsignation",
-	"Description": "Asignacions",
+	"Description": "Asignacions de càrrecs a empleats/des",
     "Layout": {
         "Icon": "fad fa-user-hard-hat",
         "Label": "Assignació de càrrec",
@@ -50,21 +50,21 @@
                 { "DataProperty": "FechaAlta", "Width": 90 },
                 { "DataProperty": "FechaBaja", "Width": 90 }
             ],
-            "Parameters": [ {"Name": "JobPositionId", "Value": "#actualItemId#"}, {"Name": "Active", "Value": "1"} ],
+            "Parameters": [ {"Name": "JobPositionId", "Value": "#actualItemId#"} ],
             "Sorting": {"Index": 1, "SortingType": "asc"} 
         },
         {
             "Id": "ByEmployeeId",
             "FormId": "Custom",
-            "Layout": 1,
-            "EditAction": "FormPage",
-			"ForcedHeight": 300,
+            "Layout": 3,
+            "EditAction": "InLine",
+			"CustomAjaxSource": "Item_JobPositionAsignation_ByEmployee",
 			"Columns": [
-                { "DataProperty": "JobPositionId" },
-                { "DataProperty": "FechaAlta", "Width": 90 },
-                { "DataProperty": "FechaBaja", "Width": 90 }
+                { "DataProperty": "Name", "ReplacedBy": "JP" },
+                { "DataProperty": "FechaAlta", "ReplacedBy": "FA", "Width": 90 },
+                { "DataProperty": "FechaBaja", "ReplacedBy": "FB", "Width": 90 }
             ],
-            "Parameters": [ {"Name": "EmployeeId", "Value": "#actualItemId#"}, {"Name": "Active", "Value": "1"} ],
+            "Parameters": [ {"Name": "EmployeeId", "Value": "#actualItemId#", "Type": "long"} ],
             "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],

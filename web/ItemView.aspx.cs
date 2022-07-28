@@ -52,5 +52,17 @@ public partial class ItemView : Page
 
         var title = listDefinition.Title ?? itemDefinition.Layout.LabelPlural;
         this.master.SetPageType("PageView");
+
+        if(itemDefinition.ForeignValues.Count > 0)
+        {
+            foreach(var fv in itemDefinition.ForeignValues)
+            {
+                var fvItem = Persistence.ItemDefinitionByName(fv.ItemName, this.master.InstanceName);
+                if (fvItem.Features.Persistence)
+                {
+                    this.master.AddFKScript(fvItem.ItemName);
+                }
+            }
+        }
     }
 }

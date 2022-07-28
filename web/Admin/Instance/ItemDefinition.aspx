@@ -42,6 +42,7 @@
         <div class="hpanel">
             <ul class="nav nav-tabs" id="FormTabs">
                 <li id="tabSelect-common" class="tabSelect active"><a data-toggle="tab" href="#tab-common" aria-expanded="false">Configuració</a></li>
+                <li id="tabSelect-definition" class="tabSelect"><a data-toggle="tab" href="#tab-definition" aria-expanded="false">Definició</a></li>
                 <li id="tabSelect-fields" class="tabSelect"><a data-toggle="tab" href="#tab-fields" aria-expanded="false">Camps</a></li>
                 <li id="tabSelect-sql" class="tabSelect"><a data-toggle="tab" href="#tab-sql" aria-expanded="false">SQL</a></li>
                 <li id="tabSelect-scripts" class="tabSelect"><a data-toggle="tab" href="#tab-scripts" aria-expanded="false">Scripts</a></li>
@@ -120,6 +121,11 @@
                         </form>
                     </div>
                 </div>
+                <div id="tab-definition" class="tab-pane">
+                    <div class="hpanel">
+                        <textarea id="ItemDefinition" rows="25"><%=this.ItemDefintionJson %></textarea>
+                    </div>
+                </div>
                 <div id="tab-fields" class="tab-pane">
                     <div class="hpanel">
                         <div class="table-responsive" id="ListFieldsScrollTableDiv">
@@ -140,6 +146,34 @@
                             <div id="ListFieldsDiv" style="overflow: hidden scroll; padding: 0px; height: 501px;">
                                 <table class="table table-bordered table-striped" style="border-top: none;">
                                     <tbody id="ListFieldsTable"></tbody>
+                                    <tbody id="ListFieldsTableNew">
+                                        <tr>
+                                            <td style="width:200px;"><input type="text" id="FieldNewName" style="width:180px;" /></td>
+                                            <td><input type="text" id="FieldNewLabel" /></td>
+                                            <td style="width:150px;">
+                                                <select id="FieldNeType" style="width:130px;">
+                                                    <option value="text">Text</option>
+                                                    <option value="textarea">Text llarg</option>
+                                                    <option value="url">Url</option>
+                                                    <option value="email">Email</option>
+                                                    <option value="fixedlist">Llista fixa</option>
+                                                    <option value="boolean">Sí/No</option>
+                                                    <option value="int">Nombre sencer</option>
+                                                    <option value="long">Nombre llarg</option>
+                                                    <option value="decimal">Nombre decimal</option>
+                                                    <option value="money">Moneda</option>
+                                                    <option value="datetime">Data</option>
+                                                    <option value="documentfile">Document</option>
+                                                    <option value="imagefile">Imatge</option>
+                                                    <option value="applicationuser">Usuari</option>
+                                                </select>
+                                            </td>
+                                            <td style="width:50px;"><input type="checkbox" id="FieldNewRequired" /></td>
+                                            <td style="width:90px;"><input type="text" id="FieldNewSize" style="width:70px;" /></td>
+                                            <td style="width:50px;"><input type="checkbox" id="FieldNewFK" /></td>
+                                            <td style="width:150px;"><input type="text" id="FieldNewReference" style="width:130px;" /></td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                             <table class="table table-bordered table-striped" style="margin: 0">

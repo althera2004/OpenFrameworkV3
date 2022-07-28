@@ -14,6 +14,7 @@ using System.Text;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
+using Newtonsoft.Json;
 using OpenFrameworkV3;
 using OpenFrameworkV3.Core.Activity;
 using OpenFrameworkV3.Core.DataAccess;
@@ -70,10 +71,24 @@ public class ItemService : WebService
                     cmd.Connection = cnn;
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(DataParameter.Input("@CompanyId", companyId));
-                    foreach(var parameter in parametersList)
-                    {
 
-                    }
+                    var parameters = JsonConvert.DeserializeObject<ListParameter[]>(parametersList);
+
+                    foreach (var parameter in parameters)
+                    {
+                        switch ((parameter.Type ?? string.Empty).ToUpperInvariant())
+                        {
+                            case "LONG":
+                                cmd.Parameters.Add(DataParameter.Input(parameter.Name, Convert.ToInt64(parameter.Value)));
+                                break;
+                            case "INT":
+                                cmd.Parameters.Add(DataParameter.Input(parameter.Name, Convert.ToInt32(parameter.Value)));
+                                break;
+                            default:
+                                cmd.Parameters.Add(DataParameter.Input(parameter.Name, parameter.Value));
+                                break;
+                        }
+                    }                    
 
                     var data = SqlStream.SQLJSONStream(cmd);
 
@@ -121,6 +136,20 @@ public class ItemService : WebService
         }
 
         return res.Replace("\n", "<br />").Replace("\r", string.Empty);
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult CreatePersistenceScripts(string instanceName)
+    {
+        var res = ActionResult.NoAction;
+        var itemDefinitions = Persistence.ItemDefinitions(instanceName).Where(i => i.Features.Persistence == true);
+        foreach(var itemDefinition in itemDefinitions)
+        {
+            itemDefinition.CreatePersistenceScript(instanceName);
+        }
+
+        return res;
     }
 
     [WebMethod(EnableSession = true)]

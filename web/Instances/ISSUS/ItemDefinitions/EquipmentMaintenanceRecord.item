@@ -1,0 +1,63 @@
+﻿{
+    "Id": 29,
+    "ItemName": "EquipmentMaintenanceRecord",
+	"Description": "Registre de anteniment realitzat",
+    "Layout": {
+        "Icon": "fad fa-user-tie",
+        "Label": "Manteniment realitzat",
+        "LabelPlural": "Manteniments realitzats",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "EquipmentMaintenanceDefinition"}, {"ItemName": "Provider"}, {"ItemName": "Employee"} ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "EquipmentMaintenanceDefinitionId", "Label": "Mantemiment", "Type": "long", "FK": true, "Required": true },
+		{ "Name": "Data", "Label": "Data", "Type": "datetime", "Required": true },
+		{ "Name": "Vto", "Label": "Venciment", "Type": "datetime", "Required": true },
+		{ "Name": "Observacions", "Label": "Observacions", "Type": "text", "Length": 150, "Required": true },
+		{ "Name": "Amount", "Label": "Cost", "Type": "money", "Required": true },
+		{ "Name": "EmployeeId", "Label": "Responsable", "Type": "long", "FK": true, "Required": true },
+		{ "Name": "ProviderId", "Label": "Proveïdor", "Type": "long", "FK": true }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [				
+                { "DataProperty": "Data", "Length": 90 },
+                { "DataProperty": "EquipmentMaintenanceDefinitionId", "Linkable": true, "Search": true },
+                { "DataProperty": "EmployeeId", "Search": true, "Length": 150 },	
+                { "DataProperty": "Amount", "Linkable": true, "Search": true, "Length": 90 },
+                { "DataProperty": "Vto", "Length": 90 }
+            ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

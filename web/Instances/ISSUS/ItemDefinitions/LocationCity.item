@@ -1,6 +1,6 @@
 ﻿{
     "Id": 2004,
-    "ItemName": "LocationLocalidad",
+    "ItemName": "LocationCity",
     "Features": {
       "Persistence": true
     },
@@ -16,14 +16,14 @@
         },
         "EditionType": "inline"
     },
-	"ForeignValues": [ {"ItemName": "LocationProvincia"} ],
+	"ForeignValues": [ {"ItemName": "LocationProvince"} ],
     "PrimaryKeys": [ ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true, "width": 60 },
         { "Name": "Code", "Label": "Codi", "Type": "text", "Length": 5 },
         { "Name": "Name", "Label": "Nom", "Type": "text", "Length": 50, "Required": true },
         { "Name": "Capital", "Label": "Capital", "Type": "boolean", "DataFormat": { "Name": "ToBooleanCheckNull" } },
-        { "Name": "LocationProvinciaId", "Label": "Província", "Type": "long", "Required": true, "ColumnDataType": "Text", "FK": true }
+        { "Name": "LocationProvinceId", "Label": "Província", "Type": "long", "Required": true, "ColumnDataType": "Text", "FK": true }
     ],
     "Lists": [
         {
@@ -54,5 +54,6 @@
                 { "DataProperty": "Name", "ReplacedBy": "N", "Search": true, "Orderable": true, "Linkable": true }
           ]
         }
-	]
+	],
+	"CustomFK": "FK_LocationCity"
 }

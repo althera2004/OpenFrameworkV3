@@ -1,0 +1,64 @@
+﻿{
+    "Id": 27,
+    "ItemName": "EquipmentMaintenanceDefinition",
+	"Description": "Manteniment",
+    "Layout": {
+        "Icon": "fad fa-user-tie",
+        "Label": "Manteniment",
+        "LabelPlural": "Manteniments",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "Equipment"}, {"ItemName": "Provider"}, {"ItemName": "Employee"} ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "EquipmentId", "Label": "Equips", "Type": "long", "FK": true, "Required": true },
+		{ "Name": "Name", "Label": "Operació", "Type": "text", "Length": 150, "Required": true },
+		{ "Name": "Periodcity", "Label": "Periodifictat", "Type": "int", "Required": true },
+		{ "Name": "Accesoris", "Label": "Accesoris", "Type": "text", "Length": 150, "Required": true },
+		{ "Name": "Amount", "Label": "Cost", "Type": "money", "Required": true },
+		{ "Name": "EmployeeId", "Label": "Responsable", "Type": "long", "FK": true, "Required": true },
+		{ "Name": "Type", "Label": "tipus", "Type": "int", "Required": true },
+		{ "Name": "ProviderId", "Label": "Proveïdor", "Type": "long", "FK": true }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name", "Linkable": true, "Search": true },				
+                { "DataProperty": "Type", "Linkable": true, "Search": true, "Length": 90 },
+                { "DataProperty": "Periodcity", "Linkable": true, "Search": true, "Length": 90 },
+                { "DataProperty": "Accesoris", "Linkable": true, "Search": true, "Length": 150 },
+                { "DataProperty": "EmployeeId", "Search": true, "Length": 150 }
+            ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

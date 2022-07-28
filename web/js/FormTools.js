@@ -400,39 +400,39 @@
                 styleHeight = " style=\"height:" + listDefinition.ForcedHeight + "px\"";
             }
 
-            res += "<div id=\"" + itemName + "_" + listDefinition.Id + "_List\" class=\"ListContainer\">";
-            res += "  <div class=\"hpanel hblue hpanel-table\" style=\"margin:0;\" id=\"" + itemName + "_" + listDefinition.Id + "_PanelBody\">";
+            var componentPrefix = itemName + "_" + listDefinition.Id;
+
+            res += "<div id=\"" + componentPrefix + "_List\" class=\"ListContainer\">";
+            res += "  <div class=\"hpanel hblue hpanel-table\" style=\"margin:0;\" id=\"" + componentPrefix + "_PanelBody\">";
             res += "    <div class=\"panel-heading hbuilt\">";
-            res += "      <span id=\"" + itemName + "_" + listDefinition.Id + "_ListTitle\"></span>";
+            res += "      <span id=\"" + componentPrefix + "_ListTitle\"></span>";
             res += "        <div class=\"panel-tools\">";
-            //            <a id="Instancia_Custom_AddBtn"><i class="fa fa-plus"></i>&nbsp;<span id="Instancia_Custom_AddBtnLabel">Afegir instància</span></a>
-            res += "          </div>";
+            res += "          <a id=\"Instancia_Custom_AddBtn\"><i class=\"fa fa-plus\"></i>&nbsp;<span id=\"Instancia_Custom_AddBtnLabel\">Afegir</span></a>";
+            res += "        </div>";
             res += "      </div >";
             res += "      <div class=\"tableHead\">";
             res += "        <table class=\"table\">";
-            res += "          <thead id=\"" + itemName + "_" + listDefinition.Id + "_ListHead\"></thead>";
+            res += "          <thead id=\"" + componentPrefix + "_ListHead\"></thead>";
             res += "        </table>";
             res += "      </div>";
-            res += "      <div class=\"panel-body2 panel-body-list-inForm\" id=\"" + itemName + "_" + listDefinition.Id + "_PanelBodyList\"" + styleHeight + ">";
+            res += "      <div class=\"panel-body2 panel-body-list-inForm\" id=\"" + componentPrefix + "_PanelBodyList\"" + styleHeight + ">";
             res += "        <div class=\"table-responsive\" style=\"max-height: 100%; height: 100%; overflow-y: scroll; overflow-x: hidden\">";
             res += "          <div class=\"table-body\" style=\"max-height: 100%; height: 100%\">";
             res += "            <table class=\"table\" style=\"max-height: 100%\" cellpadding=\"1\" cellspacing=\"1\">";
-            res += "              <tbody id=\"" + itemName + "_" + listDefinition.Id + "_ListBody\">";
+            res += "              <tbody id=\"" + componentPrefix + "_ListBody\">";
             res += "              </tbody>";
             res += "            </table>";
             res += "          </div>";
             res += "        </div>";
             res += "      </div>";
             res += "      <div class=\"panel-footer\">";
-            res += "        Nº de registros: <strong id=\"" + itemName + "_" + listDefinition.Id + "_ListCount\"></strong>";
+            res += "        Nº de registros: <strong id=\"" + componentPrefix + "_ListCount\"></strong>";
             res += "      </div>";
             res += "  </div>";
             res += "</div>";
         }
-        
-            
-        res += "</div>";
 
+        res += "</div>";
         return res;
     }
 

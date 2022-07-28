@@ -14,7 +14,7 @@
         },
         "EditionType": "inline"
     },
-	"ForeignValues": [  ],
+	"ForeignValues": [ { "ItemName": "Customer" },{ "ItemName": "Provider" },{ "ItemName": "Department" },{ "ItemName": "Incident" },{ "ItemName": "Risc" },{ "ItemName": "Oportunitat" } ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
 		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150 },
@@ -24,7 +24,10 @@
 		{ "Name": "ReporterType", "Label": "Origen", "Type": "fixedlist", "FixedListName": "ReporterType" },
 		{ "Name": "DepartmentId", "Label": "Departament", "Type": "long", "FK": true },
 		{ "Name": "ProviderId", "Label": "Proveïdor", "Type": "long", "FK": true },
-		{ "Name": "CustomerId", "Label": "Client", "Type": "long", "FK": true }
+		{ "Name": "CustomerId", "Label": "Client", "Type": "long", "FK": true },
+		{ "Name": "IncidentId", "Label": "Incidència", "Type": "long", "FK": true },
+		{ "Name": "RiscId", "Label": "Risc", "Type": "long", "FK": true },
+		{ "Name": "OportunitatId", "Label": "Oportunitat", "Type": "long", "FK": true }
     ],
     "Lists": [
         {

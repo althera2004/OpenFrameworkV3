@@ -21,6 +21,7 @@ namespace OpenFrameworkV3.Core.ItemManager
     using OpenFrameworkV3.Core.Activity;
     using OpenFrameworkV3.Core.DataAccess;
     using OpenFrameworkV3.Core.ItemManager.ItemForm;
+    using OpenFrameworkV3.Tools;
     using L = OpenFrameworkV3.Core.ItemManager.ItemList;
 
     /// <summary>Implements item definition</summary>
@@ -758,6 +759,31 @@ namespace OpenFrameworkV3.Core.ItemManager
             }
 
             return false;
+        }
+
+        public ActionResult CreatePersistenceScript(string instanceName)
+        {
+            return CreatePersistenceScript(this.ItemName, instanceName);
+        }
+
+        public static ActionResult CreatePersistenceScript(string itemDefinitionName, string instanceName)
+        {
+            var res = ActionResult.NoAction;
+            var data = Read.GetCustomFK(itemDefinitionName, instanceName);
+            var path = Instance.Path.Scripts(instanceName);
+            Basics.VerifyFolder(path);
+            var fileName = string.Format(CultureInfo.InvariantCulture, @"{0}_FK.js", itemDefinitionName);
+            using (var output = new StreamWriter(path + "\\" + fileName))
+            {
+                output.WriteLine(string.Format(CultureInfo.InvariantCulture, "// {0:dd/MM/yyyy hh:mm}", DateTime.UtcNow));
+                output.WriteLine(string.Format(CultureInfo.InvariantCulture, @"FK[""{0}""] = {{""Data"":", itemDefinitionName));
+                output.Write(data);
+                output.Write(",\"Token\":\"Persistence\"};");
+            }
+
+            res.SetSuccess();
+
+            return res;
         }
 
         public static ActionResult ReloadSessionItems(string instanceName)

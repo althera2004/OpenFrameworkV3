@@ -9,8 +9,10 @@ namespace OpenFrameworkV3.Core.ItemManager.ItemList
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Data.SqlClient;
     using System.Linq;
     using Newtonsoft.Json;
+    using OpenFrameworkV3.Core.DataAccess;
 
     /// <summary>Implements ListDefinition class</summary>
     public sealed class List
@@ -237,6 +239,38 @@ namespace OpenFrameworkV3.Core.ItemManager.ItemList
                 }
 
                 return new ReadOnlyCollection<ListParameter>(this.parameters);
+            }
+        }
+
+        /// <summary> Gets the parameters of list</summary>
+        [JsonIgnore]
+        public ReadOnlyCollection<SqlParameter> SQLParameters
+        {
+            get
+            {
+                if (this.parameters == null)
+                {
+                    return new ReadOnlyCollection<SqlParameter>(new List<SqlParameter>());
+                }
+
+                var res = new List<SqlParameter>();
+                foreach(var parameter in this.parameters)
+                {
+                    switch ((parameter.Type?? string.Empty).ToUpperInvariant())
+                    {
+                        case "LONG":
+                            res.Add(DataParameter.Input(parameter.Name, Convert.ToInt64(parameter.Value)));
+                            break;
+                        case "INT":
+                            res.Add(DataParameter.Input(parameter.Name, Convert.ToInt32(parameter.Value)));
+                            break;
+                        default:
+                            res.Add(DataParameter.Input(parameter.Name, parameter.Value));
+                            break;
+                    }
+                }
+
+                return new ReadOnlyCollection<SqlParameter>(res);
             }
         }
 

@@ -44,6 +44,24 @@ function Core_ReloadDefinitions() {
     });
 }
 
+function Core_ReloadPersistenceScripts() {
+    var data = {
+        "instanceName": Instance.Name
+    };
+
+    $.ajax({
+        "type": "POST",
+        "url": "/Async/ItemService.asmx/CreatePersistenceScripts",
+        "contentType": "application/json; charset=utf-8",
+        "dataType": "json",
+        "data": JSON.stringify(data, null, 2),
+        "success": function (response) {
+            var result = response.d;
+            console.log(result);
+        }
+    });
+}
+
 function Core_ReloadMenu() {
     var data = {
         "applicationUserId": ApplicationUser.Id,

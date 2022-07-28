@@ -49,6 +49,7 @@ public partial class Main : MasterPage
     public CodedQuery CodedQuery { get; private set; }
 
     private List<string> scripts;
+    private List<string> FKscripts;
 
     /// <summary>Gets actual instance</summary>
     public string InstanceName { get; private set; }
@@ -84,6 +85,16 @@ public partial class Main : MasterPage
 
         this.scripts.Add(scriptFile);
     }
+
+    public void AddFKScript(string scriptFile)
+    {
+        if (this.FKscripts == null)
+        {
+            this.FKscripts = new List<string>();
+        }
+
+        this.FKscripts.Add(scriptFile);
+    }
     public string Scripts
     {
         get
@@ -96,6 +107,28 @@ public partial class Main : MasterPage
                     res.AppendFormat(
                         CultureInfo.InvariantCulture,
                         @"{1}{2}<script type=""text/javascript"" src=""{0}?{3}""></script>",
+                        script,
+                        Environment.NewLine,
+                        "\t\t",
+                        string.Empty); // weke Basics.AntiCache);
+                }
+            }
+
+            return res.ToString();
+        }
+    }
+    public string FKScripts
+    {
+        get
+        {
+            var res = new StringBuilder();
+            if (this.FKscripts != null && this.FKscripts.Count > 0)
+            {
+                foreach (var script in this.FKscripts)
+                {
+                    res.AppendFormat(
+                        CultureInfo.InvariantCulture,
+                        @"{1}{2}<script type=""text/javascript"" src=""/Instances/" + this.InstanceName + "/Scripts/" + script + "_FK.js\"></script>",
                         script,
                         Environment.NewLine,
                         "\t\t",

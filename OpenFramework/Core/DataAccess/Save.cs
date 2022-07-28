@@ -163,11 +163,16 @@ namespace OpenFrameworkV3.Core.DataAccess
                 }
             }
 
+            if (itemDefinition.Features.Persistence)
+            {
+                ItemDefinition.CreatePersistenceScript(itemDefinition.ItemName, instanceName);
+            }
+
             return res;
         }
 
         /// <summary>Updates item data in database</summary>
-        /// <param name="itemBuilder">Item instance</param>
+        /// <param name="itemDefinitionName">Item instance</param>
         /// <param name="instanceName">Name of instance</param>
         /// <param name="userId">User identifier</param>
         /// <param name="fromImport">Indicates if update is from import (not required)</param>

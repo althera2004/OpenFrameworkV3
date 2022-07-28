@@ -1,6 +1,7 @@
 ﻿var CodeMirror_Context = {
     "SQL": null,
-    "JavaScript": null
+    "JavaScript": null,
+    "Definition": null
 };
 
 window.onload = function () {
@@ -17,29 +18,11 @@ window.onload = function () {
     ITEMDEFINITION_RenderScript();
 
     $("#tabSelect-sql").on("click", ITEMDEFINITION_RenderScriptRefresh);
+    $("#tabSelect-definition").on("click", ITEMDEFINITION_RenderScriptRefresh);
     $("#tabSelect-scripts").on("click", ITEMDEFINITION_RenderScriptRefresh);
 }
 
-function ITEMDEFINITION_RenderScript(sender) {
-
-    /*CodeMirror(document.querySelector('#Editor'), {
-        lineNumbers: true,
-        tabSize: 2,
-        value: 'console.log("Hello, World");'
-    });
-
-    CodeMirror(document.querySelector('#ItemSQLCreate'), {
-        lineNumbers: true,
-        tabSize: 2,
-        value: sqlScript
-    });*/
-
-    /*var sqlScript = $("#ItemSQLCreate").html();
-    $("#ItemSQLCreate").html("");
-    var myCodeMirror = CodeMirror(document.body, {
-        value: sqlScript,
-        mode: "javascript"
-    });*/
+function ITEMDEFINITION_RenderScript() {
 
     if (CodeMirror_Context.SQL === null) {
         console.log("CREATE", "SQL");
@@ -77,6 +60,18 @@ function ITEMDEFINITION_RenderScript(sender) {
         });
         CodeMirror_Context.JavaScript = editor;
     }
+
+    if (CodeMirror_Context.Definition === null) {
+        console.log("CREATE", "Definition");
+        var editor = CodeMirror.fromTextArea(document.getElementById("ItemDefinition"), {
+            mode: "text/javascript",
+            lineNumbers: true,
+            matchBrackets: true,
+            continueComments: "Enter",
+            extraKeys: { "Ctrl-Q": "toggleComment" }
+        });
+        CodeMirror_Context.Definition = editor;
+    }
 }
 
 function ITEMDEFINITION_RenderScriptRefresh(sender) {
@@ -85,6 +80,9 @@ function ITEMDEFINITION_RenderScriptRefresh(sender) {
     }
     if (sender.currentTarget.id === "tabSelect-scripts") {
         setTimeout(function () { CodeMirror_Context.JavaScript.refresh(); }, 10);
+    }
+    if (sender.currentTarget.id === "tabSelect-definition") {
+        setTimeout(function () { CodeMirror_Context.Definition.refresh(); }, 10);
     }
 }
 
@@ -100,7 +98,10 @@ function ITEMDEFINITION_RenderFields() {
 
 function ITEMDEFINITION_RenderField(field) {
     if (field.Name === "Id") {
-        return "<tr style=\"background-color:#f0f2f9;\"><td style=\"width:200px;font-weight:bold;\">Id</td><td colspan=\"7\"><i>Camp clau de l'ìtem. No es pot modificar</i></td></tr>";
+        var res = "<tr style=\"background-color:#f0f2f9;\"><td style=\"width:200px;font-weight:bold;\">Id</td><td colspan=\"7\"><i>Camp clau de l'ìtem. No es pot modificar</i></td></tr>";
+        res += "<tr style =\"background-color:#f0f2f9;\"><td style=\"width:200px;font-weight:bold;\">CompanyId</td><td colspan=\"7\"><i>Camp necessari per a l'ìtem. No es pot modificar</i></td></tr>";
+        //return res;
+        return "";
     }
 
     var length = "";
@@ -115,6 +116,26 @@ function ITEMDEFINITION_RenderField(field) {
         length += " decimals";
     }
 
+    var ItemName = "";
+
+    if (field.Type.toLowerCase() === "applicationuser") {
+        ItemName = "Usuaris";
+    }
+    else if (HasArrayValues(ItemDefinition.ForeignValues)) {
+        for (var i = 0; i < ItemDefinition.ForeignValues.length; i++) {
+            if (ItemDefinition.ForeignValues[i].ItemName + "Id" === field.Name) {
+                var definition = ItemDefinitionByName(ItemDefinition.ForeignValues[i].ItemName);
+                if (definition !== null) {
+                    ItemName = definition.Layout.LabelPlural;
+                }
+                else {
+                    ItemName = "oh oh!";
+                }
+                break;
+            }
+        }
+    }
+
     var res = "";
     res += "<tr>";
     res += "  <td style=\"width:200px;\">" + field.Name + "</td>";
@@ -123,8 +144,8 @@ function ITEMDEFINITION_RenderField(field) {
     res += "  <td style=\"width:50px;text-align:center;\">" + (field.Required ? "<i class=\"fa fa-check\"></i>" : "") + "</td>";
     res += "  <td style=\"width:90px;text-align:right;\">" + length + "</td>";
     res += "  <td style=\"width:50px;text-align:center;\">" + (field.FK ? "<i class=\"fa fa-check\"></i>" : "") + "</td>";
-    res += "  <td style=\"width:150px;\"></td>";
-    res += "  <td style=\"width:90px;\">&nbsp;</td>";
+    res += "  <td style=\"width:150px;\">" + ItemName + "</td>";
+    res += "  <td style=\"width:90px;\"></td>";
     res += "</tr>";
     return res;
 }

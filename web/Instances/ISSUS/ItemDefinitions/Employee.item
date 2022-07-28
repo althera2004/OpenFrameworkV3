@@ -25,7 +25,7 @@
 		{ "Name": "Email", "Label": "Email", "Type": "email" },
 		{ "Name": "PostalAddress", "Label": "Adreça", "Type": "text", "Length": 100 },
 		{ "Name": "LocationPostalCodeId", "Label": "CodiPostal", "Type": "long" },
-		{ "Name": "FechaBaja", "Label": "Data baixa", "Type": "datime" },
+		{ "Name": "FechaBaja", "Label": "Data baixa", "Type": "datetime" },
 		{ "Name": "FAR", "Label": "Formació acadèmica real", "Type": "textarea" },
 		{ "Name": "FER", "Label": "Formació específica real", "Type": "textarea" },
 		{ "Name": "ELR", "Label": "Experiència laboral real", "Type": "textarea" },
@@ -96,7 +96,6 @@
 							]
 						},
 						{
-							
 							"Id": "jobpositionRow",
 							"Label": "Càrrecs",
 							"ItemList": "JobPositionAsignation",
@@ -111,19 +110,19 @@
 					"Rows": [
 						{
 							"Fields": [
-								{ "Type": "Free", "Id": "FA", "Label": "Formació acadèmica desitjada", "Layout": "Splited" },
+								{ "Type": "Free", "Id": "FA", "Label": "Formació acadèmica desitjada", "Layout": "Splited", "Rows": 8 },
 								{ "Name": "FAR", "Layout": "Splited" }
 							]
 						},
 						{
 							"Fields": [
-								{ "Type": "Free", "Id": "FE", "Label": "Formació específica desitjada", "Layout": "Splited" },
+								{ "Type": "Free", "Id": "FE", "Label": "Formació específica desitjada", "Layout": "Splited", "Rows": 8 },
 								{ "Name": "FER", "Layout": "Splited" }
 							]
 						},
 						{
 							"Fields": [
-								{ "Type": "Free", "Id": "EL", "Label": "Experiència laboral desitjada", "Layout": "Splited" },
+								{ "Type": "Free", "Id": "EL", "Label": "Experiència laboral desitjada", "Layout": "Splited", "Rows": 8 },
 								{ "Name": "ELR", "Layout": "Splited" }
 							]
 						}

@@ -6,8 +6,8 @@ function PageList(config) {
     this.FilteredData = [];
     this.ListDefinition = config.ListDefinition;
     this.ItemDefinition = ItemDefinitionByName(config.ItemName);
-    this.CustomAjaxSource = config.CustomAjaxSource;
-    this.Parameters = config.Parameters;
+    this.CustomAjaxSource = config.ListDefinition.CustomAjaxSource;
+    this.Parameters = config.ListDefinition.Parameters;
     this.Filter = GetFilter(config.ListDefinition.Columns); //config.Filter;
     this.ItemName = this.ItemDefinition.ItemName;
     this.ListId = this.ListDefinition.Id;
@@ -94,6 +94,15 @@ function PageList(config) {
                 console.log($(this).data("itemDefinitionId"));
                 console.log($(this).data("formId"));
                 GoEncryptedView($(this).data("itemDefinitionId"), -1, $(this).data("formId"));
+            });
+        }
+        else if (this.ListDefinition.EditAction === "InLine") {
+            $("#" + componentPrefix + "AddBtn").data("itemDefinitionId", this.ItemDefinition.Id);
+            $("#" + componentPrefix + "AddBtn").data("formId", this.ListDefinition.FormId);
+            $("#" + componentPrefix + "AddBtn").on("click", function () {
+                console.log($(this).data("itemDefinitionId"));
+                console.log($(this).data("formId"));
+                //GoEncryptedView($(this).data("itemDefinitionId"), -1, $(this).data("formId"));
             });
         }
 
@@ -850,8 +859,12 @@ function PageList(config) {
                 searchData = eval(column.RenderData + "(" + data + "," + JSON.stringify(rowData) + ");");
             }
             else if (field === null) {
-                // Dataproperty sin campo
-                cellData = rowData[column.ReplacedBy];
+                if (typeof rowData[column.ReplacedBy] === 'object') {
+                    cellData = rowData[column.ReplacedBy].Description;
+                }
+                else {
+                    cellData = rowData[column.ReplacedBy];
+                }
             }
             else if (field.Type === "FixedList") {
                 cellData = rowData[dataKeyName];
@@ -952,14 +965,13 @@ function PageList(config) {
 
     this.GetDataFromCustomAjaxSource = function () {
         console.log("GetDataFromCustomAjaxSource", this.CustomAjaxSource, 1);
-        var params = "";
         var SendParameters = [];
         if (HasArrayValues(this.Parameters)) {
             var value = "";
             for (var p = 0; p < this.Parameters.length; p++) {
                 if (this.Parameters[p].Value === "#actualItemId#") {
-                    value = itemData.Id;
-                    SendParameters.push({"Name": this.Parameters[p].Name, "Value": value});
+                    value = ItemData.ActualData.Id;
+                    SendParameters.push({"Name": this.Parameters[p].Name, "Value": value, "Type": "long"});
                 }
                 else if (this.Parameters[p].Value.charAt(0) === "@") {
                     value = $("#" + this.Parameters[p].Value.substr(1, this.Parameters[p].Value.length - 1)).val();
@@ -975,16 +987,10 @@ function PageList(config) {
             }
         }
 
-        if (SendParameters.length > 0) {
-            console.log("result", JSON.stringify(SendParameters, null, 2), 2);
-            params = "&params=" + btoa(unescape(encodeURIComponent(JSON.stringify(SendParameters, null, 0))));
-        }
-
-        //(string itemName, string listDefinitionId, string parametersList, long companyId, string instanceName)
         var data = {
             "itemName": this.ItemName,
             "listDefinitionId": this.ListId,
-            "parametersList": "",
+            "parametersList": JSON.stringify(SendParameters),
             "companyId": Company.Id,
             "instanceName": Instance.Name
         }
@@ -1817,10 +1823,10 @@ function List_Sort(sender) {
 
 function List_SortGo(configId) {
     var list = PageListById(configId.split('_')[1], configId.split('_')[2]);
-    if (LocalStorageGetJson("Sort_" + ItemDefinition.ItemName + "_" + ListId) === null) {
+    var config = LocalStorageGetJson(configId);
+    if (config === null) {
         var x = ItemListById(list.ItemDefinition, list.ListId);
         console.log("Sorting", x.Sorting);
-
         var column = x.Columns[x.Sorting.Index - 1];
         var config = {
             "actualOrder": x.Sorting.SortingType.toUpperCase(),
@@ -1835,7 +1841,7 @@ function List_SortGo(configId) {
         return;
     }
 
-    var config = LocalStorageGetJson(configId);  
+      
 
     var data = list.Data;
     var dataProperty = config.dataProperty;

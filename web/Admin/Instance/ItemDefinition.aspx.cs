@@ -10,6 +10,8 @@
 
         public long ItemDefinitionId { get; private set; }
 
+        public string ItemDefintionJson { get; private set; }
+
         public string QueryBase
         {
             get
@@ -26,6 +28,8 @@
             this.master.SetPageType("pageInstance");
 
             this.ItemDefinitionId = this.master.CodedQuery.GetByKey<long>("Id");
+
+            this.ItemDefintionJson = Persistence.ItemDefinitionById(this.ItemDefinitionId, this.master.InstanceName).Json;
 
             this.master.AddScript("/Admin/Instance/ItemDefinition.js");
         }

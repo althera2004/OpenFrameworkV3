@@ -1,0 +1,61 @@
+﻿{
+    "Id": 30,
+    "ItemName": "ActionCost",
+	"Description": "Cost de l'actuació",
+    "Layout": {
+        "Icon": "fad fa-user-tie",
+        "Label": "Cost",
+        "LabelPlural": "Costos",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "Action"}, {"ItemName": "Employee"} ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "ActionId", "Label": "Acció", "Type": "long", "FK": true, "Required": true },
+		{ "Name": "Data", "Label": "Data", "Type": "datetime", "Required": true },
+		{ "Name": "Quantity", "Label": "Quantitat", "Type": "int", "Required": true },
+		{ "Name": "Amount", "Label": "Cost", "Type": "money", "Required": true },
+		{ "Name": "EmployeeId", "Label": "Responsable", "Type": "long", "FK": true, "Required": true }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [				
+                { "DataProperty": "Data", "Length": 90 },
+                { "DataProperty": "ActionId", "Linkable": true, "Search": true },
+                { "DataProperty": "Quantity", "Search": true, "Length": 150 },	
+                { "DataProperty": "Amount", "Linkable": true, "Search": true, "Length": 90 },
+                { "DataProperty": "EmployeeId", "Length": 90 }
+            ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
