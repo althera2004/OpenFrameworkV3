@@ -22,7 +22,7 @@ function ListButtonRow(dataId, icon, color, action, title, name) {
     }
 
     var res = "";
-    res += "<a class=\"" + color + " ace-icon " + icon + " bigger-120";
+    res += "<a class=\"RowButtonAction " + color + " ace-icon " + icon + " bigger-120";
     if (customAction === true) {
         res += " customAction actionBtn-" + name;
     }
@@ -79,6 +79,8 @@ function RenderSubmenuOption(option) {
     if (typeof Dictionary[option.Label] !== "undefined") {
         label = Dictionary[option.Label];
     }
+
+    console.log(option.Label, Dictionary[option.Label]);
 
     var linkAction = "";
     var id = option.Id;

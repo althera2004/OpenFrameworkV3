@@ -19,7 +19,7 @@
         { "Name": "Id", "Type": "long", "Required": true },
 		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 100 },
 		{ "Name": "Description", "Label": "Descripció", "Type": "textarea" },
-		{ "Name": "EmployeeId", "Label": "Responsable", "Type": "applicationUser" },
+		{ "Name": "EmployeeId", "Label": "Responsable", "Type": "long" },
 		{ "Name": "DateStart", "Label": "Inici", "Type": "datetime" },
 		{ "Name": "DatePreview", "Label": "Data prevista", "Type": "datetime" },
 		{ "Name": "Indicador", "Label": "Indicador vinculat", "Type": "boolean" },
@@ -99,17 +99,17 @@
 						},
 						{
 							"Fields": [
-								{ "Name": "Methodology" }
+								{ "Name": "Methodology", "Layout": "Splited" }
 							]
 						},
 						{
 							"Fields": [
-								{ "Name": "Resources" }
+								{ "Name": "Resources", "Layout": "Splited" }
 							]
 						},
 						{
 							"Fields": [
-								{ "Name": "Notes" }
+								{ "Name": "Notes", "Layout": "Splited" }
 							]
 						}
 					]

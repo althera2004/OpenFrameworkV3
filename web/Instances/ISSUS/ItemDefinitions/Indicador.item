@@ -14,12 +14,12 @@
         },
         "EditionType": "inline"
     },
-	"ForeignValues": [ {"ItemName": "Process" }, {"ItemName": "Unitat" } ],
+	"ForeignValues": [ {"ItemName": "Process" }, {"ItemName": "Employee" }, {"ItemName": "Unitat" } ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
 		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 100 },
 		{ "Name": "Description", "Label": "Descripció", "Type": "textarea" },
-		{ "Name": "Responsible", "Label": "Responsable", "Type": "applicationUser" },
+		{ "Name": "EmployeeId", "Label": "Responsable", "Type": "long" },
 		{ "Name": "DateStart", "Label": "Inici", "Type": "datetime" },
 		{ "Name": "Meta", "Label": "Meta", "Type": "FixedList", "FixedListName": "IndicadorMeta" },
 		{ "Name": "MetaValue", "Label": "Meta valor", "Type": "decimal", "Precission": 6 },
@@ -41,7 +41,7 @@
                 { "DataProperty": "Name", "Search": true },
                 { "DataProperty": "DateStart", "Width": 100 },
                 { "DataProperty": "ProcessId", "Width": 300, "Align": "left" },
-                { "DataProperty": "Responsible", "Width": 300, "Search": true, "Align": "left" }
+                { "DataProperty": "EmployeeId", "Width": 300, "Search": true, "Align": "left" }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
             "Sorting": {"Index": 1, "SortingType": "asc"} 
@@ -70,8 +70,7 @@
 						{
 							"Fields": [
 								{ "Name": "DateStart" },
-								{ "Name": "Responsible" },
-								
+								{ "Name": "EmployeeId" },
 								{ "Name": "Periodicity" },
 								{ "Name": "ProcessId" }
 							]

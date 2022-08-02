@@ -4,6 +4,7 @@
 // </copyright>
 // <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
+using System;
 using System.Web.Script.Services;
 using System.Web.Services;
 using OpenFrameworkV3;
@@ -33,12 +34,33 @@ public class SecurityService : WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult ApplicationUserGetName(long userId, string instanceName)
+    {
+        var res = ActionResult.NoAction;
+        try
+        {
+            var user = ApplicationUser.ById(userId, instanceName);
+            if(user.Id > 0)
+            {
+                res.SetSuccess(user.Profile.FullName);
+            }
+        }
+        catch(Exception ex)
+        {
+            res.SetFail(ex);
+        }
+
+        return res;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public ActionResult ApplicationUserSave(ApplicationUser user, long applicationUserId, long companyId, string instanceName)
     {
         var res = ActionResult.NoAction;
-        if(user.Id == Constant.DefaultId)
+        if (user.Id == Constant.DefaultId)
         {
-            res = user.Insert(applicationUserId,companyId, instanceName);
+            res = user.Insert(applicationUserId, companyId, instanceName);
         }
         else
         {

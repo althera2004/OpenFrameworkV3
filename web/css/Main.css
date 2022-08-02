@@ -271,3 +271,9 @@ textarea.form-control { font-size:12px; }
 .tab-pane .ListContainer { padding:12px; }
 .tab-pane .panel-heading { font-size:14px; padding:4px; color :#333;}
 .format-money { text-align:right;}
+
+.TableInFormAction { font-size:12px; font-weight:normal; cursor:pointer; }
+.ListContainer TH, .ListContainer TD { font-size:12px; }
+.ListContainer TD { font-weight:normal; }
+
+.RowButtonAction { cursor: pointer; }

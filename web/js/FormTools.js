@@ -161,6 +161,21 @@
         return formDefinition;
     }
 
+    this.RenderPopup = function () {
+        var tab = this.Definition.Tabs[0];
+        var res = "<div class=\"hpanel\">";
+        res += "<div class=\"panel-body panel-body-form\">";
+
+        var rows = tab.Rows;
+        for (var r = 0; r < rows.length; r++) {
+            res += this.RenderRow(rows[r]);
+        }
+
+        res += "</div>";
+        res += "</div>";
+        return res;
+    }
+
     this.Render = function (targetId) {
         console.log("Life cycle", "RenderForm init");
         this.RenderPersistent();
@@ -401,11 +416,11 @@
             }
 
             var componentPrefix = itemName + "_" + listDefinition.Id;
-
+            var Title = GetPropertyValue(listDefinition.Title, this.ItemDefinition.Layout.LabelPlural);
             res += "<div id=\"" + componentPrefix + "_List\" class=\"ListContainer\">";
-            res += "  <div class=\"hpanel hblue hpanel-table\" style=\"margin:0;\" id=\"" + componentPrefix + "_PanelBody\">";
+            /*res += "  <div class=\"hpanel hblue hpanel-table\" style=\"margin:0;\" id=\"" + componentPrefix + "_PanelBody\">";
             res += "    <div class=\"panel-heading hbuilt\">";
-            res += "      <span id=\"" + componentPrefix + "_ListTitle\"></span>";
+            res += "      <span id=\"" + componentPrefix + "_ListTitle\">" + Title + "***</span>";
             res += "        <div class=\"panel-tools\">";
             res += "          <a id=\"Instancia_Custom_AddBtn\"><i class=\"fa fa-plus\"></i>&nbsp;<span id=\"Instancia_Custom_AddBtnLabel\">Afegir</span></a>";
             res += "        </div>";
@@ -428,7 +443,7 @@
             res += "      <div class=\"panel-footer\">";
             res += "        Nº de registros: <strong id=\"" + componentPrefix + "_ListCount\"></strong>";
             res += "      </div>";
-            res += "  </div>";
+            res += "  </div>";*/
             res += "</div>";
         }
 

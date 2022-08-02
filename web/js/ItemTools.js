@@ -257,11 +257,11 @@ function GetFieldDefinition(fieldName, itemDefinition) {
 }
 
 function IsFK(itemDefinition, fieldName) {
-	if (itemDefinition !== null) {
-		if (fieldName !== "") {
-			if (HasPropertyValue(ItemDefinition.ForeignValues) === true) {
-				for (var fv = 0; fv < ItemDefinition.ForeignValues.length; fv++) {
-					if (ItemDefinition.ForeignValues[fv].ItemName + "Id" === fieldName) {
+	if (itemDefinition !== null && typeof itemDefinition !== "undefined") {
+		if (fieldName !== "" && typeof itemDefinition.ForeignValues !== "undefined") {
+			if (HasPropertyValue(itemDefinition.ForeignValues) === true) {
+				for (var fv = 0; fv < itemDefinition.ForeignValues.length; fv++) {
+					if (itemDefinition.ForeignValues[fv].ItemName + "Id" === fieldName) {
 						return true;
                     }
                 }
@@ -313,7 +313,7 @@ String.prototype.format = function () {
 
 function ItemDefinitionById(id) {
 	var result = ItemDefinitions.filter(function (v) {
-		return v.Id === id;
+		return v.Id === id * 1;
 	})
 
 	if (result.length > 0) {
@@ -705,8 +705,15 @@ function Item_InactivateConfirm() {
 		"data": JSON.stringify(data, null, 2),
 		"success": function (msg) {
 			$("#PopupDeleteBtnCancel").click();
-			PopupRenderDeleteResponse();
-			$("#LauncherPopupDeleteResponse").click();
+
+			if (PopupDeleteContext.Mode === "list") {
+				PopupSuccess("<strong>&quot;" + PopupDeleteContext.Message + "&quot;</strong> eliminat.", Dictionary.Common_Success);
+				PageListById(PopupDeleteContext.ItemDefinition.ItemName, PopupDeleteContext.ListId).GetData();
+			}
+			else {
+				PopupRenderDeleteResponse();
+				$("#LauncherPopupDeleteResponse").click();
+			}
 		},
 		"error": function (msg) {
 			NotifySaveError(msg.responseText);
@@ -724,4 +731,44 @@ function ItemDefinition_HasFeature(itemDefinition, feature) {
     }
 
 	return false;
+}
+
+function ItemGetDescription(itemDefinition, itemData) {
+	var res = "";
+	if (typeof itemDefinition.Layout.Description && itemDefinition.Layout.Description !== null) {
+		var pattern = itemDefinition.Layout.Description.Pattern;
+		var values = [];
+		for (var v = 0; v < itemDefinition.Layout.Description.Fields.length; v++) {
+			var fieldPattern = itemDefinition.Layout.Description.Fields[v];
+
+
+			if (fieldPattern !== null) {
+				var field = itemDefinition.Fields.filter(function (f) { return f.Name == fieldPattern.Name })[0];
+				switch (field.Type.toUpperCase()) {
+					case "MONEY":
+						values.push("${ToMoneyFormat(" + itemData[field.Name] + ")}");
+						break;
+					default:
+						var data = itemData[field.Name];
+						if (typeof data === "object") {
+							data = data.Value;
+						}
+
+						if (typeof data === "string") {
+							data = "'" + data + "'";
+                        }
+
+						values.push("${" + data + "}");
+						break;
+				}
+			}
+
+		}
+
+		//console.log(pattern.format(values));
+
+		res = eval("`" + pattern.format(values) + "`");
+	}
+
+	return res;
 }

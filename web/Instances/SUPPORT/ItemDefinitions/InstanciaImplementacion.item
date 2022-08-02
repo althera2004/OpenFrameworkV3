@@ -1,26 +1,27 @@
 ﻿{
-    "Id": 1,
-    "ItemName": "Instancia",
-	"Description": "Instancia",
+    "Id": 2,
+    "ItemName": "InstanciaImplementacion",
+	"Description": "Instancia implementada",
     "Layout": {
         "Icon": "fad fa-cubes",
         "Label": "Instancia",
         "LabelPlural": "Instancies",
         "Description": {
-            "Pattern": "{0} - {1}",
+            "Pattern": "{0}",
             "Fields": [
-                { "Name": "Code" },
-                { "Name": "Name" }
+                { "Name": "InstanciaId" }
             ]
         },
         "EditionType": "inline"
     },
+	"ForeignValues": [ {"ItemName": "Instancia"} ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
-		{ "Name": "Code", "Label": "Codi", "Type": "text", "Length": 10, "Required": true },
-		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150, "Required": true },
-		{ "Name": "Tipo", "Label": "Tipus", "Type": "fixedlist", "FixedListName": "InstanciaTipo" },
-		{ "Name": "Url", "Label": "Url", "Type": "url" }
+		{ "Name": "InstanciaId", "Label": "Nom", "Type": "long" },
+		{ "Name": "UrlPRO", "Label": "Url PRO", "Type": "url" },
+		{ "Name": "UrlPRE", "Label": "Url PRE", "Type": "url" },
+		{ "Name": "FINI", "Label": "Inici", "Type": "datetime" },
+		{ "Name": "FFIN", "Label": "Final", "Type": "datetime" }
 		
     ],
     "Lists": [
@@ -30,10 +31,9 @@
             "Layout": 1,
             "EditAction": "FormPage",
 			"Columns": [
-                { "DataProperty": "Code", "Width": 100, "Search": true, "Orderable": true },
-                { "DataProperty": "Name", "Search": true, "Orderable": true },
-                { "DataProperty": "Tipo", "Width": 200, "Orderable": true },
-                { "DataProperty": "Url", "Width": 350 }
+                { "DataProperty": "InstanciaId", "Width": 350, "Search": true },
+                { "DataProperty": "UrlPRO", "Search": true },
+                { "DataProperty": "FINI", "Width": 100 }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
             "Sorting": {"Index": 1, "SortingType": "asc"} 
@@ -50,9 +50,7 @@
 					"Rows": [
 						{
 							"Fields": [
-								{ "Name": "Code" },
-								{ "Name": "Name", "Colspan": 2 },
-								{ "Type": "Blank" }
+								{ "Name": "InstanciaId" }
 							]
 						}
 					]
@@ -63,8 +61,14 @@
 					"Rows": [
 						{
 							"Fields": [
-								{ "Name": "Tipo" },
-								{ "Name": "Url", "Colspan": 2 }
+								{ "Name": "UrlPRE" },
+								{ "Name": "UrlPRO" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "FINI" },
+								{ "Type": "Blank", "ColSpan": 3 }
 							]
 						}
 					]

@@ -1,0 +1,127 @@
+﻿{
+    "Id": 6,
+    "ItemName": "CustomerInstancia",
+	"Description": "Instancia implementada",
+    "Layout": {
+        "Icon": "fad fa-cubes",
+        "Label": "Instància de client",
+        "LabelPlural": "Instancies de clients",
+        "Description": {
+            "Pattern": "{0} - {1}",
+            "Fields": [
+                { "Name": "InstanciaId" },
+                { "Name": "CustomerId" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "Instancia"}, {"ItemName": "Customer"} ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "InstanciaId", "Label": "Instancia", "Type": "long" },
+		{ "Name": "CustomerId", "Label": "Client", "Type": "long" },
+		{ "Name": "FINI", "Label": "Inici", "Type": "datetime" },
+		{ "Name": "FFIN", "Label": "Final", "Type": "datetime" },
+		{ "Name": "CustomServer", "Label": "Servidor propi", "Type": "url" }
+		
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "InstanciaId", "Width": 350, "Search": true },
+                { "DataProperty": "CustomerId", "Search": true }
+            ],
+            "Parameters": [ {"Name": "Active", "Value": "1"} ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        },		
+        {
+            "Id": "ByCustomerId",
+            "FormId": "ByCustomerId",
+            "Layout": 1,
+            "EditAction": "Popup",
+			"Title": "Intàncies del client",
+			"Columns": [
+                { "DataProperty": "InstanciaId", "Search": true },
+				{ "DataProperty": "FINI", "Width": 90 },
+				{ "DataProperty": "FFIN", "Width": 90 },
+				{ "DataProperty": "CustomServer", "Width": 200 },
+                { "DataProperty": "CustomerId", "HiddenList": true, "Width": 0 }
+            ],
+            "Parameters": [ {"Name": "CustomerId", "Value": "#actualItemId#"} ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "InstanciaId" },
+								{ "Name": "CustomerId" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Dades basiques",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "FINI" },
+								{ "Name": "FFIN" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "CustomServer" }
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"Id": "ByCustomerId",
+			"FormType": "Popup",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "CustomerId" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "InstanciaId" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "FINI" },
+								{ "Name": "FFIN" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "CustomServer" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

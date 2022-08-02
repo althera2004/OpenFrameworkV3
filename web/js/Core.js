@@ -1,8 +1,4 @@
-﻿function ReloadMenu() {
-
-}
-
-function Core_ReloadInstance() {
+﻿function Core_ReloadInstance() {
     var data = {
         "instanceName": Instance.Name
     };

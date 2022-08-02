@@ -1,3 +1,5 @@
+//const search = require("core-js/library/fn/symbol/search");
+
 var ListRenderTopFirst = 100;
 
 function PageList(config) {
@@ -34,23 +36,22 @@ function PageList(config) {
     this.RenderPageList = function () {
         var res = "";
         this.CalculateWidths(this.ListDefinition, this.ItemDefinition);
-        var componentPrefix = this.ItemDefinition.ItemName + "_" + this.ListDefinition.Id;
 
         var Title = GetPropertyValue(this.ListDefinition.Title, this.ItemDefinition.Layout.LabelPlural);
         var ButtonAddLabel = this.ButtonAddLabel();
 
-        res += "<div id=\"" + componentPrefix + "_List\" class=\"ListContainer\">";
+        res += "<div id=\"" + this.ComponentId + "_List\" class=\"ListContainer\">";
         res += "  <div class=\"hpanel hblue hpanel-table\" style=\"margin:0;\">";
         res += "    <div class=\"panel-heading hbuilt\">";
-        res += "      <span id=\"" + componentPrefix + "_ListTitle\">" + Title + "</span>";
+        res += "      <span id=\"" + this.ComponentId + "_ListTitle\">" + Title + "</span>";
         res += "      <div class=\"panel-tools\">";
-        res += "        <a id=\"" + componentPrefix + "_AddBtn\" onclick=\"GoEncryptedView('" + this.ItemDefinition.ItemName + "', '" + this.ListId + "', -1,'" + this.ListDefinition.FormId + "', null)\"><i class=\"fa fa-plus\"></i>&nbsp;<span id=\"" + componentPrefix + "_AddBtnLabel\">" + ButtonAddLabel + "</span></a>";
+        res += "        <a id=\"" + this.ComponentId + "_AddBtn\" onclick=\"GoEncryptedView('" + this.ItemDefinition.ItemName + "', '" + this.ListId + "', -1,'" + this.ListDefinition.FormId + "', null)\"><i class=\"fa fa-plus\"></i>&nbsp;<span id=\"" + this.ComponentId + "_AddBtnLabel\">" + ButtonAddLabel + "</span></a>";
         res += "      </div>";
         res += "    </div>";
 
         res += "    <div class=\"tableHead\">";
         res += "      <table cellpadding=\"1\" cellspacing=\"1\" class=\"table\">";
-        res += "        <thead id=\"" + componentPrefix + "_ListHead\">";
+        res += "        <thead id=\"" + this.ComponentId + "_ListHead\">";
         res += "          <tr>";
         res += this.RenderHeader(this.ItemDefinition, this.ListDefinition, false, 0, this.Widths, 1);
         res += "          </tr>";
@@ -62,14 +63,14 @@ function PageList(config) {
         res += "      <div class=\"table-responsive\">";
         res += "         <div class=\"table-body\" style=\"max-height: 100%; height: 100%\">";
         res += "           <table cellpadding=\"1\" cellspacing=\"1\" class=\"table\" style=\"max-height: 100%\">";
-        res += "             <tbody style=\"max-height: 100%\" id=\"" + componentPrefix + "_ListBody\"></tbody>";
+        res += "             <tbody style=\"max-height: 100%\" id=\"" + this.ComponentId + "_ListBody\"></tbody>";
         res += "           </table>";
         res += "         </div>";
         res += "      </div>";
         res += "    </div><!-- panel-body -->";
 
         res += "    <div class=\"panel-footer panel-footer-list\">";
-        res += "      Nombre de registres: <strong id=\"" + componentPrefix + "_ListCount\">&nbsp;-</strong>";
+        res += "      Nombre de registres: <strong id=\"" + this.ComponentId + "_ListCount\">&nbsp;-</strong>";
         res += "    </div><!-- panel-body -->";
 
         res += "  </div>";
@@ -82,32 +83,29 @@ function PageList(config) {
 
     this.Render = function (forcedHeight, tabId) {
         this.CalculateWidths(this.ListDefinition, this.ItemDefinition);
-
-        var componentPrefix = this.ItemDefinition.ItemName + "_" + this.ListDefinition.Id + "_";
-
         var BtnAddLabel = this.ButtonAddLabel();
 
         if (this.ListDefinition.EditAction === "FormPage") {
-            $("#" + componentPrefix + "AddBtn").data("itemDefinitionId", this.ItemDefinition.Id);
-            $("#" + componentPrefix + "AddBtn").data("formId", this.ListDefinition.FormId);
-            $("#" + componentPrefix + "AddBtn").on("click", function () {
+            $("#" + this.ComponentId + "AddBtn").data("itemDefinitionId", this.ItemDefinition.Id);
+            $("#" + this.ComponentId + "AddBtn").data("formId", this.ListDefinition.FormId);
+            $("#" + this.ComponentId + "AddBtn").on("click", function () {
                 console.log($(this).data("itemDefinitionId"));
                 console.log($(this).data("formId"));
                 GoEncryptedView($(this).data("itemDefinitionId"), -1, $(this).data("formId"));
             });
         }
         else if (this.ListDefinition.EditAction === "InLine") {
-            $("#" + componentPrefix + "AddBtn").data("itemDefinitionId", this.ItemDefinition.Id);
-            $("#" + componentPrefix + "AddBtn").data("formId", this.ListDefinition.FormId);
-            $("#" + componentPrefix + "AddBtn").on("click", function () {
+            $("#" + this.ComponentId + "AddBtn").data("itemDefinitionId", this.ItemDefinition.Id);
+            $("#" + this.ComponentId + "AddBtn").data("formId", this.ListDefinition.FormId);
+            $("#" + this.ComponentId + "AddBtn").on("click", function () {
                 console.log($(this).data("itemDefinitionId"));
                 console.log($(this).data("formId"));
                 //GoEncryptedView($(this).data("itemDefinitionId"), -1, $(this).data("formId"));
             });
         }
 
-        $("#" + componentPrefix + "AddBtnLabel").html(BtnAddLabel);
-        $("#" + componentPrefix + "ListTitle").html(this.ItemDefinition.Layout.LabelPlural);
+        $("#" + this.ComponentId + "AddBtnLabel").html(BtnAddLabel);
+        $("#" + this.ComponentId + "ListTitle").html(this.ItemDefinition.Layout.LabelPlural);
 
         if (HasPropertyValue(this.ListDefinition.PageSize) === false) {
             this.ListDefinition.PageSize = ListRenderTopFirst;
@@ -125,11 +123,18 @@ function PageList(config) {
             noDataMessage = this.ListDefinition.NoDataMessage;
         }
 
+        var res = "";
+
         // Generar cabecera de tabla con título y botones si no es un página ListItem
         // Si ListDefinition.EditAction = 3 se pueden añadir (dependiendo de grants usuario)
         if (PageType !== "PageList") {
-            var headerTable = "";
+            res += "  <div class=\"hpanel hblue hpanel-table\" style=\"margin:0;\" id=\"" + this.ComponentId + "_PanelBody\">";
+            res += "    <div class=\"panel-heading hbuilt\">";
 
+
+            
+            var headerTable = "";
+            var Title = GetPropertyValue(this.ListDefinition.Title, this.ItemDefinition.Layout.LabelPlural);
             // ItemLinked
             if (this.ListDefinition.EditAction === "ItemLink") {
                 var itemLinked = GetItemDefinitionByName(this.ListDefinition.ItemLink);
@@ -159,19 +164,19 @@ function PageList(config) {
                 headerTable += "<div class=\"row\" id=\"List_" + this.ItemDefinition.ItemName +"_Header\">";
                 headerTable += "  <div class=\"col-xs-6 col-sm-8\" style=\"padding-top:12px;\">";
                 if (HasPropertyValue(this.ListDefinition.Title)) {
-                    headerTable += "    <div class=\"listTitle\">" + this.ListDefinition.Title + "</div>";
+                    headerTable += "    <div class=\"listTitle\">" + Title + "</div>";
                 }
 
                 headerTable += "  </div>";
                 headerTable += "  <div class=\"listTitleButtons col-xs-6 col-sm-4\" style=\"text-align:right;padding-top:12px;\">";
 
                 if (this.ListDefinition.EditAction === "Popup" || this.ListDefinition.EditAction === "EditableAdd") {
-                    var editAction = "GoNew('" + this.ItemDefinition.ItemName + "', '" + this.ListDefinition.FormId + "', ['itemNameRel=" + itemDefinition.ItemName + "','itemIdRel=" + itemData.Id + "'])";
-                    if (this.ListDefinition.EditAction === ListEditAction.Popup) {
-                        editAction = "PopupItem('" + this.ItemDefinition.ItemName + "', '" + this.ListDefinition.Id + "', -1);";
+                    var editAction = "PopupNew('" + this.ItemDefinition.ItemName + "', '" + this.ListDefinition.FormId + "')";
+                    if (this.ListDefinition.EditAction === "Popup") {
+                        editAction = "PopupItem({'ItemName': '" + this.ItemDefinition.ItemName + "','ListId': '" + this.ListDefinition.Id + "','ItemId': -1});";
                     }
 
-                    headerTable += "    <a data-action=\"add\" id=\"BtnAddItem" + this.ComponentId + "\" onclick=\"" + editAction + "\">";
+                    headerTable += "    <a data-action=\"add\" class=\"TableInFormAction\" id=\"BtnAddItem" + this.ComponentId + "\" onclick=\"" + editAction + "\">";
                     headerTable += "     <i class=\"ace-icon fa fa-cog\"></i>&nbsp;" + Dictionary.Common_Add + " " + this.ItemDefinition.Layout.Label.toLowerCase();
                     headerTable += "    </a>";
                 }
@@ -198,13 +203,49 @@ function PageList(config) {
             }
 
             if (HasPropertyValue(this.ListDefinition.Explanation)) {
-                res += "<div class=\"col-xs-12\" style=\"margin-bottom:4px;\">";
+                res += "<div class=\"col-xs-12\" style=\"margin-bottom:4px;\" id=\"List_" + this.ItemDefinition.ItemName + "_Explanation\">";
                 res += RenderExplanation("info", this.ListDefinition.Explanation);
                 res += "</div>";
             }
         }
 
-        $("#" + this.ComponentId + "_ListHead").html(this.RenderHeader(this.ItemDefinition, this.ListDefinition, false, 0, this.Widths, 2));
+        // Cabecera de lista
+        // ----------------------------------------
+        res += "      <div class=\"tableHead\">";
+        res += "        <table class=\"table\">";
+        res += "          <thead id=\"" + this.ComponentId + "_ListHead\">";
+        res += this.RenderHeader(this.ItemDefinition, this.ListDefinition, false, 0, this.Widths, 2);
+        res += "          </thead>";
+        res += "        </table>";
+        res += "      </div>";
+        // ----------------------------------------
+
+        // Datos de lista
+        // ----------------------------------------
+        res += "      <div class=\"panel-body2 panel-body-list-inForm\" id=\"" + this.ComponentId + "_PanelBodyList\">";
+        res += "        <div class=\"table-responsive\" style=\"max-height: 100%; height: 100%; overflow-y: scroll; overflow-x: hidden\">";
+        res += "          <div class=\"table-body\" style=\"max-height: 100%; height: 100%\">";
+        res += "            <table class=\"table\" style=\"max-height: 100%\" cellpadding=\"1\" cellspacing=\"1\">";
+        res += "              <tbody id=\"" + this.ComponentId + "_ListBody\">";
+        res += "              </tbody>";
+        res += "            </table>";
+        res += "          </div>";
+        res += "        </div>";
+        res += "      </div>";
+        // ----------------------------------------
+
+
+        // Pie de lista
+        // ----------------------------------------
+        res += "      <div class=\"panel-footer\">";
+        res += "        Nº de registros: <strong id=\"" + this.ComponentId + "_ListCount\"></strong>";
+        res += "      </div>";
+        res += "  </div>";
+        // ----------------------------------------
+
+        $("#" + this.ComponentId + "_List").html(res);
+
+        //$("#" + this.ComponentId + "_ListHead").html(this.RenderHeader(this.ItemDefinition, this.ListDefinition, false, 0, this.Widths, 2));
     };
 
     this.RenderHeader = function (itemDefinition, listDefinition, filtrable, tabId, widths, actionButtonsCount) {
@@ -450,7 +491,7 @@ function PageList(config) {
         this.ActionsButtonsCount = 0;
 
         //if (this.ListDefinition.EditAction === "ItemLink" || this.ListDefinition.EditAction === "Popup" || this.ListDefinition.EditAction === "EditableAdd" || this.ListDefinition.EditAction === "Editable")
-        if(this.ListDefinition.EditAction === "FormPage")
+        if(1 === 1 || this.ListDefinition.EditAction === "FormPage")
         {
             var buttonEdit = true; // weke GrantCanWriteByItem(this.ItemName) || GrantCanReadByItem(this.ItemName);
 
@@ -626,15 +667,18 @@ function PageList(config) {
         }
 
         var tdActionsButtons = "";
-        if (listDefinition.EditAction === "ItemLink" || listDefinition.EditAction === "Popup" || listDefinition.EditAction === "EditableAdd" || listDefinition.EditAction === "Editable" || listDefinition.EditAction === "OnlyView" || listDefinition.EditAction === "FormPage") {
+        if (listDefinition.EditAction === "InLine" || listDefinition.EditAction === "ItemLink" || listDefinition.EditAction === "Popup" || listDefinition.EditAction === "EditableAdd" || listDefinition.EditAction === "Editable" || listDefinition.EditAction === "OnlyView" || listDefinition.EditAction === "FormPage") {
 
             var buttonEdit = GrantCanReadByItem(itemDefinition.ItemName);
-            var buttonDelete = false;
+            var buttonDelete = GrantCanDeleteByItem(itemDefinition.ItemName);
 
             // En listas ItemLink, sólo se puede eliminar, para añadir hay que usar el combo y el botón añadir
             if (listDefinition.EditAction === "ItemLink" && GrantCanWriteByItem(itemDefinition.ItemName)) {
                 buttonDelete = true;
                 buttonEdit = false;
+            } else if(listDefinition.EditAction === "InLine" && GrantCanWriteByItem(itemDefinition.ItemName)) {
+                buttonDelete = true;
+                buttonEdit = true;
             } else if (listDefinition.EditAction === "OnlyView") {
                 buttonDelete = false;
                 buttonEdit = true;
@@ -648,7 +692,7 @@ function PageList(config) {
 
             if (buttonEdit) {
                 if (grant.Grants.indexOf("W") !== -1) {
-                    tdActionsButtons += ListButtonRow(data.Id, "fal fa-pencil-alt", "blue", editAction);
+                    tdActionsButtons += ListButtonRow(data.Id, "fal fa-pencil-alt", "blue", editAction, Dictionary.Common_Edit);
                 }
                 else {
                     if (grant.Grants.indexOf("R") !== -1) {
@@ -664,8 +708,7 @@ function PageList(config) {
                 }
                 else {
                     var deleteAction = "DeleteItem('" + itemDefinition.Id + "', '" + listDefinition.Id + "', this.id, 'list');";
-                    tdActionsButtons += ListButtonRow(data.Id, "fal fa-times", "red", deleteAction);
-                    //tdActionsButtons += "    <a class=\"red ace-icon fal fa-times bigger-120\" id =\"" + data.Id + "\" onclick=\"DeleteItem('" + itemDefinition.ItemName + "','" + listDefinition.Id + "', this.id, 'list');\"></a>";
+                    tdActionsButtons += ListButtonRow(data.Id, "fal fa-times", "red", deleteAction, Dictionary.Common_Delete);
                 }
             }
 
@@ -753,6 +796,7 @@ function PageList(config) {
         var searchData = "";
         var dataOrderData = "";
         var textData = cellData;
+
         if (typeof column.RenderData !== "undefined" && column.RenderData !== null && column.RenderData !== "") {
             var data = null;
             if (typeof rowData[dataKeyName] === "object") {
@@ -866,7 +910,7 @@ function PageList(config) {
                     cellData = rowData[column.ReplacedBy];
                 }
             }
-            else if (field.Type === "FixedList") {
+            else if (field.Type.toLowerCase() === "fixedlist") {
                 cellData = rowData[dataKeyName];
                 if (HasPropertyValue(field.FixedListName) === true) {
                     if (typeof rowData[dataKeyName] !== "undefined" && rowData[dataKeyName] !== null) {
@@ -1841,8 +1885,6 @@ function List_SortGo(configId) {
         return;
     }
 
-      
-
     var data = list.Data;
     var dataProperty = config.dataProperty;
     var actualOrder = config.actualOrder;
@@ -1877,4 +1919,30 @@ function List_SortGo(configId) {
     SearchList();
 
 
+}
+
+function DeleteItem(itemDefinitionId, listId, itemId, mode) {
+    var itemDefinition = ItemDefinitionById(itemDefinitionId);
+    var list = PageListById(itemDefinition.ItemName, listId);
+    var item = GetItemById(list, itemId);
+    console.log(item);
+
+    PopupDeleteContext.ItemDefinition = itemDefinition;
+    PopupDeleteContext.ItemId = itemId;
+    PopupDeleteContext.ListId = listId;
+    PopupDeleteContext.Message = ItemGetDescription(itemDefinition, item);
+    PopupDeleteContext.Mode = mode;
+    PopupRenderDelete();
+    $("#LauncherPopupDelete").click();
+}
+
+function GetItemById(pageList, itemId) {
+    itemId = itemId * 1;
+    var res = pageList.Data.filter(function (i) { return i.Id === itemId });
+
+    if (res.length > 0) {
+        return res[0];
+    }
+
+    return null;
 }

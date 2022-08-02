@@ -1,0 +1,70 @@
+﻿{
+    "Id": 3,
+    "ItemName": "Customer",
+	"Description": "Client",
+    "Layout": {
+        "Icon": "fad fa-user-tie",
+        "Label": "Client",
+        "LabelPlural": "Clients",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150, "Required": true },
+		{ "Name": "CIF", "Label": "CIF", "Type": "text", "Length": 15 }
+		
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name", "Search": true },
+                { "DataProperty": "CIF", "Width": 150 }
+            ],
+            "Parameters": [ {"Name": "Active", "Value": "1"} ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name", "ColSpan": 2 },
+								{ "Name": "CIF" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Dades principals",
+					"Rows": [
+						{
+							"Id": "instancesRow",
+							"Label": "Instàncies",
+							"ItemList": "CustomerInstancia",
+							"ListId": "ByCustomerId",
+							"FilterFields": [ { "Field": "Customer" }]
+						}
+					]
+				}
+			]
+		}
+	]
+}

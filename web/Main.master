@@ -520,6 +520,7 @@
 		<script src="/js/FK.js"></script>
 		<script src="/js/Core.js"></script>
 		<script src="/js/PopupsRender.js"></script>
+		<script src="/js/PopupItem.js"></script>
 		<script src="/js/ItemTools.js"></script>
 		<script src="/js/Search.js"></script>
 

@@ -23,6 +23,10 @@ namespace OpenFrameworkV3.Tools
             {
                 return FromStringZulu(value);
             }
+            else if(value.IndexOf('/') != -1)
+            {
+                return FromStringddMMyyyy(value);
+            }
 
             var res = FromStringyyyyMMdd(value);
 

@@ -37,7 +37,6 @@ function GetFKApplicationUsers(callback) {
 }
 
 function GetFKItem(itemName, callback) {
-    // console.log("GetFKItem", itemName);
     actualFKItem = itemName;
     var data = {
         "itemName": itemName,
@@ -78,8 +77,10 @@ function GetFKItem(itemName, callback) {
             }
 
             FKLoaded++;
-            if (FKLoaded === ItemDefinition.ForeignValues.length) {
-                GetItemDataJson(ItemDefinition.ItemName, ItemId, FillFormItemFromJson);
+            if (typeof ItemDefinition.ForeignValues !== "undefined") {
+                if (FKLoaded === ItemDefinition.ForeignValues.length) {
+                    GetItemDataJson(ItemDefinition.ItemName, ItemId, FillFormItemFromJson);
+                }
             }
         },
         "error": function (msg) {

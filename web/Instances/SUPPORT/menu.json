@@ -1,14 +1,25 @@
 [
 	{ "Leaf": true, "Item": "Instancia" },
-	{ "Leaf": true, "Item": "CustomerCompany" },
-	{ "Leaf": true, "Item": "CustomerCompanyPerson" },
-  {
-    "Label": "Tasques",
-	"Icon": "fad fa-tasks",
-    "Options": [
-      { "Leaf": true, "Item": "Incidencia", "ListId": "Incidencias" },
-      { "Leaf": true, "Item": "Incidencia", "ListId": "Datos" },
-      { "Leaf": true, "Item": "Incidencia", "ListId": "NewDevelopment" }
-    ]
-  }
+	{
+		"Label": "Tasques",
+		"Icon": "fad fa-tasks",
+		"Options": [
+			{ "Leaf": true, "Item": "Tasca" },
+			{ "Leaf": true, "Item": "Tasca", "ListId": "Incidencias" },
+			{ "Leaf": true, "Item": "Tasca", "ListId": "ModificarDades" },
+			{ "Leaf": true, "Item": "Tasca", "ListId": "ModificarFuncionalidad" },
+			{ "Leaf": true, "Item": "Tasca", "ListId": "NuevaFuncionalidad" },
+			{ "Leaf": true, "Item": "Tasca", "ListId": "Consultas" },
+			{ "Leaf": true, "Item": "Tasca", "ListId": "Altres" },
+		]
+	},
+	{
+		"Label": "Gestió interna",
+		"Icon": "fad fa-tasks",
+		"Options": [
+			{ "Leaf": true, "Item": "Instancia" },
+			{ "Leaf": true, "Item": "Customer" },
+			{ "Leaf": true, "Item": "Staff" }
+		]
+	}
 ]

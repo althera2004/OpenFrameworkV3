@@ -120,8 +120,6 @@ function filterFast(a, pattern, filter, extraFilter) {
             else {
                 x += valueToTest + "|";
             }
-
-            console.log(x);
         }
         if (x.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().indexOf(pattern) !== -1) {
             match.push(a[i]);

@@ -65,7 +65,10 @@
                 { "DataProperty": "FechaBaja", "ReplacedBy": "FB", "Width": 90 }
             ],
             "Parameters": [ {"Name": "EmployeeId", "Value": "#actualItemId#", "Type": "long"} ],
-            "Sorting": {"Index": 1, "SortingType": "asc"} 
+            "Sorting": {"Index": 1, "SortingType": "asc"},
+			"Buttons": [
+				{ "Name": "Finalizar", "Label": "Finalitar", "Icon": "green fal fa-ban", "Function": "JOBPOSTIONASIGNATION_Finalizar"}
+			]
         }
 	],
 	"Forms": [
