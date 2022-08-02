@@ -15,6 +15,7 @@
         },
         "EditionType": "inline"
     },
+	"PrimaryKeys": ["InstanciaId", "CustomerId"],
 	"ForeignValues": [ {"ItemName": "Instancia"}, {"ItemName": "Customer"} ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },

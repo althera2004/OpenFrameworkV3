@@ -687,7 +687,8 @@ function PageList(config) {
             //GoEncryptedView(itemName, listId, itemId, formId, params)
             var editAction = "GoEncryptedView('" + itemDefinition.ItemName + "', '" + this.ListDefinition.Id + "', " + data.Id + ",'" + this.ListDefinition.FormId + "', null)";
             if (listDefinition.EditAction === "Popup") {
-                editAction = "PopupItem('" + itemDefinition.Id + "', '" + listDefinition.Id + "', this.id);";
+                //editAction = "PopupItem('" + itemDefinition.Id + "', '" + listDefinition.Id + "', this.id);";
+                editAction = "PopupItem({'ItemName': '" + this.ItemDefinition.ItemName + "','ListId': '" + this.ListDefinition.Id + "','ItemId': " + data.Id+"});"
             }
 
             if (buttonEdit) {

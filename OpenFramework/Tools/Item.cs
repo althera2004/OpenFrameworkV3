@@ -312,9 +312,8 @@ namespace OpenFrameworkV3.Tools
                     res.Append(", ");
                 }
 
-                var values = new StringBuilder(", \"Values\": [");
                 bool firstValue = true;
-                foreach (var value in pk.Value)
+                foreach (var value in pk)
                 {
                     if (firstValue)
                     {
@@ -322,19 +321,11 @@ namespace OpenFrameworkV3.Tools
                     }
                     else
                     {
-                        values.Append(", ");
+                        res.Append(", ");
                     }
 
-                    values.AppendFormat(CultureInfo.InvariantCulture, @"""{0}""", value);
+                    res.AppendFormat(CultureInfo.InvariantCulture, @"""{0}""", value);
                 }
-
-                values.Append("]");
-
-                res.AppendFormat(
-                    CultureInfo.InvariantCulture,
-                    @" {{ ""Id"": ""{0}""{1} }}",
-                    pk.Key,
-                    values);
             }
 
             res.Append(" ]");

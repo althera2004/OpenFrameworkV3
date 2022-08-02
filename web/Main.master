@@ -539,6 +539,7 @@
             var ListSources = [];
             var ListsItemSearch = [];
 			var FK = [];
+			var PK = [];
             var Instance = LocalStorageGetJson("Instance");
             var Company = LocalStorageGetJson("Company");
 			var ApplicationUser = LocalStorageGetJson("ApplicationUser");

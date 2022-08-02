@@ -44,6 +44,34 @@ public class ItemService : WebService
 
     [WebMethod(EnableSession = true)]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult ItemPrimaryKeys(string itemName, string instanceName)
+    {
+        var res = ActionResult.NoAction;
+        var query = Query.PrimaryKeysList(itemName, instanceName);
+        var cns = Persistence.ConnectionString(instanceName);
+        if (!string.IsNullOrEmpty(cns))
+        {
+            try
+            {
+                var data = SqlStream.GetSqlQueryStreamNoParams(query, cns).Replace(@"^""", @"\""");
+                var datares = string.Format(
+                    CultureInfo.InvariantCulture,
+                    @"{{""Id"":""{0}"",""Data"":{1}}}",
+                    itemName,
+                    data);
+                res.SetSuccess(datares);
+            }
+            catch(Exception ex)
+            {
+                res.SetFail(ex);
+            }
+        }
+
+        return res;
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public ActionResult ItemBarDelete(string itemName, long id, long applicationUserId, string instanceName)
     {
         return OpenFrameworkV3.Core.DataAccess.Save.SaveBarDelete(itemName, id, applicationUserId, instanceName);

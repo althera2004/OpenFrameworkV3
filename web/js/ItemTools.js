@@ -772,3 +772,93 @@ function ItemGetDescription(itemDefinition, itemData) {
 
 	return res;
 }
+
+function ItemDefinition_PrimaryKeys(itemName) {
+
+	var data = {
+		"itemName": itemName,
+		"instanceName": Instance.Name
+	};
+
+	console.log(data);
+
+	//ItemPrimaryKeys(string itemName, string instanceName)
+	$.ajax({
+		"type": "POST",
+		"url": "/Async/ItemService.asmx/ItemPrimaryKeys",
+		"contentType": "application/json; charset=utf-8",
+		"dataType": "json",
+		"data": JSON.stringify(data, null, 2),
+		"success": function (msg) {
+			console.log(msg.d.ReturnValue);
+			var data = [];
+			eval("data = " + msg.d.ReturnValue + ";");
+
+			PK[data.Id] = data.Data.filter(function (d) { return d.Active });
+
+			console.log(PK);
+		},
+		"error": function (msg) {
+			PopupWarning(msg.responseText);
+		}
+	});
+
+	console.log(data);
+}
+
+function ItemDefinition_PrimaryKeysExists(itemName, data) {
+	if (typeof PK[itemName] === "undefined") {
+		return false;
+	}
+
+	var list = PK[itemName];
+	if (list.length === 0) {
+		return false;
+	}
+
+	var fieldsToCompare = Object.keys(data);
+	var dataToSearch = PK[itemName];
+
+	// Se descarta el actual
+	dataToSearch = dataToSearch.filter(function (d) { console.log(d[fieldName], data[fieldName]); return d.Id !== data.Id });
+
+	for (var x = 1; x < fieldsToCompare.length; x++) {
+		var fieldName = fieldsToCompare[x];
+		dataToSearch = dataToSearch.filter(function (d) { console.log(d[fieldName], data[fieldName]); return d[fieldName] == data[fieldName] });
+    }
+
+	return dataToSearch.length > 0;
+}
+
+function ItemDefinition_PrimaryKeysDescription(itemName) {
+	if (typeof PK[itemName] === "undefined") {
+		return "";
+	}
+
+	var list = PK[itemName];
+	if (list.length === 0) {
+		return "";
+	}
+
+	var itemDefinition = ItemDefinitionByName(itemName);
+
+	if (typeof itemDefinition.PrimaryKeys === "undefined" || itemDefinition.PrimaryKeys === null || itemDefinition.PrimaryKeys.length === 0) {
+		return "";
+    }
+
+	var fields = ItemDefinitionByName(itemName).Fields.filter(function (f) { return $.inArray(f.Name, ItemDefinitionByName(itemName).PrimaryKeys) != -1 });
+	var first = true;
+	var res = "";
+	for (var f = 0; f < fields.length; f++) {
+		if (first === true) {
+			first = false;
+		}
+		else {
+			res += ", ";
+		}
+
+		res += fields[f].Label;
+	}
+
+	return res;
+}

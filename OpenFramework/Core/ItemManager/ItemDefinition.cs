@@ -51,7 +51,7 @@ namespace OpenFrameworkV3.Core.ItemManager
 
         /// <summary>Primary keys of item</summary>
         [JsonProperty("PrimaryKeys")]
-        private readonly PrimaryKey[] primaryKeys;
+        private readonly string[] primaryKeys;
 
         /// <summary>Gets or sets item features</summary>
         [JsonProperty("Features")]
@@ -234,39 +234,16 @@ namespace OpenFrameworkV3.Core.ItemManager
 
         /// <summary>Gets the primary keys</summary>
         [JsonIgnore]
-        public ReadOnlyDictionary<string, ReadOnlyCollection<string>> PrimaryKeys
+        public ReadOnlyCollection<string> PrimaryKeys
         {
             get
             {
-                var res = new Dictionary<string, ReadOnlyCollection<string>>();
+                var res = new List<string>();
                 if (this.primaryKeys != null)
                 {
                     foreach (var pk in this.primaryKeys)
                     {
-                        res.Add(pk.Id, pk.ItemFields);
-                    }
-                }
-
-                return new ReadOnlyDictionary<string, ReadOnlyCollection<string>>(res);
-            }
-        }
-
-        [JsonIgnore]
-        public ReadOnlyCollection<string> PrimaryFields
-        {
-            get
-            {
-                if (this.PrimaryKeys == null)
-                {
-                    return new ReadOnlyCollection<string>(new List<string>());
-                }
-
-                var res = new List<string>();
-                foreach (var fields in this.PrimaryKeys.Values)
-                {
-                    foreach (string fieldName in fields)
-                    {
-                        res.Add(fieldName);
+                        res.Add(pk);
                     }
                 }
 

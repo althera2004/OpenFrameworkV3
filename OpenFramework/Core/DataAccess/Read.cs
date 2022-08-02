@@ -157,7 +157,7 @@ namespace OpenFrameworkV3.Core.DataAccess
             var q = new StringBuilder("SELECT Id,CompanyId,");
             if (definition.PrimaryKeys != null && definition.PrimaryKeys.Count > 0)
             {
-                foreach (var pk in definition.PrimaryKeys.First().Value)
+                foreach (var pk in definition.PrimaryKeys)
                 {
                     q.AppendFormat(CultureInfo.InvariantCulture, @"[{0}],", pk);
                 }

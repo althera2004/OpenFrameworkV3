@@ -49,13 +49,18 @@ namespace OpenFrameworkV3.Core.DataAccess
                 companyId);
         }
 
+        public static string PrimaryKeysList(string itemName, string instanceName)
+        {
+            var itemDefinition = Persistence.ItemDefinitionByName(itemName, instanceName);
+            return PrimaryKeysList(itemDefinition);
+        }
+
         public static string PrimaryKeysList(ItemDefinition itemDefinition)
         {
             var res = new StringBuilder();
             if (itemDefinition.PrimaryKeys != null)
             {
-                var primaryKeys = itemDefinition.PrimaryKeys.First();
-                foreach (var primaryKey in primaryKeys.Value)
+                foreach (var primaryKey in itemDefinition.PrimaryKeys)
                 {
                     var field = itemDefinition.Fields.First(f => f.Name.Equals(primaryKey, StringComparison.OrdinalIgnoreCase));
                     res.Append(field.SqlFieldExtractor);
