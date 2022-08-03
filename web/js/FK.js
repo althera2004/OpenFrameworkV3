@@ -72,6 +72,10 @@ function GetFKItem(itemName, callback) {
                 }
             }
 
+            if ($("#" + result.ItemName + "Id").length > 0) {
+                FillComboFromFK(result.ItemName + "Id", result.ItemName);
+            }
+
             if (typeof callback !== "undefined" && callback !== null) {
                 callback(result);
             }

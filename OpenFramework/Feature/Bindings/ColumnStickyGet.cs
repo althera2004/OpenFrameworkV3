@@ -9,7 +9,7 @@ namespace OpenFrameworkV3.Feature
     public partial class Sticky
     {
         /// <summary>Index of columns from "Core_Sticky_All" stored procedure</summary>
-        public class ColumnStickyGet
+        private class ColumnStickyGet
         {
             /// <summary>Index column of "Id" column</summary>
             public readonly static int Id = 0;

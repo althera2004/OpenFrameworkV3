@@ -42,6 +42,7 @@ public class InstanceService : WebService
         try
         {
             var data = ApplicationDictionary.GetCorpus(language, instanceName);
+            ApplicationDictionary.CreateJavascriptFile(language, instanceName);
             res.SetSuccess(data);
         }
         catch (Exception ex)

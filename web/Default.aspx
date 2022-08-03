@@ -128,6 +128,7 @@
         <script type="text/javascript" src="/js/Login.js?<%=this.AntiCache %>"></script>
         <script type="text/javascript" src="/assets/js/jquery.ddslick.min.js"></script>
         <script type="text/javascript">
+            localStorage.clear();
             var test = "<%=this.ServerTest%>";
             var ddData = [{ "text": "Català", "value": "45", "selected": true, "description": "Català", "imageSrc": "assets/flags/45.png" }, { "text": "Español", "value": "1", "selected": false, "description": "Español", "imageSrc": "assets/flags/1.png" }, { "text": "Français", "value": "7", "selected": false, "description": "Français", "imageSrc": "assets/flags/7.png" }, { "text": "English", "value": "12", "selected": false, "description": "English", "imageSrc": "assets/flags/12.png" }];
             var landPage = "<%=this.LandPage %>";

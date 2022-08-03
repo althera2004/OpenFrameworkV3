@@ -1,4 +1,5 @@
 [
+	{ "Leaf": true, "Item": "Tasca", "ListId": "Owner" },
 	{ "Leaf": true, "Item": "Instancia" },
 	{
 		"Label": "Tasques",

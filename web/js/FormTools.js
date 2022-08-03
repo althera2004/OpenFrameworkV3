@@ -465,13 +465,17 @@
 
             if (field !== null) {
 
-                if (HasPropertyValue(fieldForm.Layout)) {
-                    if (fieldForm.Layout.toLowerCase().indexOf("nolabel") === -1) {
-                        res += this.RenderFieldLabel(field, fieldForm);
-                    }
-                } else {
+                if (HasLayout(fieldForm, "nolabel") === false) {
                     res += this.RenderFieldLabel(field, fieldForm);
                 }
+
+                //if (HasPropertyValue(fieldForm.Layout)) {
+                //    if (fieldForm.Layout.toLowerCase().indexOf("nolabel") === -1) {
+                //        res += this.RenderFieldLabel(field, fieldForm);
+                //    }
+                //} else {
+                //    res += this.RenderFieldLabel(field, fieldForm);
+                //}
 
                 var finalSpan = span;
                 if (HasPropertyValue(fieldForm.ColSpan)) {
@@ -507,11 +511,17 @@
                         res += RenderFieldTextArea(field, finalSpan, fieldForm);
                         break;
                     case "boolean":
-                        if (HasPropertyValue(fieldForm.Layout)) {
-                            switch (fieldForm.Layout.toLowerCase()) {
-                                case "check": res += RenderFieldCheckBox(field, finalSpan, fieldForm); break;
-                                case "radio": res += RenderFieldRadioButton(field, finalSpan, fieldForm); break;
-                            }
+                        //if (HasPropertyValue(fieldForm.Layout)) {
+                        //    switch (fieldForm.Layout.toLowerCase()) {
+                        //        case "check": res += RenderFieldCheckBox(field, finalSpan, fieldForm); break;
+                        //        case "radio": res += RenderFieldRadioButton(field, finalSpan, fieldForm); break;
+                        //    }
+                        //}
+                        if (HasLayout(fieldForm, "check")) {
+                            res += RenderFieldCheckBox(field, finalSpan, fieldForm);
+                        }
+                        else if (HasLayout(fieldForm, "radio")) {
+                            RenderFieldRadioButton(field, finalSpan, fieldForm);
                         }
                         else {
                             res += RenderFieldCheckBox(field, finalSpan, fieldForm);
@@ -553,11 +563,13 @@
 
     this.RenderFieldLabel = function (field, fieldForm) {
 
-        if (HasPropertyValue(fieldForm.Layout)) {
-            if (fieldForm.Layout === "Splited") {
-                return "";
-            }
-        }
+        if (HasLayout(fieldForm, "Splited")) { return ""; }
+
+        //if (HasPropertyValue(fieldForm.Layout)) {
+        //    if (fieldForm.Layout === "Splited") {
+        //        return "";
+        //    }
+        //}
 
         res = "";
         var hidden = GetPropertyValue(fieldForm.Hidden, false) ? " style=\"visibility:hidden;\"" : "";
@@ -574,9 +586,16 @@
 }
 
 function RenderFieldApplicationUser(field, span, fieldForm) {
+    var extraClass = HasLayout(fieldForm, "chose") ? " selectChosen" : "";
+    //if (HasPropertyValue(fieldForm.Layout)) {
+    //    if (fieldForm.Layout.toLowerCase().indexOf("chosen") !== -1) {
+    //        extraClass+= " selectChosen"
+    //    }
+    //}
+
     var res = "";
     res += "<div class=\"col-sm-" + (span - 1) + "\">";
-    res += "<select id=\"" + field.Name + "\" class=\"form-control CmbAppplicationUsers\">";
+    res += "<select id=\"" + field.Name + "\" class=\"form-control CmbAppplicationUsers" + extraClass + "\">";
     res += "</select>";
     res += "</div>";
     return res;
@@ -693,12 +712,12 @@ function RenderFieldNumeric(field, span) {
 }
 
 function RenderFieldFK(field, span, fieldForm) {
-    var bar = false;
-    if (HasPropertyValue(fieldForm.Layout)) {
-        if (fieldForm.Layout.indexOf("BAR") !== -1) {
-            bar = true;
-        }
-    }
+    var bar = HasLayout(fieldForm, "BAR");
+    //if (HasPropertyValue(fieldForm.Layout)) {
+    //    if (fieldForm.Layout.indexOf("BAR") !== -1) {
+    //        bar = true;
+    //    }
+    //}
 
     var res = "";
 
@@ -980,4 +999,14 @@ function FieldToLabel(fieldName) {
         $("#" + fieldName + "BtnMoneyAddon").remove();
         $("#" + fieldName + "_Labeled").html(ToMoneyFormat(StringToNumber($("#" + fieldName).val())) + "&nbsp;&euro;");
     }
+}
+
+function HasLayout(fieldForm, layout) {
+    if (HasPropertyValue(fieldForm.Layout)) {
+        if (fieldForm.Layout.toLowerCase().indexOf(layout.toLowerCase()) !== -1) {
+            return true;
+        }
+    }
+
+    return false;
 }

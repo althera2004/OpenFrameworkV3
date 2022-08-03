@@ -38,7 +38,7 @@
 			"Columns": [
                 { "DataProperty": "Code", "Width": 100, "Search": true, "Orderable": true },
                 { "DataProperty": "Name", "Search": true, "Orderable": true },
-                { "DataProperty": "StaffId", "Width": 150, "Orderable": true },
+                { "DataProperty": "NotifyDate", "Width": 90, "Orderable": true },
                 { "DataProperty": "Tipo", "Width": 150, "Orderable": true },
                 { "DataProperty": "InstanciaId", "Width": 350 }
             ],
@@ -126,19 +126,20 @@
             "Sorting": {"Index": 1, "SortingType": "asc"} 
         },
         {
-            "Id": "Altres",
+            "Id": "Owner",
             "FormId": "Custom",
             "Layout": 1,
-			"Title": "Altres tasques",
+			"Title": "Les meves tasques",
+			"CustomAjaxSource": "Item_Task_Owner",
             "EditAction": "FormPage",
 			"Columns": [
-				{ "DataProperty": "NotifyDate", "Label": "Data", "Orderable": true, "Width": 90 },
-                { "DataProperty": "Code", "Width": 100, "Search": true, "Orderable": true },
-                { "DataProperty": "Name", "Search": true, "Orderable": true },
-                { "DataProperty": "Tipo", "Width": 200, "Orderable": true },
-                { "DataProperty": "InstanciaId", "Width": 350 }
+				{ "DataProperty": "NotifyDate", "ReplacedBy": "D", "Label": "Data", "Orderable": true, "Width": 90 },
+                { "DataProperty": "Code","ReplacedBy": "C", "Width": 100, "Search": true, "Orderable": true },
+                { "DataProperty": "Name","ReplacedBy": "N", "Search": true, "Orderable": true },
+                { "DataProperty": "Tipo","ReplacedBy": "T", "Width": 200, "Orderable": true },
+                { "DataProperty": "InstanciaId","ReplacedBy": "I", "Width": 350 }
             ],
-            "Parameters": [ {"Name": "Active", "Value": "1"}, { "Name": "Tipo", "Value": 6 } ],
+            "Parameters": [ {"Name": "ApplicationUserId", "Value": "#applicationUser#" } ],
             "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],

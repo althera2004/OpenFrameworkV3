@@ -68,7 +68,7 @@
 						{
 							"Fields": [
 								{ "Name": "InstanciaId" },
-								{ "Name": "CustomerId" }
+								{ "Name": "CustomerId", "Layout": "Chosen" }
 							]
 						}
 					]

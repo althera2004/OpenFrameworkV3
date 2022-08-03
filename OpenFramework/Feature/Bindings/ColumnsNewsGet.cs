@@ -8,7 +8,7 @@ namespace OpenFrameworkV3.Feature
 {
     public partial class News
     {
-        public static class ColumnsNewsGet
+        private static class ColumnsNewsGet
         {
             public readonly static int Id = 0;
 

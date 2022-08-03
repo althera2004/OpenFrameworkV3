@@ -171,7 +171,7 @@ namespace OpenFrameworkV3
                 dictionaryFinal.Add(item.Key, item.Value);
             }
 
-            HttpContext.Current.Session["Dictionary"] = dictionaryFinal;
+            //HttpContext.Current.Session["Dictionary"] = dictionaryFinal;
             return dictionaryFinal;
         }
 
@@ -364,11 +364,15 @@ namespace OpenFrameworkV3
         /// <returns>Path of javascript dictionary of language</returns>
         public static string DictionaryJavascriptFile(string language)
         {
-            var path = ConfigurationManager.AppSettings["DictionaryPath"] as string;
+            var path = HttpContext.Current.Request.PhysicalApplicationPath;
 
             if (!path.EndsWith("\\", StringComparison.OrdinalIgnoreCase))
             {
-                path = string.Format(CultureInfo.InvariantCulture, @"{0}\", path);
+                path = string.Format(CultureInfo.InvariantCulture, @"{0}\Dicc", path);
+            }
+            else
+            {
+                path = string.Format(CultureInfo.InvariantCulture, @"{0}Dicc", path);
             }
 
             return string.Format(CultureInfo.InvariantCulture, @"{0}\{1}.js", path, language);

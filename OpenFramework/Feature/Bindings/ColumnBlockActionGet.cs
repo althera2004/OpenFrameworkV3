@@ -2,7 +2,7 @@
 {
     public partial class BlockAction
     {
-        public class ColumnBlockActionGet
+        private class ColumnBlockActionGet
         {
             public readonly static int Id = 0;
 

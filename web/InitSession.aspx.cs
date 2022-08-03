@@ -30,6 +30,8 @@ public partial class InitSession : Page
         }
     }
 
+    public string Dictionary { get; private set; }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         this.CodedQuery = new CodedQuery(this.Request.QueryString);

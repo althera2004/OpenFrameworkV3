@@ -8,7 +8,7 @@ namespace OpenFrameworkV3.Feature
 {
     public partial class DataImport
     {
-        class ColumnsDataImportGet
+        private class ColumnsDataImportGet
         {
             public readonly static int Id = 0;
             public readonly static int CompanyId = 1;

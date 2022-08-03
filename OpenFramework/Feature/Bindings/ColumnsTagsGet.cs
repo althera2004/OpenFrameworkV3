@@ -8,7 +8,7 @@ namespace OpenFrameworkV3.Feature
 {
     public partial class Tag
     {
-        class ColumnsTagsGet
+        private class ColumnsTagsGet
         {
             /// <summary>Index column of "Id" column</summary>
             public readonly static int Id = 0;

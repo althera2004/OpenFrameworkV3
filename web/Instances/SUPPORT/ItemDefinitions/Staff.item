@@ -50,5 +50,6 @@
 				}
 			]
 		}
-	]
+	],
+	"CustomFK": "FK_Staff"
 }

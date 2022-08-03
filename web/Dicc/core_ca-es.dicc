@@ -1,5 +1,7 @@
 ﻿Añadir::Afegir
 Avatar::Avatar
+Core_Security_MenuLabel::Seguretat
+Core_Feature_DiccionaryLabel::Diccionaris
 BAR_Popup_NoElements::No hi han elements
 Calendar_ActualMonth::Mes actual
 Calendar_NextMonth::Proper mes
@@ -14,6 +16,7 @@ Chosen_default_single_text::Selecioni una opció
 Chosen_NoResultsText::No hi han coincidències
 Common_Accept::Aceptar
 Common_AcceptAndExit::Aceptar i sortir
+Core_Feature_Dictionary_Label::Diccionaris
 Common_Action_Success::Operació realitzada amb èxit
 Common_Actions::Accions
 Common_Activate_Popup_BtnOk::Activar
@@ -548,7 +551,6 @@ Core_ImgUpload_BadFormatTitle::El fitxer no es una imatge.
 Core_ImgUpload_MaxSizeText::Image size should not exceed 100Kb!
 Core_ImgUpload_MaxSizeTitle::File too big!
 Core_Import_MenuLabel::Importacions
-Core_Security_MenuLabel::Seguretat
 Core_Instance_BasicData::Configuració general
 Core_Instance_CommunicationsJSON::Configuració JSON
 Core_Instance_ConfigurationJSON::Fitxer de configuració
@@ -1002,5 +1004,3 @@ MailBox_Label_Password::Paraula de pass
 MailBox_Label_Password2::Repetir paraula de pass
 MailBox_Label_SendPort::Port d'enviament
 MailBox_Label_SSL::Activar SSL
-Core_Security_MenuLabel::Seguretat
-Core_Feature_DiccionaryLabel::Diccionaris

@@ -9,7 +9,7 @@ namespace OpenFrameworkV3.Feature
     public partial class Note
     {
         /// <summary>Index of columns from "Core_Access_All" stored procedure</summary>
-        public class ColumnNotesGet
+        private class ColumnNotesGet
         {
             /// <summary>Index column of "Id" column</summary>
             public readonly static int Id = 0;

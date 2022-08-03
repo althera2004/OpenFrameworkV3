@@ -505,7 +505,7 @@
 		<script src="/assets/js/spin.js"></script>
 		<script src="/assets/js/bootstrap-datepicker.min.js"></script>
 		<script charset="utf-8" type="text/javascript" src="/assets/js/bootstrap-datepicker.ca.js"></script>
-		<script src="/Dicc/ca-es.js"></script>
+		<script src="/Dicc/ca-es.js?<%= System.Guid.NewGuid() %>"></script>
 		<script src="/Instances/<%=this.InstanceName %>/Scripts/FixedLists.js"></script>
 		<script src="/js/Constants.js"></script>
 		<script src="/js/base64.js"></script>

@@ -85,6 +85,9 @@
                 case "ITEM_CUSTOMERCOMPANY_GETALL":
                     res = this.Item_CustomerCompany_GetAll();
                     break;
+                case "ITEM_TASK_OWNER":
+                    res = this.Item_Task_Owner();
+                    break;
                 default:
                     var connectionString = Persistence.ConnectionString(this.instanceName);
                     if (this.Request.QueryString["params"] == null)
@@ -120,6 +123,26 @@
             this.Response.Flush();
             this.Response.SuppressContent = true;
             this.ApplicationInstance.CompleteRequest();
+        }
+
+        private string Item_Task_Owner()
+        {
+            string res = Json.EmptyJsonList;
+            var parameters = new List<SqlParameter>
+            {
+                DataParameter.Input("@CompanyId", this.companyId)
+            };
+
+            try
+            {
+                res = SqlStream.GetSqlStream("Item_Task_Owner", new ReadOnlyCollection<SqlParameter>(parameters), Persistence.ConnectionString(this.instanceName));
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.Trace(ex as Exception, "Item_Task_Owner(" + this.companyId + ")");
+            }
+
+            return res;
         }
 
         private string Item_CustomerCompany_GetAll()

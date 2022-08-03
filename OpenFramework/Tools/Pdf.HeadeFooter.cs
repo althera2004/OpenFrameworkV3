@@ -19,7 +19,6 @@ namespace OpenFrameworkV3.Tools
     public static partial class Pdf
     {
         /// <summary>Header and footer for pdf documents</summary>
-        [CLSCompliant(false)]
         public class HeaderFooter : PdfPageEventHelper
         {
             /// <summary>This is the contentbyte object of the writer</summary> 
@@ -36,7 +35,6 @@ namespace OpenFrameworkV3.Tools
             public string HeaderLeft { get; set; }
             public string HeaderRight { get; set; }
 
-            [CLSCompliant(false)]
             public Font HeaderFont { get; set; }
 
             [CLSCompliant(false)]
@@ -46,7 +44,6 @@ namespace OpenFrameworkV3.Tools
             public string Date { get; set; }
             public string CreatedBy { get; set; }
 
-            [CLSCompliant(false)]
             private PdfTemplate template { get; set; }
             public string OpenFrameworkLogo { get; set; }
             public string CompanyLogo { get; set; }
@@ -55,7 +52,6 @@ namespace OpenFrameworkV3.Tools
             #endregion
 
             // we override the onOpenDocument method
-            [CLSCompliant(false)]
             public override void OnOpenDocument(PdfWriter writer, Document document)
             {
                 if (writer == null || document == null)
@@ -88,7 +84,6 @@ namespace OpenFrameworkV3.Tools
                 }
             }
 
-            [CLSCompliant(false)]
             public override void OnStartPage(PdfWriter writer, Document document)
             {
                 if(writer == null || document == null)
@@ -152,7 +147,6 @@ namespace OpenFrameworkV3.Tools
                 this.cb.EndText();
             }
 
-            [CLSCompliant(false)]
             public override void OnEndPage(PdfWriter writer, Document document)
             {
                 if (writer == null || document == null)
@@ -197,7 +191,6 @@ namespace OpenFrameworkV3.Tools
                 this.cb.EndText();
             }
 
-            [CLSCompliant(false)]
             public override void OnCloseDocument(PdfWriter writer, Document document)
             {
                 if (writer == null || document == null)

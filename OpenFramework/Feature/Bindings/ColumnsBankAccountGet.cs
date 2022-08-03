@@ -2,7 +2,7 @@
 {
     public partial class BankAccount
     {
-        public class ColumnsBankAccountGet
+        private class ColumnsBankAccountGet
         {
             public readonly static int Id = 0;
             public readonly static int IBAN = 1;

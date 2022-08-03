@@ -684,6 +684,11 @@ function PageList(config) {
                 buttonEdit = true;
             }
 
+            // Desde una lista principal no se eliminar, se obliga a entrar en la ficha
+            if (PageType === "PageList") {
+                buttonDelete = false;
+            }
+
             //GoEncryptedView(itemName, listId, itemId, formId, params)
             var editAction = "GoEncryptedView('" + itemDefinition.ItemName + "', '" + this.ListDefinition.Id + "', " + data.Id + ",'" + this.ListDefinition.FormId + "', null)";
             if (listDefinition.EditAction === "Popup") {
@@ -1014,9 +1019,11 @@ function PageList(config) {
         if (HasArrayValues(this.Parameters)) {
             var value = "";
             for (var p = 0; p < this.Parameters.length; p++) {
-                if (this.Parameters[p].Value === "#actualItemId#") {
-                    value = ItemData.ActualData.Id;
-                    SendParameters.push({"Name": this.Parameters[p].Name, "Value": value, "Type": "long"});
+                if (this.Parameters[p].Value.toLowerCase() === "#actualitemId#") {
+                    SendParameters.push({ "Name": this.Parameters[p].Name, "Value": ItemData.ActualData.Id, "Type": "long" });
+                }
+                if (this.Parameters[p].Value.toLowerCase() === "#applicationuser#") {
+                    SendParameters.push({ "Name": this.Parameters[p].Name, "Value": ApplicationUser.Id, "Type": "long" });
                 }
                 else if (this.Parameters[p].Value.charAt(0) === "@") {
                     value = $("#" + this.Parameters[p].Value.substr(1, this.Parameters[p].Value.length - 1)).val();
