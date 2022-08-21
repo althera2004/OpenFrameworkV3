@@ -1004,3 +1004,9 @@ MailBox_Label_Password::Paraula de pass
 MailBox_Label_Password2::Repetir paraula de pass
 MailBox_Label_SendPort::Port d'enviament
 MailBox_Label_SSL::Activar SSL
+Core_SecurityGroup_Plural::Grups de securetat
+Core_SecurityGroup_Btn_Add::Afegir grup
+Core_SecurityGroup_Header_Name::Nom
+Core_SecurityGroup_Header_Description::Descripció
+Core_SecurityGroup_Header_Core::Core
+Core_SecurityGroup_Header_Editable::Editable

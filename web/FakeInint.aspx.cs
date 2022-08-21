@@ -58,6 +58,13 @@ public partial class FakeInint : System.Web.UI.Page
         this.LtList.Text += "<a href=\"ItemList.aspx?" + Query(this.Instance.Name, this.Company.Id, "&Item=Incidencia&List=Datos") + "\">Datos</a>";
         this.LtList.Text += "<br />";
         this.LtList.Text += "<a href=\"ItemList.aspx?" + Query(this.Instance.Name, this.Company.Id, "&Item=Incidencia&List=NewDevelopment") + "\">Nuevo</a>";
-        
+
+        var pass = "root";
+        var enPass = Encrypt.EncryptString(Basics.Reverse(pass), "OpenFramework");
+        var dePass = Encrypt.DecryptString(enPass, "OpenFramework");
+
+        this.LtLink.Text += "<hr>" + Basics.Reverse(dePass) + "   -->   " + enPass;
+
+
     }
 }

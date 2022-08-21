@@ -18,6 +18,30 @@ namespace OpenFrameworkV3.Tools
         /// <summary>Text for JavaScript empty json object value</summary>
         public const string EmptyJsonObject = "{}";
 
+        public static string JsonValue(string value)
+        {
+            return string.IsNullOrEmpty(value) ? Constant.JavaScriptNull : string.Format(CultureInfo.InvariantCulture, @"""{0}""", Tools.Json.JsonCompliant(value));
+        }
+
+        public static string JsonValue(bool value)
+        {
+            return Tools.Json.JsonCompliant(value);
+        }
+
+        public static string JsonValue(bool? value)
+        {
+            return Tools.Json.JsonCompliant(value);
+        }
+
+        public static string JsonValue(DateTime value)
+        {
+            return Tools.Json.JsonCompliant(value);
+        }
+        public static string JsonValue(DateTime? value)
+        {
+            return value == null ? Constant.JavaScriptNull : string.Format(CultureInfo.InvariantCulture, @"""{0:dd/MM/yyyy}""", value);
+        }
+
         public static string JsonCompliant(float value, int decimals)
         {
             var pattenr = "{0:#0";

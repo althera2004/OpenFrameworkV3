@@ -113,9 +113,10 @@ function GoEncryptedView(itemName, listId, itemId, formId, params) {
     var query = "&I=" + Instance.Name;
     query += "&C=" + Company.Id;
     query += "&Item=" + itemName;
-    query += "&L=" + ListId;
+    query += "&List=" + ListId;
     query += "&Id=" + itemId;
     query += "&F=" + formId;
+    query += "&L=" + Language;
     if (typeof optionId !== "undefined" && optionId !== null && optionId > 0) {
         query += "&optionId=" + optionId;
     }
@@ -145,6 +146,7 @@ function GoEncryptedList(itemName, listId, params) {
     query += "&C=" + Company.Id;
     query += "&Item=" + itemName;
     query += "&List=" + listId;
+    query += "&L=" + Language;
 
     if (typeof params !== "undefined" && params !== null) {
         for (var x = 0; x < params.length; x++) {
@@ -183,6 +185,7 @@ function GoCleanedPage(url, params) {
 function GoEncryptedPage(url, params) {
     var query = "&I=" + Instance.Name;
     query += "&C=" + Company.Id;
+    query += "&L=" + Language;
 
     if (typeof params !== "undefined" && params !== null) {
         var keys = Object.keys(params);
@@ -296,8 +299,23 @@ function GoUserView(userId) {
     var query = "&I=" + Instance.Name;
     query += "&C=" + Company.Id;
     query += "&U=" + userId;
+    query += "&L=" + Language;
     url += "?" + $.base64.encode(guid() + query);
     var url = "/Admin/Security/User.aspx?" + $.base64.encode(guid() + query);
+    document.location = url;
+}
+
+function GoGroupNew() {
+    GoGroupView(-1);
+}
+
+function GoGroupView(userId) {
+    var query = "&I=" + Instance.Name;
+    query += "&C=" + Company.Id;
+    query += "&G=" + userId;
+    query += "&L=" + Language;
+    url += "?" + $.base64.encode(guid() + query);
+    var url = "/Admin/Security/Group.aspx?" + $.base64.encode(guid() + query);
     document.location = url;
 }
 
@@ -343,6 +361,7 @@ function DetectDirty() {
 function GoProfilePage() {
     var query = "&I=" + Instance.Name;
     query += "&C=" + Company.Id;
+    query += "&L=" + Language;
 
     if (typeof params !== "undefined" && params !== null) {
         var keys = Object.keys(params);

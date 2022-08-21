@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using OpenFrameworkV3;
 using OpenFrameworkV3.Core;
-using OpenFrameworkV3.Core.Companies;
 using OpenFrameworkV3.Core.Navigation;
 
 public partial class Main : MasterPage
@@ -48,6 +43,8 @@ public partial class Main : MasterPage
     /// <summary>Encoded query string</summary>
     public CodedQuery CodedQuery { get; private set; }
 
+    public string Language { get; private set; }
+
     private List<string> scripts;
     private List<string> FKscripts;
 
@@ -66,10 +63,15 @@ public partial class Main : MasterPage
     protected void Page_Init()
     {
         Instance.CheckPersistence();
-        this.BreadCrumb = new BreadCrumb();
         this.CodedQuery = new CodedQuery(this.Request.QueryString);
         this.InstanceName = this.CodedQuery.GetByKey<string>("I");
         this.CompanyId = this.CodedQuery.GetByKey<long>("C");
+        this.Language = this.CodedQuery.GetByKey<string>("L");
+        this.BreadCrumb = new BreadCrumb()
+        {
+            InstanceName = this.InstanceName,
+            Language = this.Language
+        };
     }
 
     protected void Page_Load(object sender, EventArgs e)
@@ -138,5 +140,10 @@ public partial class Main : MasterPage
 
             return res.ToString();
         }
+    }
+
+    public string Translate(string key)
+    {
+        return OpenFrameworkV3.ApplicationDictionary.Translate(key, this.Language, this.InstanceName);
     }
 }

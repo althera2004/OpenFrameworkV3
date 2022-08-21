@@ -88,7 +88,7 @@ namespace OpenFrameworkV3.Feature
                     {
                         foreach (var g in user.Groups)
                         {
-                            if (definition.Groups.Contains(g))
+                            if (definition.Groups.Any(gr=>gr == g.Id))
                             {
                                 res.Add(definition);
                                 break;

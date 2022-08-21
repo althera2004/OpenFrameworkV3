@@ -54,7 +54,7 @@ namespace OpenFrameworkV3.Tools
         /// <param name="cellIndex">Index of cell in row</param>
         /// <returns>String value of cell</returns>
         [CLSCompliant(false)]
-        public static string GetString(IRow row, int cellIndex)
+        public static string GetString(IRow row, int cellIndex, string language, string instanceName)
         {
             if (row == null)
             {
@@ -66,7 +66,7 @@ namespace OpenFrameworkV3.Tools
                 return string.Empty;
             }
 
-            return GetString(row.GetCell(cellIndex));
+            return GetString(row.GetCell(cellIndex), language, instanceName);
         }
 
         /// <summary>Gets value from a cell</summary>
@@ -74,7 +74,7 @@ namespace OpenFrameworkV3.Tools
         /// <param name="cell">Excel cell</param>
         /// <returns>Value of cell</returns>
         [CLSCompliant(false)]
-        public static T GetValue<T>(ICell cell)
+        public static T GetValue<T>(ICell cell, string language, string instanceName)
         {
             if (cell == null)
             {
@@ -98,7 +98,7 @@ namespace OpenFrameworkV3.Tools
                     break;
                 case "SYSTEM.STRING":
                 default:
-                    cellValue = GetString(cell);
+                    cellValue = GetString(cell, language, instanceName);
                     break;
             }
 
@@ -129,7 +129,7 @@ namespace OpenFrameworkV3.Tools
         /// <param name="cell">Excel cell</param>
         /// <returns>String value of cell</returns>
         [CLSCompliant(false)]
-        public static string GetString(ICell cell)
+        public static string GetString(ICell cell, string language, string instanceName)
         {
             if (cell == null)
             {
@@ -142,14 +142,15 @@ namespace OpenFrameworkV3.Tools
                 case CellType.Blank:
                     textValue = string.Empty;
                     break;
-                case CellType.String:
-                    textValue = cell.StringCellValue;
-                    break;
                 case CellType.Numeric:
                     textValue = cell.NumericCellValue.ToString();
                     break;
                 case CellType.Boolean:
-                    textValue = cell.BooleanCellValue ? ApplicationDictionary.Translate("Common_Yes") : ApplicationDictionary.Translate("Common_No");
+                    textValue = cell.BooleanCellValue ? ApplicationDictionary.Translate("Common_Yes", language, instanceName) : ApplicationDictionary.Translate("Common_No", language, instanceName);
+                    break;
+                //case CellType.String:
+                default:
+                    textValue = cell.StringCellValue;
                     break;
             }
 

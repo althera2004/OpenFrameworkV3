@@ -185,7 +185,8 @@ namespace OpenFrameworkV3.Core.Security
                                         result.UserName = user.Email;
                                         HttpContext.Current.Session["ApplicationUser"] = user;
                                         HttpContext.Current.Session["LoggedUser"] = user;
-                                        HttpContext.Current.Session["Dictionary"] = ApplicationDictionary.Load(user.Language.Iso, instanceName);
+                                        HttpContext.Current.Session["Language"] = user.Language.Iso;
+                                        Persistence.DictionaryAdd(instanceName, user.Language.Iso);
                                         ApplicationDictionary.CreateJavascriptFile(user.Language.Iso, instanceName);
 
                                         using (var instance = Persistence.InstanceByName(instanceName))

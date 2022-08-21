@@ -9430,7 +9430,7 @@
 	src: url(/fonts/fa-brands-400-free-5.8.0.eot#iefix) format("embedded-opentype"), url(/fonts/fa-brands-400-free-5.8.0.woff2) format("woff2"), url(/fonts/fa-brands-400-free-5.8.0.woff) format("woff"), url(/fonts/fa-brands-400-free-5.8.0.ttf) format("truetype"), url(/fonts/fa-brands-400-free-5.8.0.svg#fontawesome) format("svg");
 	unicode-range: U+f171, U+f179, U+f1e9, U+f27c, U+f3e8, U+f3f3, U+f41a, U+f41e, U+f420, U+f428, U+f42a-f42c, U+f459, U+f4e4, U+f4f6, U+f4f9, U+f50b, U+f50f, U+f511, U+f514, U+f592, U+f5a8, U+f5b2, U+f5b5, U+f5c6, U+f5f7, U+f5fa, U+f612, U+f69d, U+f6af, U+f6c9, U+f731, U+f75d, U+f778, U+f77a, U+f785, U+f789, U+f791, U+f798-f799, U+f7c6, U+f7d3, U+f7d6, U+f7e0-f7e1, U+f834-f83d, U+f83f-f840
 }
-
+/*
 @font-face {
 	font-family: "Font Awesome 5 Brands";
 	font-style: normal;
@@ -9493,7 +9493,7 @@
 	src: url(/fonts/fa-brands-400-free-5.12.0.eot#iefix) format("embedded-opentype"), url(/fonts/fa-brands-400-free-5.12.0.woff2) format("woff2"), url(/fonts/fa-brands-400-free-5.12.0.woff) format("woff"), url(/fonts/fa-brands-400-free-5.12.0.ttf) format("truetype"), url(/fonts/fa-brands-400-free-5.12.0.svg#fontawesome) format("svg");
 	unicode-range: U+f17b, U+f1e8, U+f267, U+f269, U+f2ae, U+f2c5, U+f907, U+f913, U+f91a, U+f91e, U+f949
 }
-
+*/
 .fab {
 	font-family: "Font Awesome 5 Brands"
 }

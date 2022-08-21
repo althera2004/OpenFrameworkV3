@@ -7,20 +7,19 @@
         <div class="col-lg-12" id="BankAccountList">
             <div class="hpanel hblue">
                 <div class="panel-heading hbuilt">
-                    Grupos de seguridad
+                    <%= this.master.Translate("Core_SecurityGroup_Plural") %>
                     <div class="panel-tools">
-                        <a class="_showhide" id="BANKACCOUNT_AddBtn" onclick="BANKACCOUNT_Add();"><i class="fa fa-plus"></i>&nbsp;Añadir grupo</a>
-                    </div>
+                    </div>s
                 </div>
                         <div class="tableHead">
                             <table cellpadding="1" cellspacing="1" class="table">
                                 <thead>
                                     <tr>
-                                        <th style="width:300px;">Nombre</th>
-                                        <th>Descripción</th>
-                                        <th style="width:120px;text-align: center;">Core</th>
-                                        <th style="width:120px;text-align: center;">Editable</th>
-                                        <th class="action-buttons-header" data-buttons="2" style="width:77px;white-space:nowrap;"></th>
+                                        <th style="width:300px;"><%= this.master.Translate("Core_SecurityGroup_Header_Name") %></th>
+                                        <th><%= this.master.Translate("Core_SecurityGroup_Header_Description") %></th>
+                                        <th style="width:120px;text-align: center;"><%= this.master.Translate("Core_SecurityGroup_Header_Core") %></th>
+                                        <th style="width:120px;text-align: center;"><%= this.master.Translate("Core_SecurityGroup_Header_Editable") %></th>
+                                        <th class="action-buttons-header" data-buttons="2" style="width:17px;white-space:nowrap;"></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -29,14 +28,14 @@
                     <div class="table-responsive" style="max-height:100%;height:100%;overflow-y:scroll;overflow-x:hidden">
                         <div class="table-body" style="max-height:100%;height:100%">
                             <table cellpadding="1" cellspacing="1" class="table" style="max-height:100%">
-                                <tbody style="max-height:100%" id="BANKACCOUNT_TBody><asp:Literal runat="server" ID="LTListData"></asp:Literal></tbody>
+                                <tbody style="max-height:100%"><asp:Literal runat="server" ID="LTListData"></asp:Literal></tbody>
                             </table>
                         </div>
                     </div>
 
                 </div>
                 <div class="panel-footer">
-                    Nº de registros: <strong id="BANKACCOUNT_TotalRows"><asp:Literal runat="server" ID="LtListCount"></asp:Literal></strong>
+                    <%= this.master.Translate("Common_RegisterCount") %>: <strong><asp:Literal runat="server" ID="LtListCount"></asp:Literal></strong>
                 </div>
             </div>
         </div>

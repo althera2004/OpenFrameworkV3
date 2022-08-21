@@ -212,14 +212,14 @@ namespace OpenFrameworkV3.Feature
             return new ReadOnlyCollection<Tag>(res);
         }
 
-        public static Tag ByItemId(long itemId, long itemDefinitionId, long companyId, string instanceName)
+        public static Tag _ByItemId(long itemId, long itemDefinitionId, long companyId, string instanceName)
         {
             var res = Tag.Empty;
             var user = ApplicationUser.Actual;
             var cns = Persistence.ConnectionString(instanceName);
             if (!string.IsNullOrEmpty(cns))
             {
-                using (var cmd = new SqlCommand("Feature_Tag_GetByItemId"))
+                using (var cmd = new SqlCommand("Feature_Tag_ByItemId"))
                 {
                     using (var cnn = new SqlConnection(cns))
                     {
@@ -310,6 +310,55 @@ namespace OpenFrameworkV3.Feature
             }
 
             return res;
+        }
+
+
+        public static string ByItemId(long itemId, long itemDefinitionId, long companyId, string instanceName)
+        {
+            var res = new StringBuilder("[");
+            var user = ApplicationUser.Actual;
+            var cns = Persistence.ConnectionString(instanceName);
+            if (!string.IsNullOrEmpty(cns))
+            {
+                using (var cmd = new SqlCommand("Feature_Tag_ByItemId"))
+                {
+                    using (var cnn = new SqlConnection(cns))
+                    {
+                        cmd.Connection = cnn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(DataParameter.Input("@ItemId", itemId));
+                        cmd.Parameters.Add(DataParameter.Input("@ItemDefinitionId", itemDefinitionId));
+                        cmd.Parameters.Add(DataParameter.Input("@CompanyId", user.CompanyId));
+                        try
+                        {
+                            cmd.Connection.Open();
+                            using (var rdr = cmd.ExecuteReader())
+                            {
+                                bool first = true;
+                                while (rdr.Read())
+                                {
+                                    res.AppendFormat(
+                                        CultureInfo.InvariantCulture,
+                                        @"{1}""{0}""",
+                                        Tools.Json.JsonCompliant(rdr.GetString(ColumnsTagsGet.Tags)),
+                                        first ? string.Empty : ",");
+
+                                    first = false;
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            if (cmd.Connection.State != ConnectionState.Closed)
+                            {
+                                cmd.Connection.Close();
+                            }
+                        }
+                    }
+                }
+            }
+            res.Append("]");
+            return res.ToString();
         }
 
         public static Tag ById(long id, string instanceName)

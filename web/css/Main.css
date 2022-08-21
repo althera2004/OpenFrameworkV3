@@ -277,3 +277,13 @@ textarea.form-control { font-size:12px; }
 .ListContainer TD { font-weight:normal; }
 
 .RowButtonAction { cursor: pointer; }
+
+.bootstrap-duallistbox-container .btn-outline-secondary {
+	padding:0;
+	margin:0;
+	border:none;
+	background-color:#438eb9!important
+}
+
+.securitytablerow { cursor:pointer; }
+.securitytablerow:hover { background-color:#d1e7f7; color:#3498db;}

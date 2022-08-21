@@ -572,7 +572,7 @@ namespace OpenFrameworkV3.Billing
             return res;
         }
 
-        public static ActionResult SetSent(long id, long companyId, long applicationUserId, string instanceName)
+        public static ActionResult SetSent(long id, long companyId, long applicationUserId, string language, string instanceName)
         {
             var res = ActionResult.NoAction;
             var cns = Persistence.ConnectionString(instanceName);
@@ -591,7 +591,7 @@ namespace OpenFrameworkV3.Billing
                         {
                             cmd.Connection.Open();
                             cmd.ExecuteNonQuery();
-                            RenderPdf(id, companyId, instanceName);
+                            RenderPdf(id, companyId,language, instanceName);
                             res.SetSuccess();
                         }
                         catch (SqlException ex)
@@ -620,7 +620,7 @@ namespace OpenFrameworkV3.Billing
             return res;
         }
 
-        public static ActionResult SetPayed(long id,long companyId, long applicationUserId, string instanceName)
+        public static ActionResult SetPayed(long id,long companyId, long applicationUserId,string language, string instanceName)
         {
             var res = ActionResult.NoAction;
             var cns = Persistence.ConnectionString(instanceName);
@@ -638,7 +638,7 @@ namespace OpenFrameworkV3.Billing
                         {
                             cmd.Connection.Open();
                             cmd.ExecuteNonQuery();
-                            RenderPdf(id, companyId, instanceName);
+                            RenderPdf(id, companyId,language, instanceName);
                             res.SetSuccess();
                         }
                         catch (SqlException ex)
@@ -762,7 +762,7 @@ namespace OpenFrameworkV3.Billing
         }
 
 
-        public static void RenderPdf(long receiptId, long companyId, string instanceName)
+        public static void RenderPdf(long receiptId, long companyId,string language, string instanceName)
         {
             var receipt = Receipt.ById(receiptId, companyId, instanceName);
             var instance = Persistence.InstanceByName(instanceName);
@@ -810,7 +810,7 @@ namespace OpenFrameworkV3.Billing
                         var stamper = new PdfStamper(pdfReader, newFileStream);
                         var form = stamper.AcroFields;
                         var fieldKeys = form.Fields.Keys;
-                        Pdf.SetMetadata(pdfReader, stamper, ApplicationDictionary.Translate("Billing_Receipt"), string.Empty, "OpenFramework - " + instance.Name);
+                        Pdf.SetMetadata(pdfReader, stamper, ApplicationDictionary.Translate("Billing_Receipt", language, instanceName), string.Empty, "OpenFramework - " + instance.Name);
                         var company = Company.ById(companyId, instanceName);
 
                         #region lineas
@@ -829,11 +829,11 @@ namespace OpenFrameworkV3.Billing
                             SpacingAfter = 0f
                         };
                         table.SetWidths(new float[] { 75f, 50f, 25f, 30f, 30f, 40f });
-                        table.AddCell(HeaderCellLeft(ApplicationDictionary.Translate("Billing_Receipt_HeaderPDF_Description"), baseFontBold, 3));
-                        table.AddCell(HeaderCellRight(ApplicationDictionary.Translate("Billing_Receipt_HeaderPDF_Quantity"), baseFontBold));
-                        table.AddCell(HeaderCellRight(ApplicationDictionary.Translate("Billing_Receipt_HeaderPDF_Amount"), baseFontBold));
-                        //table.AddCell(HeaderCellRight(ApplicationDictionary.Translate("Billing_Receipt_HeaderPDF_IVA"), baseFontBold));
-                        table.AddCell(HeaderCellRight(ApplicationDictionary.Translate("Billing_Receipt_HeaderPDF_Total"), baseFontBold));
+                        table.AddCell(HeaderCellLeft(ApplicationDictionary.Translate("Billing_Receipt_HeaderPDF_Description", language, instanceName), baseFontBold, 3));
+                        table.AddCell(HeaderCellRight(ApplicationDictionary.Translate("Billing_Receipt_HeaderPDF_Quantity", language, instanceName), baseFontBold));
+                        table.AddCell(HeaderCellRight(ApplicationDictionary.Translate("Billing_Receipt_HeaderPDF_Amount", language, instanceName), baseFontBold));
+                        //table.AddCell(HeaderCellRight(ApplicationDictionary.Translate("Billing_Receipt_HeaderPDF_IVA", language, instanceName), baseFontBold));
+                        table.AddCell(HeaderCellRight(ApplicationDictionary.Translate("Billing_Receipt_HeaderPDF_Total", language, instanceName), baseFontBold));
 
                         int cont = 1;
                         var odd = true;
@@ -861,13 +861,13 @@ namespace OpenFrameworkV3.Billing
                         }
 
                         odd = true;
-                        table.AddCell(CellTableRightResume(ApplicationDictionary.Translate("Billing_Receipt_HeaderPDF_Total"), baseFont, odd, 0, 5));
+                        table.AddCell(CellTableRightResume(ApplicationDictionary.Translate("Billing_Receipt_HeaderPDF_Total", language, instanceName), baseFont, odd, 0, 5));
                         table.AddCell(CellTableMoneyResume(total, baseFontBold, odd, 0));
 
                         odd = false;
                         if (!string.IsNullOrEmpty(receipt.Notes))
                         {
-                            table.AddCell(CellTableLeftResume(ApplicationDictionary.Translate("Common_Notes"), baseFont, odd, Rectangle.BOTTOM_BORDER, 5));
+                            table.AddCell(CellTableLeftResume(ApplicationDictionary.Translate("Common_Notes", language, instanceName), baseFont, odd, Rectangle.BOTTOM_BORDER, 5));
                             table.AddCell(new PdfPCell(new Phrase(receipt.Notes, new Font(baseFont, 9, Font.NORMAL, BaseColor.BLACK)))
                             {
                                 Border = Rectangle.NO_BORDER,

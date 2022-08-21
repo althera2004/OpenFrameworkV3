@@ -34,7 +34,7 @@
 
                 res.AppendFormat(
                     CultureInfo.InvariantCulture,
-                    @"<tr id=""{0}"" onclick=""GoUserView(this.id);""><td style=""width:300px;"">{1}</td><td>{2}</td><td style=""width:120px;"">{3}</td><td style=""width:120px;text-align:center;"">{4}</td><td style=""width:120px;text-align:center;"">{5}</td></tr>",
+                    @"<tr id=""{0}"" onclick=""GoUserView(this.id);"" class=""securitytablerow""><td style=""width:300px;"">{1}</td><td>{2}</td><td style=""width:120px;"">{3}</td><td style=""width:120px;text-align:center;"">{4}</td><td style=""width:120px;text-align:center;"">{5}</td></tr>",
                     user.Id,
                     user.Profile.FullName,
                     user.Email,

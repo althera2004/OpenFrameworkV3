@@ -22,6 +22,7 @@
 		{ "Name": "EmployeeId", "Label": "Responsable", "Type": "long" },
 		{ "Name": "DateStart", "Label": "Inici", "Type": "datetime" },
 		{ "Name": "DatePreview", "Label": "Data prevista", "Type": "datetime" },
+		{ "Name": "DateEnd", "Label": "Finalitzacio", "Type": "datetime" },
 		{ "Name": "Indicador", "Label": "Indicador vinculat", "Type": "boolean" },
 		{ "Name": "Meta", "Label": "Meta", "Type": "FixedList", "FixedListName": "ObjectiuMeta" },
 		{ "Name": "MetaValue", "Label": "Meta valor", "Type": "decimal", "Precission": 6 },
@@ -42,6 +43,7 @@
                 { "DataProperty": "Name", "Search": true },
                 { "DataProperty": "DateStart", "Width": 100, "Align": "center" },
                 { "DataProperty": "DatePreview", "Width": 100, "Align": "center" },
+                { "DataProperty": "DateEnd", "Width": 100, "Align": "center" },
                 { "DataProperty": "EmployeeId", "Width": 250, "Align": "left", "Search": true }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
@@ -87,7 +89,8 @@
 							"Fields": [
 								{ "Name": "EmployeeId" },
 								{ "Name": "DateStart" },
-								{ "Name": "DatePreview" }
+								{ "Name": "DatePreview" },
+								{ "Name": "DateEnd" }
 							]
 						},
 						{

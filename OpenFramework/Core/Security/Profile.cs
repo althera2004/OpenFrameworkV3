@@ -45,7 +45,7 @@ namespace OpenFrameworkV3.Core.Security
                     Instagram = string.Empty,
                     LinkedIn = string.Empty,
                     Fax = string.Empty,
-                    Gender = ProfileGender.None,
+                    Gender = 0,
                     IdentificationCard = string.Empty,
                     IMEI = string.Empty,
                     Address = PostalAddress.Empty,
@@ -79,7 +79,7 @@ namespace OpenFrameworkV3.Core.Security
                     Instagram = string.Empty,
                     LinkedIn = string.Empty,
                     Fax = string.Empty,
-                    Gender = ProfileGender.None,
+                    Gender = 2,
                     IdentificationCard = string.Empty,
                     IMEI = string.Empty,
                     Address = PostalAddress.Empty,
@@ -113,7 +113,7 @@ namespace OpenFrameworkV3.Core.Security
                     Instagram = string.Empty,
                     LinkedIn = string.Empty,
                     Fax = string.Empty,
-                    Gender = ProfileGender.None,
+                    Gender = -1,
                     IdentificationCard = string.Empty,
                     IMEI = string.Empty,
                     Address = PostalAddress.Empty,
@@ -142,8 +142,28 @@ namespace OpenFrameworkV3.Core.Security
         public string LastName2 { get; set; }
 
         /// <summary>Gets or sets the user alternative email</summary>
+        [XmlElement(Type = typeof(string), ElementName = "IdentificationCard")]
+        public string IdentificationCard { get; set; }
+
+        /// <summary>Gets or sets the user alternative email</summary>
         [XmlElement(Type = typeof(string), ElementName = "EmailAlternative")]
         public string EmailAlternative { get; set; }
+
+        /// <summary>Gets or sets the user alternative email</summary>
+        [XmlElement(Type = typeof(string), ElementName = "Mobile")]
+        public string Mobile { get; set; }
+
+        /// <summary>Gets or sets the user alternative email</summary>
+        [XmlElement(Type = typeof(string), ElementName = "Fax")]
+        public string Fax { get; set; }
+
+        /// <summary>Gets or sets the user alternative email</summary>
+        [XmlElement(Type = typeof(int), ElementName = "Gender")]
+        public int Gender { get; set; }
+
+        /// <summary>Gets or sets the user alternative email</summary>
+        [XmlElement(Type = typeof(int), ElementName = "Nacionality")]
+        public int Nacionality { get; set; }
 
         /// <summary>Gets or sets the user web page</summary>
         [XmlElement(Type = typeof(string), ElementName = "Web")]
@@ -222,11 +242,10 @@ namespace OpenFrameworkV3.Core.Security
 
             switch(this.Gender)
             {
-                case ProfileGender.Female:
+                case 1:
                     return "/img/avatar_female.png";
-                case ProfileGender.Male:
+                case 0:
                     return "/img/avatar_male.png";
-                case ProfileGender.None:
                 default:
                     return "/img/avatar.png";
             }
@@ -258,11 +277,10 @@ namespace OpenFrameworkV3.Core.Security
 
             switch(this.Gender)
             {
-                case ProfileGender.Female:
+                case 1:
                     return "/img/avatar_female.png";
-                case ProfileGender.Male:
+                case 0:
                     return "/img/avatar_male.png";
-                case ProfileGender.None:
                 default:
                     return "/img/avatar.png";
             }
@@ -313,17 +331,9 @@ namespace OpenFrameworkV3.Core.Security
         [XmlElement(Type = typeof(string), ElementName = "Phone")]
         public string Phone { get; set; }
 
-        /// <summary>Gets or sets the user mobile number</summary>
-        [XmlElement(Type = typeof(string), ElementName = "Mobile")]
-        public string Mobile { get; set; }
-
         /// <summary>Gets or sets the user mobile IMEI</summary>
         [XmlElement(Type = typeof(string), ElementName = "IMEI")]
         public string IMEI { get; set; }
-
-        /// <summary>Gets or sets the user fax number</summary>
-        [XmlElement(Type = typeof(string), ElementName = "Fax")]
-        public string Fax { get; set; }
 
         /// <summary>Gets or sets the user phone</summary>
         [XmlElement(Type = typeof(string), ElementName = "PhoneEmergency")]
@@ -345,10 +355,6 @@ namespace OpenFrameworkV3.Core.Security
         [XmlElement(Type = typeof(string), ElementName = "Instragram")]
         public string Instagram { get; set; }
 
-        /// <summary>Gets or sets the user gender</summary>
-        [XmlElement(Type = typeof(ProfileGender), ElementName = "ProfileGender")]
-        public ProfileGender Gender { get; set; }
-
         /// <summary>Gets or sets the user birthdate</summary>
         [XmlElement(Type = typeof(DateTime?), ElementName = "BirthDate")]
         public DateTime? BirthDate { get; set; }
@@ -356,10 +362,6 @@ namespace OpenFrameworkV3.Core.Security
         /// <summary>Gets or sets the user postal address</summary>
         [XmlElement(Type = typeof(PostalAddress), ElementName = "Address")]
         public PostalAddress Address { get; set; }
-
-        /// <summary>Gets or sets the user identification card information</summary>
-        [XmlElement(Type = typeof(string), ElementName = "IdentificationCard")]
-        public string IdentificationCard { get; set; }
 
         /// <summary>Gets a JSON structure of user profile</summary>
         public string JsonSimple
@@ -391,122 +393,143 @@ namespace OpenFrameworkV3.Core.Security
             {
                 string pattern = @"{{
                         ""ApplicationUserId"":{0},
-                        ""Name"":""{1}"",
-                        ""LastName"":""{2}"",
-                        ""LastName2"":""{3}"",
-                        ""FullName"":""{4}"",
-                        ""Phone"":""{5}"",
-                        ""Mobile"":""{6}"",
-                        ""IMEI"":""{7}"",
-                        ""EmailAlternative"":""{8}""}}";
+                        ""Name"":{1},
+                        ""LastName"":{2},
+                        ""LastName2"":{3},
+                        ""FullName"":{4},
+                        ""Phone"":{5},
+                        ""Mobile"":{6},
+                        ""Fax"":{7},
+                        ""IMEI"":{7},
+                        ""EmailAlternative"":{8},
+                        ""IdentificationCard"":{9},
+                        ""Nacionality"":{10},
+                        ""Gender"":{11}
+                    }}";
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     pattern,
                     this.ApplicationUserId,
-                    Tools.Json.JsonCompliant(this.Name),
-                    Tools.Json.JsonCompliant(this.LastName),
-                    Tools.Json.JsonCompliant(this.LastName2),
-                    Tools.Json.JsonCompliant(this.FullName),
-                    Tools.Json.JsonCompliant(this.Phone),
-                    Tools.Json.JsonCompliant(this.Mobile),
-                    Tools.Json.JsonCompliant(this.IMEI),
-                    Tools.Json.JsonCompliant(this.EmailAlternative));
+                    Tools.Json.JsonValue(this.Name),
+                    Tools.Json.JsonValue(this.LastName),
+                    Tools.Json.JsonValue(this.LastName2),
+                    Tools.Json.JsonValue(this.FullName),
+                    Tools.Json.JsonValue(this.Phone),
+                    Tools.Json.JsonValue(this.Mobile),
+                    Tools.Json.JsonValue(this.IMEI),
+                    Tools.Json.JsonValue(this.EmailAlternative),
+                    Tools.Json.JsonValue(this.IdentificationCard),
+                    this.Nacionality,
+                    this.Gender);
             }
         }
 
         /// <summary>Obtains profile of application user</summary>
         /// <param name="applicationUserId">Application user identifier</param>
         /// <param name="companyId">Company user identifier</param>
-        /// <param name="connectionString">Connection string to database</param>
+        /// <param name="instanceName">Name of actual instance</param>
         /// <returns>Profile of application user</returns>
-        public static Profile ByApplicationUserId(long applicationUserId, long companyId, string connectionString)
+        public static Profile ByApplicationUserId(long applicationUserId, long companyId, string instanceName)
         {
-            var source = string.Format(CultureInfo.InvariantCulture, "Profile.ByApplicationUserId({0},{1})", applicationUserId, connectionString);
+            var source = string.Format(CultureInfo.InvariantCulture, "Profile.ByApplicationUserId({0},{1})", applicationUserId, instanceName);
             var res = Profile.Empty;
             res.ApplicationUserId = applicationUserId;
 
-            /* CREATE PROCEDURE Core_Profile_ByApplicationUserId
-             *   @ApplicationUserId bigint */
-            using(var cmd = new SqlCommand("Core_Profile_ByApplicationUserId"))
+            var cns = Persistence.ConnectionString(instanceName);
+            if (!string.IsNullOrEmpty(cns))
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                using(var cnn = new SqlConnection(connectionString))
+                /* CREATE PROCEDURE Core_Profile_ByApplicationUserId
+                 *   @ApplicationUserId bigint */
+                using (var cmd = new SqlCommand("Core_Profile_ByApplicationUserId"))
                 {
-                    cmd.Connection = cnn;
-                    try
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));
+                    using (var cnn = new SqlConnection(cns))
                     {
-                        cmd.Connection.Open();
-                        using(var rdr = cmd.ExecuteReader())
+                        cmd.Connection = cnn;
+                        try
                         {
-                            if(rdr.HasRows)
+                            cmd.Connection.Open();
+                            using (var rdr = cmd.ExecuteReader())
                             {
-                                rdr.Read();
-                                res.Name = rdr.GetString(ColumnsProfileByApplicationUserId.Name);
-                                res.LastName = rdr.GetString(ColumnsProfileByApplicationUserId.LastName);
-                                res.LastName2 = rdr.GetString(ColumnsProfileByApplicationUserId.LastName2);
-
-                                res.EmailAlternative = rdr.GetString(ColumnsProfileByApplicationUserId.EmailAlternative);
-                                res.Web = rdr.GetString(ColumnsProfileByApplicationUserId.Web);
-
-                                res.Phone = rdr.GetString(ColumnsProfileByApplicationUserId.Phone);
-                                res.Mobile = rdr.GetString(ColumnsProfileByApplicationUserId.Mobile);
-                                res.IMEI = rdr.GetString(ColumnsProfileByApplicationUserId.IMEI);
-                                res.Fax = rdr.GetString(ColumnsProfileByApplicationUserId.Fax);
-                                res.PhoneEmergency = rdr.GetString(ColumnsProfileByApplicationUserId.PhoneEmergency);
-
-                                res.Gender = (ProfileGender)rdr.GetInt32(ColumnsProfileByApplicationUserId.Gender);
-                                res.IdentificationCard = rdr.GetString(ColumnsProfileByApplicationUserId.IdentificationCard);
-                                if(!rdr.IsDBNull(ColumnsProfileByApplicationUserId.BirthDate))
+                                if (rdr.HasRows)
                                 {
-                                    res.BirthDate = rdr.GetDateTime(ColumnsProfileByApplicationUserId.BirthDate);
-                                }
+                                    rdr.Read();
+                                    res.Name = rdr.GetString(ColumnsProfileByApplicationUserId.Name);
+                                    res.LastName = rdr.GetString(ColumnsProfileByApplicationUserId.LastName);
+                                    res.LastName2 = rdr.GetString(ColumnsProfileByApplicationUserId.LastName2);
 
-                                res.Twitter = rdr.GetString(ColumnsProfileByApplicationUserId.Twitter);
-                                res.Instagram = rdr.GetString(ColumnsProfileByApplicationUserId.Instagram);
-                                res.Facebook = rdr.GetString(ColumnsProfileByApplicationUserId.Facebook);
-                                res.LinkedIn = rdr.GetString(ColumnsProfileByApplicationUserId.LinkedIn);
+                                    res.EmailAlternative = rdr.GetString(ColumnsProfileByApplicationUserId.EmailAlternative);
+                                    res.Web = rdr.GetString(ColumnsProfileByApplicationUserId.Web);
 
-                                res.Address.WayTypeId = rdr.GetInt32(ColumnsProfileByApplicationUserId.AddressWayType);
-                                res.Address.Address = rdr.GetString(ColumnsProfileByApplicationUserId.Address);
-                                res.Address.PostalCode = rdr.GetString(ColumnsProfileByApplicationUserId.PostalCode);
-                                res.Address.City = rdr.GetString(ColumnsProfileByApplicationUserId.City);
-                                res.Address.Province = rdr.GetString(ColumnsProfileByApplicationUserId.Province);
-                                res.Address.State = rdr.GetString(ColumnsProfileByApplicationUserId.State);
-                                res.Address.Country = rdr.GetString(ColumnsProfileByApplicationUserId.Country);
+                                    res.Phone = rdr.GetString(ColumnsProfileByApplicationUserId.Phone);
+                                    res.Mobile = rdr.GetString(ColumnsProfileByApplicationUserId.Mobile);
+                                    res.IMEI = rdr.GetString(ColumnsProfileByApplicationUserId.IMEI);
+                                    res.Fax = rdr.GetString(ColumnsProfileByApplicationUserId.Fax);
+                                    res.PhoneEmergency = rdr.GetString(ColumnsProfileByApplicationUserId.PhoneEmergency);
 
-                                if(!rdr.IsDBNull(ColumnsProfileByApplicationUserId.Latitude))
-                                {
-                                    res.Address.Latitude = rdr.GetDecimal(ColumnsProfileByApplicationUserId.Latitude);
-                                }
+                                    if (!rdr.IsDBNull(ColumnsProfileByApplicationUserId.Gender))
+                                    {
+                                        res.Gender = rdr.GetInt32(ColumnsProfileByApplicationUserId.Gender);
+                                    }
 
-                                if(!rdr.IsDBNull(ColumnsProfileByApplicationUserId.Longitude))
-                                {
-                                    res.Address.Longitude = rdr.GetDecimal(ColumnsProfileByApplicationUserId.Longitude);
+                                    if (!rdr.IsDBNull(ColumnsProfileByApplicationUserId.IdentificationCard))
+                                    {
+                                        res.IdentificationCard = rdr.GetString(ColumnsProfileByApplicationUserId.IdentificationCard);
+                                    }
+
+                                    if (!rdr.IsDBNull(ColumnsProfileByApplicationUserId.BirthDate))
+                                    {
+                                        res.BirthDate = rdr.GetDateTime(ColumnsProfileByApplicationUserId.BirthDate);
+                                    }
+
+                                    res.Twitter = rdr.GetString(ColumnsProfileByApplicationUserId.Twitter);
+                                    res.Instagram = rdr.GetString(ColumnsProfileByApplicationUserId.Instagram);
+                                    res.Facebook = rdr.GetString(ColumnsProfileByApplicationUserId.Facebook);
+                                    res.LinkedIn = rdr.GetString(ColumnsProfileByApplicationUserId.LinkedIn);
+
+                                    res.Address.WayTypeId = rdr.GetInt32(ColumnsProfileByApplicationUserId.AddressWayType);
+                                    res.Address.Address = rdr.GetString(ColumnsProfileByApplicationUserId.Address);
+                                    res.Address.PostalCode = rdr.GetString(ColumnsProfileByApplicationUserId.PostalCode);
+                                    res.Address.City = rdr.GetString(ColumnsProfileByApplicationUserId.City);
+                                    res.Address.Province = rdr.GetString(ColumnsProfileByApplicationUserId.Province);
+                                    res.Address.State = rdr.GetString(ColumnsProfileByApplicationUserId.State);
+                                    res.Address.Country = rdr.GetString(ColumnsProfileByApplicationUserId.Country);
+
+                                    if (!rdr.IsDBNull(ColumnsProfileByApplicationUserId.Latitude))
+                                    {
+                                        res.Address.Latitude = rdr.GetDecimal(ColumnsProfileByApplicationUserId.Latitude);
+                                    }
+
+                                    if (!rdr.IsDBNull(ColumnsProfileByApplicationUserId.Longitude))
+                                    {
+                                        res.Address.Longitude = rdr.GetDecimal(ColumnsProfileByApplicationUserId.Longitude);
+                                    }
                                 }
                             }
                         }
-                    }
-                    catch(SqlException ex)
-                    {
-                        ExceptionManager.Trace(ex as Exception, source);
-                    }
-                    catch(FormatException ex)
-                    {
-                        ExceptionManager.Trace(ex as Exception, source);
-                    }
-                    catch(NullReferenceException ex)
-                    {
-                        ExceptionManager.Trace(ex as Exception, source);
-                    }
-                    catch(NotSupportedException ex)
-                    {
-                        ExceptionManager.Trace(ex as Exception, source);
-                    }
-                    finally
-                    {
-                        if(cmd.Connection.State != ConnectionState.Closed)
+                        catch (SqlException ex)
                         {
-                            cmd.Connection.Close();
+                            ExceptionManager.Trace(ex as Exception, source);
+                        }
+                        catch (FormatException ex)
+                        {
+                            ExceptionManager.Trace(ex as Exception, source);
+                        }
+                        catch (NullReferenceException ex)
+                        {
+                            ExceptionManager.Trace(ex as Exception, source);
+                        }
+                        catch (NotSupportedException ex)
+                        {
+                            ExceptionManager.Trace(ex as Exception, source);
+                        }
+                        finally
+                        {
+                            if (cmd.Connection.State != ConnectionState.Closed)
+                            {
+                                cmd.Connection.Close();
+                            }
                         }
                     }
                 }

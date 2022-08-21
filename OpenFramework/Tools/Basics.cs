@@ -34,27 +34,27 @@ namespace OpenFrameworkV3.Tools
 
         private const bool OnlyFirstLetter = true;
 
-        public static string MonthName(int month)
+        public static string MonthName(int month, string language, string instanceName)
         {
-            return MonthNameBase0(month - 1);
+            return MonthNameBase0(month - 1, language, instanceName);
         }
 
-        public static string MonthNameBase0(int month)
+        public static string MonthNameBase0(int month, string language, string instanceName)
         {
             switch (month)
             {
-                case 0: return ApplicationDictionary.Translate("Common_MonthName_January");
-                case 1: return ApplicationDictionary.Translate("Common_MonthName_February");
-                case 2: return ApplicationDictionary.Translate("Common_MonthName_March");
-                case 3: return ApplicationDictionary.Translate("Common_MonthName_April");
-                case 4: return ApplicationDictionary.Translate("Common_MonthName_May");
-                case 5: return ApplicationDictionary.Translate("Common_MonthName_June");
-                case 6: return ApplicationDictionary.Translate("Common_MonthName_July");
-                case 7: return ApplicationDictionary.Translate("Common_MonthName_August");
-                case 8: return ApplicationDictionary.Translate("Common_MonthName_September");
-                case 9: return ApplicationDictionary.Translate("Common_MonthName_October");
-                case 10: return ApplicationDictionary.Translate("Common_MonthName_November");
-                case 11: return ApplicationDictionary.Translate("Common_MonthName_December");
+                case 0: return ApplicationDictionary.Translate("Common_MonthName_January", language, instanceName);
+                case 1: return ApplicationDictionary.Translate("Common_MonthName_February", language, instanceName);
+                case 2: return ApplicationDictionary.Translate("Common_MonthName_March", language, instanceName);
+                case 3: return ApplicationDictionary.Translate("Common_MonthName_April", language, instanceName);
+                case 4: return ApplicationDictionary.Translate("Common_MonthName_May", language, instanceName);
+                case 5: return ApplicationDictionary.Translate("Common_MonthName_June", language, instanceName);
+                case 6: return ApplicationDictionary.Translate("Common_MonthName_July", language, instanceName);
+                case 7: return ApplicationDictionary.Translate("Common_MonthName_August", language, instanceName);
+                case 8: return ApplicationDictionary.Translate("Common_MonthName_September", language, instanceName);
+                case 9: return ApplicationDictionary.Translate("Common_MonthName_October", language, instanceName);
+                case 10: return ApplicationDictionary.Translate("Common_MonthName_November", language, instanceName);
+                case 11: return ApplicationDictionary.Translate("Common_MonthName_December", language, instanceName);
             }
 
             return string.Empty;
@@ -78,6 +78,13 @@ namespace OpenFrameworkV3.Tools
 
                 return context.Request.ServerVariables["REMOTE_ADDR"];
             }
+        }
+
+        public static string Reverse(string s)
+        {
+            char[] charArray = s.ToCharArray();
+            Array.Reverse(charArray);
+            return new string(charArray);
         }
 
         public static void VerifyFolder(string folder)
@@ -485,29 +492,29 @@ namespace OpenFrameworkV3.Tools
             return angle * (180.0 / Math.PI);
         }
 
-        /// <summary>Gets name of month</summary>
-        /// <param name="index">Index of month</param>
-        /// <param name="languageCode">Code on laguange to translate</param>
-        /// <returns>Name of month</returns>
-        public static string MonthName(int index, string languageCode)
-        {
-            switch (index)
-            {
-                case Constant.Month.January + 1: return ApplicationDictionary.Translate("Common_MonthName_January");
-                case Constant.Month.February + 1: return ApplicationDictionary.Translate("Common_MonthName_February");
-                case Constant.Month.March + 1: return ApplicationDictionary.Translate("Common_MonthName_March");
-                case Constant.Month.April + 1: return ApplicationDictionary.Translate("Common_MonthName_April");
-                case Constant.Month.May + 1: return ApplicationDictionary.Translate("Common_MonthName_May");
-                case Constant.Month.June + 1: return ApplicationDictionary.Translate("Common_MonthName_June");
-                case Constant.Month.July + 1: return ApplicationDictionary.Translate("Common_MonthName_July");
-                case Constant.Month.August + 1: return ApplicationDictionary.Translate("Common_MonthName_August");
-                case Constant.Month.September + 1: return ApplicationDictionary.Translate("Common_MonthName_September");
-                case Constant.Month.October + 1: return ApplicationDictionary.Translate("Common_MonthName_October");
-                case Constant.Month.November + 1: return ApplicationDictionary.Translate("Common_MonthName_November");
-                case Constant.Month.December + 1: return ApplicationDictionary.Translate("Common_MonthName_December");
-                default: return string.Empty;
-            }
-        }
+        ///// <summary>Gets name of month</summary>
+        ///// <param name="index">Index of month</param>
+        ///// <param name="languageCode">Code on laguange to translate</param>
+        ///// <returns>Name of month</returns>
+        //public static string MonthName(int index, string language, string instanceName)
+        //{
+        //    switch (index)
+        //    {
+        //        case Constant.Month.January + 1: return ApplicationDictionary.Translate("Common_MonthName_January", language, instanceName);
+        //        case Constant.Month.February + 1: return ApplicationDictionary.Translate("Common_MonthName_February", language, instanceName);
+        //        case Constant.Month.March + 1: return ApplicationDictionary.Translate("Common_MonthName_March", language, instanceName);
+        //        case Constant.Month.April + 1: return ApplicationDictionary.Translate("Common_MonthName_April", language, instanceName);
+        //        case Constant.Month.May + 1: return ApplicationDictionary.Translate("Common_MonthName_May", language, instanceName);
+        //        case Constant.Month.June + 1: return ApplicationDictionary.Translate("Common_MonthName_June", language, instanceName);
+        //        case Constant.Month.July + 1: return ApplicationDictionary.Translate("Common_MonthName_July", language, instanceName);
+        //        case Constant.Month.August + 1: return ApplicationDictionary.Translate("Common_MonthName_August", language, instanceName);
+        //        case Constant.Month.September + 1: return ApplicationDictionary.Translate("Common_MonthName_September", language, instanceName);
+        //        case Constant.Month.October + 1: return ApplicationDictionary.Translate("Common_MonthName_October", language, instanceName);
+        //        case Constant.Month.November + 1: return ApplicationDictionary.Translate("Common_MonthName_November", language, instanceName);
+        //        case Constant.Month.December + 1: return ApplicationDictionary.Translate("Common_MonthName_December", language, instanceName);
+        //        default: return string.Empty;
+        //    }
+        //}
 
         public static string ServerName(string request)
         {
@@ -659,9 +666,9 @@ namespace OpenFrameworkV3.Tools
         /// <param name="date">Date to get month name from</param>
         /// <param name="languageCode">Code of laguage to translate month names</param>
         /// <returns>Name of month</returns>
-        public static string MonthDate(DateTime date, string languageCode)
+        public static string MonthDate(DateTime date, string language, string instanceName)
         {
-            return string.Format(CultureInfo.GetCultureInfo("en-us"), "{0}/{1}", MonthName(date.Month, languageCode), date.Year);
+            return string.Format(CultureInfo.GetCultureInfo("en-us"), "{0}/{1}", MonthName(date.Month, language, instanceName), date.Year);
         }
 
         /// <summary>Calculates if two dates are in the same month of the same year</summary>

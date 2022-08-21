@@ -44,7 +44,7 @@ namespace OpenFrameworkV3.Core.Navigation
         /// <summary>Gets or sets the type of shortcut (red, blue, green, yellow, or none by default)</summary>
         public ShortcutTypes ShortcutType { get; set; }
 
-        public static Shortcut ByItemId(long itemId, string instanceName)
+        public static Shortcut ByItemId(long itemId, string language, string instanceName)
         {
             var res = Shortcut.Empty;
 
@@ -54,7 +54,7 @@ namespace OpenFrameworkV3.Core.Navigation
                 var itemIndex = items.First(i => i.Id == itemId);
                 res.Id = itemId;
                 res.Icon = itemIndex.Layout.Icon;
-                res.Label = itemIndex.Layout.Label;
+                res.Label = ApplicationDictionary.Translate(itemIndex.Layout.Label, language, instanceName);
             }
 
             return res;
@@ -69,7 +69,7 @@ namespace OpenFrameworkV3.Core.Navigation
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     @"<button type=""button"" class=""btn btn-info"" style=""height:32px;"" onclick=""alert('{0}');"" title=""{0}""><i class=""{1}""></i></button>",
-                    ApplicationDictionary.Translate(this.Label),
+                    this.Label,
                     this.Icon);
             }
         }
@@ -86,7 +86,7 @@ namespace OpenFrameworkV3.Core.Navigation
                         CultureInfo.InvariantCulture,
                         @"{{""Id"":{0},""Label"":""{1}"",""Icon"":""{2}""}}",
                         this.Id,
-                        Tools.Json.JsonCompliant(ApplicationDictionary.Translate(this.Label)),
+                        Tools.Json.JsonCompliant(this.Label),
                         this.Icon);
                 }
 
@@ -153,6 +153,7 @@ namespace OpenFrameworkV3.Core.Navigation
                         return "<span class=\"btn btn-warning\" title=\"" + this.Label + "\"></span>";
                     case ShortcutTypes.Red:
                         return "<span class=\"btn btn-danger\" title=\"" + this.Label + "\"></span>";
+                    case ShortcutTypes.None:
                     default:
                         return string.Empty;
                 }

@@ -195,6 +195,7 @@
     <Compile Include="Core\Activity\ActionLog.cs" />
     <Compile Include="Core\Activity\ActivityTrace.cs" />
     <Compile Include="Core\Bindings\ColumnsScopeGet.cs" />
+    <Compile Include="Core\Bindings\ColumnsUserGetForList.cs" />
     <Compile Include="Core\Companies\CompanyBankAccount.cs" />
     <Compile Include="Core\Companies\CompanyContactPerson.cs" />
     <Compile Include="Core\Companies\CompanyPostalAddress.cs" />
@@ -226,7 +227,6 @@
     <Compile Include="Core\Enums\ExtendSelect.cs" />
     <Compile Include="Core\Enums\FormFieldType.cs" />
     <Compile Include="Core\Enums\ItemFieldDataType.cs" />
-    <Compile Include="Core\Enums\ProfileGender.cs" />
     <Compile Include="Core\Enums\SaveAction.cs" />
     <Compile Include="Core\ItemManager\ColumnDataFormat.cs" />
     <Compile Include="Core\ItemManager\ForeignKey.cs" />

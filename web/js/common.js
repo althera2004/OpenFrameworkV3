@@ -15,6 +15,10 @@ function none() {
 
 // JQuery extensions
 // -----------------------------------------------
+jQuery.fn.title = function (text) {
+    return this.attr("title", text);
+};
+
 jQuery.fn.visible = function () {
     return this.css("visibility", "visible");
 };
@@ -163,6 +167,32 @@ function GetDate(date, separator, nullable) {
     return new Date(year, month, day);
 }
 
+function GetDateTextFromZulu(date, separator, nullable) {
+    if (typeof date === "undefined" || date === null || date === "") {
+        if (typeof nullable === "undefined" || nullable === null) {
+            return null;
+        }
+        else {
+            if (nullable === false) {
+                return null;
+            }
+            else {
+                return new Date(1970, 1, 1);
+            }
+        }
+    }
+
+    date = date.split('T')[0];
+
+    if (typeof separator === "undefined") { separator = "/" };
+    if (separator === "-") { separator = "/"; }
+    if (separator === null) { separator = "/"; }
+
+    var parts = date.split('-');
+
+    return parts[2] + separator + parts[1] + separator + parts[0];
+}
+
 function GetDateText(date, separator, nullable) {
     if (typeof date === "undefined" || date === null || date === "") {
         if (typeof nullable === "undefined" || nullable === null) {
@@ -191,7 +221,6 @@ function GetDateText(date, separator, nullable) {
     if (months < 10) { months = "0" + months };
 
     return days + separator + months + separator + date.getFullYear();
-
 }
 
 

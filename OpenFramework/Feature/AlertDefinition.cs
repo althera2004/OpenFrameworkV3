@@ -58,7 +58,7 @@ namespace OpenFrameworkV3.Feature
 
                     foreach (var g in user.Groups)
                     {
-                        if (definition.Groups.Any(gr => gr == g))
+                        if (definition.Groups.Any(gr => gr == g.Id))
                         {
                             res.Add(definition);
                             break;
@@ -218,7 +218,7 @@ namespace OpenFrameworkV3.Feature
         /// <summary>Creates a HTML code for a alert row of alerts page</summary>
         /// <param name="dictionary">Dictionary for fixed label</param>
         /// <returns>HTML code for a alert row of alerts page</returns>
-        public ReadOnlyCollection<string> RenderRow(Dictionary<string, string> dictionary, string instanceName, bool remindAlerts)
+        public ReadOnlyCollection<string> RenderRow(Dictionary<string, string> dictionary,string language, string instanceName, bool remindAlerts)
         {
             if (dictionary == null)
             {
@@ -298,8 +298,8 @@ namespace OpenFrameworkV3.Feature
                                              <i class=""fa fa-comment red"" title=""{0}"" onclick=""FEATURE_Alerts_Remind(this);""></i>
                                              <i class=""fa fa-lock blank"" title=""{1}"" onclick=""FEATURE_Alerts_BlockAction(this, true,{2});""></i>
                                          </td>",
-                                            ApplicationDictionary.Translate("Feature_Messagin_IconTitle"),
-                                            ApplicationDictionary.Translate("Feature_BlockAction_IconTitle"),
+                                            ApplicationDictionary.Translate("Feature_Messagin_IconTitle", language, instanceName),
+                                            ApplicationDictionary.Translate("Feature_BlockAction_IconTitle", language, instanceName),
                                             this.BlockAction);
 
                                         if (this.groups == null || this.groups.Length == 0 || this.BlockAction < 1)
@@ -309,7 +309,7 @@ namespace OpenFrameworkV3.Feature
                                             @"<td style=""text-align:center;width:50px;"">
                                              <i class=""fa fa-comment red"" title=""{0}"" onclick=""FEATURE_Alerts_Remind(this);""></i>
                                          </td>",
-                                            ApplicationDictionary.Translate("Feature_Messagin_IconTitle"));
+                                            ApplicationDictionary.Translate("Feature_Messagin_IconTitle", language, instanceName));
                                         }
                                     }
 
@@ -343,12 +343,12 @@ namespace OpenFrameworkV3.Feature
                                             {
                                                 if (this.ItemType == 10000)
                                                 {
-                                                    itemLabel = ApplicationDictionary.Translate("Billing_Invoice");
+                                                    itemLabel = ApplicationDictionary.Translate("Billing_Invoice",language, instanceName);
                                                     itemDefinition.ItemName = "Billing_Invoice";
                                                 }
                                                 else if (this.ItemType == 10005)
                                                 {
-                                                    itemLabel = ApplicationDictionary.Translate("Billing_Receipt");
+                                                    itemLabel = ApplicationDictionary.Translate("Billing_Receipt",language, instanceName);
                                                     itemDefinition.ItemName = "Billing_Receipt";
                                                 }
                                                 else
@@ -543,12 +543,12 @@ namespace OpenFrameworkV3.Feature
 
         /// <summary>Extract alert ocurrences</summary>
         /// <returns>A list of alert ocurrences in JSON format</returns>
-        public ReadOnlyCollection<string> ExtractJson(string instanceName)
+        public ReadOnlyCollection<string> ExtractJson(string language, string instanceName)
         {
             var res = new List<string>();
             try
             {
-                var dictionary = HttpContext.Current.Session["Dictionary"] as Dictionary<string, string>;
+                var dictionary = Persistence.Dictionary(language, instanceName);
                 var columns = new List<string>();
                 foreach (var position in this.Index.OrderBy(x => x.Position))
                 {

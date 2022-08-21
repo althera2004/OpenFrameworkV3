@@ -273,17 +273,14 @@ namespace OpenFrameworkV3
         /// <summary>Try to get a label from dictionary</summary>
         /// <param name="key">Key of dictionary</param>
         /// <returns>Label based on key or key notation</returns>
-        public static string Translate(string key)
+        public static string Translate(string key, string language, string instanceName)
         {
             if (string.IsNullOrEmpty(key))
             {
                 return string.Empty;
             }
 
-            if (!(HttpContext.Current.Session["Dictionary"] is Dictionary<string, string> dictionary))
-            {
-                return key;
-            }
+            var dictionary = Persistence.Dictionary(language, instanceName);
 
             if (dictionary != null && dictionary.ContainsKey(key))
             {
@@ -320,7 +317,7 @@ namespace OpenFrameworkV3
         /// <param name="instanceName">Name of instance</param>
         public static void CreateJavascriptFile(string language, string instanceName)
         {
-            var dictionary = Load(language, instanceName);
+            var dictionary = Persistence.Dictionary(language, instanceName);
             var content = new StringBuilder("// " + DateTime.Now.ToShortDateString());
             content.Append(Environment.NewLine);
             content.Append("var Dictionary =" + Environment.NewLine);

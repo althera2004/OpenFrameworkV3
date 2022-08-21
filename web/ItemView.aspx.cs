@@ -1,10 +1,15 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="ItemView.aspx.cs" company="OpenFramework">
+//     Copyright (c) 2013 - OpenFramework. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using OpenFrameworkV3;
+using OpenFrameworkV3.Core.DataAccess;
 
 public partial class ItemView : Page
 {
@@ -19,11 +24,18 @@ public partial class ItemView : Page
     }
 
     public long ItemDefinitionId { get; private set; }
+
     public string ItemName { get; private set; }
+
     public string ListId { get; private set; }
 
     public string FormId { get; private set; }
+
     public long ItemId { get; private set; }
+
+    public string JsonData { get; private set; }
+
+    public string FK { get; private set; }
 
     public string InstanceName
     {
@@ -37,10 +49,9 @@ public partial class ItemView : Page
     {
         this.master = this.Master as Main;
         this.ItemName = this.master.CodedQuery.GetByKey<string>("Item");
-        this.ListId = this.master.CodedQuery.GetByKey<string>("L");
+        this.ListId = this.master.CodedQuery.GetByKey<string>("List");
         this.FormId = this.master.CodedQuery.GetByKey<string>("F");
         this.ItemId = this.master.CodedQuery.GetByKey<long>("Id");
-
 
         var itemDefinition = Persistence.ItemDefinitionByName(this.ItemName, this.master.InstanceName);
         this.ItemDefinitionId = itemDefinition.Id;
@@ -50,11 +61,14 @@ public partial class ItemView : Page
             listDefinition = itemDefinition.Lists.First(l => l.Id.Equals(this.ListId, StringComparison.OrdinalIgnoreCase));
         }
 
+        this.JsonData = Read.JsonById(this.ItemId, itemDefinition, this.master.InstanceName);
+
         var title = listDefinition.Title ?? itemDefinition.Layout.LabelPlural;
         this.master.SetPageType("PageView");
 
         if(itemDefinition.ForeignValues.Count > 0)
         {
+            var itemNames = new List<string>();
             foreach(var fv in itemDefinition.ForeignValues)
             {
                 var fvItem = Persistence.ItemDefinitionByName(fv.ItemName, this.master.InstanceName);
@@ -62,6 +76,25 @@ public partial class ItemView : Page
                 {
                     this.master.AddFKScript(fvItem.ItemName);
                 }
+                else
+                {
+                    itemNames.Add(fvItem.ItemName);
+                }
+            }
+
+            foreach(var itemName in itemNames)
+            {
+                var data = string.Empty;
+                var fkDefinition = Persistence.ItemDefinitionByName(itemName, this.master.InstanceName);
+                if (!string.IsNullOrEmpty(fkDefinition.CustomFK))
+                {
+                    data = Read.GetCustomFK(itemName, this.master.InstanceName);
+                }
+                else
+                {
+                    data = Read.JsonActive(itemName, this.master.CompanyId, this.master.InstanceName);
+                }
+                this.FK += "FK[\"" + itemName + "\"] = {\"Data\":" + data.Replace("\n", "\\n") + "};";
             }
         }
     }

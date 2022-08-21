@@ -16,12 +16,13 @@ namespace OpenFrameworkV3.Core.Security
     using System.Text;
     using System.Web;
     using System.Xml.Serialization;
+    using OpenFramework.Core.Bindings;
     using OpenFrameworkV3.Core.Activity;
     using OpenFrameworkV3.Core.Bindings;
     using OpenFrameworkV3.Core.DataAccess;
     using OpenFrameworkV3.Core.ItemManager;
     using OpenFrameworkV3.Core.Navigation;
-
+    using OpenFrameworkV3.Tools;
 
     public class ApplicationUser
     {
@@ -117,18 +118,18 @@ namespace OpenFrameworkV3.Core.Security
         [XmlElement(Type = typeof(Language), ElementName = "Language")]
         public Language Language { get; set; }
 
-        private List<long> groups;
+        private List<Group> groups;
 
-        public ReadOnlyCollection<long> Groups
+        public ReadOnlyCollection<Group> Groups
         {
             get
             {
                 if (this.groups == null)
                 {
-                    this.groups = new List<long>();
+                    this.groups = new List<Group>();
                 }
 
-                return new ReadOnlyCollection<long>(this.groups);
+                return new ReadOnlyCollection<Group>(this.groups);
             }
         }
 
@@ -155,12 +156,13 @@ namespace OpenFrameworkV3.Core.Security
         {
             if (this.groups == null)
             {
-                this.groups = new List<long>();
+                this.groups =
+                    new List<Group>();
             }
 
-            if (!this.groups.Contains(groupId))
+            if (!this.groups.Any(g => g.Id == groupId))
             {
-                this.groups.Add(groupId);
+                this.groups.Add(new Group { Id = groupId });
             }
         }
 
@@ -197,7 +199,14 @@ namespace OpenFrameworkV3.Core.Security
         {
             get
             {
-                return new ApplicationUser();
+                return new ApplicationUser
+                {
+                    Id = Constant.DefaultId,
+                    Email = string.Empty,
+                    Profile = Profile.Empty,
+                    Core = false,
+                    Active = false
+                };
             }
         }
 
@@ -273,15 +282,17 @@ namespace OpenFrameworkV3.Core.Security
                         ""Core"":{3},
                         ""AdminUser"":{4},
                         ""Profile"":{5},
-                        ""Grants"":{6}
+                        ""Grants"":{6},
+                        ""Groups"":{7}
                     }}",
                     this.Id,
                     (this.Email ?? string.Empty).ToLowerInvariant(),
-                    (this.Password ?? string.Empty),
+                    "*******************",
                     ConstantValue.Value(this.Core),
                     ConstantValue.Value(this.AdminUser),
                     profileJson,
-                    Grant.JsonList(new ReadOnlyCollection<Grant>(this.grants)));
+                    Grant.JsonList(new ReadOnlyCollection<Grant>(this.Grants)),
+                    Group.JsonListSimple(new ReadOnlyCollection<Group>(this.Groups)));
             }
         }
 
@@ -289,7 +300,7 @@ namespace OpenFrameworkV3.Core.Security
 
         public string Email { get; set; }
 
-        public void GetShortcuts(long applicationUserId, long companyId, string instanceName)
+        public void GetShortcuts(long applicationUserId, long companyId, string language, string instanceName)
         {
             var cns = Persistence.ConnectionString(instanceName);
             if (!string.IsNullOrEmpty(cns))
@@ -319,7 +330,7 @@ namespace OpenFrameworkV3.Core.Security
                                         var itemBlue = Persistence.ItemDefinitionByName(rdr.GetString(0), instanceName);
                                         this.shortcuts.Blue = new Shortcut
                                         {
-                                            Label = itemBlue.Layout.LabelPlural,
+                                            Label = ApplicationDictionary.Translate(itemBlue.Layout.LabelPlural, language, instanceName),
                                             Icon = itemBlue.Layout.Icon,
                                             Link = rdr.GetString(1),
                                             ShortcutType = ShortcutTypes.Blue
@@ -331,7 +342,7 @@ namespace OpenFrameworkV3.Core.Security
                                         var itemRed = Persistence.ItemDefinitionByName(rdr.GetString(2), instanceName);
                                         this.shortcuts.Red = new Shortcut
                                         {
-                                            Label = itemRed.Layout.LabelPlural,
+                                            Label = ApplicationDictionary.Translate(itemRed.Layout.LabelPlural, language, instanceName),
                                             Icon = itemRed.Layout.Icon,
                                             Link = rdr.GetString(3),
                                             ShortcutType = ShortcutTypes.Red
@@ -386,13 +397,7 @@ namespace OpenFrameworkV3.Core.Security
                                         Name = rdr.GetString(ColumnsUserGet.LanguageName)
                                     };
 
-                                    res.Profile = new Profile
-                                    {
-                                        ApplicationUserId = rdr.GetInt64(ColumnsUserGet.Id),
-                                        Name = rdr.GetString(ColumnsUserGet.Name),
-                                        LastName = rdr.GetString(ColumnsUserGet.LastName),
-                                        LastName2 = rdr.GetString(ColumnsUserGet.LastName2)
-                                    };
+                                    res.Profile = Profile.ByApplicationUserId(res.Id, companyId, instanceName);
 
                                     res.AdminUser = rdr.GetBoolean(ColumnsUserGet.AdminUser);
                                     res.Core = rdr.GetBoolean(ColumnsUserGet.Core);
@@ -405,9 +410,11 @@ namespace OpenFrameworkV3.Core.Security
 
                                     res.grants = Grant.ByUser(res.Id, 1, instanceName).ToList();
 
+                                    res.groups = Group.ByUserId(res.Id, companyId, instanceName).ToList();
+
                                     if (companyId != Constant.DefaultId)
                                     {
-                                        res.GetShortcuts(applicationUserId, companyId, instanceName);
+                                        res.GetShortcuts(applicationUserId, companyId, res.Language.Iso, instanceName);
                                     }
 
                                 }
@@ -437,7 +444,7 @@ namespace OpenFrameworkV3.Core.Security
             var cns = Persistence.ConnectionString(instanceName);
             if (!string.IsNullOrEmpty(cns))
             {
-                using (var cmd = new SqlCommand("Core_User_GetAll"))
+                using (var cmd = new SqlCommand("Core_User_GetAllForList"))
                 {
                     using (var cnn = new SqlConnection(cns))
                     {
@@ -454,25 +461,25 @@ namespace OpenFrameworkV3.Core.Security
                                     var newUser = new ApplicationUser
                                     {
 
-                                        Id = rdr.GetInt64(ColumnsUserGet.Id),
+                                        Id = rdr.GetInt64(ColumnsUserGetForList.Id),
                                         Language = new Language
                                         {
-                                            Id = rdr.GetInt64(ColumnsUserGet.LanguageId),
-                                            Iso = rdr.GetString(ColumnsUserGet.LanguageISO),
-                                            Name = rdr.GetString(ColumnsUserGet.LanguageName)
+                                            Id = rdr.GetInt64(ColumnsUserGetForList.LanguageId),
+                                            Iso = rdr.GetString(ColumnsUserGetForList.LanguageISO),
+                                            Name = rdr.GetString(ColumnsUserGetForList.LanguageName)
                                         },
                                         Profile = new Profile
                                         {
-                                            ApplicationUserId = rdr.GetInt64(ColumnsUserGet.Id),
-                                            Name = rdr.GetString(ColumnsUserGet.Name),
-                                            LastName = rdr.GetString(ColumnsUserGet.LastName),
-                                            LastName2 = rdr.GetString(ColumnsUserGet.LastName2)
+                                            ApplicationUserId = rdr.GetInt64(ColumnsUserGetForList.Id),
+                                            Name = rdr.GetString(ColumnsUserGetForList.FirstName),
+                                            LastName = rdr.GetString(ColumnsUserGetForList.LastName),
+                                            LastName2 = rdr.GetString(ColumnsUserGetForList.LastName2)
                                         },
-                                        AdminUser = rdr.GetBoolean(ColumnsUserGet.AdminUser),
-                                        Corporative = rdr.GetBoolean(ColumnsUserGet.Coporative),
-                                        Core = rdr.GetBoolean(ColumnsUserGet.Core),
-                                        Email = rdr.GetString(ColumnsUserGet.Email),
-                                        Active = rdr.GetBoolean(ColumnsUserGet.Active)
+                                        AdminUser = rdr.GetBoolean(ColumnsUserGetForList.AdminUser),
+                                        Corporative = rdr.GetBoolean(ColumnsUserGetForList.Corporative),
+                                        Core = rdr.GetBoolean(ColumnsUserGetForList.Core),
+                                        Email = rdr.GetString(ColumnsUserGetForList.Email),
+                                        Active = rdr.GetBoolean(ColumnsUserGetForList.Active)
                                     };
 
                                     res.Add(newUser);
@@ -507,10 +514,11 @@ namespace OpenFrameworkV3.Core.Security
                 {
                     using (var cnn = new SqlConnection(cns))
                     {
+                        var sendPass = Encrypt.EncryptString(Basics.Reverse(password), "OpenFramework");
                         cmd.Connection = cnn;
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add(DataParameter.Input("@UserName", userName, 50));
-                        cmd.Parameters.Add(DataParameter.Input("@Password", password, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@Password", sendPass, 150));
                         cmd.Parameters.Add(DataParameter.OutputInt("@Result"));
                         cmd.Parameters.Add(DataParameter.OutputBool("@Locked"));
                         cmd.Parameters.Add(DataParameter.OutputBool("@Corporative"));

@@ -1,4 +1,4 @@
-// 03/08/2022
+// 19/08/2022
 var Dictionary =
 {
     "Añadir": "Afegir",
@@ -727,6 +727,7 @@ var Dictionary =
     "Core_ScopeGroup_MenuLabel": "Grups d´àmbit",
     "Core_Security_CreateUser": "Crear usuari",
     "Core_Security_MenuLabel": "Seguretat",
+    "Core_SecurityGroup_Btn_Add": "Afegir grup",
     "Core_SecurityGroup_Btn_AddSecurityGroup": "Afegir grup",
     "Core_SecurityGroup_FieldLabel_Core": "Core",
     "Core_SecurityGroup_FieldLabel_Description": "Descripció",
@@ -734,12 +735,14 @@ var Dictionary =
     "Core_SecurityGroup_FieldLabel_Primary": "Principal",
     "Core_SecurityGroup_Header_Core": "Core",
     "Core_SecurityGroup_Header_Description": "Descripció",
+    "Core_SecurityGroup_Header_Editable": "Editable",
     "Core_SecurityGroup_Header_Name": "Nom",
     "Core_SecurityGroup_MenuLabel": "Grups",
     "Core_SecurityGroup_Message_Core": "Grup de <strong>OpenFramework</strong>, aquest grup no es pot modificar ni eliminar.",
     "Core_SecurityGroup_Message_CoreGrants": "Aquest grup és part del core de l´aplicació, no es pot modificar",
     "Core_SecurityGroup_Message_SaveOk": "Grup desat amb éxit",
     "Core_SecurityGroup_NewSecurityGroup": "Nou grup",
+    "Core_SecurityGroup_Plural": "Grups de securetat",
     "Core_SecurityGroup_Tab_EffectiveGrants": "Permissos",
     "Core_SecurityGroup_Tab_Main": "Dades del grup",
     "Core_SecurityGroup_Tab_Membership": "Membres",

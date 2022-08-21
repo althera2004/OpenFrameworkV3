@@ -117,92 +117,92 @@ namespace OpenFrameworkV3.Tools
             return FormatDateDDMMYYYY(date.Value);
         }
 
-        public static string FormatDayMonth(DateTime date)
+        public static string FormatDayMonth(DateTime date, string language, string instanceName)
         {
             string res = string.Format(CultureInfo.InvariantCulture, "{0}", date.Day) + " de ";
             switch (date.Month)
             {
                 case Constant.Month.January:
-                    res += ApplicationDictionary.Translate("Common_Month_January");
+                    res += ApplicationDictionary.Translate("Common_Month_January", language, instanceName);
                     break;
                 case Constant.Month.February:
-                    res += ApplicationDictionary.Translate("Common_Month_February");
+                    res += ApplicationDictionary.Translate("Common_Month_February", language, instanceName);
                     break;
                 case Constant.Month.March:
-                    res += ApplicationDictionary.Translate("Common_Month_March");
+                    res += ApplicationDictionary.Translate("Common_Month_March", language, instanceName);
                     break;
                 case Constant.Month.April:
-                    res += ApplicationDictionary.Translate("Common_Month_April");
+                    res += ApplicationDictionary.Translate("Common_Month_April", language, instanceName);
                     break;
                 case Constant.Month.May:
-                    res += ApplicationDictionary.Translate("Common_Month_May");
+                    res += ApplicationDictionary.Translate("Common_Month_May", language, instanceName);
                     break;
                 case Constant.Month.June:
-                    res += ApplicationDictionary.Translate("Common_Month_June");
+                    res += ApplicationDictionary.Translate("Common_Month_June", language, instanceName);
                     break;
                 case Constant.Month.July:
-                    res += ApplicationDictionary.Translate("Common_Month_July");
+                    res += ApplicationDictionary.Translate("Common_Month_July", language, instanceName);
                     break;
                 case Constant.Month.August:
-                    res += ApplicationDictionary.Translate("Common_Month_August");
+                    res += ApplicationDictionary.Translate("Common_Month_August", language, instanceName);
                     break;
                 case Constant.Month.September:
-                    res += ApplicationDictionary.Translate("Common_Month_September");
+                    res += ApplicationDictionary.Translate("Common_Month_September", language, instanceName);
                     break;
                 case Constant.Month.October:
-                    res += ApplicationDictionary.Translate("Common_Month_October");
+                    res += ApplicationDictionary.Translate("Common_Month_October", language, instanceName);
                     break;
                 case Constant.Month.November:
-                    res += ApplicationDictionary.Translate("Common_Month_November");
+                    res += ApplicationDictionary.Translate("Common_Month_November", language, instanceName);
                     break;
                 case Constant.Month.December:
-                    res += ApplicationDictionary.Translate("Common_Month_December");
+                    res += ApplicationDictionary.Translate("Common_Month_December", language, instanceName);
                     break;
             }
 
             return res;
         }
 
-        public static string FormatMonthShortYear(DateTime date)
+        public static string FormatMonthShortYear(DateTime date, string language, string instanceName)
         {
             string res = string.Empty;
             switch (date.Month - 1)
             {
                 case Constant.Month.January:
-                    res += ApplicationDictionary.Translate("Common_MonthNameShort_January");
+                    res += ApplicationDictionary.Translate("Common_MonthNameShort_January", language, instanceName);
                     break;
                 case Constant.Month.February:
-                    res += ApplicationDictionary.Translate("Common_MonthNameShort_February");
+                    res += ApplicationDictionary.Translate("Common_MonthNameShort_February", language, instanceName);
                     break;
                 case Constant.Month.March:
-                    res += ApplicationDictionary.Translate("Common_MonthNameShort_March");
+                    res += ApplicationDictionary.Translate("Common_MonthNameShort_March", language, instanceName);
                     break;
                 case Constant.Month.April:
-                    res += ApplicationDictionary.Translate("Common_MonthNameShort_April");
+                    res += ApplicationDictionary.Translate("Common_MonthNameShort_April", language, instanceName);
                     break;
                 case Constant.Month.May:
-                    res += ApplicationDictionary.Translate("Common_MonthNameShort_May");
+                    res += ApplicationDictionary.Translate("Common_MonthNameShort_May", language, instanceName);
                     break;
                 case Constant.Month.June:
-                    res += ApplicationDictionary.Translate("Common_MonthNameShort_June");
+                    res += ApplicationDictionary.Translate("Common_MonthNameShort_June", language, instanceName);
                     break;
                 case Constant.Month.July:
-                    res += ApplicationDictionary.Translate("Common_MonthNameShort_July");
+                    res += ApplicationDictionary.Translate("Common_MonthNameShort_July", language, instanceName);
                     break;
                 case Constant.Month.August:
-                    res += ApplicationDictionary.Translate("Common_MonthNameShort_August");
+                    res += ApplicationDictionary.Translate("Common_MonthNameShort_August", language, instanceName);
                     break;
                 case Constant.Month.September:
-                    res += ApplicationDictionary.Translate("Common_MonthNameShort_September");
+                    res += ApplicationDictionary.Translate("Common_MonthNameShort_September", language, instanceName);
                     break;
                 case Constant.Month.October:
-                    res += ApplicationDictionary.Translate("Common_MonthNameShort_October");
+                    res += ApplicationDictionary.Translate("Common_MonthNameShort_October", language, instanceName);
                     break;
                 case Constant.Month.November:
-                    res += ApplicationDictionary.Translate("Common_MonthNameShort_November");
+                    res += ApplicationDictionary.Translate("Common_MonthNameShort_November", language, instanceName);
                     break;
                 case Constant.Month.December:
-                    res += ApplicationDictionary.Translate("Common_MonthNameShort_December");
+                    res += ApplicationDictionary.Translate("Common_MonthNameShort_December", language, instanceName);
                     break;
             }
 
@@ -211,46 +211,46 @@ namespace OpenFrameworkV3.Tools
             return res;
         }
 
-        public static string FormatMonthYear(DateTime date)
+        public static string FormatMonthYear(DateTime date, string language, string instanceName)
         {
             string res = string.Empty;
             switch (date.Month - 1)
             {
                 case Constant.Month.January:
-                    res += ApplicationDictionary.Translate("Common_MonthName_January");
+                    res += ApplicationDictionary.Translate("Common_MonthName_January", language, instanceName);
                     break;
                 case Constant.Month.February:
-                    res += ApplicationDictionary.Translate("Common_MonthName_February");
+                    res += ApplicationDictionary.Translate("Common_MonthName_February", language, instanceName);
                     break;
                 case Constant.Month.March:
-                    res += ApplicationDictionary.Translate("Common_MonthName_March");
+                    res += ApplicationDictionary.Translate("Common_MonthName_March", language, instanceName);
                     break;
                 case Constant.Month.April:
-                    res += ApplicationDictionary.Translate("Common_MonthName_April");
+                    res += ApplicationDictionary.Translate("Common_MonthName_April", language, instanceName);
                     break;
                 case Constant.Month.May:
-                    res += ApplicationDictionary.Translate("Common_MonthName_May");
+                    res += ApplicationDictionary.Translate("Common_MonthName_May", language, instanceName);
                     break;
                 case Constant.Month.June:
-                    res += ApplicationDictionary.Translate("Common_MonthName_June");
+                    res += ApplicationDictionary.Translate("Common_MonthName_June", language, instanceName);
                     break;
                 case Constant.Month.July:
-                    res += ApplicationDictionary.Translate("Common_MonthName_July");
+                    res += ApplicationDictionary.Translate("Common_MonthName_July", language, instanceName);
                     break;
                 case Constant.Month.August:
-                    res += ApplicationDictionary.Translate("Common_MonthName_August");
+                    res += ApplicationDictionary.Translate("Common_MonthName_August", language, instanceName);
                     break;
                 case Constant.Month.September:
-                    res += ApplicationDictionary.Translate("Common_MonthName_September");
+                    res += ApplicationDictionary.Translate("Common_MonthName_September", language, instanceName);
                     break;
                 case Constant.Month.October:
-                    res += ApplicationDictionary.Translate("Common_MonthName_October");
+                    res += ApplicationDictionary.Translate("Common_MonthName_October", language, instanceName);
                     break;
                 case Constant.Month.November:
-                    res += ApplicationDictionary.Translate("Common_MonthName_November");
+                    res += ApplicationDictionary.Translate("Common_MonthName_November", language, instanceName);
                     break;
                 case Constant.Month.December:
-                    res += ApplicationDictionary.Translate("Common_MonthName_December");
+                    res += ApplicationDictionary.Translate("Common_MonthName_December", language, instanceName);
                     break;
             }
 

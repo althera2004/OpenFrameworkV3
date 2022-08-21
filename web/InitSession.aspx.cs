@@ -22,6 +22,14 @@ public partial class InitSession : Page
     /// <summary>Encoded query string</summary>
     public CodedQuery CodedQuery { get; private set; }
 
+    public string Language
+    {
+        get
+        {
+            return this.ApplicationUser.Language.Iso;
+        }
+    }
+
     public string ItemDefinitions
     {
         get
@@ -41,7 +49,6 @@ public partial class InitSession : Page
         var languageId = this.CodedQuery.GetByKey<string>("L");
         this.Instance = Persistence.InstanceByName(instanceName);
 
-        ApplicationDictionary.Load("ca", instanceName);
 
         if (companyId == 0)
         {
@@ -70,9 +77,10 @@ public partial class InitSession : Page
             this.Company = Company.ById(companyId, instanceName);
         }
 
-        this.ApplicationUser = ApplicationUser.ById(userId, instanceName);
+        this.ApplicationUser = ApplicationUser.ById(userId, companyId, instanceName);
+        Persistence.DictionaryCheck(this.ApplicationUser.Language.Iso, instanceName);
 
-        if(this.Company.Id > 0)
+        if (this.Company.Id > 0)
         {
             var menu = Menu.Load(this.ApplicationUser,this.Company.Id, false, instanceName);
             this.MenuJson = menu.GetJson();

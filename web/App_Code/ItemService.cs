@@ -21,6 +21,7 @@ using OpenFrameworkV3.Core.DataAccess;
 using OpenFrameworkV3.Core.ItemManager;
 using OpenFrameworkV3.Core.ItemManager.ItemList;
 using OpenFrameworkV3.Core.Security;
+using OpenFrameworkV3.Feature;
 using OpenFrameworkV3.Tools;
 
 /// <summary>
@@ -40,6 +41,28 @@ public class ItemService : WebService
     public ActionResult ItemBarSave(string itemName, long id, string description, long applicationUserId, long companyId, string instanceName)
     {
         return OpenFrameworkV3.Core.DataAccess.Save.SaveBarItem(itemName, id, description, applicationUserId, companyId, instanceName);
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult GetTags(long itemDefinitionId, long itemId, long companyId, string instanceName)
+    {
+        var res = ActionResult.NoAction;
+
+        var itemDefinition = Persistence.ItemDefinitionById(itemDefinitionId, instanceName);
+        //if (itemDefinition.Features != null)
+        //{
+        //    if (itemDefinition.Features.Tags)
+        //    {
+        //        if (itemId > 0)
+        //        {
+                    var tag = Tag.ByItemId(itemId, itemDefinitionId, companyId, instanceName);
+                    res.SetSuccess(tag);
+        //        }
+        //    }
+        //}
+
+        return res;
     }
 
     [WebMethod(EnableSession = true)]

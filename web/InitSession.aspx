@@ -15,20 +15,12 @@
     <script type="text/javascript" charset="utf-8" src ="/js/common.js"></script>
         <script>
             var PageType = "Init";
-            // Instance
             var Instance = <%=this.Instance.Config.JsonData %>;
-
-            // User
             var user = <%=this.ApplicationUser.Json %>;
-
-            // Company
             var Company = <%=this.Company.Json %>;
-
-            // ItemDefinitions
             var ItemDefinitions = <%= this.ItemDefinitions  %>;
-
-            // Menu
             var Menu = <%=this.MenuJson %>;
+            var Language = "<%=this.Language %>";
 
             localStorage.setItem("Instance", JSON.stringify(Instance));
             localStorage.setItem("ItemDefinitions", JSON.stringify(ItemDefinitions));

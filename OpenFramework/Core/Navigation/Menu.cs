@@ -75,7 +75,7 @@ namespace OpenFrameworkV3.Core.Navigation
                     var user = ApplicationUser.Actual;
                     foreach (var group in option.Groups)
                     {
-                        if (user.Groups.Any(g => g == group))
+                        if (user.Groups.Any(g => g.Id == group))
                         {
                             realOptions.Add(option);
                             break;
@@ -497,7 +497,7 @@ namespace OpenFrameworkV3.Core.Navigation
         private static long ValidateOptions(ReadOnlyCollection<MenuOption> options, string instanceName, long optionId)
         {
             // Validate default values
-            var instance = Instance.Actual;
+            var instance = Persistence.InstanceByName(instanceName);
             foreach (var option in options)
             {
                 var itemDefinition = ItemDefinition.Empty;
@@ -631,7 +631,7 @@ namespace OpenFrameworkV3.Core.Navigation
 					<b class=""arrow""></b>
                 </li>",
                 option.DestinationPage,
-                ApplicationDictionary.Translate(option.Label),
+                ApplicationDictionary.Translate(option.Label, language, instanceName),
                 option.Icon,
                 actualOptionId == option.OptionId ? " active" : string.Empty,
                 language,
@@ -668,7 +668,7 @@ namespace OpenFrameworkV3.Core.Navigation
 					<b class=""arrow""></b>
                 </li>",
                 option.DestinationPage,
-                ApplicationDictionary.Translate(option.Label),
+                ApplicationDictionary.Translate(option.Label, language, instanceName),
                 option.Icon,
                 actualOptionId == option.OptionId ? " active" : string.Empty,
                 language,
@@ -716,7 +716,7 @@ namespace OpenFrameworkV3.Core.Navigation
                 CultureInfo.InvariantCulture,
                 pattern,
                 res,
-                ApplicationDictionary.Translate(option.Label),
+                ApplicationDictionary.Translate(option.Label, language, instanceName),
                 selected ? " open active" : string.Empty,
                 selected ? "block" : "none",
                 option.Icon);

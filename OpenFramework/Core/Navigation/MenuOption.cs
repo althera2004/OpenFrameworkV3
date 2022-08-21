@@ -157,7 +157,7 @@ namespace OpenFrameworkV3.Core.Navigation
                             {
                                 foreach (var optionGroup in option.Groups)
                                 {
-                                    if (applicationUser.Groups.Any(g => g == optionGroup))
+                                    if (applicationUser.Groups.Any(g => g.Id == optionGroup))
                                     {
                                         byOptionGroup = true;
                                         break;

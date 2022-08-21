@@ -11,6 +11,8 @@ function Item(config) {
 		this.OriginalItemData = normalizedData;
 		this.ItemDefinition = config.ItemDefinition;
 		this.ActualData = { ...normalizedData };
+		this.OriginalTags = [];
+		this.ActualTags = [];
 	}
 
 	this.Differences = function () {
@@ -244,6 +246,30 @@ function Item(config) {
 
 		return res;
 	}
+
+	this.GetTags = function () {
+		var data = {
+			"itemDefinitionId": this.ItemDefinition.Id,
+			"itemId": this.OriginalItemData.Id,
+			"companyId": Companany.Id,
+			"instanceName": Instance.Name
+		};
+
+		$.ajax({
+			"type": "POST",
+			"url": "/Async/ItemService.asmx/GetTags",
+			"contentType": "application/json; charset=utf-8",
+			"dataType": "json",
+			"data": JSON.stringify(data, null, 2),
+			"success": function (msg) {
+				eval("this.OriginalTags = " + msg.d + ";");
+				console.log(ItemData.OriginalTags);
+			},
+			"error": function (msg) {
+				PopupWarning(msg.responseText);
+			}
+		});
+	}
 }
 
 function GetFieldDefinition(fieldName, itemDefinition) {
@@ -292,7 +318,6 @@ function ItemDifferences(original, actual) {
 
 	return res;
 }
-
 
 
 $(".formData").on("change", UpdateFormData);
@@ -380,6 +405,30 @@ function FieldByName(itemDefinition, name) {
 	return null;
 }
 
+function GetTags(itemDefinitionId, itemId) {
+	var data = {
+		"itemDefinitionId": itemDefinitionId,
+		"itemId": itemId,
+		"companyId": Company.Id,
+		"instanceName": Instance.Name
+	};
+
+	$.ajax({
+		"type": "POST",
+		"url": "/Async/ItemService.asmx/GetTags",
+		"contentType": "application/json; charset=utf-8",
+		"dataType": "json",
+		"data": JSON.stringify(data, null, 2),
+		"success": function (msg) {
+			eval("ItemData.OriginalTags = " + msg.d.ReturnValue + ";");
+			console.log(ItemData.OriginalTags);
+		},
+		"error": function (msg) {
+			PopupWarning(msg.responseText);
+		}
+	});
+}
+
 function GetItemDataJson(itemName, itemId, callBack) {
 	//console.log(FK.length);
 	if (typeof itemName === "undefined" || itemName === null || itemName === "") {
@@ -414,6 +463,17 @@ function GetItemDataJson(itemName, itemId, callBack) {
 				}
 
 				ItemDataLoaded = true;
+
+				var itemDefinition = ItemDefinition;
+				var itemId = ItemData.OriginalItemData.Id;
+				if (HasPropertyValue(ItemDataJson_Context.ItemDefinition)) {
+					itemDefinition = ItemDataJson_Context.ItemDefinition;
+					itemId = ItemDataJson_Context.ItemId;
+                }
+
+				if (HasPropertyEnabled(itemDefinition.Features.Tags)) {
+					GetTags(itemDefinition, itemId);
+                }
 			},
 			"error": function (msg) {
 				PopupWarning(msg.responseText);
@@ -422,7 +482,6 @@ function GetItemDataJson(itemName, itemId, callBack) {
 	}
 	else {
 		RenderBreadCrumb();
-
 		ItemData.OriginalItemData = { "Id": -1 };
 		ItemData.ActualData = { "Id": -1 };
 
@@ -434,14 +493,21 @@ function GetItemDataJson(itemName, itemId, callBack) {
 
 		$("#FooterStatusModifiedBy").html(ApplicationUser.Profile.FullName);
 		$("#FooterStatusModifiedOn").html(TodayText());
-		PageLoadingHIde();
+		PageLoadingHide();
     }
 }
 
 function ItemFromJson(data) {
 
+	console.log(typeof data);
+
 	var res = null;
-	eval("res = " + data + ";");
+	if (typeof data === "object") {
+		res = data;
+	}
+	else {
+		eval("res = " + data + ";");
+	}
 	console.log(res);
 
 	// Transform Zulu text to Date
@@ -458,10 +524,11 @@ function ItemFromJson(data) {
 }
 
 function FillFormItemFromJson(data) {
+	console.log("FillFormItemFromJson", data);
 	ItemFromJson(data);
 	Form.Fill(ItemData.OriginalItemData);
 	RenderBreadCrumb();
-	PageLoadingHIde();
+	PageLoadingHide();
 	if (ItemData.OriginalItemData.Id > 0) {
 		$("#FooterStatusModifiedBy").html(ItemData.OriginalItemData.ModifiedBy);
 		$("#FooterStatusModifiedOn").html(ItemData.OriginalItemData.ModifiedOn);

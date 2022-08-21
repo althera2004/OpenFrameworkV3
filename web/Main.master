@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html lang="ca-es" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="<%=this.Language.ToLowerInvariant() %>" xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/ace-skins.min.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/ace-rtl.min.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datepicker3.min.css" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-duallistbox.css" />
 
 
     <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ace-ie.min.css" /><![endif]-->
@@ -327,7 +328,7 @@
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 								<img class="nav-user-photo" id="UserAvatar" src="/assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
-									<small>Welcome,</small>
+									<small><%= this.Translate("Common_Welcome") %>,</small>
 									<span id="ActualUserName"></span>
 								</span>
 
@@ -400,7 +401,7 @@
 					<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
 						<ul class="breadcrumb">
 							<li class="breadcrumb-home-icon fa fa-cog">
-								<a href="#">Home</a>
+								<a href="/Instances/<%=this.InstanceName %>/Pages/DashBoard.aspx">Home</a>
 							</li>
 							<%= this.BreadCrumb.Render %>
 						</ul><!-- /.breadcrumb -->
@@ -455,9 +456,9 @@
                         Data:&nbsp;<strong><span id="FooterStatusModifiedOn"></span></strong>
                     </div>
                     <div id="FooterButton" class="col-lg-8 col-md-8 col-sm-12 col-xs-12" style="text-align: right; height: 30px;">                       
-                        <button class="btn btn-danger" type="button" id="FormBtnDelete" onclick="ItemData.Delete();"><i class="fa fa-trash bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;">Eliminar</span></button>
-                        <button class="btn btn-success" type="button" id="FormBtnSave" disabled="disabled" onclick="ItemData.Save();" title="No hay cambios por guardar"><i class="fa fa-check bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;">Guardar</span></button>
-                        <button class="btn" type="button" id="FormBtnCancel"><i class="fa fa-arrow-left bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;">Volver</span></button>
+                        <button class="btn btn-danger" type="button" id="FormBtnDelete" onclick="ItemData.Delete();"><i class="fa fa-trash bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;"><%= Translate("Common_Delete") %></span></button>
+                        <button class="btn btn-success" type="button" id="FormBtnSave" disabled="disabled" onclick="ItemData.Save();" title="No hay cambios por guardar"><i class="fa fa-check bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;"><%= Translate("Common_Save") %></span></button>
+                        <button class="btn" type="button" id="FormBtnCancel"><i class="fa fa-arrow-left bigger-110"></i><span class="hidden-xs" style="float: right; margin-left: 4px;"><%= Translate("Common_Back") %></span></button>
                         <span id="widths" style="float: left; display: none;">
                             <span class="show-xs">XS</span>
                             <span class="show-sm">SM</span>
@@ -515,6 +516,7 @@
 		<script src="/assets/js/moment.min.js"></script>
 		<script src="/assets/js/nouislider.js"></script>
 		<script src="/assets/js/wNumb.min.js"></script>
+		<script src="/assets/js/jquery.bootstrap-duallistbox.js"></script>
 		<script src="/js/layout.js"></script>
 		<script src="/js/navigation.js"></script>
 		<script src="/js/FK.js"></script>
@@ -543,6 +545,7 @@
             var Instance = LocalStorageGetJson("Instance");
             var Company = LocalStorageGetJson("Company");
 			var ApplicationUser = LocalStorageGetJson("ApplicationUser");
+			var Language = "<%=this.Language%>";
 
 			$("#LayoutInstanceName").html(Instance.Name);
 			$("#LayoutCompanyName").html(Company.Name);
@@ -585,18 +588,20 @@
 								</div>
 	<script type="text/javascript">
 		$(window).trigger("resize");
-		if (PageType === "PageView") {
-			if (typeof ItemData.OriginalItemData !== "undefined") {
-                if (HasArrayValues(ItemDefinition.ForeignValues)) {
-					PageLoadingShow();
-				}
-                else {
-                    ItemData.ItemDefinition = ItemDefinition;
-                }
-			} else {
-				ItemData.ItemDefinition = ItemDefinition;
-            }
-		}
+
+		// Ahora se carga los datos desde c#
+		//if (PageType === "PageView") {
+		//	if (typeof ItemData.OriginalItemData !== "undefined") {
+		//   if (HasArrayValues(ItemDefinition.ForeignValues)) {
+		//			PageLoadingShow();
+		//		}
+  //              else {
+  //                  ItemData.ItemDefinition = ItemDefinition;
+  //              }
+		//	} else {
+		//		ItemData.ItemDefinition = ItemDefinition;
+  //          }
+		//}
 
         if (PageType === "PageList" || PageType === "PageView") {
 			if (typeof ItemDefinition !== "undefined") {

@@ -80,7 +80,7 @@ function RenderSubmenuOption(option) {
         label = Dictionary[option.Label];
     }
 
-    console.log(option.Label, Dictionary[option.Label]);
+    //console.log(option.Label, Dictionary[option.Label]);
 
     var linkAction = "";
     var id = option.Id;
@@ -179,7 +179,7 @@ function PageLoadingShow() {
     $("form").addClass("blur-filter");
 }
 
-function PageLoadingHIde() {
+function PageLoadingHide() {
     $("#PageLoadingMask").hide();
     $("form").removeClass("blur-filter");
 }

@@ -27,6 +27,7 @@
         var ListId = "<%= this.ListId %>";
         var FormId = "<%= this.FormId %>";
         var ItemId = <%= this.ItemId %>;
+        var JsonData = <%= this.JsonData %>;
 
         var ItemDefinition = ItemDefinitionById(ItemDefinitionId);
         var ListDefinition = ItemListById(ItemDefinition, ListId);
@@ -64,8 +65,9 @@
         // --------------------
         // Si tiene FK hay que esperar los FK antes de obtener los datos y rellenar el formulario
 
-        var HasFK = false;
+        /*var HasFK = false;
 
+        console.log(FK);
         if (HasArrayValues(ItemDefinition.ForeignValues)) {
             for (var fk = 0; fk < ItemDefinition.ForeignValues.length; fk++) {
                 var fkItemName = ItemDefinition.ForeignValues[fk].ItemName;
@@ -92,10 +94,20 @@
         // --------------------
         
 
-
+*/
         for (var pl = 0; pl < ListSources.length; pl++) {
             ListSources[pl].Render();
         }
+
+
+         <%=this.FK %>
+        console.log(FK);
+        var fks = Object.keys(FK);
+        for (var f = 0; f < fks.length; f++) {
+            FillComboFromFK(fks[f] + "Id", fks[f]);
+        }
+
+        FillFormItemFromJson(JsonData);
     </script>
 </asp:Content>
 

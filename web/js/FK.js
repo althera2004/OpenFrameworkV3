@@ -94,6 +94,9 @@ function GetFKItem(itemName, callback) {
 }
 
 function FillComboFromFK(comboId, fkItemName, selectedId) {
+
+    console.log("FillComboFromFK", comboId);
+
     var fkValues = FK[fkItemName].Data;
 
     var options = "<option value=\"-1\">" + Dictionary.Common_SelectOne + "</option>";

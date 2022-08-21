@@ -44,6 +44,9 @@
                     }
                     else if (typeof data[fieldName] === "string") {
                         dataValue = data[fieldName];
+                        if (dataValue.indexOf('T') != -1) {
+                            dataValue = GetDateTextFromZulu(dataValue, "/", false);
+                        }
                     }
                     else {
                         dataValue = GetDateText(data[fieldName], "/", false);

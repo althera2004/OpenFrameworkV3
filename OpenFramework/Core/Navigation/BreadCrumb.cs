@@ -18,6 +18,10 @@ namespace OpenFrameworkV3.Core.Navigation
 
         public string QueryBase { get; private set; }
 
+        public string Language { get; set; }
+
+        public string InstanceName { get; set; }
+
         public string Title { get; private set; }
 
         public void SetTitle(string title)
@@ -64,7 +68,7 @@ namespace OpenFrameworkV3.Core.Navigation
             this.items.Add(new BreadcrumbItem
             {
                 Link = "#",
-                Label = ApplicationDictionary.Translate(label),
+                Label = ApplicationDictionary.Translate(label, this.Language, this.InstanceName),
                 Leaf = Constant.NotLeaft
             });
         }
@@ -79,7 +83,7 @@ namespace OpenFrameworkV3.Core.Navigation
             this.items.Add(new BreadcrumbItem
             {
                 Link = "#",
-                Label = ApplicationDictionary.Translate(label),
+                Label = ApplicationDictionary.Translate(label, this.Language, this.InstanceName),
                 Leaf = leaf
             });
         }
@@ -94,7 +98,7 @@ namespace OpenFrameworkV3.Core.Navigation
             this.items.Add(new BreadcrumbItem
             {
                 Link = "#",
-                Label = ApplicationDictionary.Translate(label),
+                Label = ApplicationDictionary.Translate(label, this.Language, this.InstanceName),
                 Leaf = Constant.BreadCrumbLeaf
             });
         }
@@ -111,7 +115,7 @@ namespace OpenFrameworkV3.Core.Navigation
                 Link = string.Empty,
                 ItemId = itemId,
                 ListId = listId,
-                Label = ApplicationDictionary.Translate(label),
+                Label = ApplicationDictionary.Translate(label, this.Language, this.InstanceName),
                 Leaf = Constant.NotLeaft,
                 Encrypted = true
             });
@@ -127,7 +131,7 @@ namespace OpenFrameworkV3.Core.Navigation
             this.items.Add(new BreadcrumbItem
             {
                 Link = link,
-                Label = ApplicationDictionary.Translate(label),
+                Label = ApplicationDictionary.Translate(label, this.Language, this.InstanceName),
                 Leaf = Constant.NotLeaft,
                 Encrypted = true
             });
@@ -143,7 +147,7 @@ namespace OpenFrameworkV3.Core.Navigation
             this.items.Add(new BreadcrumbItem
             {
                 Link = link,
-                Label = ApplicationDictionary.Translate(label),
+                Label = ApplicationDictionary.Translate(label, this.Language, this.InstanceName),
                 Leaf = Constant.NotLeaft
             });
         }
@@ -158,7 +162,7 @@ namespace OpenFrameworkV3.Core.Navigation
             this.items.Add(new BreadcrumbItem
             {
                 Link = link,
-                Label = ApplicationDictionary.Translate(label),
+                Label = ApplicationDictionary.Translate(label, this.Language, this.InstanceName),
                 Leaf = leaf
             });
         }

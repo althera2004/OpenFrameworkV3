@@ -105,20 +105,20 @@ namespace OpenFrameworkV3.Core.Security
             return res.ToString();
         }
 
-        /// <summary>Gets all groups</summary>
-        public static ReadOnlyCollection<Group> All(long companyId, string instanceName)
+        public static ReadOnlyCollection<Group> ByUserId(long userId, long companyId, string instanceName)
         {
             var cns = Persistence.ConnectionString(instanceName);
-                var res = new List<Group>();
+            var res = new List<Group>();
 
             if (!string.IsNullOrEmpty(cns))
             {
-                using (var cmd = new SqlCommand("Core_Group_GetAll"))
+                using (var cmd = new SqlCommand("Core_Group_ByUserId"))
                 {
                     using (var cnn = new SqlConnection(cns))
                     {
                         cmd.Connection = cnn;
                         cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(DataParameter.Input("UserId", userId));
                         cmd.Parameters.Add(DataParameter.Input("CompanyId", companyId));
 
                         try
@@ -131,11 +131,12 @@ namespace OpenFrameworkV3.Core.Security
                                     res.Add(new Group
                                     {
                                         Id = rdr.GetInt64(ColumnsGroupGet.Id),
-                                        Deletable = rdr.GetBoolean(ColumnsGroupGet.Deletable),
-                                        Core = rdr.GetBoolean(ColumnsGroupGet.Core),
                                         Name = rdr.GetString(ColumnsGroupGet.Name),
                                         Description = rdr.GetString(ColumnsGroupGet.Description),
-                                        Active = rdr.GetBoolean(ColumnsGroupGet.Active),
+                                        Deletable = rdr.GetBoolean(ColumnsGroupGet.Deletable),
+                                        Core = rdr.GetBoolean(ColumnsGroupGet.Core),
+                                        BillingAccess = rdr.GetBoolean(ColumnsGroupGet.BillingAccess),
+                                        MainUserId = rdr.GetInt64(ColumnsGroupGet.MainUserId),
                                         CreatedOn = rdr.GetDateTime(ColumnsGroupGet.CreatedOn),
                                         ModifiedOn = rdr.GetDateTime(ColumnsGroupGet.ModifiedOn),
                                         CreatedBy = new ApplicationUser
@@ -157,7 +158,79 @@ namespace OpenFrameworkV3.Core.Security
                                                 Name = rdr.GetString(ColumnsGroupGet.ModifiedByName),
                                                 LastName = rdr.GetString(ColumnsGroupGet.ModifiedByLastName)
                                             }
-                                        }
+                                        },
+                                        Active = rdr.GetBoolean(ColumnsGroupGet.Active)
+                                    });
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            if (cmd.Connection.State != ConnectionState.Closed)
+                            {
+                                cmd.Connection.Close();
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new ReadOnlyCollection<Group>(res);
+        }
+
+        /// <summary>Gets all groups</summary>
+        public static ReadOnlyCollection<Group> All(long companyId, string instanceName)
+        {
+            var cns = Persistence.ConnectionString(instanceName);
+            var res = new List<Group>();
+
+            if (!string.IsNullOrEmpty(cns))
+            {
+                using (var cmd = new SqlCommand("Core_Group_GetAll"))
+                {
+                    using (var cnn = new SqlConnection(cns))
+                    {
+                        cmd.Connection = cnn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(DataParameter.Input("CompanyId", companyId));
+
+                        try
+                        {
+                            cmd.Connection.Open();
+                            using (var rdr = cmd.ExecuteReader())
+                            {
+                                while (rdr.Read())
+                                {
+                                    res.Add(new Group
+                                    {
+                                        Id = rdr.GetInt64(ColumnsGroupGet.Id),
+                                        Name = rdr.GetString(ColumnsGroupGet.Name),
+                                        Description = rdr.GetString(ColumnsGroupGet.Description),
+                                        Deletable = rdr.GetBoolean(ColumnsGroupGet.Deletable),
+                                        Core = rdr.GetBoolean(ColumnsGroupGet.Core),
+                                        CreatedOn = rdr.GetDateTime(ColumnsGroupGet.CreatedOn),
+                                        ModifiedOn = rdr.GetDateTime(ColumnsGroupGet.ModifiedOn),
+                                        CreatedBy = new ApplicationUser
+                                        {
+                                            Id = rdr.GetInt64(ColumnsGroupGet.CreatedBy),
+                                            Profile = new Profile
+                                            {
+                                                ApplicationUserId = rdr.GetInt64(ColumnsGroupGet.CreatedBy),
+                                                Name = rdr.GetString(ColumnsGroupGet.CreatedByName),
+                                                LastName = rdr.GetString(ColumnsGroupGet.CreatedByLastName)
+                                            }
+                                        },
+                                        ModifiedBy = new ApplicationUser
+                                        {
+                                            Id = rdr.GetInt64(ColumnsGroupGet.ModifiedBy),
+                                            Profile = new Profile
+                                            {
+                                                ApplicationUserId = rdr.GetInt64(ColumnsGroupGet.ModifiedBy),
+                                                Name = rdr.GetString(ColumnsGroupGet.ModifiedByName),
+                                                LastName = rdr.GetString(ColumnsGroupGet.ModifiedByLastName)
+                                            }
+                                        },
+                                        Active = rdr.GetBoolean(ColumnsGroupGet.Active)
                                     });
                                 }
                             }
@@ -345,6 +418,9 @@ namespace OpenFrameworkV3.Core.Security
         /// <summary>Gets or sets a value indicating whether if group members can access to billing data</summary>
         public bool BillingAccess { get; set; }
 
+        /// <summary>Gets or sets identifier of main user</summary>
+        public long MainUserId { get; set; }
+
         /// <summary>Gets or sets the user that creates group</summary>
         public ApplicationUser CreatedBy { get; set; }
 
@@ -386,6 +462,32 @@ namespace OpenFrameworkV3.Core.Security
                     Tools.Json.JsonCompliant(this.Name),
                     ConstantValue.Value(this.Core),
                     ConstantValue.Value(this.Active));
+            }
+        }
+
+        /// <summary>Gets a simple json structure of security group</summary>
+        public string JsonSimple
+        {
+            get
+            {
+                if (this.grants == null)
+                {
+                    this.grants = new List<Grant>();
+                }
+
+                string pattern = @"{{""Id"":{0},
+                        ""Name"":""{1}"",
+                        ""Description"":""{2}"",
+                        ""Deletable"":{3},
+                        ""Core"":{4}}}";
+                return string.Format(
+                    CultureInfo.InvariantCulture,
+                    pattern,
+                    this.Id,
+                    Tools.Json.JsonCompliant(this.Name),
+                    Tools.Json.JsonCompliant(this.Description),
+                    ConstantValue.Value(this.Deletable),
+                    ConstantValue.Value(this.Core));
             }
         }
 
@@ -511,6 +613,8 @@ namespace OpenFrameworkV3.Core.Security
 
         /// <summary>Gets security group from data base by identifier</summary>
         /// <param name="securityGroupId">Security group identifier</param>
+        /// <param name="companyId">Comnpany identifier</param>
+        /// <param name="instanceName">Name of intance</param>
         /// <returns>Security group</returns>
         public static Group ById(long securityGroupId, long companyId, string instanceName)
         {
@@ -534,12 +638,12 @@ namespace OpenFrameworkV3.Core.Security
                                 while (rdr.Read())
                                 {
                                     res.Id = rdr.GetInt64(ColumnsGroupGet.Id);
+                                    res.Name = rdr.GetString(ColumnsGroupGet.Name);
+                                    res.Description = rdr.GetString(ColumnsGroupGet.Description);
                                     res.Deletable = rdr.GetBoolean(ColumnsGroupGet.Deletable);
                                     res.Core = rdr.GetBoolean(ColumnsGroupGet.Core);
                                     res.RemindAlert = rdr.GetBoolean(ColumnsGroupGet.RemindAlert);
                                     res.BillingAccess = rdr.GetBoolean(ColumnsGroupGet.BillingAccess);
-                                    res.Name = rdr.GetString(ColumnsGroupGet.Name);
-                                    res.Description = rdr.GetString(ColumnsGroupGet.Description);
                                     res.Active = rdr.GetBoolean(ColumnsGroupGet.Active);
                                     res.CreatedOn = rdr.GetDateTime(ColumnsGroupGet.CreatedOn);
                                     res.ModifiedOn = rdr.GetDateTime(ColumnsGroupGet.ModifiedOn);
@@ -581,6 +685,31 @@ namespace OpenFrameworkV3.Core.Security
             }
 
             return res;
+        }
+
+        /// <summary>Gets a list of groups in JSON format</summary>
+        /// <param name="list">Groups list</param>
+        /// <returns>A list of groups in JSON format</returns>
+        public static string JsonListSimple(ReadOnlyCollection<Group> list)
+        {
+            var res = new StringBuilder("[");
+            bool first = true;
+            foreach (var group in list)
+            {
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    res.Append(",");
+                }
+
+                res.Append(group.JsonSimple);
+            }
+
+            res.Append("]");
+            return res.ToString();
         }
 
         /// <summary>Gets a list of groups in JSON format</summary>
@@ -905,7 +1034,7 @@ namespace OpenFrameworkV3.Core.Security
             return SetMembership(this.Id, this.Membership, applicationUserId, companyId, instanceName);
         }
 
-        public static string FKList(long companyId, string instanceName)
+        public static string FKList(long companyId,string language, string instanceName)
         {
             var res = new StringBuilder("[");
             var groups = All(companyId, instanceName);
@@ -916,7 +1045,7 @@ namespace OpenFrameworkV3.Core.Security
                     CultureInfo.InvariantCulture,
                     @"{4}{{""Id"":{0}, ""Description"":""{1}"", ""Active"":{2}, ""Core"": {3}}}",
                     item.Id,
-                    Tools.Json.JsonCompliant(ApplicationDictionary.Translate("Core_SecurityGroup_Name_" + item.Id.ToString())),
+                    Tools.Json.JsonCompliant(ApplicationDictionary.Translate("Core_SecurityGroup_Name_" + item.Id.ToString(), language, instanceName)),
                     ConstantValue.Value(item.Active),
                     ConstantValue.Value(item.Core),
                     first ? string.Empty : ",");
@@ -927,7 +1056,7 @@ namespace OpenFrameworkV3.Core.Security
             return res.ToString();
         }
 
-        public static long MainUserId(long companyId, long GroupId, string instanceName)
+        public static long MainUser(long companyId, long GroupId, string instanceName)
         {
             long res = 0;
             var cns = Persistence.ConnectionString(instanceName);

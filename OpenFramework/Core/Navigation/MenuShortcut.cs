@@ -39,7 +39,7 @@ namespace OpenFrameworkV3.Core.Navigation
         /// <summary>Sets shortcut configruation by type</summary>
         /// <param name="type">Shorcut type</param>
         /// <param name="itemId">Item type identifier</param>
-        public void SetShortcut(ShortcutTypes type, long itemId, string instanceName)
+        public void SetShortcut(ShortcutTypes type, long itemId, string language, string instanceName)
         {
             switch (type)
             {
@@ -62,16 +62,16 @@ namespace OpenFrameworkV3.Core.Navigation
                 switch (type)
                 {
                     case ShortcutTypes.Red:
-                        this.Red = Shortcut.ByItemId(itemId, instanceName);
+                        this.Red = Shortcut.ByItemId(itemId, language, instanceName);
                         break;
                     case ShortcutTypes.Blue:
-                        this.Blue = Shortcut.ByItemId(itemId, instanceName);
+                        this.Blue = Shortcut.ByItemId(itemId, language, instanceName);
                         break;
                     case ShortcutTypes.Green:
-                        this.Green = Shortcut.ByItemId(itemId, instanceName);
+                        this.Green = Shortcut.ByItemId(itemId, language, instanceName);
                         break;
                     case ShortcutTypes.Yellow:
-                        this.Yellow = Shortcut.ByItemId(itemId, instanceName);
+                        this.Yellow = Shortcut.ByItemId(itemId, language, instanceName);
                         break;
                 }
             }

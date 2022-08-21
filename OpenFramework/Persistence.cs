@@ -12,12 +12,77 @@ namespace OpenFrameworkV3
     using OpenFrameworkV3.Mail;
     using OpenFrameworkV3.Core;
     using OpenFrameworkV3.Core.ItemManager;
+    using System.Globalization;
 
     public static class Persistence
     {
         private static Dictionary<string, Instance> instances;
         private static Dictionary<string, string> connectionsString;
         private static Dictionary<string, ReadOnlyCollection<MailBox>> mailBox;
+
+        private static Dictionary<string, Dictionary<string,string>> dictionary;
+
+        private static string DictionaryKey(string language, string instanceName)
+        {
+            return string.Format(CultureInfo.InvariantCulture, "{0}|{1}", instanceName, language).ToUpperInvariant();
+        }
+
+        public static void DictionaryAdd(string language, string instanceName)
+        {
+            var key = DictionaryKey(language, instanceName);
+            var corpus = ApplicationDictionary.Load(language, instanceName);
+
+            if (dictionary == null)
+            {
+                dictionary = new Dictionary<string, Dictionary<string, string>>
+                {
+                    { key, corpus }
+                };
+            }
+            else
+            {
+                if (dictionary.ContainsKey(key))
+                {
+                    dictionary[key].Remove(language);
+                }
+
+                dictionary.Add(key, corpus);
+
+            }
+        }
+
+        public static ReadOnlyDictionary<string, string> Dictionary(string language, string instanceName)
+        {
+            if(DictionaryExists(language, instanceName))
+            {
+                return new ReadOnlyDictionary<string, string>(dictionary[DictionaryKey(language, instanceName)]);
+            }
+
+            return new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+        }
+        public static bool DictionaryExists(string language, string instanceName)
+        {
+            if (dictionary != null)
+            {
+                var key = DictionaryKey(language, instanceName);
+                if (dictionary.ContainsKey(key))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static void DictionaryCheck(string language, string instanceName)
+        {
+            instanceName = instanceName.ToUpperInvariant();
+            language = language.ToUpperInvariant();
+            if(!DictionaryExists(language, instanceName))
+            {
+                DictionaryAdd(language, instanceName);
+            }
+        }
 
         public static MailBox MailBoxByCode(string code, string instanceName)
         {

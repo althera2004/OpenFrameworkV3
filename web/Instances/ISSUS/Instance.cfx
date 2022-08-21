@@ -22,8 +22,8 @@
     "Profile": {
         "Twiter": true,
         "LinkedIn": true,
-        "Facebook": false,
-        "Instagram": false,
+        "Facebook": true,
+        "Instagram": true,
         "BirthDate": true,
         "Mobile": true,
         "IdentificationCard": true,

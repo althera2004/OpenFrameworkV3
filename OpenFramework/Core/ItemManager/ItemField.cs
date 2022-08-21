@@ -519,13 +519,9 @@ namespace OpenFrameworkV3.Core.ItemManager
         }
 
         /// <summary>Gets data type description for user interface</summary>
-        [JsonIgnore]
-        public string DataTypeInterfaceLabel
+       public string DataTypeInterfaceLabel(string language, string instanceName)
         {
-            get
-            {
-                return ApplicationDictionary.Translate("Core_DataType_" + Enum.GetName(typeof(ItemFieldDataType), this.DataType).ToLowerInvariant().Replace("nullable", string.Empty));
-            }
+            return ApplicationDictionary.Translate("Core_DataType_" + Enum.GetName(typeof(ItemFieldDataType), this.DataType).ToLowerInvariant().Replace("nullable", string.Empty), language, instanceName);            
         }
 
         /// <summary>Gets or sets the data type of field</summary>

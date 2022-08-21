@@ -2,6 +2,7 @@
     "Id": 4,
     "ItemName": "Tasca",
 	"Description": "Tasca",
+	"Features": { "Tags": true },
     "Layout": {
         "Icon": "fad fa-cog",
         "Label": "Tasca",
