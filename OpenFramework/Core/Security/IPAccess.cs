@@ -316,7 +316,7 @@ namespace OpenFrameworkV3.Core.Security
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(6),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(6),
                                                 Name = rdr.GetString(7),
@@ -328,7 +328,7 @@ namespace OpenFrameworkV3.Core.Security
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(11),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(11),
                                                 Name = rdr.GetString(12),

@@ -273,7 +273,7 @@ namespace OpenFrameworkV3.Billing
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsInvoiceLineGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsInvoiceLineGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnsInvoiceLineGet.CreatedByName),
@@ -285,7 +285,7 @@ namespace OpenFrameworkV3.Billing
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsInvoiceLineGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsInvoiceLineGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnsInvoiceLineGet.ModifiedByName),

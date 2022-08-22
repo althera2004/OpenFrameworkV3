@@ -113,7 +113,7 @@ namespace OpenFrameworkV3.Core.Security
                                     res.CreatedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(7),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(7),
                                             Name = string.Empty,
@@ -125,7 +125,7 @@ namespace OpenFrameworkV3.Core.Security
                                     res.ModifiedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(9),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(9),
                                             Name = string.Empty,

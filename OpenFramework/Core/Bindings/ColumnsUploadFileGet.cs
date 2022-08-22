@@ -33,8 +33,8 @@ namespace OpenFrameworkV3.Core.Bindings
         /// <summary>Index of CreatedBy column</summary>
         public readonly static int CreatedBy = 7;
 
-        /// <summary>Index of CreatdByLogin column</summary>
-        public readonly static int CreatdByLogin = 8;
+        /// <summary>Index of CreatedByLogin column</summary>
+        public readonly static int CreatedByEmail = 8;
 
         /// <summary>Index of CreatedOn column</summary>
         public readonly static int CreatedOn = 9;
@@ -43,7 +43,7 @@ namespace OpenFrameworkV3.Core.Bindings
         public readonly static int ModifiedBy = 10;
 
         /// <summary>Index of ModifiedByLogin column</summary>
-        public readonly static int ModifiedByLogin = 11;
+        public readonly static int ModifiedByEmail = 11;
 
         /// <summary>Index of ModifiedOn column</summary>
         public readonly static int ModifiedOn = 12;

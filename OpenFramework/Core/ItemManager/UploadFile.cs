@@ -153,13 +153,13 @@ namespace OpenFrameworkV3.Core.ItemManager
                                     CreatedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt32(ColumnsUploadFileGet.CreatedBy),
-                                        Email = rdr.GetString(ColumnsUploadFileGet.CreatdByLogin)
+                                        Email = rdr.GetString(ColumnsUploadFileGet.CreatedByEmail)
                                     },
                                     CreatedOn = rdr.GetDateTime(ColumnsUploadFileGet.CreatedOn),
                                     ModifiedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt32(ColumnsUploadFileGet.ModifiedBy),
-                                        Email = rdr.GetString(ColumnsUploadFileGet.ModifiedByLogin)
+                                        Email = rdr.GetString(ColumnsUploadFileGet.ModifiedByEmail)
                                     },
                                     ModifiedOn = rdr.GetDateTime(ColumnsUploadFileGet.ModifiedOn),
                                     Active = rdr.GetBoolean(ColumnsUploadFileGet.Active)
@@ -319,13 +319,13 @@ namespace OpenFrameworkV3.Core.ItemManager
                                     CreatedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt32(ColumnsUploadFileGet.CreatedBy),
-                                        Email = rdr.GetString(ColumnsUploadFileGet.CreatdByLogin)
+                                        Email = rdr.GetString(ColumnsUploadFileGet.CreatedByEmail)
                                     },
                                     CreatedOn = rdr.GetDateTime(ColumnsUploadFileGet.CreatedOn),
                                     ModifiedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt32(ColumnsUploadFileGet.ModifiedBy),
-                                        Email = rdr.GetString(ColumnsUploadFileGet.ModifiedByLogin)
+                                        Email = rdr.GetString(ColumnsUploadFileGet.ModifiedByEmail)
                                     },
                                     ModifiedOn = rdr.GetDateTime(ColumnsUploadFileGet.ModifiedOn),
                                     Active = rdr.GetBoolean(ColumnsUploadFileGet.Active)

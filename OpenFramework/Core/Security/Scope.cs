@@ -153,7 +153,7 @@ namespace OpenFrameworkV3.Core.Security
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsScopeGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsScopeGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnsScopeGet.CreatedByName),
@@ -165,7 +165,7 @@ namespace OpenFrameworkV3.Core.Security
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsScopeGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsScopeGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnsScopeGet.ModifiedByName),
@@ -227,7 +227,7 @@ namespace OpenFrameworkV3.Core.Security
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsScopeGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsScopeGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnsScopeGet.CreatedByName),
@@ -239,7 +239,7 @@ namespace OpenFrameworkV3.Core.Security
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsScopeGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsScopeGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnsScopeGet.ModifiedByName),

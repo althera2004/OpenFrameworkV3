@@ -588,7 +588,7 @@ namespace OpenFrameworkV3.Calendar
                                     CreatedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnsEventGet.CreatedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnsEventGet.CreatedBy),
                                             Name = rdr.GetString(ColumnsEventGet.CreatedByFirstName),
@@ -600,7 +600,7 @@ namespace OpenFrameworkV3.Calendar
                                     ModifiedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnsEventGet.ModifiedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnsEventGet.ModifiedBy),
                                             Name = rdr.GetString(ColumnsEventGet.ModifiedByFirstName),
@@ -704,7 +704,7 @@ namespace OpenFrameworkV3.Calendar
                                     CreatedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnsEventGet.CreatedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnsEventGet.CreatedBy),
                                             Name = rdr.GetString(ColumnsEventGet.CreatedByFirstName),
@@ -716,7 +716,7 @@ namespace OpenFrameworkV3.Calendar
                                     ModifiedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnsEventGet.ModifiedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnsEventGet.ModifiedBy),
                                             Name = rdr.GetString(ColumnsEventGet.ModifiedByFirstName),

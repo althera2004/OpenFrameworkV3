@@ -20,7 +20,7 @@ namespace OpenFrameworkV3.Feature
         public long ItemDefintionId { get; set; }
         public long ItemId { get; set; }
         public DateTime WhenHappened { get; set; }
-        public string subject { get; set; }
+        public string Subject { get; set; }
 
         public ActionResult SetLastView(long userId, long companyId, string instanceName)
         {
@@ -142,7 +142,7 @@ namespace OpenFrameworkV3.Feature
                         cmd.Parameters.Add(DataParameter.Input("@ItemDefinitionId", this.ItemDefintionId));
                         cmd.Parameters.Add(DataParameter.Input("@ItemId", this.ItemId));
                         cmd.Parameters.Add(DataParameter.Input("@WhenHappened", this.WhenHappened));
-                        cmd.Parameters.Add(DataParameter.Input("@Subject", this.subject, 4000));
+                        cmd.Parameters.Add(DataParameter.Input("@Subject", this.Subject, 4000));
                         try
                         {
                             cmd.Connection.Open();

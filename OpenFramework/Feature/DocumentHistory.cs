@@ -461,7 +461,7 @@ namespace OpenFrameworkV3.Feature
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsDocumentHistoryGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsDocumentHistoryGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnsDocumentHistoryGet.CreatedByName),
@@ -473,7 +473,7 @@ namespace OpenFrameworkV3.Feature
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsDocumentHistoryGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsDocumentHistoryGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnsDocumentHistoryGet.ModifiedByName),

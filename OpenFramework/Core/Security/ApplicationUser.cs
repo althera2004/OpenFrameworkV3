@@ -67,8 +67,8 @@ namespace OpenFrameworkV3.Core.Security
         public long Id { get; set; }
 
         /// <summary>Gets or sets user profile</summary>
-        [XmlElement(Type = typeof(Profile), ElementName = "Profile")]
-        public Profile Profile { get; set; }
+        [XmlElement(Type = typeof(UserProfile), ElementName = "Profile")]
+        public UserProfile Profile { get; set; }
 
         /// <summary>Gets or sets user that creates user</summary>
         [XmlElement(Type = typeof(ApplicationUser), ElementName = "CreatedBy")]
@@ -203,7 +203,7 @@ namespace OpenFrameworkV3.Core.Security
                 {
                     Id = Constant.DefaultId,
                     Email = string.Empty,
-                    Profile = Profile.Empty,
+                    Profile = UserProfile.Empty,
                     Core = false,
                     Active = false
                 };
@@ -230,7 +230,7 @@ namespace OpenFrameworkV3.Core.Security
                 return new ApplicationUser
                 {
                     Id = 1,
-                    Profile = new Profile
+                    Profile = new UserProfile
                     {
                         ApplicationUserId = 1,
                         Name = "Open",
@@ -271,7 +271,7 @@ namespace OpenFrameworkV3.Core.Security
                     this.grants = new List<Grant>();
                 }
 
-                var profileJson = (this.Profile ?? Profile.Empty).Json;
+                var profileJson = (this.Profile ?? UserProfile.Empty).Json;
 
                 return string.Format(
                     CultureInfo.InvariantCulture,
@@ -397,7 +397,7 @@ namespace OpenFrameworkV3.Core.Security
                                         Name = rdr.GetString(ColumnsUserGet.LanguageName)
                                     };
 
-                                    res.Profile = Profile.ByApplicationUserId(res.Id, companyId, instanceName);
+                                    res.Profile = UserProfile.ByApplicationUserId(res.Id, companyId, instanceName);
 
                                     res.AdminUser = rdr.GetBoolean(ColumnsUserGet.AdminUser);
                                     res.Core = rdr.GetBoolean(ColumnsUserGet.Core);
@@ -468,7 +468,7 @@ namespace OpenFrameworkV3.Core.Security
                                             Iso = rdr.GetString(ColumnsUserGetForList.LanguageISO),
                                             Name = rdr.GetString(ColumnsUserGetForList.LanguageName)
                                         },
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnsUserGetForList.Id),
                                             Name = rdr.GetString(ColumnsUserGetForList.FirstName),
@@ -502,6 +502,52 @@ namespace OpenFrameworkV3.Core.Security
             }
 
             return new ReadOnlyCollection<ApplicationUser>(res);
+        }
+
+
+        public static ActionResult MaintainSession(long applicationUserId, string password,long companyId, string instanceName)
+        {
+            var res = ActionResult.NoAction;
+            var cns = Persistence.ConnectionString(instanceName);
+            if (!string.IsNullOrEmpty(cns))
+            {
+                using (var cmd = new SqlCommand("Security_MaintainSession"))
+                {
+                    using (var cnn = new SqlConnection(cns))
+                    {
+                        var sendPass = Encrypt.EncryptString(Basics.Reverse(password), "OpenFramework");
+                        cmd.Connection = cnn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));
+                        cmd.Parameters.Add(DataParameter.Input("@Password", sendPass, 150));
+                        cmd.Parameters.Add(DataParameter.Input("@CompanyId", companyId));
+                        try
+                        {
+                            cmd.Connection.Open();
+                            using(var rdr = cmd.ExecuteReader())
+                            {
+                                if (rdr.HasRows)
+                                {
+                                    res.SetSuccess();
+                                }
+                            }                            
+                        }
+                        catch (Exception ex)
+                        {
+                            res.SetFail(ex);
+                        }
+                        finally
+                        {
+                            if (cmd.Connection.State != ConnectionState.Closed)
+                            {
+                                cmd.Connection.Close();
+                            }
+                        }
+                    }
+                }
+            }
+
+            return res;
         }
 
         public static ActionResult LogOn(string userName, string password, string instanceName)

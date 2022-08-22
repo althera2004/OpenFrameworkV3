@@ -49,19 +49,19 @@ namespace OpenFrameworkV3
         public static readonly string False = "false";
 
         /// <summary>Gets JavaScript representation of boolean value</summary>
-        /// <param name="booleanValue">Boolean value</param>
+        /// <param name="value">Boolean value</param>
         /// <returns>JavaScript text</returns>
-        public static string Value(bool booleanValue)
+        public static string Value(bool value)
         {
-            return booleanValue ? Constant.JavaScriptTrue : Constant.JavaScriptFalse;
+            return value ? Constant.JavaScriptTrue : Constant.JavaScriptFalse;
         }
 
         /// <summary>Gets JavaScript representation of boolean value</summary>
-        /// <param name="booleanValue">Boolean value</param>
+        /// <param name="value">Boolean value</param>
         /// <returns>JavaScript text</returns>
-        public static string Value(bool? booleanValue)
+        public static string Value(bool? value)
         {
-            return booleanValue.HasValue ? Value(booleanValue.Value) : Constant.JavaScriptNull;
+            return value.HasValue ? Value(value.Value) : Constant.JavaScriptNull;
         }
     }
 }

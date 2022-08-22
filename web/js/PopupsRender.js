@@ -136,7 +136,7 @@ function PopupRenderDeleteResponse() {
 }
 
 var LAC = 3;
-function PopupLoginAndContinueCloseRelogin() {
+function _PopupLoginAndContinueCloseRelogin() {
     $("#PopupLoginAndContinueErrorMessage").html("");
     var password = $("#LAC").val();
 
@@ -162,6 +162,42 @@ function PopupLoginAndContinueCloseRelogin() {
         $("#PopupLoginAndContinueErrorMessage").html("Número d'intents restants: " + LAC);
         $("#LAC").val("");
     }
+}
+
+function PopupLoginAndContinueCloseRelogin() {
+    var credential = ApplicationUser.Id + "||||" + $("#LAC").val() + "||||" + Company.Id + '||||' + Instance.Name;
+    var data = {
+        "credential": btoa(unescape(encodeURIComponent(credential)))
+    };
+
+    $.ajax({
+        "type": "POST",
+        "url": "/Async/SecurityService.asmx/MaintainSession",
+        "contentType": "application/json; charset=utf-8",
+        "dataType": "json",
+        "data": JSON.stringify(data, null, 2),
+        "success": function (msg) {
+            if (msg.d.Success === true) {
+                $("#PopupLoginAndContinueBtnClose").click();
+                popupContext.LoginAndContinue = false;
+                $("form").removeClass("blur-filter");
+                SessionRestart();
+                localStorage.setItem("LAC", false);
+            }
+            else {
+                if (LAC === 0) {
+                    document.location = "/";
+                }
+                LAC--;
+                $("#PopupLoginAndContinueBtnRelogin").html(Dictionary.Common_Accept + " - " + LAC);
+                $("#PopupLoginAndContinueErrorMessage").html("Número d'intents restants: " + LAC);
+                $("#LAC").val("");
+            }
+        },
+        "error": function (msg) {
+            PopupWarning(msg.responseText);
+        }
+    });
 }
 
 function PopupLoginAndContinueCloseCallBack() {

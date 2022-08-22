@@ -473,7 +473,7 @@ namespace OpenFrameworkV3.Core.Companies
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsCompanyGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsCompanyGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnsCompanyGet.CreatedByName),
@@ -485,7 +485,7 @@ namespace OpenFrameworkV3.Core.Companies
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsCompanyGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsCompanyGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnsCompanyGet.ModifiedByName),
@@ -604,7 +604,7 @@ namespace OpenFrameworkV3.Core.Companies
                                     res.CreatedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnsCompanyGet.CreatedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnsCompanyGet.CreatedBy),
                                             Name = rdr.GetString(ColumnsCompanyGet.CreatedByName),
@@ -618,7 +618,7 @@ namespace OpenFrameworkV3.Core.Companies
                                     res.ModifiedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnsCompanyGet.ModifiedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnsCompanyGet.ModifiedBy),
                                             Name = rdr.GetString(ColumnsCompanyGet.ModifiedByName),

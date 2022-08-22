@@ -78,4 +78,13 @@ public class SecurityService : WebService
         var parts = dataClean.Split('¶');
         return ApplicationUser.LogOn(parts[0], parts[1], parts[2]);
     }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult MaintainSession(string credential)
+    {
+        var dataClean = Basics.Base64Decode(credential).Replace("||||", "¶");
+        var parts = dataClean.Split('¶');
+        return ApplicationUser.MaintainSession(Convert.ToInt64(parts[0]), parts[1], Convert.ToInt64(parts[2]), parts[3]);
+    }
 }

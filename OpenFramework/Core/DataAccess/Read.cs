@@ -387,7 +387,7 @@ namespace OpenFrameworkV3.Core.DataAccess
                     if (actualUser.ScopeView.Count > 0)
                     {
                         var itemDefinitionId = Persistence.ItemDefinitionIdByName(itemName, instanceName);
-                        if (actualUser.ScopeView.Any(s => s.itemDefinitionId == itemDefinitionId))
+                        if (actualUser.ScopeView.Any(s => s.ItemDefinitionId == itemDefinitionId))
                         {
                             scopedField = "Id";
                         }
@@ -397,9 +397,9 @@ namespace OpenFrameworkV3.Core.DataAccess
                             foreach (var scope in actualUser.ScopeView)
                             {
                                 var definitions = Persistence.InstanceByName(instanceName).ItemDefinitions;
-                                if (definitions.Any(d => d.Id == scope.itemDefinitionId))
+                                if (definitions.Any(d => d.Id == scope.ItemDefinitionId))
                                 {
-                                    var scopeDefinition = definitions.First(d => d.Id == scope.itemDefinitionId);
+                                    var scopeDefinition = definitions.First(d => d.Id == scope.ItemDefinitionId);
                                     if (definition.Fields.Any(f => f.Name.Equals(scopeDefinition.ItemName + "Id")))
                                     {
                                         scopedField = scopeDefinition.ItemName + "Id";

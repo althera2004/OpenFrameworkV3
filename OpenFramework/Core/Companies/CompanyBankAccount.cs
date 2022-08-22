@@ -303,7 +303,7 @@ namespace OpenFrameworkV3.Core.Companies
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsCompanyBankAccountGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsCompanyBankAccountGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnsCompanyBankAccountGet.CreatedByName),
@@ -315,7 +315,7 @@ namespace OpenFrameworkV3.Core.Companies
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsCompanyBankAccountGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsCompanyBankAccountGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnsCompanyBankAccountGet.ModifiedByName),
@@ -389,7 +389,7 @@ namespace OpenFrameworkV3.Core.Companies
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsCompanyBankAccountGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsCompanyBankAccountGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnsCompanyBankAccountGet.CreatedByName),
@@ -401,7 +401,7 @@ namespace OpenFrameworkV3.Core.Companies
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsCompanyBankAccountGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsCompanyBankAccountGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnsCompanyBankAccountGet.ModifiedByName),

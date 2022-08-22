@@ -260,7 +260,7 @@
                                     res.CreatedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(7),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(7),
                                             Name = rdr.GetString(8)
@@ -270,7 +270,7 @@
                                     res.ModifiedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(11),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(11),
                                             Name = rdr.GetString(12)
@@ -329,7 +329,7 @@
                                     res.CreatedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(8),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(8),
                                             Name = rdr.GetString(9)
@@ -339,7 +339,7 @@
                                     res.ModifiedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(11),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(11),
                                             Name = rdr.GetString(12)

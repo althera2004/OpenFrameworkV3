@@ -195,7 +195,7 @@ namespace OpenFrameworkV3.Task
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnTaskGetAll.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnTaskGetAll.CreatedBy),
                                                 Name = rdr.GetString(ColumnTaskGetAll.Name),
@@ -207,7 +207,7 @@ namespace OpenFrameworkV3.Task
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnTaskGetAll.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnTaskGetAll.ModifiedBy),
                                                 Name = rdr.GetString(ColumnTaskGetAll.ModifiedByName),
@@ -277,7 +277,7 @@ namespace OpenFrameworkV3.Task
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnTaskGetAll.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnTaskGetAll.CreatedBy),
                                                 Name = rdr.GetString(ColumnTaskGetAll.Name),
@@ -289,7 +289,7 @@ namespace OpenFrameworkV3.Task
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnTaskGetAll.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnTaskGetAll.ModifiedBy),
                                                 Name = rdr.GetString(ColumnTaskGetAll.ModifiedByName),
@@ -355,7 +355,7 @@ namespace OpenFrameworkV3.Task
                                     res.CreatedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnTaskGetAll.CreatedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnTaskGetAll.CreatedBy),
                                             Name = rdr.GetString(ColumnTaskGetAll.Name),
@@ -367,7 +367,7 @@ namespace OpenFrameworkV3.Task
                                     res.ModifiedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnTaskGetAll.ModifiedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnTaskGetAll.ModifiedBy),
                                             Name = rdr.GetString(ColumnTaskGetAll.ModifiedByName),

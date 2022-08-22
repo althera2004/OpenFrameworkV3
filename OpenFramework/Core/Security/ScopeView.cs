@@ -36,7 +36,7 @@ namespace OpenFrameworkV3.Core.Security
                 return new ReadOnlyCollection<Data>(new List<Data>());
             }
 
-            return new ReadOnlyCollection<Data>(this.data.Where(d => d.itemDefinitionId == itemDefinitionId).ToList());
+            return new ReadOnlyCollection<Data>(this.data.Where(d => d.ItemDefinitionId == itemDefinitionId).ToList());
         }
 
         public static ReadOnlyCollection<Data> ByApplicationUser(long applicationUserId, long companyId, string instanceName)
@@ -73,13 +73,13 @@ namespace OpenFrameworkV3.Core.Security
 
         public struct Data
         {
-            public long itemDefinitionId { get; set; }
+            public long ItemDefinitionId { get; set; }
 
-            public long itemId { get; set; }
+            public long ItemId { get; set; }
 
-            public long scurityGroupId { get; set; }
+            public long SecurityGroupId { get; set; }
 
-            public long applicationUserId { get; set; }
+            public long ApplicationUserId { get; set; }
         }
     }
 }

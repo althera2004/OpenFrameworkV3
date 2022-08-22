@@ -184,7 +184,7 @@ namespace OpenFrameworkV3.Core.ItemManager.ItemForm
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsImageGalleryGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsImageGalleryGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnsImageGalleryGet.CreatedByName),
@@ -196,7 +196,7 @@ namespace OpenFrameworkV3.Core.ItemManager.ItemForm
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsImageGalleryGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsImageGalleryGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnsImageGalleryGet.ModifiedByName),

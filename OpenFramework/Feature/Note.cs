@@ -174,7 +174,7 @@ namespace OpenFrameworkV3.Feature
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnNotesGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnNotesGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnNotesGet.CreatedByName),
@@ -186,7 +186,7 @@ namespace OpenFrameworkV3.Feature
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnNotesGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnNotesGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnNotesGet.ModifiedByName),
@@ -259,7 +259,7 @@ namespace OpenFrameworkV3.Feature
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnNotesGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnNotesGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnNotesGet.CreatedByName),
@@ -271,7 +271,7 @@ namespace OpenFrameworkV3.Feature
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnNotesGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnNotesGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnNotesGet.ModifiedByName),
@@ -344,7 +344,7 @@ namespace OpenFrameworkV3.Feature
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnNotesGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnNotesGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnNotesGet.CreatedByName),
@@ -356,7 +356,7 @@ namespace OpenFrameworkV3.Feature
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnNotesGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnNotesGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnNotesGet.ModifiedByName),
@@ -426,7 +426,7 @@ namespace OpenFrameworkV3.Feature
                                     res.CreatedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnNotesGet.CreatedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnNotesGet.CreatedBy),
                                             Name = rdr.GetString(ColumnNotesGet.CreatedByName),
@@ -438,7 +438,7 @@ namespace OpenFrameworkV3.Feature
                                     res.ModifiedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnNotesGet.ModifiedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnNotesGet.ModifiedBy),
                                             Name = rdr.GetString(ColumnNotesGet.ModifiedByName),

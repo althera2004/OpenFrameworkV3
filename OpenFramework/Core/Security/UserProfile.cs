@@ -21,14 +21,14 @@ namespace OpenFrameworkV3.Core.Security
 
     /// <summary>Implements user profile class</summary>
     [Serializable]
-    public class Profile
+    public class UserProfile
     {
         /// <summary>Gets an empty instance of user profile object</summary>
-        public static Profile Empty
+        public static UserProfile Empty
         {
             get
             {
-                return new Profile
+                return new UserProfile
                 {
                     ApplicationUserId = Constant.DefaultId,
                     Name = string.Empty,
@@ -58,11 +58,11 @@ namespace OpenFrameworkV3.Core.Security
         }
 
         /// <summary>Gets the fixed profile for OpenFramework system user</summary>
-        public static Profile OpenFrameworkProfile
+        public static UserProfile OpenFrameworkProfile
         {
             get
             {
-                return new Profile
+                return new UserProfile
                 {
                     ApplicationUserId = 1,
                     Name = "Open",
@@ -92,11 +92,11 @@ namespace OpenFrameworkV3.Core.Security
         }
 
         /// <summary>Gets the fixed profile for anonymous mail land page user</summary>
-        public static Profile AnonymousMailLandPageProfile
+        public static UserProfile AnonymousMailLandPageProfile
         {
             get
             {
-                return new Profile
+                return new UserProfile
                 {
                     ApplicationUserId = 1,
                     Name = "Anonymous",
@@ -429,10 +429,10 @@ namespace OpenFrameworkV3.Core.Security
         /// <param name="companyId">Company user identifier</param>
         /// <param name="instanceName">Name of actual instance</param>
         /// <returns>Profile of application user</returns>
-        public static Profile ByApplicationUserId(long applicationUserId, long companyId, string instanceName)
+        public static UserProfile ByApplicationUserId(long applicationUserId, long companyId, string instanceName)
         {
             var source = string.Format(CultureInfo.InvariantCulture, "Profile.ByApplicationUserId({0},{1})", applicationUserId, instanceName);
-            var res = Profile.Empty;
+            var res = UserProfile.Empty;
             res.ApplicationUserId = applicationUserId;
 
             var cns = Persistence.ConnectionString(instanceName);

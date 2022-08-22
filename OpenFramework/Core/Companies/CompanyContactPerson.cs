@@ -250,7 +250,7 @@ namespace OpenFrameworkV3.Core.Companies
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsCompanyContactPersonGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsCompanyContactPersonGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnsCompanyContactPersonGet.CreatedByName),
@@ -340,7 +340,7 @@ namespace OpenFrameworkV3.Core.Companies
                                             CreatedBy = new ApplicationUser
                                             {
                                                 Id = rdr.GetInt64(ColumnsCompanyContactPersonGet.CreatedBy),
-                                                Profile = new Profile
+                                                Profile = new UserProfile
                                                 {
                                                     ApplicationUserId = rdr.GetInt64(ColumnsCompanyContactPersonGet.CreatedBy),
                                                     Name = rdr.GetString(ColumnsCompanyContactPersonGet.CreatedByName),
@@ -571,7 +571,7 @@ namespace OpenFrameworkV3.Core.Companies
                                     res.CreatedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnsCompanyContactPersonGet.CreatedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnsCompanyContactPersonGet.CreatedBy),
                                             Name = rdr.GetString(ColumnsCompanyContactPersonGet.CreatedByName),
@@ -583,7 +583,7 @@ namespace OpenFrameworkV3.Core.Companies
                                     res.ModifiedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnsCompanyContactPersonGet.ModifiedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnsCompanyContactPersonGet.ModifiedBy),
                                             Name = rdr.GetString(ColumnsCompanyContactPersonGet.ModifiedByName),

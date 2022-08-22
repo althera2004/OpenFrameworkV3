@@ -142,7 +142,7 @@ namespace OpenFrameworkV3.Core.Security
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsGroupGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsGroupGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnsGroupGet.CreatedByName),
@@ -152,7 +152,7 @@ namespace OpenFrameworkV3.Core.Security
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsGroupGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsGroupGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnsGroupGet.ModifiedByName),
@@ -213,7 +213,7 @@ namespace OpenFrameworkV3.Core.Security
                                         CreatedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsGroupGet.CreatedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsGroupGet.CreatedBy),
                                                 Name = rdr.GetString(ColumnsGroupGet.CreatedByName),
@@ -223,7 +223,7 @@ namespace OpenFrameworkV3.Core.Security
                                         ModifiedBy = new ApplicationUser
                                         {
                                             Id = rdr.GetInt64(ColumnsGroupGet.ModifiedBy),
-                                            Profile = new Profile
+                                            Profile = new UserProfile
                                             {
                                                 ApplicationUserId = rdr.GetInt64(ColumnsGroupGet.ModifiedBy),
                                                 Name = rdr.GetString(ColumnsGroupGet.ModifiedByName),
@@ -650,7 +650,7 @@ namespace OpenFrameworkV3.Core.Security
                                     res.CreatedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnsGroupGet.CreatedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnsGroupGet.CreatedBy),
                                             Name = rdr.GetString(ColumnsGroupGet.CreatedByName),
@@ -660,7 +660,7 @@ namespace OpenFrameworkV3.Core.Security
                                     res.ModifiedBy = new ApplicationUser
                                     {
                                         Id = rdr.GetInt64(ColumnsGroupGet.ModifiedBy),
-                                        Profile = new Profile
+                                        Profile = new UserProfile
                                         {
                                             ApplicationUserId = rdr.GetInt64(ColumnsGroupGet.ModifiedBy),
                                             Name = rdr.GetString(ColumnsGroupGet.ModifiedByName),
@@ -1056,13 +1056,13 @@ namespace OpenFrameworkV3.Core.Security
             return res.ToString();
         }
 
-        public static long MainUser(long companyId, long GroupId, string instanceName)
+        public static long MainUser(long companyId, long groupId, string instanceName)
         {
             long res = 0;
             var cns = Persistence.ConnectionString(instanceName);
             if (!string.IsNullOrEmpty(cns))
             {
-                using (var cmd = new SqlCommand("SELECT UserId FROM Core_GroupUserMain WHERE CompanyId = " + companyId.ToString() + " AND GroupId = " + GroupId.ToString()))
+                using (var cmd = new SqlCommand("SELECT UserId FROM Core_GroupUserMain WHERE CompanyId = " + companyId.ToString() + " AND GroupId = " + groupId.ToString()))
                 {
                     using (var cnn = new SqlConnection(cns))
                     {

@@ -261,7 +261,7 @@
     <Compile Include="Core\Security\Grant.cs" />
     <Compile Include="Core\Security\Group.cs" />
     <Compile Include="Core\Security\IPAccess.cs" />
-    <Compile Include="Core\Security\Profile.cs" />
+    <Compile Include="Core\Security\UserProfile.cs" />
     <Compile Include="Core\Security\ScopeView.cs" />
     <Compile Include="Core\DataAccess\StoredParameterQuery.cs" />
     <Compile Include="Core\Security\UserGrant.cs" />
