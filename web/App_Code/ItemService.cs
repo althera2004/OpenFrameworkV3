@@ -40,7 +40,7 @@ public class ItemService : WebService
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public ActionResult ItemBarSave(string itemName, long id, string description, long applicationUserId, long companyId, string instanceName)
     {
-        return OpenFrameworkV3.Core.DataAccess.Save.SaveBarItem(itemName, id, description, applicationUserId, companyId, instanceName);
+        return OpenFrameworkV3.Core.DataAccess.Save.BarItemSave(itemName, id, description, applicationUserId, companyId, instanceName);
     }
 
     [WebMethod(EnableSession = true)]
@@ -97,7 +97,7 @@ public class ItemService : WebService
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public ActionResult ItemBarDelete(string itemName, long id, long applicationUserId, string instanceName)
     {
-        return OpenFrameworkV3.Core.DataAccess.Save.SaveBarDelete(itemName, id, applicationUserId, instanceName);
+        return OpenFrameworkV3.Core.DataAccess.Save.BarItemDelete(itemName, id, applicationUserId, instanceName);
     }
 
     [WebMethod(EnableSession = true)]

@@ -1,6 +1,7 @@
 ﻿{
     "Id": 7,
     "ItemName": "DocumentCategory",
+	"Features": { "BAR": true },
 	"Description": "Categoria document",
     "Layout": {
         "Icon": "fad fa-user-tie",

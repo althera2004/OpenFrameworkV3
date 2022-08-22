@@ -94,6 +94,7 @@ public partial class ItemView : Page
                 {
                     data = Read.JsonActive(itemName, this.master.CompanyId, this.master.InstanceName);
                 }
+
                 this.FK += "FK[\"" + itemName + "\"] = {\"Data\":" + data.Replace("\n", "\\n") + "};";
             }
         }

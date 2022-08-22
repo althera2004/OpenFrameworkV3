@@ -1,6 +1,7 @@
 ﻿{
     "Id": 21,
     "ItemName": "DocumentProcedencia",
+	"Features": { "BAR": true },
 	"Description": "Procedència",
     "Layout": {
         "Icon": "fad fa-user-tie",

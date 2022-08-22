@@ -411,10 +411,21 @@ function PopupBAR_DeleteConfirmed() {
         "contentType": "application/json; charset=utf-8",
         "dataType": "json",
         "data": JSON.stringify(data, null, 2),
-        "success": function () {
-            PopupBAR_Context.DeleteId = null;
-            GetFKItem(PopupBAR_Context.ItemDefinition.ItemName, PopupBAR_DataUpdated);
-            $("#PopupBAR_BtnCancelEdition").click();
+        "success": function (msg) {
+
+            console.log(msg.d);
+            if (msg.d.Success === true) {
+                PopupBAR_Context.DeleteId = null;
+                GetFKItem(PopupBAR_Context.ItemDefinition.ItemName, PopupBAR_DataUpdated);
+                $("#PopupBAR_BtnCancelEdition").click();
+            }
+            else {
+                var message = msg.d.MessageError;
+                if (msg.d.MessageError === "Exists") {
+                    message = "No es pot eliminar perque està en ús";
+                }
+                PopupWarning(message);
+            }
         },
         "error": function (msg) {
             PopupWarning(msg.responseText);

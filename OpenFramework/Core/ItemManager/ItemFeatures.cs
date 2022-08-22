@@ -85,6 +85,9 @@ namespace OpenFrameworkV3.Core.ItemManager
         [JsonProperty("Firmafy")]
         public bool Firmafy { get; set; }
 
+        [JsonProperty("BAR")]
+        public bool BAR { get; set; }
+
         [JsonIgnore]
         public static ItemFeatures Empty
         {
@@ -114,7 +117,8 @@ namespace OpenFrameworkV3.Core.ItemManager
                     MailLink = false,
                     Persistence = false,
                     Tags = false,
-                    Schedule = false
+                    Schedule = false,
+                    BAR = false
                 };
             }
         }

@@ -178,6 +178,121 @@ namespace OpenFrameworkV3.Core.DataAccess
                 FKFields);
         }
 
+        public static string FKBARList(string itemDefinitionName, Dictionary<string, string> parameters, string scopedField, string scopedItemd, long applicationUserId, long companyId, string instanceName)
+        {
+            var descriptionFields = FieldsDescription(itemDefinitionName, instanceName);
+            var fieldLines = FieldForeingLines(itemDefinitionName, instanceName);
+            var itemDefinition = Persistence.ItemDefinitions(instanceName).First(d => d.ItemName.Equals(itemDefinitionName, StringComparison.OrdinalIgnoreCase));
+            var res = new StringBuilder();
+
+            if (itemDefinition.Fields != null)
+            {
+                foreach (var field in fieldLines)
+                {
+                    res.Append("                      ");
+                    res.Append(field.SqlFieldExtractor);
+                    res.Append(" +");
+                }
+            }
+
+            var descriptionFieldLine = itemDefinition.Layout.Description.Pattern;
+            var descriptionFieldList = new List<string>();
+            foreach (var field in descriptionFields)
+            {
+                descriptionFieldList.Add(field.SqlFieldExtractorValue);
+            }
+
+            var nfield = itemDefinition.Layout.Description.Pattern.ToCharArray().Count(c => c.Equals('{'));
+            for (var x = 0; x < nfield; x++)
+            {
+                descriptionFieldLine = descriptionFieldLine.Replace("{" + x + "}", " #" + x + " ");
+            }
+
+            var parts = descriptionFieldLine.Split(' ');
+            descriptionFieldLine = string.Empty;
+            if (descriptionFieldList.Count > 0)
+            {
+                foreach (var part in parts)
+                {
+                    if (part.StartsWith("#"))
+                    {
+                        descriptionFieldLine += " + " + part;
+                    }
+                    else
+                    {
+                        descriptionFieldLine += " + '" + part + "'";
+                    }
+                }
+
+                for (var x = 0; x < nfield; x++)
+                {
+                    descriptionFieldLine = descriptionFieldLine.Replace("#" + x, descriptionFieldList[x]);
+                }
+            }
+
+            var additionalWhere = new StringBuilder(string.Format(CultureInfo.InvariantCulture, " WHERE (Item.CompanyId = {0} OR Item.CompanyId = 0)", companyId));
+            if (parameters != null)
+            {
+                if (parameters.Count > 0)
+                {
+                    foreach (var parameter in parameters)
+                    {
+                        additionalWhere.AppendFormat(CultureInfo.InvariantCulture, @" AND Item.{0} ='{1}", parameter.Key, parameter.Value);
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(scopedField))// && string.IsNullOrEmpty(scopedItemd))
+            {
+                var definition = itemDefinition;
+                if (!string.IsNullOrEmpty(scopedItemd))
+                {
+                    definition = Persistence.ItemDefinitions(instanceName).First(d => d.ItemName.Equals(scopedItemd, StringComparison.OrdinalIgnoreCase));
+                }
+
+
+                additionalWhere.AppendFormat(CultureInfo.InvariantCulture, @" AND Item.{0} IN({1})", scopedField, string.Empty); // weke ApplicationUser.Actual.ScopeViewIdsSqlWhereData(definition.Id));
+            }
+
+            var FKFields = new StringBuilder();
+            foreach (var field in itemDefinition.Fields.Where(f => f.FK == true))
+            {
+                res.Append(field.SqlFieldExtractor);
+                res.Append(" +");
+            }
+
+            // Where FK links
+            var whereBar = new StringBuilder();
+            var items = Persistence.ItemDefinitions(instanceName).Where(i => i.ForeignValues.Any(fv => fv.ItemName.Equals(itemDefinitionName, StringComparison.OrdinalIgnoreCase)));
+            foreach(var fkItem in items)
+            {
+                whereBar.AppendFormat(
+                    CultureInfo.InvariantCulture,
+                    @" AND Item.Id Not in (SELECT {0}Id FROM Item_{1} WHERE Active = 1) ",
+                    itemDefinitionName,
+                    fkItem);
+            }
+
+
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                @"SELECT 
+		              '{{""Id"":' +  CAST(Item.Id AS  nvarchar(20)) + ',' +
+                      '""Description"":""' {1} + '"",' + 
+                      {2}
+                      {4}
+                      '""Active"":' + CASE WHEN Item.Active = 0 THEN 'false' ELSE 'true' END + '}}' AS Data
+                      FROM Item_{0} Item WITH(NOLOCK){3}
+                      {5}",
+                itemDefinition.ItemName,
+                descriptionFieldLine,
+                res,
+                additionalWhere,
+                FKFields,
+                whereBar);
+        }
+
+
         public static string KeyValueById(string itemDefinitionName, long id, string instanceName)
         {
 

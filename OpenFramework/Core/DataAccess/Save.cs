@@ -7,10 +7,12 @@
 namespace OpenFrameworkV3.Core.DataAccess
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
     using System.Globalization;
     using System.Linq;
+    using System.Text;
     using System.Web;
     using OpenFrameworkV3.Core.Activity;
     using OpenFrameworkV3.Core.Enums;
@@ -21,7 +23,7 @@ namespace OpenFrameworkV3.Core.DataAccess
     /// <summary>Implements save actions for item into database</summary>
     public static class Save
     {
-        public static ActionResult SaveBarItem(string itemName, long id, string description, long applicationUserId, long companyId, string instanceName)
+        public static ActionResult BarItemSave(string itemName, long id, string description, long applicationUserId, long companyId, string instanceName)
         {
             var res = ActionResult.NoAction;
             var cns = Persistence.ConnectionString(instanceName);
@@ -72,7 +74,7 @@ namespace OpenFrameworkV3.Core.DataAccess
         /// <param name="applicationUserId">Identifier of user that performs actions</param>
         /// <param name="instanceName">Name of instance</param>
         /// <returns></returns>
-        public static ActionResult SaveBarDelete(string itemName, long id, long applicationUserId, string instanceName)
+        public static ActionResult BarItemDelete(string itemName, long id, long applicationUserId, string instanceName)
         {
             var res = ActionResult.NoAction;
             var cns = Persistence.ConnectionString(instanceName);
@@ -80,16 +82,75 @@ namespace OpenFrameworkV3.Core.DataAccess
             {
                 try
                 {
-                    res = new ExecuteQuery
+                    var items = Persistence.ItemDefinitions(instanceName).Where(i => i.ForeignValues.Count > 0);
+                    var itemNames = new List<string>();
+                    foreach(var fkItem in items)
                     {
-                        ConnectionString = cns,
-                        QueryText = string.Format(
-                        CultureInfo.InvariantCulture,
-                        @"UPDATE Item_{0} SET Active = 0, ModifiedBy = {1}, ModifiedOn = GETDATE() WHERE Id = {2}",
-                        itemName,
-                        applicationUserId,
-                        id)
-                    }.ExecuteCommand;
+                        foreach(var fk in fkItem.ForeignValues.Where(f=>string.IsNullOrEmpty(f.ItemName) == false))
+                        {
+                            if (fk.ItemName.Equals(itemName))
+                            {
+                                itemNames.Add(fkItem.ItemName);
+                                break;
+                            }
+                        }
+                    }
+
+                    var where = new StringBuilder();
+                    foreach(var itemFK in itemNames)
+                    {
+                        where.AppendFormat(
+                            CultureInfo.InvariantCulture,
+                            @" AND Id IN (SELECT {0}Id FROM Item_{1} WHERE Active = 1) ",
+                            itemName,
+                            itemFK);
+                    }
+
+                    var query = "SELECT Id FROM Item_" + itemName + " WHERE Id= " + id.ToString() + where.ToString();
+                    using(var cmd = new SqlCommand(query))
+                    {
+                        using(var cnn = new SqlConnection(cns))
+                        {
+                            cmd.Connection = cnn;
+                            cmd.CommandType = CommandType.Text;
+                            try
+                            {
+                                cmd.Connection.Open();
+                                using(var rdr = cmd.ExecuteReader())
+                                {
+                                    if (rdr.HasRows)
+                                    {
+                                        res.SetFail("Exists");
+                                    }
+                                    else
+                                    {
+                                        res.SetSuccess();
+                                    }
+                                }
+                            }
+                            finally
+                            {
+                                if(cmd.Connection.State != ConnectionState.Closed)
+                                {
+                                    cmd.Connection.Close();
+                                }
+                            }
+                        }
+                    }
+
+                    if (res.Success)
+                    {
+                        res = new ExecuteQuery
+                        {
+                            ConnectionString = cns,
+                            QueryText = string.Format(
+                            CultureInfo.InvariantCulture,
+                            @"UPDATE Item_{0} SET Active = 0, ModifiedBy = {1}, ModifiedOn = GETDATE() WHERE Id = {2}",
+                            itemName,
+                            applicationUserId,
+                            id)
+                        }.ExecuteCommand;
+                    }
                 }
                 catch (Exception ex)
                 {
