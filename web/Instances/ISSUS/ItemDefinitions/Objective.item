@@ -47,7 +47,14 @@
                 { "DataProperty": "EmployeeId", "Width": 250, "Align": "left", "Search": true }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
-            "Sorting": {"Index": 1, "SortingType": "asc"} 
+            "Sorting": {"Index": 1, "SortingType": "asc"},
+			"Actions": [
+				{ "Label": "Imprimir", "Icon": "fal fa-file-pdf", "Action": "DOCUMENT_List_Print" }
+			],
+			"Filter": [
+				{ "DataProperty": "DateStart", "Label": "Període", "Type": "DateRange" },
+				{ "DataProperty": "DateEnd", "Label":"Estat", "Type": "ISNULL", "Options": "Actiu|Tancat" }
+			]
         }
 	],
 	"Forms": [

@@ -14,7 +14,7 @@
         },
         "EditionType": "inline"
     },
-	"ForeignValues": [ { "ItemName": "Customer" },{ "ItemName": "Provider" },{ "ItemName": "Department" },{ "ItemName": "Incident" },{ "ItemName": "Risc" },{ "ItemName": "Oportunitat" } ],
+	"ForeignValues": [ { "ItemName": "Customer" },{ "ItemName": "Provider" },{ "ItemName": "Department" },{ "ItemName": "Incident" },{ "ItemName": "Risc" },{ "ItemName": "Oportunity" } ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
 		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150 },
@@ -27,7 +27,7 @@
 		{ "Name": "CustomerId", "Label": "Client", "Type": "long", "FK": true },
 		{ "Name": "IncidentId", "Label": "Incidència", "Type": "long", "FK": true },
 		{ "Name": "RiscId", "Label": "Risc", "Type": "long", "FK": true },
-		{ "Name": "OportunitatId", "Label": "Oportunitat", "Type": "long", "FK": true }
+		{ "Name": "OportunityId", "Label": "Oportunitat", "Type": "long", "FK": true }
     ],
     "Lists": [
         {
@@ -40,10 +40,7 @@
                 { "DataProperty": "ActionType", "Width": 300 },
                 { "DataProperty": "Origin", "Width": 150 }
             ],
-            "Sorting": {"Index": 1, "SortingType": "asc"},
-			"Buttons": [
-				{ "Name": "Print", "Label": "Imprimit", "Icon": "green fal fa-file-pdf", "Function": "EXTRAESCOLAR_ConfirmarInscripcion"}
-			]
+            "Sorting": {"Index": 1, "SortingType": "asc"}
         }
 	],
 	"Forms": [
@@ -57,8 +54,7 @@
 					"Rows": [
 						{
 							"Fields": [
-								{ "Name": "Name", "ColSpan": 2 },
-								{ "Name": "Tipo", "FixedListMode": "DropDown" }
+								{ "Name": "Name" }
 							]
 						}
 					]
@@ -69,24 +65,8 @@
 					"Rows": [
 						{
 							"Fields": [
-								{ "Name": "Url" }
+								{ "Name": "Description" }
 							]
-						},
-						{
-							"ItemList": "CustomerCompanyInstance",
-							"ListId": "ByInstance",
-							"FilterFields": [ { "Field": "Instancia" } ]
-						}
-					]
-				},
-				{
-					"Id": "Incidencias",
-					"Label": "Incidencias",
-					"Rows": [
-						{
-							"ItemList": "Incidencia",
-							"ListId": "ByInstancia",
-							"FilterFields": [ { "Field": "Instancia" } ]
 						}
 					]
 				}

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
 using OpenFrameworkV3;
+using OpenFrameworkV3.Core.DataAccess;
+using OpenFrameworkV3.Core.ItemManager;
 using OpenFrameworkV3.Core.ItemManager.ItemList;
 
 public partial class ItemList : Page
@@ -20,6 +23,8 @@ public partial class ItemList : Page
     public long ItemDefinitionId { get; private set; }
     public string ItemName { get; private set; }
     public string ListId { get; private set; }
+
+    public string FK { get; private set; }
 
     public string InstanceName
     {
@@ -46,5 +51,42 @@ public partial class ItemList : Page
         var title = listDefinition.Title ?? itemDefinition.Layout.LabelPlural;
         this.master.BreadCrumb.AddLeaf(title);
         this.master.SetPageType("PageList");
+        this.GetFK(itemDefinition, listDefinition);
+    }
+
+    private void GetFK(ItemDefinition itemDefinition, List listDefinition)
+    {
+        if (itemDefinition.ForeignValues.Count > 0)
+        {
+            var itemNames = new List<string>();
+            foreach (var fv in itemDefinition.ForeignValues)
+            {
+                var fvItem = Persistence.ItemDefinitionByName(fv.ItemName, this.master.InstanceName);
+                if (fvItem.Features!= null && fvItem.Features.Persistence)
+                {
+                    this.master.AddFKScript(fvItem.ItemName);
+                }
+                else
+                {
+                    itemNames.Add(fvItem.ItemName);
+                }
+            }
+
+            foreach (var itemName in itemNames)
+            {
+                var data = string.Empty;
+                var fkDefinition = Persistence.ItemDefinitionByName(itemName, this.master.InstanceName);
+                if (!string.IsNullOrEmpty(fkDefinition.CustomFK))
+                {
+                    data = Read.GetCustomFK(itemName, this.master.InstanceName);
+                }
+                else
+                {
+                    data = Read.JsonActive(itemName, this.master.CompanyId, this.master.InstanceName);
+                }
+
+                this.FK += "FK[\"" + itemName + "\"] = {\"Data\":" + data.Replace("\n", "\\n") + "};" + Environment.NewLine;
+            }
+        }
     }
 }

@@ -1010,3 +1010,8 @@ Core_SecurityGroup_Header_Name::Nom
 Core_SecurityGroup_Header_Description::Descripció
 Core_SecurityGroup_Header_Core::Core
 Core_SecurityGroup_Header_Editable::Editable
+Core_Security_MaintainSession_PasswordRequired::Paraula de pas obligatòria
+Core_Security_MaintainSession_ExpiredAttempts::Número d'intents restants
+Core_Security_MaintainSession_Title::S'ha detectat una llarga durada d'inactivitat.<br />Introdueixi de nou la seva paraula de pas per a continuar.<br>
+Common_NoChanges::No hi ha canvis
+Core_BAR_NoChanged::No es pot eliminar perque està en ús

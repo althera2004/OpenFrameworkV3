@@ -31,7 +31,10 @@
 		{ "Name": "ScaleDivisionUnitId", "Label": "*", "Type": "long", "FK": true },
 		{ "Name": "DateStart", "Label": "D.inici", "Type": "datetime" },
 		{ "Name": "EmployeeId", "Label": "Responsable", "Type": "long", "FK": true },
-		{ "Name": "Notes", "Label": "Notes", "Type": "textarea" }
+		{ "Name": "Notes", "Label": "Notes", "Type": "textarea" },
+		{ "Name": "FInactivate", "Label": "Data baixa", "Type": "datetime" },
+		{ "Name": "InactivateReason", "Label": "Motiu de baixa", "Type": "textarea" },
+		{ "Name": "InactivateResponsible", "Label": "Responsable baixa", "Type": "long", "FK": true }
     ],
     "Lists": [
         {
@@ -46,7 +49,11 @@
 				{ "DataProperty": "EmployeeId", "Width": 150, "Search": true },
                 { "DataProperty": "Code", "HiddenList": true }
             ],
-            "Sorting": {"Index": 1, "SortingType": "asc"} 
+            "Sorting": {"Index": 1, "SortingType": "asc"},
+			"Filter": [
+				{ "Id": "type", "Type": "CustomCheckBox","Label": "Registres",  "Options": "Calibratge|Verificació|Manteniment" },
+				{ "DataProperty": "FInactivate", "Type": "ISNULL", "Label": "Estat", "Options": "Actius|De baixa" }
+			]
         }
 	],
 	"Forms": [

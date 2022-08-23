@@ -31,7 +31,9 @@
 		{ "Name": "ConservacioTime", "Label": "Durada", "Type": "FixedList", "FixedListName": "DocumentConservacioTime" },
 		{ "Name": "Origin", "Label": "Origen", "Type": "FixedList", "FixedListName": "DocumentOrigin" },
 		{ "Name": "Location", "Label": "Ubicació", "Type": "text", "Length": 150 },
-		{ "Name": "RevisionReason", "Label": "Motiu del canvi", "Type": "textarea" }
+		{ "Name": "RevisionReason", "Label": "Motiu del canvi", "Type": "textarea" },
+		{ "Name": "FInactivate", "Label": "Data desactivació", "Type": "datetime" },
+		{ "Name": "InactivateReason", "Label": "Motiu de desactivació", "Type": "textarea" }
     ],
     "Lists": [
         {
@@ -46,9 +48,18 @@
                 { "DataProperty": "Origin", "Width": 90 },
                 { "DataProperty": "Location", "Width": 150 },
                 { "DataProperty": "Revisio", "Width": 50, "Label": "Rev." },
-                { "DataProperty": "FAlta", "Width": 90 }
+                { "DataProperty": "FAlta", "Width": 90 },
+                { "DataProperty": "FInactivate", "HiddenList": true }
             ],
-            "Sorting":  {"Index": 1, "SortingType": "asc"} 
+			"Actions": [
+				{ "Label": "Imprimir", "Icon": "fal fa-file-pdf", "Action": "DOCUMENT_List_Print" }
+			],
+            "Sorting":  {"Index": 1, "SortingType": "asc"},
+			"Filter": [
+				{ "DataProperty": "FInactivate", "Label":" ", "Type": "ISNULL", "Options": "Vigent|Arxivat" },
+				{ "DataProperty": "DocumentCategoryId" },
+				{ "DataProperty": "Origin", "Type": "Checkbox" }
+			]
         }
 	],
 	"Forms": [
@@ -56,6 +67,10 @@
 			"Id": "Custom",
 			"FormType": "Custom",
 			"DefaultSelected": true,
+			"Actions": [
+				{ "Label": "Revisar", "Icon": "fad fa-book-spells", "Action": "DOCUMENT_NewRevision" },
+				{ "Label": "Arxivar", "Icon": "fal fa-books", "Action": "DOCUMENT_ToArchive" }
+			],
 			"Tabs": [
 				{
 					"Persistent": true,
@@ -77,7 +92,7 @@
 								{ "Name": "FAlta" },
 								{ "Name": "FRevisio", "Label": "D.Revisió" },
 								{ "Name": "Revisio" },
-								{ "Type": "Button", "Id": "BtnRevisio", "Action": "DOCUMENT_NewRevision", "Label": "Revisar", "Icon": "fal fa-cog", "Help": "Ayudita pal usuario tonto" }
+								{ "Type": "Button", "Id": "BtnRevisio", "Action": "DOCUMENT_NewRevision", "Label": "Revisar", "Icon": "fal fa-book-spells", "Help": "Afegir revisió del document" }
 							]
 						},
 						{

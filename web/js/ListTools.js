@@ -45,9 +45,22 @@ function PageList(config) {
         res += "    <div class=\"panel-heading hbuilt\">";
         res += "      <span id=\"" + this.ComponentId + "_ListTitle\">" + Title + "</span>";
         res += "      <div class=\"panel-tools\">";
+
+        if (HasArrayValues(this.ListDefinition.Actions)) {
+            for (var a = 0; a < this.ListDefinition.Actions.length; a++) {
+                var action = this.ListDefinition.Actions[a];
+                res += "    <a data-action=\"add\" class=\"TableInFormAction\" id=\"" + action.Action + "_Btn\" onclick=\"" + action.Action + "();\">";
+                res += "     <i class=\"ace-icon " + action.Icon + "\"></i>&nbsp;" + action.Label;
+                res += "    </a>";
+                res += " | ";
+            }
+        }
+
         res += "        <a id=\"" + this.ComponentId + "_AddBtn\" onclick=\"GoEncryptedView('" + this.ItemDefinition.ItemName + "', '" + this.ListId + "', -1,'" + this.ListDefinition.FormId + "', null)\"><i class=\"fa fa-plus\"></i>&nbsp;<span id=\"" + this.ComponentId + "_AddBtnLabel\">" + ButtonAddLabel + "</span></a>";
         res += "      </div>";
         res += "    </div>";
+
+        res += this.RenderFilter();
 
         res += "    <div class=\"tableHead\">";
         res += "      <table cellpadding=\"1\" cellspacing=\"1\" class=\"table\">";
@@ -78,6 +91,7 @@ function PageList(config) {
 
 
         $("#TableList").html(res);
+        $(".filter .datepicker").localDatePicker();
         ResizeWorkArea();
     }
 
@@ -170,6 +184,12 @@ function PageList(config) {
                 headerTable += "  </div>";
                 headerTable += "  <div class=\"listTitleButtons col-xs-6 col-sm-4\" style=\"text-align:right;padding-top:12px;\">";
 
+                if (HasArrayValues(this.Actions)) {
+                    headerTable += "    <a data-action=\"add\" class=\"TableInFormAction\" id=\"BtnAddItem" + this.ComponentId + "\" onclick=\"" + editAction + "\">";
+                    headerTable += "     <i class=\"ace-icon fa fa-cog\"></i>&nbsp;hola";
+                    headerTable += "    </a>";
+                }
+
                 if (this.ListDefinition.EditAction === "Popup" || this.ListDefinition.EditAction === "EditableAdd") {
                     var editAction = "PopupNew('" + this.ItemDefinition.ItemName + "', '" + this.ListDefinition.FormId + "')";
                     if (this.ListDefinition.EditAction === "Popup") {
@@ -247,6 +267,151 @@ function PageList(config) {
 
         //$("#" + this.ComponentId + "_ListHead").html(this.RenderHeader(this.ItemDefinition, this.ListDefinition, false, 0, this.Widths, 2));
     };
+
+    this.RenderFilter = function () {
+        var res = "";
+        if (HasArrayValues(this.ListDefinition.Filter)) {
+            ListHeightDelta = 280;
+            res += "      <div class=\"panel-heading filter\">";
+
+            for (var x = 0; x < this.ListDefinition.Filter.length; x++) {
+                var filter = this.ListDefinition.Filter[x];
+
+                if (HasPropertyValue(filter.Type) === false) {
+                    filter.Type = "";
+                }
+
+                if (HasPropertyValue(filter.DataProperty) === false) {
+                    filter.DataProperty = "";
+                }
+
+                var field = GetFieldDefinition(filter.DataProperty, this.ItemDefinition);
+
+                if (filter.Type.toLowerCase() === "customcheckbox") {
+                    var label = "";
+                    if (HasPropertyValue(filter.Label)) {
+                        label = "<label>" + filter.Label +"</label>:&nbsp;";
+                    }
+
+                    var parts = filter.Options.split('|');
+
+                    res += "<span style=\"margin-right:12px;\">";
+                    res += label;
+
+                    for (var p = 0; p < parts.length; p++) {
+                        res += "<input type=\"checkbox\" id=\"" + filter.Id + "_" + p + "\" style=\"margin:0!important;\" onclick=\"" + this.ItemName.toUpperCase() + "_FilterList()\">&nbsp;" + parts[p];
+                        res += "&nbsp;";
+                    }
+
+                    res += "</span>";
+                }
+                else if (filter.Type.toLowerCase() === "customselect") {
+                    var label = "";
+                    if (HasPropertyValue(filter.Label)) {
+                        label = "<label>" + filter.Label + "</label>:&nbsp;";
+                    }
+
+                    var parts = filter.Options.split('|');
+
+                    res += "<span style=\"margin-right:12px;\">";
+                    res += label;
+
+                    res += " <select id=\"Filter_" + filter.If + "\" onchange=\"" + this.ItemName.toUpperCase() + "_FilterList();\">";
+                    for (var o = 0; o < parts.length; o++) {                        
+                        res += "<option value=\"" + o + "\">" + parts[o] + "</option>";
+                    }
+
+                    res += "</select>";
+
+                    res += "</span>";
+                }
+                else if(filter.Type.toLowerCase() === "isnull") {
+                    var label = field.Label;
+                    var label1 = "Informat";
+                    var label2 = "No informat";
+
+                    if (HasPropertyValue(filter.Label)) {
+                        label = filter.Label;
+                    }
+
+                    if (label.trim() !== "") {
+                        label = "<label>" + label + "</label>:&nbsp;";
+                    }
+
+                    if (HasPropertyValue(filter.Options)) {
+                        if (filter.Options.indexOf('|') !== -1) {
+                            label1 = filter.Options.split('|')[0];
+                            label2 = filter.Options.split('|')[1];
+                        }
+                    }
+
+                    res += "<span style=\"margin-right:12px;\">";
+                    res += label;
+                    res += "<input type=\"checkbox\" id=\"" + field.Name + "_0\" style=\"margin:0!important;\" onclick=\"" + this.ItemName.toUpperCase() + "_FilterList()\">&nbsp;" + label1;
+                    res += "&nbsp;";
+                    res += "<input type=\"checkbox\" id=\"" + field.Name + "_1\" style=\"margin:0!important;\" onclick=\"" + this.ItemName.toUpperCase() + "_FilterList()\">&nbsp;" + label2;
+                    res += "</span>";
+                }
+                else if (filter.Type.toLowerCase() === "daterange") {
+                    var label = HasPropertyValue(filter.Label) ? filter.Label : field.Label;
+
+                    res += "<span style=\"margin-right:12px;\">";
+                    res += "<label style=\"float:left;\">" + label + ":&nbsp;</label>";
+                    res += "<span class=\"input-group date\" style=\"width:112px;float:left;\">";
+                    res += "  <input id=\"DateRealStart\" type=\"text\" class=\"form-control datepicker\" autocomplete=\"off\" style=\"width:85px;height:22px;\">";
+                    res += "  <span id =\"DateRealStartBtnDatepicker\" class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></span>";
+                    res += "</span>";
+                    res += "<span class=\"input-group date\" style=\"width:112px;float:left;\">";
+                    res += "  <input id=\"DateRealStart\" type=\"text\" class=\"form-control datepicker\" autocomplete=\"off\" style=\"width:85px;height:22px;\">";
+                    res += "  <span id =\"DateRealStartBtnDatepicker\" class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></span>";
+                    res += "</span>";
+                    res += "</span>";
+                }
+                else {
+                    if (field.Type == "FixedList") {
+                        var list = FixedLists[field.FixedListName];
+                        if (HasPropertyValue(filter.Type)) {
+                            if (filter.Type.toLowerCase() === "checkbox") {
+                                res += "<span style=\"margin-right:12px;\">";
+                                res += "<label>" + field.Label + "</label>:&nbsp;";
+                                for (var o = 1; o < list.length; o++) {
+                                    res += "<input type=\"checkbox\" id=\"" + field.Name + "_" + o + "\" style=\"margin:0!important;\"  onclick=\"" + this.ItemName.toUpperCase() + "_FilterList()\"/>&nbsp;" + list[o] + "&nbsp;";
+                                }
+                                res += "</span>";
+                            }
+                        }
+                        else {
+                            res += "<span><label>" + field.Label + "</label>:&nbsp;";
+                            res += " <select id=\"Filter_" + filter.DataProperty + "\" onchange=\"" + this.ItemName.toUpperCase() + "_FilterList();\">";
+                            for (var o = 0; o < list.length; o++) {
+                                res += "<option value=\"" + o + "\">" + list[o] + "</option>";
+                            }
+
+                            res += "</select>";
+                            res += "</span>";
+                        }
+                    }
+                    else if (IsFK(this.ItemDefinition, field.Name)) {
+                        res += "<span><label>" + field.Label + "</label>:&nbsp;";
+                        res += "<select id=\"Filter_" + filter.DataProperty + "\" onchange=\"" + this.ItemName.toUpperCase() + "_FilterList();\">";
+                        res += "<option value=\"-1\">" + Dictionary.Common_SelectOne + "</option>";
+                        var list = FK[field.Name.substr(0, field.Name.length - 2)].Data;
+                        for (var o = 0; o < list.length; o++) {
+                            if (list[o].Active) {
+                                res += "<option value=\"" + list[o].Id + "\">" + list[o].Description + "</option>";
+                            }
+                        }
+                        res += "</select>";
+                        res += "</span>";
+                    }
+                }                
+            }
+            
+            res += "      </div>";
+        }
+
+        return res;
+    }
 
     this.RenderHeader = function (itemDefinition, listDefinition, filtrable, tabId, widths, actionButtonsCount) {
         var res = "";

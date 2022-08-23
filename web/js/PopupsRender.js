@@ -76,7 +76,7 @@ function PopupRenderLoginAndContinue() {
         popup += "                            <i class=\"ace-icon fa fa-lock red fa-2x\"></i>";
         popup += "                        </div>";
         popup += "                        <div class=\"col-xs-10\"><p id=\"PopupLoginAndContinueMessage\">";
-        popup += "                           S'ha detectat una llarga durada d'inactivitat.<br />Introdueixi de nou la seva paraula de pas per a continuar.<br>";
+        popup += Dictionary.Core_Security_MaintainSession_Title;
         popup += "                        </p>";
         popup += "                        <table>";
         popup += "                           <tr><td style=\"padding:4px;\">Usuari:</td><td style=\"padding:4px;\"><strong> " + ApplicationUser.Profile.FullName + "</strong></td></tr>";
@@ -141,7 +141,7 @@ function _PopupLoginAndContinueCloseRelogin() {
     var password = $("#LAC").val();
 
     if (password === "") {
-        $("#PopupLoginAndContinueErrorMessage").html("Paraula de pas obligatòria");
+        $("#PopupLoginAndContinueErrorMessage").html(Dictionary.Core_Security_MaintainSession_PasswordRequired);
         return;
     }
 
@@ -159,7 +159,7 @@ function _PopupLoginAndContinueCloseRelogin() {
         }
         LAC--;
         $("#PopupLoginAndContinueBtnRelogin").html(Dictionary.Common_Accept + " - " + LAC);
-        $("#PopupLoginAndContinueErrorMessage").html("Número d'intents restants: " + LAC);
+        $("#PopupLoginAndContinueErrorMessage").html(Dictionary.Core_Security_MaintainSession_ExpiredAttempts + ": " + LAC);
         $("#LAC").val("");
     }
 }
@@ -190,7 +190,7 @@ function PopupLoginAndContinueCloseRelogin() {
                 }
                 LAC--;
                 $("#PopupLoginAndContinueBtnRelogin").html(Dictionary.Common_Accept + " - " + LAC);
-                $("#PopupLoginAndContinueErrorMessage").html("Número d'intents restants: " + LAC);
+                $("#PopupLoginAndContinueErrorMessage").html(Dictionary.Core_Security_MaintainSession_ExpiredAttempts + ": " + LAC);
                 $("#LAC").val("");
             }
         },
@@ -379,7 +379,7 @@ function PopupBAR_Save() {
     $("#PopupBAR_ErrorMessage").html("");
     if ($("#PopupBarDescription").val() === PopupBAR_Context.FormData.Description) {
 
-        $("#PopupBAR_ErrorMessage").html("<i class=\"fa fa-exclamation-circle\"></i>&nbsp;No hi ha canvis");
+        $("#PopupBAR_ErrorMessage").html("<i class=\"fa fa-exclamation-circle\"></i>&nbsp;" + Dictionary.Common_NoChanges);
         return false;
     }
 
@@ -458,7 +458,7 @@ function PopupBAR_DeleteConfirmed() {
             else {
                 var message = msg.d.MessageError;
                 if (msg.d.MessageError === "Exists") {
-                    message = "No es pot eliminar perque està en ús";
+                    message = Dictionary.Core_BAR_NoChanged;
                 }
                 PopupWarning(message);
             }

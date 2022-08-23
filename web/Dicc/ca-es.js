@@ -1,4 +1,4 @@
-// 19/08/2022
+// 23/08/2022
 var Dictionary =
 {
     "Añadir": "Afegir",
@@ -354,6 +354,7 @@ var Dictionary =
     "Common_No_Access_Message": "S´han registrat les següents dades per motius de seguretat",
     "Common_No_Access_Title": "No té accés l´element que intenta visualitzar",
     "Common_NoAlerts": "<strong>Felicitats!</strong><br />No hi ha cap alerta pendent",
+    "Common_NoChanges": "No hi ha canvis",
     "Common_NoData": "No hi ha dades",
     "Common_NoF12": "Només administradors tenen permitida aquesta acció",
     "Common_NoGrants": "Usuari sense permissos",
@@ -587,6 +588,7 @@ var Dictionary =
     "Core_BankAccount_Title_Main": "Compte principal",
     "Core_BankAccount_Title_NoMain": "Compte no principal",
     "Core_BankAccounts": "Comptes bancaris",
+    "Core_BAR_NoChanged": "No es pot eliminar perque està en ús",
     "Core_Bill": "Factura",
     "Core_Billing": "Facturació",
     "Core_Billing_BtnNewInvoice": "Crear factura proforma",
@@ -726,6 +728,9 @@ var Dictionary =
     "Core_Profile_NameFormat_FirstNameLastName": "Nom y 1er cognom",
     "Core_ScopeGroup_MenuLabel": "Grups d´àmbit",
     "Core_Security_CreateUser": "Crear usuari",
+    "Core_Security_MaintainSession_ExpiredAttempts": "Número d´intents restants",
+    "Core_Security_MaintainSession_PasswordRequired": "Paraula de pas obligatòria",
+    "Core_Security_MaintainSession_Title": "S´ha detectat una llarga durada d´inactivitat.<br />Introdueixi de nou la seva paraula de pas per a continuar.<br>",
     "Core_Security_MenuLabel": "Seguretat",
     "Core_SecurityGroup_Btn_Add": "Afegir grup",
     "Core_SecurityGroup_Btn_AddSecurityGroup": "Afegir grup",

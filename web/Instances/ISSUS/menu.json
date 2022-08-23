@@ -23,5 +23,6 @@
 	{ "Leaf": true, "Item": "Objective" },
 	{ "Leaf": true, "Item": "Indicador" },
 	{ "Leaf": true, "Item": "Auditory" },
-	{ "Leaf": true, "Item": "Risc" }
+	{ "Leaf": true, "Item": "Risc" },
+	{ "Leaf": true, "Item": "Oportunity" }
 ]

@@ -18,6 +18,8 @@
         var ItemDefinitionId = <%=this.ItemDefinitionId %>;
         var ItemDefinitions = LocalStorageGetJson("ItemDefinitions");
         var ListId = "<%= this.ListId %>";
+        var ListHeightDelta = 237;
+        <%=this.FK %>
 
         var ItemDefinition = ItemDefinitionById(ItemDefinitionId);
         var ListDefinition = ItemListById(ItemDefinition, ListId);
@@ -47,11 +49,18 @@
         });
 
         function ResizeWorkArea() {
-            $(".panel-body").height($(window).height() - 237);
+            $(".panel-body").height($(window).height() - ListHeightDelta);
         }
 
         window.onresize = function () {
             ResizeWorkArea();
-        }        
+        }
+
+        if (typeof <%= this.ItemName.ToUpperInvariant()%>_List_CustomActions === "function") {
+            <%= this.ItemName.ToUpperInvariant()%>_List_CustomActions();
+        } else {
+            console.log("No custom actions", "<%= this.ItemName.ToUpperInvariant()%>_List_CustomActions");
+        }
+
     </script>
 </asp:Content>

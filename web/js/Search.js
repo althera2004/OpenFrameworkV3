@@ -54,6 +54,9 @@ function filterFast(a, pattern, filter, extraFilter) {
                 if (filterc.Value === "ISNULL") {
                     return item[filterc.Field] === null;
                 }
+                else if(filterc.Value === "NOTNULL") {
+                    return item[filterc.Field] !== null;
+                }
                 else if (filterc.Comparer === "BEFORE") {
                     return item[filterc.Field] < filterc.Value
                 }

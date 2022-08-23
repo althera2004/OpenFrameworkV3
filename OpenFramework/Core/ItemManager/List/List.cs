@@ -1,5 +1,5 @@
 ﻿// --------------------------------
-// <copyright file="SecurityConfiguration.cs" company="OpenFramework">
+// <copyright file="List.cs" company="OpenFramework">
 //     Copyright (c) 2013 - OpenFramework. All rights reserved.
 // </copyright>
 // <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
@@ -52,6 +52,10 @@ namespace OpenFrameworkV3.Core.ItemManager.ItemList
         /// <summary>List layout</summary>
         [JsonProperty("Layout")]
         private string layout;
+
+        /// <summary>List of actions of the form</summary>
+        [JsonProperty("Actions")]
+        private readonly List<ListAction> actions;
 
         /// <summary>Gets an empty list definition</summary>
         [JsonIgnore]
@@ -297,6 +301,21 @@ namespace OpenFrameworkV3.Core.ItemManager.ItemList
 
             res.columns = columns.ToArray();
             return res;
+        }
+
+        /// <summary>Gets form actions</summary>
+        [JsonIgnore]
+        public ReadOnlyCollection<ListAction> Actions
+        {
+            get
+            {
+                if (this.actions == null)
+                {
+                    return new ReadOnlyCollection<ListAction>(new List<ListAction>());
+                }
+
+                return new ReadOnlyCollection<ListAction>(this.actions);
+            }
         }
     }
 }

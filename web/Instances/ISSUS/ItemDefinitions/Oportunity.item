@@ -1,11 +1,11 @@
 ﻿{
-    "Id": 18,
-    "ItemName": "Risc",
-	"Description": "Desenvolupament",
+    "Id": 31,
+    "ItemName": "Oportunity",
+	"Description": "Oportunitat",
     "Layout": {
-        "Icon": "fad fa-exclamation-circle",
-        "Label": "Risc",
-        "LabelPlural": "Riscos",
+        "Icon": "fad fa-star",
+        "Label": "Oportunitat",
+        "LabelPlural": "Oportunitats",
         "Description": {
             "Pattern": "{0}-{1}",
             "Fields": [
@@ -19,25 +19,27 @@
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
 		{ "Name": "Description", "Label": "Descripció", "Type": "text", "Length": 100, "Required": true },
-		{ "Name": "Code", "Label": "Codi", "Type": "long" },
-		{ "Name": "NormaId", "Label": "Norma", "Type": "long" },
-		{ "Name": "InitialValue", "Label": "Valor incial", "Type": "int" },
-		{ "Name": "DateStart", "Label": "Inici", "Type": "datetime" },
-		{ "Name": "ProcessId", "Label": "Procés", "Type": "long" },
-		{ "Name": "Assumed", "Label": "Assumit", "Type": "boolean" },
-		{ "Name": "PreviousBusinessRiskId", "Label": "Anterior", "Type": "long" },
-		{ "Name": "Causes", "Label": "Causes", "Type": "textarea" },
+		{ "Name": "Code", "Label": "Codi", "Type": "long", "Required": true },
 		{ "Name": "ItemDescription", "Label": "Descripció", "Type": "textarea" },
-		{ "Name": "StartControl", "Label": "Control", "Type": "textarea" },
+		{ "Name": "StartControl", "Label": "Control", "Type": "textarea"},
 		{ "Name": "Notes", "Label": "Notes", "Type": "textarea" },
-		{ "Name": "Probability", "Label": "Probabilitat", "Type": "int" },
-		{ "Name": "Severity", "Label": "Severitat", "Type": "int" },
+		{ "Name": "ApplyAction", "Label": "Aplica acció", "Type": "boolean" },
+		{ "Name": "DateStart", "Label": "Inici", "Type": "datetime" },
+		{ "Name": "Causes", "Label": "Causes", "Type": "textarea" },
+		{ "Name": "Cost", "Label": "Cost", "Type": "int" },
+		{ "Name": "Impact", "Label": "Impacte", "Type": "int" },
 		{ "Name": "Result", "Label": "Resultat", "Type": "int" },
-		{ "Name": "FinalProbability", "Label": "Probabilitat", "Type": "int" },
-		{ "Name": "FinalSeverity", "Label": "Severitat", "Type": "int" },
+		{ "Name": "ProcessId", "Label": "Procés", "Type": "long", "FK": true },
+		{ "Name": "NormaId", "Label": "Norma", "Type": "long", "FK": true },
+		{ "Name": "AnulateBy", "Label": "Responsable", "Type": "long" },
+		{ "Name": "AnulateDate", "Label": "Data", "Type": "datetime"},
+		{ "Name": "AnulateReason", "Label": "Motiu", "Type": "textarea" },
+		{ "Name": "FinalCost", "Label": "Cost", "Type": "int" },
+		{ "Name": "FinalImpact", "Label": "Impacte", "Type": "int" },
 		{ "Name": "FinalResult", "Label": "Resultat", "Type": "int" },
+		{ "Name": "FinalApplyAction", "Label": "Aplica acció", "Type": "boolean" },
 		{ "Name": "FinalDate", "Label": "Finalització", "Type": "datetime" },
-		{ "Name": "ApplyAction", "Label": "Aplica acció", "Type": "boolean" }
+		{ "Name": "PreviousOportunityId", "Type": "long" }
     ],
     "Lists": [
         {
@@ -55,7 +57,7 @@
             "Parameters": [ {"Name": "Tipo", "Value": "1"}, {"Name": "Active", "Value": "1"} ],
             "Sorting": {"Index": 1, "SortingType": "asc"},
 			"Actions": [
-				{ "Label": "Imprimir", "Icon": "fal fa-file-pdf", "Action": "RISC_List_Print" }
+				{ "Label": "Imprimir", "Icon": "fal fa-file-pdf", "Action": "OPORTUNITY_List_Print" }
 			]
         }
 	],

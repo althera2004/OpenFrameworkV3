@@ -13,8 +13,6 @@
     });
 }
 
-//tdActions += "    <a id=\"BtnCustomAction-" + button.Name + "-" + data.Id + "\" class=\"customAction actionBtn-" + button.Name + " ace-icon " + icon + " bigger-120\" id =\"" + button.Function + "_" + data.Id + "\" onclick=\"" + button.Function + "(this);\"" + color + "></a>";
-
 function ListButtonRow(dataId, icon, color, action, title, name) {
     var customAction = false;
     if (typeof name !== "undefined") {
@@ -256,8 +254,7 @@ function GroupButtonUrlClicked(sender) {
     }
 }
 
-function InitSliders() {
-    
+function InitSliders() {    
     $(".simple-slider").each(function (index) {
         var id = $(this)[0].id;
         var min = $("#" + id).data("min");

@@ -1,1 +1,2 @@
-﻿
+﻿function INDICADOR_FilterList(){
+}

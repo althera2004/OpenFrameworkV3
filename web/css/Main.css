@@ -287,3 +287,8 @@ textarea.form-control { font-size:12px; }
 
 .securitytablerow { cursor:pointer; }
 .securitytablerow:hover { background-color:#d1e7f7; color:#3498db;}
+
+.filter { font-weight:normal; background-color: #e8f3fb!important;border-bottom:1px solid #3498db;padding:8px 12px;}
+.filter span { margin-right:8px; }
+.filter select { padding:0; height:25px; }
+.filter label { font-weight:bold; }

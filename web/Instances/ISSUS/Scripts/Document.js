@@ -9,6 +9,10 @@ function DOCUMENT_NewRevision() {
 	alert("DOCUMENT_NewRevision");
 }
 
+function DOCUMENT_ToArchive() {
+	alert("DOCUMENT_ToArchive");
+}
+
 function DOCUMENT_OriginChanged() {
 	if($("#RB_Origin_1").prop("checked") === true){
 		$("#DocumentProcedenciaId_Label").invisible();

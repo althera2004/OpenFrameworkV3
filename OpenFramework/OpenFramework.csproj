@@ -246,6 +246,7 @@
     <Compile Include="Core\ItemManager\List\Column.cs" />
     <Compile Include="Core\ItemManager\List\DataFormatList.cs" />
     <Compile Include="Core\ItemManager\List\List.cs" />
+    <Compile Include="Core\ItemManager\List\ListAction.cs" />
     <Compile Include="Core\ItemManager\List\ListButton.cs" />
     <Compile Include="Core\ItemManager\List\ListParameter.cs" />
     <Compile Include="Core\ItemManager\List\Sorting.cs" />

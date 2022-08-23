@@ -44,7 +44,11 @@
                 { "DataProperty": "Amount", "Width": 90, "Orderable": true }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
-            "Sorting": {"Index": 1, "SortingType": "asc"} 
+            "Sorting": {"Index": 1, "SortingType": "asc"},
+			"Filter": [
+				{ "DataProperty": "DatePreview", "Label": "Període", "Type": "DateRange" },
+				{ "DataProperty": "Status", "Type": "CheckBox" }
+			]
         }
 	],
 	"Forms": [
