@@ -47,11 +47,12 @@
                 { "DataProperty": "Ubicacio", "Width": 200 },
                 { "DataProperty": "RecordType", "Width": 300, "Search": true },
 				{ "DataProperty": "EmployeeId", "Width": 150, "Search": true },
-                { "DataProperty": "Code", "HiddenList": true }
+                { "DataProperty": "Code", "HiddenList": true },
+				{ "DataProperty": "FInactivate", "HiddenList": true }
             ],
             "Sorting": {"Index": 1, "SortingType": "asc"},
 			"Filter": [
-				{ "Id": "type", "Type": "CustomCheckBox","Label": "Registres",  "Options": "Calibratge|Verificació|Manteniment" },
+				{ "Id": "RecordType", "Type": "CustomCheckBox", "Label": "Registres", "Options": "Calibratge|Verificació|Manteniment", "GetValue": "EQUIPMENT_RecordTypeFilter" },
 				{ "DataProperty": "FInactivate", "Type": "ISNULL", "Label": "Estat", "Options": "Actius|De baixa" }
 			]
         }

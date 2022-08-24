@@ -7,8 +7,9 @@
         "Label": "Acció",
         "LabelPlural": "Accions",
         "Description": {
-            "Pattern": "{0}",
+            "Pattern": "{0}-{1}",
             "Fields": [
+                { "Name": "Codi" },
                 { "Name": "Name" }
             ]
         },
@@ -17,17 +18,32 @@
 	"ForeignValues": [ { "ItemName": "Customer" },{ "ItemName": "Provider" },{ "ItemName": "Department" },{ "ItemName": "Incident" },{ "ItemName": "Risc" },{ "ItemName": "Oportunity" } ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
-		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150 },
-		{ "Name": "Description", "Label": "Descripció", "Type": "textarea" },
-		{ "Name": "ActionType", "Label": "Tipus", "Type": "fixedlist", "FixedListName": "ActionType" },
-		{ "Name": "Origin", "Label": "Origen", "Type": "fixedlist", "FixedListName": "ActionOrigin" },
-		{ "Name": "ReporterType", "Label": "Origen", "Type": "fixedlist", "FixedListName": "ReporterType" },
-		{ "Name": "DepartmentId", "Label": "Departament", "Type": "long", "FK": true },
-		{ "Name": "ProviderId", "Label": "Proveïdor", "Type": "long", "FK": true },
-		{ "Name": "CustomerId", "Label": "Client", "Type": "long", "FK": true },
-		{ "Name": "IncidentId", "Label": "Incidència", "Type": "long", "FK": true },
-		{ "Name": "RiscId", "Label": "Risc", "Type": "long", "FK": true },
-		{ "Name": "OportunityId", "Label": "Oportunitat", "Type": "long", "FK": true }
+		{ "Name": "ActionType", "Label": "Tipus", "Type": "FixedList", "FixedListName": "ActionType" },
+		{ "Name": "Code", "Label": "Codi", "Type": "long" },
+		{ "Name": "Description", "Label": "Descripció", "Type": "text", "Length": 100, "Required": true },
+		{ "Name": "Origin", "Label": "Origen", "Type": "FixedList", "FixedListName": "ActionOrigin" },
+		{ "Name": "ReporterType", "Label": "Reportat", "Type": "FixedList", "FixedListName": "ActionReporter" },
+		{ "Name": "DepartmentId", "Label": "Departament", "Type": "long" },
+		{ "Name": "ProviderId", "Label": "Proveïdor", "Type": "long" },
+		{ "Name": "CustomerId", "Label": "Client", "Type": "long" },
+		{ "Name": "IncidentId", "Label": "Incidència", "Type": "long" },
+		{ "Name": "RiscId", "Label": "Risc", "Type": "long" },
+		{ "Name": "ObjetiveId", "Label": "Objectiu", "Type": "long" },
+		{ "Name": "OportunityId", "Label": "Oportunitat", "Type": "long" },
+		{ "Name": "AuditoryId", "Label": "Auditoria", "Type": "long" },
+		{ "Name": "WhatHappend", "Label": "Què ha passat", "Type": "textarea" },
+		{ "Name": "WhatHappendBy", "Label": "Responsable", "Type": "long" },
+		{ "Name": "WhatHappendOn", "Label": "Data", "Type": "DateTime" },
+		{ "Name": "Causes", "Label": "Causes", "Type": "textarea" },
+		{ "Name": "CausesBy", "Label": "Responsable", "Type": "long" },
+		{ "Name": "CausesOn", "Label": "Data", "Type": "DateTime" },
+		{ "Name": "Actions", "Label": "accions", "Type": "textarea" },
+		{ "Name": "ActionsBy", "Label": "Responsable", "Type": "long" },
+		{ "Name": "ActionsOn", "Label": "Data", "Type": "DateTime" },
+		{ "Name": "Monitoring", "Label": "Seguiment / evaluació de l'eficàcia", "Type": "textarea" },
+		{ "Name": "Notes", "Label": "Notes", "Type": "textarea" },
+		{ "Name": "ClosedBy", "Label": "Responsable", "Type": "long" },
+		{ "Name": "ClosedOn", "Label": "Data", "Type": "DateTime" }
     ],
     "Lists": [
         {
@@ -54,7 +70,9 @@
 					"Rows": [
 						{
 							"Fields": [
-								{ "Name": "Name" }
+								{ "Name": "Codi" },
+								{ "Name": "Name", "ColSpan": 2 },
+								{ "Type": "Blank" }
 							]
 						}
 					]
@@ -66,6 +84,21 @@
 						{
 							"Fields": [
 								{ "Name": "Description" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Origin" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "ActionType" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "ReporterType" }
 							]
 						}
 					]

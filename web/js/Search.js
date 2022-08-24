@@ -71,6 +71,9 @@ function filterFast(a, pattern, filter, extraFilter) {
                 else if (filterc.Comparer === "CONTAINS") {
                     return item[filterc.Field].indexOf(filterc.Value) !== -1;
                 }
+                else if (filterc.Comparer === "BINARYCONTAINS") {
+                    return (filterc.Value.toString() & item[filterc.Field].toString()) !== 0;
+                }
                 else {
                     if (typeof filterc.Subfield !== "undefined") {
                         return item[filterc.Field][filterc.Subfield] === filterc.Value;

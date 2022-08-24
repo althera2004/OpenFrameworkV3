@@ -267,21 +267,15 @@ function InitSliders() {
         }
 
         noUiSlider.create(slider, {
-            start: [-1],
-            //tooltips: [
-            //    wNumb({ decimals: 0 })
-            //],
-            connect: 'lower',
-            step: 1,
-            range: {
-                'min': [0],
-                'max': [26]
+            "start": [-1],
+            "connect": "lower",
+            "step": 1,
+            "range": {
+                'min': [min],
+                'max': [max]
             },
-            pips: {
-                filter: filterPips,
-                mode: 'steps',
-                density: 10,
-                stepped: true
+            "pips": {
+                "mode": "steps"
             }
         });
 
@@ -305,6 +299,11 @@ function InitSliders() {
 
             if(CanUpdate === true) {
                 ItemUpdateData(realId);
+            }
+
+            var callback = eval("typeof " + id + "_Changed");
+            if (callback === "function") {
+                window[id + "_Changed"]();
             }
         });
     });

@@ -524,7 +524,7 @@
                             res += RenderFieldCheckBox(field, finalSpan, fieldForm);
                         }
                         else if (HasLayout(fieldForm, "radio")) {
-                            RenderFieldRadioButton(field, finalSpan, fieldForm);
+                            res += RenderFieldRadioButton(field, finalSpan, fieldForm);
                         }
                         else {
                             res += RenderFieldCheckBox(field, finalSpan, fieldForm);

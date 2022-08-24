@@ -1,5 +1,3 @@
-//const search = require("core-js/library/fn/symbol/search");
-
 var ListRenderTopFirst = 100;
 
 function PageList(config) {
@@ -10,7 +8,8 @@ function PageList(config) {
     this.ItemDefinition = ItemDefinitionByName(config.ItemName);
     this.CustomAjaxSource = config.ListDefinition.CustomAjaxSource;
     this.Parameters = config.ListDefinition.Parameters;
-    this.Filter = GetFilter(config.ListDefinition.Columns); //config.Filter;
+    this.Filter = GetFilter(config.ListDefinition.Columns);
+    this.ExtraFilter = [];
     this.ItemName = this.ItemDefinition.ItemName;
     this.ListId = this.ListDefinition.Id;
     this.ShowHiddenData = false;
@@ -23,6 +22,64 @@ function PageList(config) {
     this.TabId = typeof config.TabId !== "undefined" ? config.TabId : "NoTab";
 
     // --------------------- RENDERING
+    this.Search = function () {
+        console.log("nav-search-input", $("#nav-search-input").val());
+        this.ExtraFilter = [];
+        if (HasArrayValues(this.ListDefinition.Filter)) {
+            for (var x = 0; x < this.ListDefinition.Filter.length; x++) {
+                var criteria = this.ListDefinition.Filter[x];
+
+                console.log(criteria);
+
+                if (criteria.Type === '') {
+                    var value = $("#Filter_" + criteria.DataProperty).val() * 1;
+                    if (value > 0) {
+                        ListSources[0]["ExtraFilter"].push({ "Field": "" + criteria.DataProperty, "Subfield": "Id", "Value": value });
+                    }
+                }
+                else if (criteria.Type.toLowerCase() === "isnull") {
+                    var active = $("#" + criteria.DataProperty + "_0").prop("checked");
+                    var inactive = $("#" + criteria.DataProperty + "_1").prop("checked");
+
+                    if (active == false || inactive == false) {
+                        if (active === true) {
+                            ListSources[0]["ExtraFilter"].push({ "Field": "" + criteria.DataProperty + "", "Value": "ISNULL" });
+                        }
+                        if (inactive === true) {
+                            ListSources[0]["ExtraFilter"].push({ "Field": "" + criteria.DataProperty + "", "Value": "NOTNULL" });
+                        }
+                    }
+                }
+                else if (criteria.Type.toLowerCase() === "checkbox") {
+                    // total cheboxes
+                    var total = $(".Filter_" + criteria.DataProperty).length;
+                    var selected = $(".Filter_" + criteria.DataProperty + ":checked").length;
+                    if (selected > 0 && selected < total) {
+                        for (var x = 0; x < $(".Filter_" + criteria.DataProperty).length; x++) {
+                            if ($("#Filter_" + criteria.DataProperty + "_" + (x + 1)).prop("checked") === true) {
+                                ListSources[0]["ExtraFilter"].push({ "Field": criteria.DataProperty, "Value": (x + 1) });
+                            }
+                        }
+                    }
+                }
+                else if (criteria.Type.toLowerCase() === "customcheckbox") {
+                    var value = null;
+                    if (HasPropertyValue(criteria.GetValue)) {
+                        var typeofValue = eval("typeof " + criteria.GetValue);
+                        if (typeofValue === "function") {
+                            value = window[criteria.GetValue]();
+                        }
+                    }
+
+                    if (value !== null) {
+                        ListSources[0]["ExtraFilter"].push({ "Field": criteria.Id, "Value": value, "Comparer": "BINARYCONTAINS" });
+                    }
+                }
+            }
+        }
+
+        SearchList();
+    }
 
     this.ButtonAddLabel = function () {
         var res = this.ListDefinition.ButtonAddLabel;
@@ -299,7 +356,7 @@ function PageList(config) {
                     res += label;
 
                     for (var p = 0; p < parts.length; p++) {
-                        res += "<input type=\"checkbox\" id=\"" + filter.Id + "_" + p + "\" style=\"margin:0!important;\" onclick=\"" + this.ItemName.toUpperCase() + "_FilterList()\">&nbsp;" + parts[p];
+                        res += "<input type=\"checkbox\" class=\"Filter_" + filter.Id + "\" id=\"Filter_" + filter.Id + "_" + p + "\" style=\"margin:0!important;\" onclick=\"FilterList('" + this.ListId + "','" + this.ItemName + "');\">&nbsp;" + parts[p];
                         res += "&nbsp;";
                     }
 
@@ -316,7 +373,7 @@ function PageList(config) {
                     res += "<span style=\"margin-right:12px;\">";
                     res += label;
 
-                    res += " <select id=\"Filter_" + filter.If + "\" onchange=\"" + this.ItemName.toUpperCase() + "_FilterList();\">";
+                    res += " <select id=\"Filter_" + filter.If + "\" onchange=\"FilterList('" + this.ListId + "','" + this.ItemName + "');\">";
                     for (var o = 0; o < parts.length; o++) {                        
                         res += "<option value=\"" + o + "\">" + parts[o] + "</option>";
                     }
@@ -347,9 +404,9 @@ function PageList(config) {
 
                     res += "<span style=\"margin-right:12px;\">";
                     res += label;
-                    res += "<input type=\"checkbox\" id=\"" + field.Name + "_0\" style=\"margin:0!important;\" onclick=\"" + this.ItemName.toUpperCase() + "_FilterList()\">&nbsp;" + label1;
+                    res += "<input type=\"checkbox\" id=\"" + field.Name + "_0\" style=\"margin:0!important;\" onclick=\"FilterList('" + this.ListId + "','" + this.ItemName + "');\">&nbsp;" + label1;
                     res += "&nbsp;";
-                    res += "<input type=\"checkbox\" id=\"" + field.Name + "_1\" style=\"margin:0!important;\" onclick=\"" + this.ItemName.toUpperCase() + "_FilterList()\">&nbsp;" + label2;
+                    res += "<input type=\"checkbox\" id=\"" + field.Name + "_1\" style=\"margin:0!important;\" onclick=\"FilterList('" + this.ListId + "','" + this.ItemName + "');\">&nbsp;" + label2;
                     res += "</span>";
                 }
                 else if (filter.Type.toLowerCase() === "daterange") {
@@ -375,14 +432,14 @@ function PageList(config) {
                                 res += "<span style=\"margin-right:12px;\">";
                                 res += "<label>" + field.Label + "</label>:&nbsp;";
                                 for (var o = 1; o < list.length; o++) {
-                                    res += "<input type=\"checkbox\" id=\"" + field.Name + "_" + o + "\" style=\"margin:0!important;\"  onclick=\"" + this.ItemName.toUpperCase() + "_FilterList()\"/>&nbsp;" + list[o] + "&nbsp;";
+                                    res += "<input type=\"checkbox\" class=\"Filter_" + field.Name + "\" id=\"Filter_" + field.Name + "_" + o + "\" style=\"margin:0!important;\"  onclick=\"FilterList('" + this.ListId + "','" + this.ItemName + "');\" />&nbsp;" + list[o] + "&nbsp;";
                                 }
                                 res += "</span>";
                             }
                         }
                         else {
                             res += "<span><label>" + field.Label + "</label>:&nbsp;";
-                            res += " <select id=\"Filter_" + filter.DataProperty + "\" onchange=\"" + this.ItemName.toUpperCase() + "_FilterList();\">";
+                            res += " <select id=\"Filter_" + filter.DataProperty + "\" onchange=\"FilterList('" + this.ListId + "','" + this.ItemName + "');\">";
                             for (var o = 0; o < list.length; o++) {
                                 res += "<option value=\"" + o + "\">" + list[o] + "</option>";
                             }
@@ -393,8 +450,8 @@ function PageList(config) {
                     }
                     else if (IsFK(this.ItemDefinition, field.Name)) {
                         res += "<span><label>" + field.Label + "</label>:&nbsp;";
-                        res += "<select id=\"Filter_" + filter.DataProperty + "\" onchange=\"" + this.ItemName.toUpperCase() + "_FilterList();\">";
-                        res += "<option value=\"-1\">" + Dictionary.Common_SelectOne + "</option>";
+                        res += "<select id=\"Filter_" + filter.DataProperty + "\" onchange=\"FilterList('" + this.ListId + "','" + this.ItemName + "');\">";
+                        res += "<option value=\"-1\">" + Dictionary.Common_All + "</option>";
                         var list = FK[field.Name.substr(0, field.Name.length - 2)].Data;
                         for (var o = 0; o < list.length; o++) {
                             if (list[o].Active) {
@@ -2118,4 +2175,11 @@ function GetItemById(pageList, itemId) {
     }
 
     return null;
+}
+
+function FilterList(listId, itemName) {
+    var list = PageListById(itemName, listId);
+    if (list !== null) {
+        list.Search();
+    }
 }

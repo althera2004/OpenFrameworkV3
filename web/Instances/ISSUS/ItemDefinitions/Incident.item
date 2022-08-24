@@ -10,7 +10,7 @@
             "Pattern": "{0}-{1}",
             "Fields": [
                 { "Name": "Code" },
-                { "Name": "Name" }
+                { "Name": "Description" }
             ]
         },
         "EditionType": "inline"
@@ -18,7 +18,7 @@
 	"ForeignValues": [ {"ItemName": "Customer" }, {"ItemName": "Provider" }, {"ItemName": "Department" } ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
-		{ "Name": "Name", "Label": "Nom", "Type": "texxt", "Length": 200 },
+		{ "Name": "Description", "Label": "Nom", "Type": "texxt", "Length": 100 },
 		{ "Name": "Code", "Label": "Codi", "Type": "int" },
 		{ "Name": "CurtomerId", "Label": "Client", "Type": "FixedList", "FixedListName": "IncidenciaTipo" },
 		{ "Name": "ProviderId", "Label": "Proveïdor", "Type": "long" },
@@ -27,7 +27,7 @@
     ],
     "Lists": [
         {
-            "Id": "Incidencias",
+            "Id": "Custom",
             "FormId": "Custom",
             "Layout": 1,
             "EditAction": "FormPage",

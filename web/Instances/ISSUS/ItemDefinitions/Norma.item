@@ -19,7 +19,7 @@
         { "Name": "Id", "Type": "long", "Required": true },
 		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 20 },
 		{ "Name": "Notes", "Label": "Notes", "Type": "textarea" },
-		{ "Name": "IPR", "Label": "IPR", "Type": "range", "Values": [1,26] }
+		{ "Name": "IPR", "Label": "IPR", "FK": true, "Type": "range", "Values": [1,26] }
     ],
     "Lists": [
         {

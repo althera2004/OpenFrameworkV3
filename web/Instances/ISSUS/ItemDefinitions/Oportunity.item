@@ -54,7 +54,7 @@
                 { "DataProperty": "NormaId", "Width": 200 },
                 { "DataProperty": "Result", "Width": 70 }
             ],
-            "Parameters": [ {"Name": "Tipo", "Value": "1"}, {"Name": "Active", "Value": "1"} ],
+            "Parameters": [ {"Name": "Active", "Value": "1"} ],
             "Sorting": {"Index": 1, "SortingType": "asc"},
 			"Actions": [
 				{ "Label": "Imprimir", "Icon": "fal fa-file-pdf", "Action": "OPORTUNITY_List_Print" }

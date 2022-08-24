@@ -854,6 +854,7 @@ function PopupLoginAndContinue() {
     $("#LauncherPopupLoginAndContinue").click();
     $("#PopupLoginAndContinue .close").remove();
     $("#LAC").val("");
+    $("#LAC").focus();
     $("#PopupLoginAndContinueBtnRelogin").html(Dictionary.Common_Accept);
     LAC = 3;
     popupContext.LoginAndContinue = true;

@@ -2,14 +2,14 @@
     "Id": 18,
     "ItemName": "Risc",
 	"Description": "Desenvolupament",
+	"Features": { "Attachs": true },
     "Layout": {
         "Icon": "fad fa-exclamation-circle",
         "Label": "Risc",
         "LabelPlural": "Riscos",
         "Description": {
-            "Pattern": "{0}-{1}",
+            "Pattern": "{1}",
             "Fields": [
-                { "Name": "Code" },
                 { "Name": "Description" }
             ]
         },
@@ -18,8 +18,8 @@
 	"ForeignValues": [ {"ItemName": "Norma" }, {"ItemName": "Process" }, {"ItemName": "Employee" } ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
-		{ "Name": "Description", "Label": "Descripció", "Type": "text", "Length": 100, "Required": true },
 		{ "Name": "Code", "Label": "Codi", "Type": "long" },
+		{ "Name": "Description", "Label": "Descripció", "Type": "text", "Length": 100, "Required": true },
 		{ "Name": "NormaId", "Label": "Norma", "Type": "long" },
 		{ "Name": "InitialValue", "Label": "Valor incial", "Type": "int" },
 		{ "Name": "DateStart", "Label": "Inici", "Type": "datetime" },
@@ -30,8 +30,8 @@
 		{ "Name": "ItemDescription", "Label": "Descripció", "Type": "textarea" },
 		{ "Name": "StartControl", "Label": "Control", "Type": "textarea" },
 		{ "Name": "Notes", "Label": "Notes", "Type": "textarea" },
-		{ "Name": "Probability", "Label": "Probabilitat", "Type": "int" },
-		{ "Name": "Severity", "Label": "Severitat", "Type": "int" },
+		{ "Name": "Probability", "Label": "Probabilitat", "Type": "range", "Values": [1,5] },
+		{ "Name": "Severity", "Label": "Severitat", "Type": "range", "Values": [1,5] },
 		{ "Name": "Result", "Label": "Resultat", "Type": "int" },
 		{ "Name": "FinalProbability", "Label": "Probabilitat", "Type": "int" },
 		{ "Name": "FinalSeverity", "Label": "Severitat", "Type": "int" },
@@ -48,11 +48,11 @@
 			"Columns": [
                 { "DataProperty": "DateStart", "Width": 90   },
                 { "DataProperty": "Description" },
-                { "DataProperty": "ProcessId", "Width": 100 },
-                { "DataProperty": "NormaId", "Width": 200 },
-                { "DataProperty": "Result", "Width": 70 }
+                { "DataProperty": "ProcessId", "Width": 150 },
+                { "DataProperty": "NormaId", "Width": 150 },
+                { "DataProperty": "Result", "Label": "Actual", "Width": 70 }
             ],
-            "Parameters": [ {"Name": "Tipo", "Value": "1"}, {"Name": "Active", "Value": "1"} ],
+            "Parameters": [ {"Name": "Active", "Value": "1"} ],
             "Sorting": {"Index": 1, "SortingType": "asc"},
 			"Actions": [
 				{ "Label": "Imprimir", "Icon": "fal fa-file-pdf", "Action": "RISC_List_Print" }
@@ -71,20 +71,69 @@
 						{
 							"Fields": [
 								{ "Name": "Code" },
-								{ "Name": "Title" }
+								{ "Name": "Description", "ColSpan": 2 },
+								{ "Name": "DateStart" }
 							]
 						}
 					]
 				},
 				{
 					"Id": "basic",
-					"Label": "dades basiques",
+					"Label": "Situació inicial",
 					"Rows": [
 						{
 							"Fields": [
-								{ "Name": "DateStart" },
 								{ "Name": "NormaId" },
 								{ "Name": "ProcessId" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "ItemDescription", "Layout": "Splited" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Causes", "Layout": "Splited" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "StartControl", "Layout": "Splited" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Notes", "Layout": "Splited" }
+							]
+						},
+						{
+							"Label": "Valoració inicial",
+							"Fields": [
+								{ "Name": "Probability" },
+								{ "Name": "Severity" },
+								{ "Name": "Result" },
+								{ "Type": "Free", "Id": "IPR" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "ApplyAction", "Layout": "Radio" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "final",
+					"Label": "Situació final",
+					"Rows": [
+						{
+							"Label": "Valoració inicial",
+							"Fields": [
+								{ "Name": "FinalProbability" },
+								{ "Name": "FinalSeverity" },
+								{ "Name": "FinalResult" },
+								{ "Type": "Free", "Id": "FinalIPR" }
 							]
 						}
 					]
