@@ -103,6 +103,43 @@ function PageList(config) {
         res += "      <span id=\"" + this.ComponentId + "_ListTitle\">" + Title + "</span>";
         res += "      <div class=\"panel-tools\">";
 
+        if (HasPropertyValue(this.ListDefinition.Export)) {
+            var exportActions = this.ListDefinition.Export.split('|');
+            var extraExport = [];
+            for (var a = 0; a < exportActions.length; a++) {
+                var exportAction = exportActions[a];
+
+                if (exportAction === "PDF") {
+                    res += "    <a data-action=\"add\" class=\"TableInFormAction\" id=\"BtnExport_PDF\" onclick=\"List_export('PDF');\">";
+                    res += "     <i class=\"ace-icon fa fa-file-pdf\"></i>&nbsp;" + Dictionary.Common_ListPdf;
+                    res += "    </a>";
+                    res += " | ";
+                }
+                else {
+                    extraExport.push(exportAction);
+                }
+            }
+
+            if (extraExport.length === 1) {
+                res += "    <a data-action=\"add\" class=\"TableInFormAction\" id=\"BtnExport_" + extraExport[0] + "\" onclick=\"List_export('" + extraExport[0] +"');\">";
+                res += "      Exportar " + extraExport[0];
+                res += "    </a>";
+                res += " | ";
+            }
+            else if (extraExport.length > 1) {
+                res += "<a class=\"TableInFormAction dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\">";
+                res += "    Exportar";
+                res += "    <i class=\"ace-icon fa fa-chevron-down icon-on-right\"></i>";
+                res += "</a>";
+                res += "<ul class=\"dropdown-menu dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close\">";
+                for (var x = 0; x < extraExport.length; x++) {
+                    res += "    <li><a  id=\"BtnExport_" + extraExport[x] + "\" onclick=\"List_export('" + extraExport[x] + "');\">Exportar " + extraExport[x] + "</a></li>";
+                }
+                res += "</ul>";
+                res += " | ";
+            }
+        }
+
         if (HasArrayValues(this.ListDefinition.Actions)) {
             for (var a = 0; a < this.ListDefinition.Actions.length; a++) {
                 var action = this.ListDefinition.Actions[a];

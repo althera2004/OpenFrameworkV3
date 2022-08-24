@@ -42,6 +42,7 @@
             "FormId": "Custom",
             "Layout": 1,
             "EditAction": "FormPage",
+			"Export": "PDF",
 			"Columns": [
                 { "DataProperty": "Name", "Linkable": true,"Orderable": true, "Search": true, "RenderData": "Equipment_Name_Column" },
                 { "DataProperty": "Ubicacio", "Width": 200 },

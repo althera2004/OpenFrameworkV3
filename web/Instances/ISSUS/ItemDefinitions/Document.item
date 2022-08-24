@@ -41,6 +41,7 @@
             "FormId": "Custom",
             "Layout": 1,
             "EditAction": "FormPage",
+			"Export": "PDF|CSV|Excel|SAP",
 			"Columns": [
                 { "DataProperty": "Code", "Width": 100, "Search": true, "Orderable": true },
                 { "DataProperty": "Name", "Search": true, "Orderable": true },
@@ -51,9 +52,6 @@
                 { "DataProperty": "FAlta", "Width": 90 },
                 { "DataProperty": "FInactivate", "HiddenList": true }
             ],
-			"Actions": [
-				{ "Label": "Imprimir", "Icon": "fal fa-file-pdf", "Action": "DOCUMENT_List_Print" }
-			],
             "Sorting":  {"Index": 1, "SortingType": "asc"},
 			"Filter": [
 				{ "DataProperty": "FInactivate", "Label":" ", "Type": "ISNULL", "Options": "Vigent|Arxivat" },
