@@ -41,7 +41,7 @@
             "FormId": "Custom",
             "Layout": 1,
             "EditAction": "FormPage",
-			"Export": "PDF|CSV|Excel|SAP",
+			"Export": "PDF|CSV|Excel",
 			"Columns": [
                 { "DataProperty": "Code", "Width": 100, "Search": true, "Orderable": true },
                 { "DataProperty": "Name", "Search": true, "Orderable": true },

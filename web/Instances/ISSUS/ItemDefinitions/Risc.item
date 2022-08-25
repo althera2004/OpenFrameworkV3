@@ -8,7 +8,7 @@
         "Label": "Risc",
         "LabelPlural": "Riscos",
         "Description": {
-            "Pattern": "{1}",
+            "Pattern": "{0}",
             "Fields": [
                 { "Name": "Description" }
             ]
@@ -48,7 +48,7 @@
 			"Columns": [
                 { "DataProperty": "DateStart", "Width": 90   },
                 { "DataProperty": "Description" },
-                { "DataProperty": "ProcessId", "Width": 150 },
+                { "DataProperty": "ProcessId", "Width": 250 },
                 { "DataProperty": "NormaId", "Width": 150 },
                 { "DataProperty": "Result", "Label": "Actual", "Width": 70 }
             ],
@@ -117,8 +117,10 @@
 							]
 						},
 						{
+							"Label": "Accions després d'evaluar risc",
 							"Fields": [
-								{ "Name": "ApplyAction", "Layout": "Radio" }
+								{ "Name": "ApplyAction", "Layout": "Radio" },
+								{ "Name": "Assumed" }
 							]
 						}
 					]

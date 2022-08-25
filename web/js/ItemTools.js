@@ -213,7 +213,7 @@ function Item(config) {
 
 	this.GetDescription = function () {
 
-		if (typeof ItemData.OriginalItemData === "undefined") {
+		if (typeof this.OriginalItemData === "undefined" || this.OriginalItemData.Id === -1) {
 			return "Nou";
         }
 

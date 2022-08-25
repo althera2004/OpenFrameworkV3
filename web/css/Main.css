@@ -316,3 +316,5 @@ textarea.form-control { font-size:12px; }
     transform: scale(1);
   }
 }
+
+.subText { font-size:10px; color:#777; text-transform:italic };

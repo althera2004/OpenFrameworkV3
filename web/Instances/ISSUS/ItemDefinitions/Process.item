@@ -19,7 +19,7 @@
         { "Name": "Id", "Type": "long", "Required": true },
 		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150 },
 		{ "Name": "JobPositionId", "Label": "Responsable", "Type": "long" },
-		{ "Name": "ProcessTypeId", "Label": "Tipus", "Type": "long" },
+		{ "Name": "ProcessTypeId", "Label": "Tipus", "Type": "long", "FK": true },
 		{ "Name": "PhaseStart", "Label": "Inici", "Type": "textarea" },
 		{ "Name": "PhaseDevelopment", "Label": "Desenvolupament", "Type": "textarea" },
 		{ "Name": "PhaseEnd", "Label": "Fí", "Type": "textarea" }

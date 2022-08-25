@@ -14,7 +14,7 @@
         },
         "EditionType": "inline"
     },
-	"ForeignValues": [ {"ItemName": "Process" }, {"ItemName": "Employee" }, {"ItemName": "Unitat" } ],
+	"ForeignValues": [ {"ItemName": "Process" }, {"ItemName": "Employee" }, {"ItemName": "Unitat" }, {"ItemName": "ProcessType"} ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
 		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 100 },

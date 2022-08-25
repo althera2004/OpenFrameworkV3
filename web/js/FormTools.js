@@ -64,13 +64,16 @@
                     }
                     break;
                 case "bool":
-                    var checkValue = false;
-
-                    if (data[fieldName] === true) {
-                        checkValue = true;
+                case "boolean":
+                    // Si no es checkbox
+                    if ($("#" + itemField.Name).length > 0 && $("#" + itemField.Name)[0].localName !== "div") {
+                        $("#" + itemField.Name).prop("checked", data[fieldName] === true);
                     }
-
-                    $("#" + itemField.Name).prop("checked", checkValue);
+                    // es radiobutton
+                    else {
+                        $("#" + itemField.Name + "_No").prop("checked", data[fieldName] === false);
+                        $("#" + itemField.Name + "_Yes").prop("checked", data[fieldName] === true);
+                    }
 
                     break;
                 case "fixedlist":
@@ -127,7 +130,7 @@
             console.log($("#" + this.id).val());
         });
 
-        var afterFillAction = itemDefinition.ItemName.toUpperCase() + "_FormFillAfter";
+        var afterFillAction = itemDefinition.ItemName.toUpperCase() +"_" + this.FormId.toUpperCase() + "_FormFillAfter";
         var type = eval("typeof " + afterFillAction);
         if (type === "function") {
             window[afterFillAction]();
@@ -202,6 +205,12 @@
         $("input.format-money").on("keydown", numberDecimalDown);
         $("input.format-money").on("focus", numberDecimalFocus);
         $("input.format-money").on("blur", moneyBlur);
+
+        var formCallback = this.ItemName.toUpperCase() + "_" + this.FormId.toUpperCase() + "_AfterRender";
+        var typeFormCallback = eval("typeof " + formCallback);
+        if (typeFormCallback === "function") {
+            window[formCallback]();
+        }
     }
 
     this.RenderFooterActions = function () {
@@ -379,7 +388,12 @@
     };
 
     this.RenderRow = function (row) {
-        var res = "<div class=\"row\">";
+        var res = "";
+        if (HasPropertyValue(row.Label)) {
+            res += "<h5>" + row.Label + "</h5>";
+        }
+
+        res += "<div class=\"row\">";
 
         if (HasPropertyValue(row.Fields)) {
             var fields = row.Fields;
@@ -678,9 +692,12 @@ function RenderFieldCheckBox(field, span) {
 function RenderFieldRadioButton(field, span) {
     var res = "";
     res += "<div class=\"col-sm-" + (span - 1) + "\">";
-    res += "    <input type=\"radio\" name=\"" + field.Name + "\" id=\"" + field.Name + "_No\" class=\"form-radio form-radio-" + field.Name + "\" />&nbsp;" + Dictionary.Common_No;
+    res += "    <input type=\"radio\" name=\"" + field.Name + "\" id=\"" + field.Name + "_No\" class=\"form-radio form-radio-" + field.Name + "\" />";
+    res += "&nbsp;<span id=\"" + field.Name + "_No_Label\">" + Dictionary.Common_No + "</span>";
     res += "&nbsp;&nbsp;&nbsp;";
-    res += "    <input type=\"radio\" name=\"" + field.Name + "\" id=\"" + field.Name + "_Yes\" class=\"form-radio form-radio-" + field.Name + "\" />&nbsp;" + Dictionary.Common_Yes;
+    res += "    <input type=\"radio\" name=\"" + field.Name + "\" id=\"" + field.Name + "_Yes\" class=\"form-radio form-radio-" + field.Name + "\" />";
+    res += "&nbsp;<span id=\"" + field.Name + "_Yes_Label\">" + Dictionary.Common_Yes + "</span>";
+    res += "<div id=\"" + field.Name + "\" class=\"form-control\" style=\"display:none;\"></div>";
     res += "</div>";
     return res;
 }

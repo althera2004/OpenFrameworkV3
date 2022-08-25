@@ -360,3 +360,8 @@ function ToMoneyFormat(value, decimals, nullable) {
 
     return res;
 }
+
+function FormFieldHide(fieldId) {
+    $("#" + fieldId + "_Label").hide();
+    $("#" + fieldId).parent().hide();
+}

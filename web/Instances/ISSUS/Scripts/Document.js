@@ -25,6 +25,6 @@ function DOCUMENT_OriginChanged() {
 }
 
 
-function DOCUMENT_FormFillAfter(){
+function DOCUMENT_CUSTOM_FormFillAfter(){
 	DOCUMENT_OriginChanged();
 }
