@@ -273,6 +273,14 @@ textarea.form-control { font-size:12px; }
 .format-money { text-align:right;}
 
 .TableInFormAction { font-size:12px; font-weight:normal; cursor:pointer; }
+.TableInFormActionBtn {
+	font-size:12px; font-weight:normal; cursor:pointer;
+    border: 1px solid #3498db;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 5px;
+    background-color: #3498db;
+}
 .ListContainer TH, .ListContainer TD { font-size:12px; }
 .ListContainer TD { font-weight:normal; }
 
@@ -292,3 +300,19 @@ textarea.form-control { font-size:12px; }
 .filter span { margin-right:8px; }
 .filter select { padding:0; height:25px; }
 .filter label { font-weight:bold; }
+
+.beat {
+  animation: animateHeart 1.2s infinite;
+}
+
+@keyframes animateHeart {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

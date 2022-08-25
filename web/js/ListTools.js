@@ -54,12 +54,15 @@ function PageList(config) {
                     // total cheboxes
                     var total = $(".Filter_" + criteria.DataProperty).length;
                     var selected = $(".Filter_" + criteria.DataProperty + ":checked").length;
+                    var comparedValue = "|";
                     if (selected > 0 && selected < total) {
                         for (var x = 0; x < $(".Filter_" + criteria.DataProperty).length; x++) {
                             if ($("#Filter_" + criteria.DataProperty + "_" + (x + 1)).prop("checked") === true) {
-                                ListSources[0]["ExtraFilter"].push({ "Field": criteria.DataProperty, "Value": (x + 1) });
+                                comparedValue += (x + 1) + "|";
                             }
                         }
+
+                        ListSources[0]["ExtraFilter"].push({ "Field": criteria.DataProperty, "Value": comparedValue, "Comparer": "INLIST" });
                     }
                 }
                 else if (criteria.Type.toLowerCase() === "customcheckbox") {
@@ -77,6 +80,8 @@ function PageList(config) {
                 }
             }
         }
+
+        console.log("Extrafilter", ListSources[0]["ExtraFilter"]);
 
         SearchList();
     }
@@ -110,8 +115,8 @@ function PageList(config) {
                 var exportAction = exportActions[a];
 
                 if (exportAction === "PDF") {
-                    res += "    <a data-action=\"add\" class=\"TableInFormAction\" id=\"BtnExport_PDF\" onclick=\"List_export('PDF');\">";
-                    res += "     <i class=\"ace-icon fa fa-file-pdf\"></i>&nbsp;" + Dictionary.Common_ListPdf;
+                    res += "    <a data-action=\"add\" style=\"border:1px solid #00f; color:#fff;\" class=\"TableInFormActionBtn\" id=\"BtnExport_PDF\" onclick=\"List_Export('PDF','" + this.ItemName + "','" + this.ListId + "');\">";
+                    res += "     <i class=\"ace-icon fal fa-file-pdf\"></i>&nbsp;" + Dictionary.Common_ListPdf;
                     res += "    </a>";
                     res += " | ";
                 }
@@ -121,19 +126,19 @@ function PageList(config) {
             }
 
             if (extraExport.length === 1) {
-                res += "    <a data-action=\"add\" class=\"TableInFormAction\" id=\"BtnExport_" + extraExport[0] + "\" onclick=\"List_export('" + extraExport[0] +"');\">";
+                res += "    <a data-action=\"add\" class=\"TableInFormAction\" id=\"BtnExport_" + extraExport[0] + "\" onclick=\"List_Export('" + extraExport[0] + "','" + this.ItemName + "','" + this.ListId + "');\">";
                 res += "      Exportar " + extraExport[0];
                 res += "    </a>";
                 res += " | ";
             }
             else if (extraExport.length > 1) {
                 res += "<a class=\"TableInFormAction dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\">";
-                res += "    Exportar";
+                res += "    <i class=\"ace-icon fad fa-file-export\"></i>&nbsp;Exportar";
                 res += "    <i class=\"ace-icon fa fa-chevron-down icon-on-right\"></i>";
                 res += "</a>";
-                res += "<ul class=\"dropdown-menu dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close\">";
+                res += "<ul class=\"dropdown-menu dropdown-blue dropdown-menu-right dropdown-caret dropdown-close\">";
                 for (var x = 0; x < extraExport.length; x++) {
-                    res += "    <li><a  id=\"BtnExport_" + extraExport[x] + "\" onclick=\"List_export('" + extraExport[x] + "');\">Exportar " + extraExport[x] + "</a></li>";
+                    res += "    <li><a id=\"BtnExport_" + extraExport[x] + "\" onclick=\"List_Export('" + extraExport[x] + "','" + this.ItemName + "','" + this.ListId + "');\" style=\"cursor:pointer;\">Exportar " + extraExport[x] + "</a></li>";
                 }
                 res += "</ul>";
                 res += " | ";
@@ -2219,4 +2224,8 @@ function FilterList(listId, itemName) {
     if (list !== null) {
         list.Search();
     }
+}
+
+function List_Export(exportType, itemName, listId) {
+    PopupPrinting("Exportant llista a " + exportType);
 }

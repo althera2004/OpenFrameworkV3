@@ -704,8 +704,9 @@ variables above and don't change anything in the actual loader code
         <a href="#PopupUserConversion" role="button" data-toggle="modal" id="LauncherPopupUserConversion"> User </a>
         <a href="#PopupDirty" role="button" data-toggle="modal" id="LauncherPopupDirty"> Dirty </a>
         <a href="#PopupExportList" role="button" data-toggle="modal" id="LauncherPopupExportList"> Exrpot </a>
-        <a href="#PopupWorking" role="button" data-toggle="modal" id="LauncherPopupWorking"> Working </a>
-        <a href="#PopupSignQR" role="button" data-toggle="modal" id="LauncherPopupSignQR"> Working </a>
+        <a href="#PopupPrinting" role="button" data-toggle="modal" id="LauncherPopupPrinting" data-backdrop="static" data-keyboard="false" > Working </a>
+        <a href="#PopupWorking" role="button" data-toggle="modal" id="LauncherPopupWorking" data-backdrop="static" data-keyboard="false" > Printing </a>
+        <a href="#PopupSignQR" role="button" data-toggle="modal" id="LauncherPopupSignQR"> QR </a>
         <a href="#PopupMap" role="button" data-toggle="modal" id="LauncherPopupMap"> Map </a>
         <a href="#PopupWarning" role="button" data-toggle="modal" id="LauncherPopupWaring"> Warning </a>
         <a href="#PopupConfirm" role="button" data-toggle="modal" id="LauncherPopupConfirm"> Confirm </a>
@@ -759,6 +760,56 @@ variables above and don't change anything in the actual loader code
                     <button class="btn btn-sm" data-dismiss="modal" id="PopupDefaultBtnCancel" onclick="PopupDefault_Context.actual=null;">
                         <i class="ace-icon fa fa-ban"></i>
                         cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div id="PopupWorking" class="modal in" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header blue">
+                        <span id="PopupWorkingTitle" style="color:#fff;"><%= Translate("Common_Working") %></span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="ace-icon fa fa-cog beat blue fa-2x"></i>
+                        </div>
+                        <div class="col-xs-10"><p id="PopupWorkingMessage"></p></div>
+                    </div>
+                </div>
+                <div class="modal-footer no-margin-top" style="display:none;">
+                    <button type="button" class="btn btn-sm pull-right" data-dismiss="modal" id="PopupWorkingBtnCancel">
+                        <i class="ace-icon fa fa-times"></i>
+                        <%= Translate("Common_Cancel") %>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div id="PopupPrinting" class="modal in" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header blue">
+                        <span id="PopupPrintingTitle" style="color:#fff;"><%= Translate("Common_Print") %></span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="ace-icon fa fa-print beat blue fa-2x"></i>
+                        </div>
+                        <div class="col-xs-10"><p id="PopupPrintingMessage"></p></div>
+                    </div>
+                </div>
+                <div class="modal-footer no-margin-top" style="display:none;">
+                    <button type="button" class="btn btn-sm pull-right" data-dismiss="modal" id="PopupPrintingBtnCancel">
+                        <i class="ace-icon fa fa-times"></i>
+                        <%= Translate("Common_Cancel") %>
                     </button>
                 </div>
             </div>

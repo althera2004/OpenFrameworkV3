@@ -781,13 +781,26 @@ function PopupWarning(message, title, block, action) {
 function PopupWorking(message) {
     $("#PopupWorkingMessage").html(message);
     $("#LauncherPopupWorking").click();
-    PopupWarningLaunched = true;
+    PopupWorkingLaunched = true;
 }
 
 function PopupWorkingHide() {
-    if (PopupWarningLaunched === true) {
+    if (PopupWorkingLaunched === true) {
         $("#PopupWorkingBtnCancel").click();
-        PopupWarningLaunched = false;
+        PopupWorkingLaunched = false;
+    }
+}
+
+function PopupPrinting(message) {
+    $("#PopupPrintingMessage").html(message);
+    $("#LauncherPopupPrinting").click();
+    PopupPrintingLaunched = true;
+}
+
+function PopupWorkingHide() {
+    if (PopupPrintingLaunched === true) {
+        $("#PopupPrintingBtnCancel").click();
+        PopupPrintingLaunched = false;
     }
 }
 

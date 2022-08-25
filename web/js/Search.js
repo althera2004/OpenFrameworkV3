@@ -54,7 +54,7 @@ function filterFast(a, pattern, filter, extraFilter) {
                 if (filterc.Value === "ISNULL") {
                     return item[filterc.Field] === null;
                 }
-                else if(filterc.Value === "NOTNULL") {
+                else if (filterc.Value === "NOTNULL") {
                     return item[filterc.Field] !== null;
                 }
                 else if (filterc.Comparer === "BEFORE") {
@@ -73,6 +73,9 @@ function filterFast(a, pattern, filter, extraFilter) {
                 }
                 else if (filterc.Comparer === "BINARYCONTAINS") {
                     return (filterc.Value.toString() & item[filterc.Field].toString()) !== 0;
+                }
+                else if (filterc.Comparer === "INLIST") {
+                    return filterc.Value.indexOf("|" + item[filterc.Field] + "|") !== -1;
                 }
                 else {
                     if (typeof filterc.Subfield !== "undefined") {
