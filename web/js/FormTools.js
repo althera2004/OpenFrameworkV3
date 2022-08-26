@@ -318,7 +318,12 @@
                     mustExists = " TabMustExists";
                 }
 
-                res += "<li id=\"tabSelect-" + tab.Id + "\" class=\"tabSelect " + active + mustExists + "\"><a data-toggle=\"tab\" href=\"#tab-" + tab.Id + "\" aria-expanded=\"false\">" + tab.Label + "</a></li>";
+                var cssClass = "";
+                if (HasPropertyEnabled(tab.Hidden)) {
+                    cssClass = "style=\"display:none\"";
+                }
+
+                res += "<li id=\"tabSelect-" + tab.Id + "\" " + cssClass + " class=\"tabSelect " + active + mustExists + "\"><a data-toggle=\"tab\" href=\"#tab-" + tab.Id + "\" aria-expanded=\"false\">" + tab.Label + "</a></li>";
                 realTab++;
             }
         }

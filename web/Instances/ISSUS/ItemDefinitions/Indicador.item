@@ -43,8 +43,9 @@
 			"Columns": [
                 { "DataProperty": "Name", "Search": true },
                 { "DataProperty": "DateStart", "Width": 100 },
-                { "DataProperty": "ProcessId", "Width": 300, "Align": "left" },
-                { "DataProperty": "EmployeeId", "Width": 300, "Search": true, "Align": "left" }
+                { "DataProperty": "ProcessId", "Width": 250, "Align": "left" },
+                { "DataProperty": "EmployeeId", "Width": 300, "Search": true, "Align": "left" },
+				{ "DataProperty": "FInactivate", "HiddenList": true }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
             "Sorting": {"Index": 1, "SortingType": "asc"},
@@ -63,6 +64,9 @@
 			"Id": "Custom",
 			"FormType": "Custom",
 			"DefaultSelected": true,
+			"Actions": [
+				{ "Label": "Tancar", "Icon": "fal fa-ban", "Action": "INDICADOR_Close", "Tab": "basic" }
+			],
 			"Tabs": [
 				{
 					"Persistent": true,

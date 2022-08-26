@@ -45,7 +45,7 @@
 			"Columns": [
                 { "DataProperty": "Code", "Width": 100, "Search": true, "Orderable": true },
                 { "DataProperty": "Name", "Search": true, "Orderable": true },
-                { "DataProperty": "DocumentCategoryId", "Width": 150, "Search": true },
+                { "DataProperty": "DocumentCategoryId", "Width": 200, "Search": true },
                 { "DataProperty": "Origin", "Width": 90 },
                 { "DataProperty": "Location", "Width": 150 },
                 { "DataProperty": "Revisio", "Width": 50, "Label": "Rev." },

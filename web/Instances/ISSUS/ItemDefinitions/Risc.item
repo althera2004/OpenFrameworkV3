@@ -33,8 +33,8 @@
 		{ "Name": "Probability", "Label": "Probabilitat", "Type": "range", "Values": [1,5] },
 		{ "Name": "Severity", "Label": "Severitat", "Type": "range", "Values": [1,5] },
 		{ "Name": "Result", "Label": "Resultat", "Type": "int" },
-		{ "Name": "FinalProbability", "Label": "Probabilitat", "Type": "int" },
-		{ "Name": "FinalSeverity", "Label": "Severitat", "Type": "int" },
+		{ "Name": "FinalProbability", "Label": "Probabilitat", "Type": "range", "Values": [1,5] },
+		{ "Name": "FinalSeverity", "Label": "Severitat", "Type": "range", "Values": [1,5] },
 		{ "Name": "FinalResult", "Label": "Resultat", "Type": "int" },
 		{ "Name": "FinalDate", "Label": "Finalització", "Type": "datetime" },
 		{ "Name": "ApplyAction", "Label": "Aplica acció", "Type": "boolean" }
@@ -44,19 +44,20 @@
             "Id": "Custom",
             "FormId": "Custom",
             "Layout": 1,
+			"Export": "PDF",
             "EditAction": "FormPage",
+			"CustomAjaxSource": "Item_RiscGetAll",
 			"Columns": [
-                { "DataProperty": "DateStart", "Width": 90   },
-                { "DataProperty": "Description" },
-                { "DataProperty": "ProcessId", "Width": 250 },
-                { "DataProperty": "NormaId", "Width": 150 },
-                { "DataProperty": "Result", "Label": "Actual", "Width": 70 }
+                { "ReplacedBy": "E", "Label": "Estat", "Width": 50, "Align": "center", "RenderData": "RISC_EstatColumn" },
+                { "DataProperty": "DateStart", "ReplacedBy": "S", "Width": 90 },
+                { "DataProperty": "Description", "ReplacedBy": "D", "Search": true, "Orderable": true },
+                { "DataProperty": "ProcessId", "ReplacedBy": "P", "Width": 250, "Search": true, "Orderable": true },
+                { "DataProperty": "NormaId", "ReplacedBy": "N", "Width": 150, "Search": true, "Orderable": true },
+                { "DataProperty": "Result", "ReplacedBy": "R", "Label": "Actual", "Width": 70, "RenderData": "RISC_ResultColumn" },
+                { "ReplacedBy": "I", "Label": "IPR", "Width": 70, "Align": "right" }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
-            "Sorting": {"Index": 1, "SortingType": "asc"},
-			"Actions": [
-				{ "Label": "Imprimir", "Icon": "fal fa-file-pdf", "Action": "RISC_List_Print" }
-			]
+            "Sorting": {"Index": 1, "SortingType": "asc"}
         }
 	],
 	"Forms": [
@@ -127,10 +128,11 @@
 				},
 				{
 					"Id": "final",
+					"Hidden": true,
 					"Label": "Situació final",
 					"Rows": [
 						{
-							"Label": "Valoració inicial",
+							"Label": "Valoració final",
 							"Fields": [
 								{ "Name": "FinalProbability" },
 								{ "Name": "FinalSeverity" },

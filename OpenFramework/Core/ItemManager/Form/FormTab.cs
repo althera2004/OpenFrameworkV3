@@ -49,6 +49,10 @@ namespace OpenFrameworkV3.Core.ItemManager.ItemForm
         [JsonProperty("Listable")]
         public bool Listable { get; private set; }
 
+        /// <summary>Gets a value indicating whether if tab contains a list</summary>
+        [JsonProperty("Hidden")]
+        public bool Hidden { get; private set; }
+
         /// <summary>Gets the tab label</summary>
         [JsonProperty("Label")]
         public string Label { get; private set; }

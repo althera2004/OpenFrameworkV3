@@ -18,6 +18,7 @@ function RISC_SetResult(){
 	var norma = GetFKById("Norma", normaId);
 	
 	$("#Result").val(result);
+	ItemData.UpdateData("Result", result);
 	$("#Result_Labeled").html($("#Result").val());
 	
 	if(typeof norma !== "undefined" && norma !== null) {	

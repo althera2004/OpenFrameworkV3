@@ -84,7 +84,7 @@ namespace OpenFrameworkV3.Tools
                 {{
                     ""Id"": ""{0}"",
                     ""Label"": ""{1}"",
-                    ""Groups"":{7},{2}{3}{4}{6}
+                    ""Groups"":{7},{2}{3}{4}{6}{8}
                     ""Rows"": [{5}
                     ]
                 }}";
@@ -491,7 +491,8 @@ namespace OpenFrameworkV3.Tools
                 PropertyJson("ItemMustExists", tab.ItemMustExists, fill),
                 rowsJson,
                 PropertyJson("Persistent", tab.Persitent, fill),
-                tab.GroupsJson);
+                tab.GroupsJson,
+                PropertyJson("Hidden", tab.Hidden, fill));
         }
 
         public static string ListJson(List list, int fill)

@@ -793,13 +793,6 @@ function PageList(config) {
         var listDefinition = this.ListDefinition;
         var width = 0;
 
-        /* weke? if ($("#tabHeader").length !== 0) {
-            width = $("#tabHeader").width() -17;
-        }
-        else {
-            width = $("#MainContainer").width() - 7;
-        }*/
-
         console.log(tableName, width, 1);
         var widths = [];
         var usedWidth = 0;
@@ -1065,8 +1058,10 @@ function PageList(config) {
 
         var searchData = "";
         var dataOrderData = "";
-        var textData = cellData;
+        var textData = "";
+        var cellTitle = "";
 
+        // RenderData
         if (typeof column.RenderData !== "undefined" && column.RenderData !== null && column.RenderData !== "") {
             var data = null;
             if (typeof rowData[dataKeyName] === "object") {
@@ -1080,8 +1075,18 @@ function PageList(config) {
                 searchData = rowData[dataKeyName] === null ? "" : rowData[dataKeyName];
             }
 
-            textData = eval(column.RenderData + "(" + data + "," + JSON.stringify(rowData) + ");");
-            searchData = textData;
+            var renderedData = eval(column.RenderData + "(" + data + "," + JSON.stringify(rowData) + ");");
+
+            if (typeof renderedData === "object") {
+                textData = renderedData.data;
+                cellTitle = renderedData.title;
+                searchData = cellData;
+            }
+            else {
+                textData = renderedData;
+                searchData = textData;
+            }
+
         }
 
         if (typeof column.Linkable !== "undefined" && column.Linkable !== null && column.Linkable === true) {
@@ -1091,7 +1096,6 @@ function PageList(config) {
                 cellData = "<a id=\"" + rowData.Id + "\" onclick=\"" + editAction + "\" style=\"cursor:pointer;\">";
                 cellData += textData;
                 cellData += "</a>";
-                //searchData = rowData[dataKeyName];
             }
             else if (field.Type === "FixedList") {
                 cellData = rowData[dataKeyName];
@@ -1112,7 +1116,6 @@ function PageList(config) {
                     searchData = "";
                 }
                 else {
-                    //searchData = rowData[dataKeyName];
                     searchData = textData;
                     if (GrantCanReadByItem(itemName) !== true) {
                         cellData = rowData[dataKeyName]["Value"];
@@ -1170,14 +1173,16 @@ function PageList(config) {
                 }
 
                 cellData = eval(column.RenderData + "(" + data + "," + JSON.stringify(rowData) + ");");
-                searchData = eval(column.RenderData + "(" + data + "," + JSON.stringify(rowData) + ");");
+                searchData = cellData;
             }
             else if (field === null) {
                 if (typeof rowData[column.ReplacedBy] === 'object') {
                     cellData = rowData[column.ReplacedBy].Description;
+                    textData = rowData[column.ReplacedBy].Description;
                 }
                 else {
                     cellData = rowData[column.ReplacedBy];
+                    textData = rowData[column.ReplacedBy];
                 }
             }
             else if (field.Type.toLowerCase() === "fixedlist") {
@@ -1230,14 +1235,18 @@ function PageList(config) {
                     if (rowData[column.DataProperty] === null) {
                         cellData = null;
                         searchData = null;
+                        textData = "";
                     }
                     else {
                         cellData = rowData[dataKeyName]["Value"];
                         searchData = rowData[dataKeyName]["Value"];
+                        textData = rowData[dataKeyName]["Value"];
                     }
                 }
                 else {
-                    searchData = data;
+                    searchData = cellData;
+                    textData = cellData;
+                    cellTitle = "";
                 }
             }
         }
@@ -1248,15 +1257,20 @@ function PageList(config) {
             ListSearchAddItem(itemDefinition.ItemName, listDefinitionId, searchData);
         }
 
-		var tdTitle = "";
 		if(typeof searchData !== "undefined" && searchData !== null && searchData !== "") {
-            tdTitle = "title=\"" + searchData.toString().split('<br />').join('\n');
             dataOrderData = " data-orderData=\"" + searchData + "\"";
-		}
+        }
 
-        res += "<td" + style + " data-order=\"" + columnIndex + "\"" + dataOrderData + "><div class=\"truncate\" style=\"width:" + (columnWidth - 20) + "px;\"" + tdTitle + "\">";
-        res += cellData;
-        res += "</div></td>";
+        var tdTitle = "";
+        if (typeof cellTitle !== "undefined" && cellTitle !== null && cellTitle !== "") {
+            tdTitle = " title=\"" + cellTitle.toString().split('<br />').join('\n') + "\"";
+        }
+
+        res += "<td" + style + " data-order=\"" + columnIndex + "\"" + dataOrderData + "" + tdTitle + ">";
+        res += "  <div class=\"truncate\" style=\"width:" + (columnWidth - 20) + "px;\">";
+        res += textData;
+        res += "  </div>";
+        res += "</td>";
         return res;
     }
     // --------------------- END FILL DATA
