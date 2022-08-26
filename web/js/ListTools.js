@@ -731,6 +731,7 @@ function PageList(config) {
             $("#ListTable_" + this.ComponentId + "_NoData").show();
         }
 
+
         if (total === this.Total || this.Total === 0) {
             $("#" + this.ComponentId + "_ListCount").html(total);
         }
@@ -740,7 +741,7 @@ function PageList(config) {
 
         //TableRendered();
 
-        var TableAfterFill = this.ComponentId + "_AfterFill";
+        var TableAfterFill = this.ComponentId.toUpperCase() + "_AfterFill";
         var afterFillCallback = eval("typeof " + TableAfterFill);
         if (afterFillCallback === "function") {
             eval(TableAfterFill + "();");
@@ -1080,7 +1081,7 @@ function PageList(config) {
             if (typeof renderedData === "object") {
                 textData = renderedData.data;
                 cellTitle = renderedData.title;
-                searchData = cellData;
+                searchData = data;
             }
             else {
                 textData = renderedData;
@@ -1088,8 +1089,7 @@ function PageList(config) {
             }
 
         }
-
-        if (typeof column.Linkable !== "undefined" && column.Linkable !== null && column.Linkable === true) {
+        else if (typeof column.Linkable !== "undefined" && column.Linkable !== null && column.Linkable === true) {
             var itemName = "";
 
             if (field !== null && !IsFK(field.Name, itemDefinition)) {
@@ -1239,7 +1239,7 @@ function PageList(config) {
                     }
                     else {
                         cellData = rowData[dataKeyName]["Value"];
-                        searchData = rowData[dataKeyName]["Value"];
+                        searchData = rowData[dataKeyName]["Id"];
                         textData = rowData[dataKeyName]["Value"];
                     }
                 }

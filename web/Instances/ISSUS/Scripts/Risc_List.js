@@ -31,3 +31,14 @@ function RISC_ResultColumn(data, row) {
 	
 	return res;	
 }
+
+function RISC_CUSTOM_AfterFill() {
+	console.log("RISC_CUSTOM_AfterFill");
+	$.each($("#Risc_Custom_ListBody tr"), function(a,i) {
+		var cell = $(i).children()[0];
+		if($(cell).data("orderdata") === 3)
+		{
+			$(i).css("backgroundColor", "#f9f0f2");
+		}
+	});
+}
