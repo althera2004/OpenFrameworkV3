@@ -17,14 +17,14 @@
 	"ForeignValues": [ {"ItemName": "JobPosition" }, { "ItemName": "Department" } ],
     "Fields": [
         { "Name": "Id", "Type": "long", "Required": true },
-		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150 },
-		{ "Name": "JobPositionId", "Label": "Responsable", "Type": "long" },
-		{ "Name": "DepartmentId", "Label": "Departament", "Type": "long" },
-		{ "Name": "Responsabilitats", "Label": "Responsabilitats", "Type": "textarea" },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150, "Required": true },
+		{ "Name": "JobPositionId", "Label": "Responsable", "Type": "long", "Required": true },
+		{ "Name": "DepartmentId", "Label": "Departament", "Type": "long", "Required": true },
+		{ "Name": "Responsabilitats", "Label": "Responsabilitats", "Type": "textarea", "Required": true },
 		{ "Name": "Notes", "Label": "Notes", "Type": "textarea" },
-		{ "Name": "FormacioAcademica", "Label": "Formació Academica", "Type": "textarea" },
+		{ "Name": "FormacioAcademica", "Label": "Formació Academica", "Type": "textarea", "Required": true },
 		{ "Name": "FormacioEspecifica", "Label": "Formació Especifica", "Type": "textarea" },
-		{ "Name": "ExperienciaLaboral", "Label": "Experiencia laboral", "Type": "textarea" },
+		{ "Name": "ExperienciaLaboral", "Label": "Experiencia laboral", "Type": "textarea", "Required": true },
 		{ "Name": "Habilitats", "Label": "Habilitats", "Type": "textarea" }
     ],
     "Lists": [

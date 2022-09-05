@@ -191,6 +191,7 @@ function PageList(config) {
 
         $("#TableList").html(res);
         $(".filter .datepicker").localDatePicker();
+        $(".chosen-multiple").chosen();
         ResizeWorkArea();
     }
 
@@ -394,15 +395,24 @@ function PageList(config) {
 
                     var parts = filter.Options.split('|');
 
-                    res += "<span style=\"margin-right:12px;\">";
-                    res += label;
-
-                    for (var p = 0; p < parts.length; p++) {
-                        res += "<input type=\"checkbox\" class=\"Filter_" + filter.Id + "\" id=\"Filter_" + filter.Id + "_" + p + "\" style=\"margin:0!important;\" onclick=\"FilterList('" + this.ListId + "','" + this.ItemName + "');\">&nbsp;" + parts[p];
-                        res += "&nbsp;";
+                    if (HasPropertyValue(filter.Render)) {
+                        res += window[filter.Render](filter);
                     }
+                    else {
+                        res += "<span style=\"margin-right:12px;\">";
+                        res += label;
 
-                    res += "</span>";
+                        for (var p = 0; p < parts.length; p++) {
+                            if (parts[p] === "^") {
+                                res += "<br />";
+                                continue;
+                            }
+                            res += "<input type=\"checkbox\" class=\"Filter_" + filter.Id + "\" id=\"Filter_" + filter.Id + "_" + p + "\" style=\"margin:0!important;\" onclick=\"FilterList('" + this.ListId + "','" + this.ItemName + "');\">&nbsp;" + parts[p];
+                            res += "&nbsp;";
+                        }
+
+                        res += "</span>";
+                    }
                 }
                 else if (filter.Type.toLowerCase() === "customselect") {
                     var label = "";
@@ -1093,9 +1103,9 @@ function PageList(config) {
             var itemName = "";
 
             if (field !== null && !IsFK(field.Name, itemDefinition)) {
-                cellData = "<a id=\"" + rowData.Id + "\" onclick=\"" + editAction + "\" style=\"cursor:pointer;\">";
-                cellData += textData;
-                cellData += "</a>";
+                textData = "<a id=\"" + rowData.Id + "\" onclick=\"" + editAction + "\" style=\"cursor:pointer;\">";
+                textData += rowData[dataKeyName];
+                textData += "</a>";
             }
             else if (field.Type === "FixedList") {
                 cellData = rowData[dataKeyName];
@@ -1228,6 +1238,7 @@ function PageList(config) {
                 }
 
                 cellData = test;
+                textData = test;
 
             }
             else {
@@ -2242,4 +2253,18 @@ function FilterList(listId, itemName) {
 
 function List_Export(exportType, itemName, listId) {
     PopupPrinting("Exportant llista a " + exportType);
+}
+
+function ColumMoneyFormat(data, row) {
+    if (data === null) { return ""; }
+    if (typeof data !== "number") { return ""; }
+
+    return ToMoneyFormat(data);
+}
+
+function ColumEuroFormat(data, row) {
+    if (data === null) { return ""; }
+    if (typeof data !== "number") { return ""; }
+
+    return ToMoneyFormat(data)+ "&nbsp;&euro;";
 }

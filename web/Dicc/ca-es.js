@@ -1,4 +1,4 @@
-// 25/08/2022
+// 05/09/2022
 var Dictionary =
 {
     "Añadir": "Afegir",

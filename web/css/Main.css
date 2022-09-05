@@ -222,7 +222,7 @@ select.form-control {
     font-size: 12px;
 }
 
-.tab-content { padding:0; border:none;}
+.tab-content { padding:0; border:none; background-color:#fff;}
 
 #logofooter button {
     margin: 0 1px 0 0;
@@ -318,3 +318,19 @@ textarea.form-control { font-size:12px; }
 }
 
 .subText { font-size:10px; color:#777; text-transform:italic };
+
+.search-choice {
+	background:none;	
+}
+
+.errorMessage { color: red; }
+.page-content { background-color:#fafafa;}
+.table-body { background-color:#fff; }
+
+#Btn_Feature_StickyAdd {
+    float: right !important;
+    font-family: "Open Sans";
+    color: #2d72d1;
+    cursor: pointer;
+    margin-right: 6px;
+}

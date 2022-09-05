@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.Script.Serialization;
@@ -499,5 +500,34 @@ public class ItemService : WebService
                 return Json.EmptyJsonObject;
             }
         }
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult GetFileAttributes(string fileName)
+    {
+        var res = ActionResult.NoAction;
+        FileAttributes attributes = File.GetAttributes(fileName);
+
+        
+
+        return res;
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult FeatureStickySave(long itemDefinitionId, long itemId, string text, string target, long companyId, long applicationUserId, string instanceName)
+    {
+        var sticky = new Sticky
+        {
+            Id = Constant.DefaultId,
+            CompanyId = companyId,
+            Text = text,
+            Target = target,
+            ItemDefinitionId = itemDefinitionId,
+            ItemId = itemId
+        };
+
+        return sticky.Insert(applicationUserId, instanceName);
     }
 }

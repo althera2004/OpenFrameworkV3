@@ -136,7 +136,9 @@
             window[afterFillAction]();
         }
 
-        $(".TabMustExists").removeClass("TabMustExists");
+        if (data.Id > 0) {
+            $(".TabMustExists").removeClass("TabMustExists");
+        }
     }
 
     this.FormDefinitionDefault = function () {
@@ -211,6 +213,13 @@
         if (typeFormCallback === "function") {
             window[formCallback]();
         }
+
+        // Buttons documents event
+        $(".BtnDocumentView").on("click", FieldDocument_View)
+        $(".BtnDocumentUpload").on("click", FieldDocument_Upload)
+        $(".BtnDocumentDelete").on("click", FieldDocument_Delete)
+        $(".BtnDocumentSign").on("click", FieldDocument_Sign)
+        $(".BtnDocumentHistory").on("click", FieldDocument_History)
     }
 
     this.RenderFooterActions = function () {
@@ -331,6 +340,11 @@
         if (ItemDefinition_HasFeature(this.ItemDefinition, "Attachs")) {
             res += "<li id=\"tabSelect-Attachs\" class=\"tabSelect\"><a data-toggle=\"tab\" href=\"#tab-Attachs\" aria-expanded=\"false\"><i class=\"fa fa-paperclip\"></i>&nbsp;" + Dictionary.Feature_Attachment_TabTitle + "</a></li>";
         }
+
+        if (SupportsSticky(this.ItemDefinition)) {
+            res += "<li id=\"Btn_Feature_StickyAdd\" title=\"" + Dictionary.Feature_Sticking_Add + "\" onclick=\"Feature_Sticky_ShowPopup();\"><i class=\"fa fa-sticky-note\"></i>";
+        }
+
 
         $("#" + targetId + "Tabs").html(res);
         $(".tabSelect").on("click", LayoutTabSelected)
@@ -658,27 +672,27 @@ function RenderFieldDocumentFile(field, span, fieldForm) {
     var config = GetPropertyValue(fieldForm.Config, "LVADUSH");
 
     res += "<div class=\"col-sm-" + (span - 1) + "\">";
-    res += "  <div class=\"input-group date\">";
-    res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control\" autocomplete=\"off\" readonly=\"readonly\">";
+    res += "  <div class=\"input-group fieldDocument\">";
+    res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control\" autocomplete=\"off\" readonly=\"readonly\" />";
 
     if (config.indexOf("A") !== -1) {
-        res += "    <span id=\"" + field.Name + "_BtnView\" class=\"input-group-addon\" title=\"Veure\"><i class=\"fa fa-eye\"></i></span>";
+        res += "    <span id=\"" + field.Name + "_BtnView\" class=\"input-group-addon BtnDocumentView\" title=\"Veure\"><i class=\"fa fa-eye\"></i></span>";
     }
 
     if (config.indexOf("U") !== -1) {
-        res += "    <span id=\"" + field.Name + "_BtnUpload\" class=\"input-group-addon\" title=\"Pujar\"><i class=\"fa fa-upload\"></i></span>";
+        res += "    <span id=\"" + field.Name + "_BtnUpload\" class=\"input-group-addon BtnDocumentUpload\" title=\"Pujar\"><i class=\"fa fa-upload\"></i></span>";
     }
 
     if (config.indexOf("D") !== -1) {
-        res += "    <span id=\"" + field.Name + "_BtnDelete\" class=\"input-group-addon\" title=\"Eliminar\"><i class=\"fa fa-times grey\"></i></span>";
+        res += "    <span id=\"" + field.Name + "_BtnDelete\" class=\"input-group-addon BtnDocumentDelete\" title=\"Eliminar\"><i class=\"fa fa-times grey\"></i></span>";
     }
 
     if (config.indexOf("S") !== -1) {
-        res += "    <span id=\"" + field.Name + "_BtnSign\" class=\"input-group-addon\" title=\"Signar\"><i class=\"fa fa-file-signature\"></i></span>";
+        res += "    <span id=\"" + field.Name + "_BtnSign\" class=\"input-group-addon BtnDocumentSign\" title=\"Signar\"><i class=\"fa fa-file-signature\"></i></span>";
     }
 
     if (config.indexOf("H") !== -1) {
-        res += "    <span id=\"" + field.Name + "_BtnHistory\" class=\"input-group-addon\ title=\"Veure historial\"><i class=\"fa fa-list\"></i></span>";
+        res += "    <span id=\"" + field.Name + "_BtnHistory\" class=\"input-group-addon BtnDocumentHistory\ title=\"Veure historial\"><i class=\"fa fa-list\"></i></span>";
     }
 
     res += "  </div>";
@@ -718,10 +732,12 @@ function RenderFieldTextArea(field, span, fieldForm) {
     var realSpan = splited ? span : span - 1;
 
     var rows = GetPropertyValue(fieldForm.Rows, 3);
+    var required = GetPropertyValue(field.Required, false) ? "<span id=\"" + field.Name + "_LabelRequired\" class=\"formFieldRequired\">*</span>" : "";
+
     var res = "";
     res += "<div class=\"col-sm-" + realSpan + "\">";
     if (splited) {
-        res += "<label>" + field.Label + "</label>";
+        res += "<label>" + field.Label + required + "</label>";
     }
     res += "    <textarea id=\"" + field.Name + "\" class=\"form-control\" value=\"" + field.Type + "\" rows=\"" + rows + "\"></textarea>";
     res += "</div>";

@@ -28,6 +28,7 @@
         var FormId = "<%= this.FormId %>";
         var ItemId = <%= this.ItemId %>;
         var JsonData = <%= this.JsonData %>;
+        var sticks = <%=this.Stick %>;
 
         var ItemDefinition = ItemDefinitionById(ItemDefinitionId);
         var ListDefinition = ItemListById(ItemDefinition, ListId);

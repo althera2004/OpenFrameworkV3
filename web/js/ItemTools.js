@@ -929,3 +929,101 @@ function ItemDefinition_PrimaryKeysDescription(itemName) {
 
 	return res;
 }
+
+
+
+function SupportsFirmafy(itemDefinition) {
+	if (typeof itemDefinition.Features !== "undefined") {
+		if (typeof itemDefinition.Features.Firmafy !== "undefined" &&
+			itemDefinition.Features.Attachs !== null &&
+			itemDefinition.Features.Attachs === true) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function SupportsAttachment(itemDefinition) {
+	if (typeof itemDefinition.Features !== "undefined") {
+		if (typeof itemDefinition.Features.Attachs !== "undefined" &&
+			itemDefinition.Features.Attachs !== null &&
+			itemDefinition.Features.Attachs === true) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function SupportsSticky(itemDefinition) {
+	if (typeof itemDefinition.Features !== "undefined") {
+		if (typeof itemDefinition.Features.Sticky !== "undefined" &&
+			itemDefinition.Features.Sticky !== null &&
+			itemDefinition.Features.Sticky === true) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function SupportsBankAccount(itemDefinition) {
+	if (typeof itemDefinition.Features !== "undefined") {
+		if (typeof itemDefinition.Features.BankAccount !== "undefined" &&
+			itemDefinition.Features.BankAccount !== null &&
+			itemDefinition.Features.BankAccount === true) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function SupportsInvoices(itemDefinition) {
+	if (typeof itemDefinition.Features !== "undefined") {
+		if (typeof itemDefinition.Features.Invoices !== "undefined" &&
+			itemDefinition.Features.Invoices !== null &&
+			itemDefinition.Features.Invoices === true) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function SupportsFAQs(itemDefinition) {
+	if (typeof itemDefinition.Features !== "undefined") {
+		if (typeof itemDefinition.Features.FAQs !== "undefined" &&
+			itemDefinition.Features.FAQs !== null &&
+			itemDefinition.Features.FAQs === true) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function SupportsContactPerson(itemDefinition) {
+	if (typeof itemDefinition.Features !== "undefined") {
+		if (typeof itemDefinition.Features.ContactPerson !== "undefined" &&
+			itemDefinition.Features.ContactPerson !== null &&
+			itemDefinition.Features.ContactPerson === true) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function SupportsMailLink(itemDefinition) {
+	if (typeof itemDefinition.Features !== "undefined") {
+		if (typeof itemDefinition.Features.MailLink !== "undefined" &&
+			itemDefinition.Features.MailLink !== null &&
+			itemDefinition.Features.MailLink === true) {
+			return true;
+		}
+	}
+
+	return false;
+}

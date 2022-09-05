@@ -30,7 +30,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-danger" onclick="document.location='/Admin/Company/Features/Documents.aspx?ST1TVVBQT1JUJkM9MQ==';">
+                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-danger" onclick="GoEncryptedPage('/Admin/Company/Features/Documents.aspx');">
                             <i class="fa fa-book"></i>&nbsp;&nbsp;Gestió documental&nbsp;&nbsp;</button>
                     </p>
                 </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-success" onclick="document.location='/Admin/Company/Services.aspx?ST1TVVBQT1JUJkM9MQ==';">
+                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-success" onclick="GoEncryptedPage('/Admin/Company/Services.aspx');">
                             <i class="fa fa-file-contract"></i>&nbsp;&nbsp;Serveis&nbsp;&nbsp;</button>
                     </p>
                 </div>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-info" onclick="document.location='/Admin/Company/Features/Signatures.aspx?ST1TVVBQT1JUJkM9MQ==';">
+                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-info" onclick="GoEncryptedPage('/Admin/Company/Features/Signatures.aspx');">
                             <i class="fa fa-file-signature"></i>&nbsp;&nbsp;Signatures&nbsp;&nbsp;</button>
                     </p>
                 </div>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-info" onclick="document.location='/Admin/Company/CompanyAddress.aspx?ST1TVVBQT1JUJkM9MQ==';">
+                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-info" onclick="GoEncryptedPage('/Admin/Company/CompanyAddress.aspx');">
                             <i class="fa fa-map-marker-alt"></i>&nbsp;&nbsp;Adreces&nbsp;&nbsp;</button>
                     </p>
                 </div>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-info" onclick="document.location='/Admin/Company/BankAccount.aspx?ST1TVVBQT1JUJkM9MQ==';">
+                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-info" onclick="GoEncryptedPage('/Admin/Company/BankAccount.aspx');">
                             <i class="fa fa-credit-card"></i>&nbsp;&nbsp;Cuentas bancarias&nbsp;&nbsp;</button>
                     </p>
                 </div>
@@ -145,7 +145,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-warning" onclick="document.location='/Instances/Storage/Pages/DashboardOcupacion.aspx?YWM9MSZvcHRpb25JZD0w';">
+                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-warning" onclick="GoEncryptedPage('/Instances/Storage/Pages/DashboardOcupacion.aspx?YWM9MSZvcHRpb25JZD0w');">
                             <i class="fa fa-bell"></i>&nbsp;&nbsp;Alertas&nbsp;&nbsp;</button>
                     </p>
                 </div>
@@ -161,7 +161,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-warning" onclick="document.location='/Instances/Storage/Pages/DashboardOcupacion.aspx?YWM9MSZvcHRpb25JZD0w';">
+                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-warning" onclick="GoEncryptedPage('/Instances/Storage/Pages/DashboardOcupacion.aspx');">
                             <i class="fa fa-euro-sign"></i>&nbsp;&nbsp;Facturación&nbsp;&nbsp;</button>
                     </p>
                 </div>

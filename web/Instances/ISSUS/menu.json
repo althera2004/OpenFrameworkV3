@@ -18,6 +18,7 @@
 	{ "Leaf": true, "Item": "Process" },
 	{ "Leaf": true, "Item": "Learning" },
 	{ "Leaf": true, "Item": "Equipment" },
+	{ "Leaf": true, "Item": "Equipment", "ListId": "EquipmentCosts", "Label": "Cost equips", "Icon": "fad fa-euro-sign" },
 	{ "Leaf": true, "Item": "Incident" },
 	{ "Leaf": true, "Item": "Action" },
 	{ "Leaf": true, "Item": "Objective" },

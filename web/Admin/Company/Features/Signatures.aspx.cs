@@ -19,7 +19,7 @@
             this.master.BreadCrumb.Add("Administració");
             this.master.BreadCrumb.AddEncryptedLink("Configuració de companyia", "/Admin/Company/");
             this.master.BreadCrumb.AddLeaf("Firmas");
-            this.master.BreadCrumb.SetTitle("Companyia: ");
+            this.master.BreadCrumb.SetTitle("Companyia: " + this.master.InstanceName);
 
             this.master.AddScript("/vendor/jquery-flot/jquery.flot.js");
             this.master.AddScript("/vendor/jquery-flot/jquery.flot.resize.js");

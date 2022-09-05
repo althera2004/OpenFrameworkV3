@@ -40,6 +40,20 @@
                 { "DataProperty": "EmployeeId", "Search": true, "Length": 150 }
             ],
             "Sorting": {"Index": 1, "SortingType": "asc"} 
+        },		
+        {
+            "Id": "ByEquipment",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Name", "Linkable": true, "Search": true },				
+                { "DataProperty": "Type", "Linkable": true, "Search": true, "Length": 90 },
+                { "DataProperty": "Periodcity", "Linkable": true, "Search": true, "Length": 90 },
+                { "DataProperty": "Accesoris", "Linkable": true, "Search": true, "Length": 150 },
+                { "DataProperty": "Amount", "Search": true, "Length": 150 }
+            ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [

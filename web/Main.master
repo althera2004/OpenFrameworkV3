@@ -17,11 +17,13 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/nouislider.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/fonts.googleapis.com.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/ace.min.css" class="ace-main-stylesheet" <%=this.MainAceStyle %> />
-    <link rel="stylesheet" type="text/css" href="/css/Main.css" />
+    <link rel="stylesheet" type="text/css" href="/css/Main.css" />	
+    <link type="text/css" rel="stylesheet" href="/assets/css/tellis-sticky-note.css" />
 
     <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ace-part2.min.css" class="ace-main-stylesheet" /><![endif]-->
     <link rel="stylesheet" type="text/css" href="/assets/css/ace-skins.min.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/ace-rtl.min.css" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/chosen.min.css" />		
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datepicker3.min.css" />
 	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-duallistbox.css" />
 
@@ -501,6 +503,7 @@
 		<script src="/assets/js/jquery-ui.custom.min.js"></script>
 		<script src="/assets/js/jquery.ui.touch-punch.min.js"></script>
 		<script src="/assets/js/bootbox.js"></script>
+		<script charset="utf-8" type="text/javascript" src="/assets/js/chosen.jquery.min.js"></script>		
 		<script src="/assets/js/jquery.easypiechart.min.js"></script>
 		<script src="/assets/js/notify.js"></script>
 		<script src="/assets/js/spin.js"></script>
@@ -513,6 +516,7 @@
 		<script src="/js/NumberFormat.js"></script>
 		<script src="/js/common.js"></script>
 		<script src="/js/MasterEvents.js"></script>
+		<script src="/js/Document.js"></script>
 		<script src="/assets/js/moment.min.js"></script>
 		<script src="/assets/js/nouislider.js"></script>
 		<script src="/assets/js/wNumb.min.js"></script>
@@ -525,6 +529,9 @@
 		<script src="/js/PopupItem.js"></script>
 		<script src="/js/ItemTools.js"></script>
 		<script src="/js/Search.js"></script>
+		
+        <script charset="utf-8" type="text/javascript" src="/assets/js/tellis-sticky-note.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/js/Feature.Sticky.js"></script>
 
 		<!-- ace scripts -->
 		<script src="/assets/js/ace-elements.min.js"></script>
@@ -730,6 +737,7 @@ variables above and don't change anything in the actual loader code
         <a href="#PopupDocumentGallery" role="button" data-toggle="modal" id="LauncherPopupDocumentGallery"> Gallery  </a>
         <a href="#PopupCalendar" role="button" data-toggle="modal" id="LauncherPopupCalendar"> Calendar  </a>
         <a href="#PopupItemCalendar" role="button" data-toggle="modal" id="LauncherPopupItemCalendar"> ItemCalendar  </a>
+        <a href="#PopupSticky" role="button" data-toggle="modal" id="LauncherPopupSticky"> Sticky  </a>
     </div>
     <div id="PopupsContentHolder"></div>
     <div id="PopupDefault" class="modal in" tabindex="-1">
@@ -815,6 +823,123 @@ variables above and don't change anything in the actual loader code
             </div>
         </div>
     </div>
+	<div id="PopupUploadFile" class="modal in" tabindex="-1" style="z-index:9998;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="white">&times;</span></button>
+                        <span id="PopupModalFileTitle"><%=Translate("Common_Upload_Popup_Title") %></span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div id="UploadFileSignatureWarning" class="form-explanation alert alert-block alert-warning" style="padding:8px;display:none">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td style="vertical-align:top;"><i class="ace-icon fa fa-info-circle info fa-2x"></i>&nbsp;&nbsp;&nbsp;</td>
+                                    <td>Aquest document requereix estar signat.<br />Asseguri's que el document ho està abans de pujar-lo.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4 style="width:100%;border-bottom:1px dashed #ccc;"id="PopupUploadPreviousFileTitle"><%=Translate("Common_Upload_Title_ActualFile") %></h4>
+                    <div class="row" id="PopupUploadPreviousFile">
+                        <label class="col-xs-3"><span id="PopupUploadFileFieldName"></span></label>
+                        <label class="col-xs-9"><span id="PopupUploadFileFieldValue"></span></label>
+                    </div>
+                    <div class="row" id="PopupUploadFileInfo" style="display:none;">
+                        <label class="col-xs-3"><%=Translate("Common_Upload_Label_Size") %>:</label>
+                        <label class="col-xs-3"><span id="PopupUploadFileActuaLength"></span></label>
+                        <label class="col-xs-2"><%=Translate("Common_Upload_Label_CreatedOn") %>:</label>
+                        <label class="col-xs-4"><span id="PopupUploadFileActuaCreatedOn"></span></label>
+                    </div>
+                    <h4 style="width:100%;border-bottom:1px dashed #ccc;"><%=Translate("Common_Upload_Title_NewFile") %></h4>
+                    <div class="row">
+                        <label class="col-xs-2"><%=Translate("Common_Upload_Label_NewName") %>:</label>
+                        <label class="col-xs-9" style="font-weight:bold;"><span id="PopupUploadFileNewFile"></span></label>
+                    </div>
+                    <div class="row">
+                        <label class="col-xs-2"><%=Translate("Common_Upload_Label_Size") %>:</label>
+                        <label class="col-xs-9"><span id="PopupUploadFileNewLength"></span></label>
+                    </div>
+                    <div class="row">
+                        <label class="col-xs-2"><%=Translate("Common_Upload_Label_MIME") %>:</label>
+                        <label class="col-xs-9"><span id="PopupUploadFileNewType"></span></label>
+                    </div>
+                    <input type="file" id="PopupUploadFileInput" style="display:none;" />
+                </div>
+                <div class="modal-footer no-margin-top">
+                    <button type="button" class="btn btn-sm pull-right" data-dismiss="modal" id="PopupUploadFileBtnCancel">
+                        <i class="ace-icon fal fa-ban"></i>
+                        <%=Translate("Common_Cancel") %>
+                    </button>
+                    <button type="button" class="btn btn-sm pull-right btn-success" style="display:none;" id="PopupUploadFileBtnOk" onclick="UploadFileGo();">
+                        <i class="ace-icon fal fa-upload"></i>
+                        <%=Translate("Common_Upload_BtnOK") %>
+                    </button>
+                    <button type="button" class="btn btn-sm pull-right btn-info" id="PopupUploadFileBtnSelect" onclick="$('#PopupUploadFileInput').click();">
+                        <i class="ace-icon fal fa-search"></i>
+                        <%=Translate("Common_Upload_BtnSelect") %>
+                    </button>
+                    <div id="PopupUploadFileError" style="color:#f00;float:left;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+    <div id="PopupSticky" class="modal in" tabindex="-1">
+        <div class="modal-dialog" style="width:800px;">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header blue">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="white">&times;</span></button>
+                        <span id="PopupStickyTitle" style="color:#fff;"><i class="fa fa-sticky-note"></i>&nbsp;<%=Translate("Feature_Sticking_Add") %></span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="PopupStickyItemDefinitionId"></label>
+                        <label for="PopupStickyItemId"></label>
+                        <input type="text" id="PopupStickyItemDefinitionId" style="display:none;" />
+                        <input type="text" id="PopupStickyItemId" style="display:none;" />
+                        <div class="row">
+                            <label class="col-sm-2"><%= Translate("Feature_Sticky_Label_SendTo") %>:</label>
+                            <div class="col-xs-10">
+                                <div id="PopupStickyTargets">
+                                    <input type="radio" name="PopupStickyRB" id="StickyRB0" onclick="Feature_Sticky_RBTargetsChanged();" checked="checked" />&nbsp;Només per a mi <br />
+                                    <input type="radio" name="PopupStickyRB" id="StickyRB1" onclick="Feature_Sticky_RBTargetsChanged();" />&nbsp;A tothom <br />
+                                    <input type="radio" name="PopupStickyRB" id="StickyRB2" onclick="Feature_Sticky_RBTargetsChanged();" />&nbsp;Seleccionar destinatari/s <br />
+                                    <div id="StickyPopup_TargetsDiv" style="display:none;">
+                                    <asp:Literal runat="server" ID="LtListUsersSticky"></asp:Literal>
+                                    <label for="PopupStickyTarget"></label>
+                                    <input type="text" id="PopupStickyTarget" value="" style="display:_none;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2"><%= Translate("Feature_Sticky_Label_Message") %></label>
+                            <div class="col-xs-10">
+                                <textarea id="PopupStickyText" rows="3" class="col-xs-11"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer no-margin-top">
+                    <span id="PopupStickyError" style="color:#f00;display:none;float:left;"></span>
+                    <button type="button" class="btn btn-sm pull-right" data-dismiss="modal" id="PopupStickyBtnCancel">
+                        <i class="ace-icon fa fa-times"></i>
+                        <%=Translate("Common_Cancel") %>
+                    </button>
+                    <button type="button" class="btn btn-sm pull-right btn-success" id="PopupStickyBtnSave" onclick="Feature_Sticky_SavePopup();">
+                        <i class="ace-icon fa fa-check"></i>
+                        <%=Translate("Common_Save") %>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 	<script type="text/javascript" src="/js/chronometer.js"></script>
 	<script type="text/javascript">
 		var LACStatus = localStorage.getItem("LAC");
@@ -823,7 +948,18 @@ variables above and don't change anything in the actual loader code
 		}
 
         $("#nav-search-input").on("keyup", SearchListKeyUp);
-        $("#nav-search-input").on("change", SearchListChange)
+		$("#nav-search-input").on("change", SearchListChange)
+		$(document).ready(function () {
+			$.support.cors = true;
+            if (PageType === "PageView" && SupportsSticky(ItemDefinition)) {
+
+				for (var s = 0; s < sticks.length; s++) {
+					var sticky = Tellis_Sticky();
+					sticky.init(sticks[s].Id, sticks[s].Author === ApplicationUser.Id);
+					sticky.write(sticks[s].Text, sticks[s].CreatedBy.Profile.FullName);
+				}
+			}
+		});
     </script>
 </body>
 </html>

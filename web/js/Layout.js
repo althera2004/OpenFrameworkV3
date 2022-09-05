@@ -365,3 +365,19 @@ function FormFieldHide(fieldId) {
     $("#" + fieldId + "_Label").hide();
     $("#" + fieldId).parent().hide();
 }
+
+function SelectChosenMultiple(id, options, width) {
+    var res = "<select id=\"" + id + "\" multiple class=\"chosen-multiple\">";
+
+    var cssStyle = "";
+    if (typeof width !== "undefined" && width !== null && isNaN(width) === false) {
+        cssStyle = " style=\"width:" + width + "px;\"";
+    }
+
+    for (var x = 0; x < options.length; x++) {
+        res += "<option value=\"" + options[x].Id + "\"" + cssStyle + ">" + options[x].Value + "</option>";
+    }
+
+    res += "</select>";
+    return res;
+}

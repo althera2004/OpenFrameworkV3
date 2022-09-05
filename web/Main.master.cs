@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Web.UI;
+using OpenFrameworkV3;
 using OpenFrameworkV3.Core;
 using OpenFrameworkV3.Core.Navigation;
 
@@ -51,6 +52,8 @@ public partial class Main : MasterPage
     /// <summary>Gets actual instance</summary>
     public string InstanceName { get; private set; }
 
+    public Instance Instance { get; private set; }
+
     public long CompanyId { get; private set; }
 
     /// <summary>Gets de breadcrumb elements</summary>
@@ -67,6 +70,7 @@ public partial class Main : MasterPage
         this.InstanceName = this.CodedQuery.GetByKey<string>("I");
         this.CompanyId = this.CodedQuery.GetByKey<long>("C");
         this.Language = this.CodedQuery.GetByKey<string>("L");
+        this.Instance = Persistence.InstanceByName(this.InstanceName);
         this.BreadCrumb = new BreadCrumb()
         {
             InstanceName = this.InstanceName,

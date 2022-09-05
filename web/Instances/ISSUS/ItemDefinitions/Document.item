@@ -103,7 +103,7 @@
 							"Fields": [
 								{ "Name": "DocumentCategoryId", "ColSpan": 2, "Layout": "BAR" },
 								{ "Name": "Conservacio" },
-								{ "Name": "ConservacioTime" }
+								{ "Name": "ConservacioTime", "Layout": "NoLabel" }
 							]
 						},
 						{

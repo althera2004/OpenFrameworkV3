@@ -10,6 +10,8 @@ using System.Linq;
 using System.Web.UI;
 using OpenFrameworkV3;
 using OpenFrameworkV3.Core.DataAccess;
+using OpenFrameworkV3.Feature;
+using OpenFrameworkV3.Tools;
 
 public partial class ItemView : Page
 {
@@ -36,6 +38,7 @@ public partial class ItemView : Page
     public string JsonData { get; private set; }
 
     public string FK { get; private set; }
+    public string Stick { get; private set; }
 
     public string InstanceName
     {
@@ -97,6 +100,16 @@ public partial class ItemView : Page
 
                 this.FK += "FK[\"" + itemName + "\"] = {\"Data\":" + data.Replace("\n", "\\n") + "};";
             }
+        }
+
+        // weke-product if (this.master.Instance.Config.Sticking && itemDefinition.Features.Sticky && this.ItemId > 0)
+        if (itemDefinition.Features.Sticky && this.ItemId > 0)
+            {
+            this.Stick = Sticky.JsonList(Sticky.ByItemId(itemDefinition.Id, this.ItemId, this.master.CompanyId, this.master.InstanceName));
+        }
+        else
+        {
+            this.Stick = Json.EmptyJsonList;
         }
     }
 }

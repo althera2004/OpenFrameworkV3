@@ -54,6 +54,7 @@ var popupContext = {
     "DocumentGallery": false,
     "LoginAndContinue": false,
     "DeleteResponse": false,
+    "FileUpload": false,
     "BAR": false
 };
 

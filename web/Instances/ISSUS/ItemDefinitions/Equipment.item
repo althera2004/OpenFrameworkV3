@@ -1,7 +1,7 @@
 ﻿{
     "Id": 8,
     "ItemName": "Equipment",
-	"Features": { "Attachs": true },
+	"Features": { "Attachs": true, "Sticky": true },
 	"Description": "Equips",
     "Layout": {
         "Icon": "fad fa-cubes",
@@ -44,7 +44,7 @@
             "EditAction": "FormPage",
 			"Export": "PDF",
 			"Columns": [
-                { "DataProperty": "Name", "Linkable": true,"Orderable": true, "Search": true, "RenderData": "Equipment_Name_Column" },
+                { "DataProperty": "Name", "Linkable": true, "Orderable": true, "Search": true, "RenderData": "Equipment_Name_Column" },
                 { "DataProperty": "Ubicacio", "Width": 200 },
                 { "DataProperty": "RecordType", "Width": 300, "Search": true },
 				{ "DataProperty": "EmployeeId", "Width": 150, "Search": true },
@@ -55,6 +55,37 @@
 			"Filter": [
 				{ "Id": "RecordType", "Type": "CustomCheckBox", "Label": "Registres", "Options": "Calibratge|Verificació|Manteniment", "GetValue": "EQUIPMENT_RecordTypeFilter" },
 				{ "DataProperty": "FInactivate", "Type": "ISNULL", "Label": "Estat", "Options": "Actius|De baixa" }
+			],
+			"Actions": [
+				{ "Label": "Veure costos", "Action": "EQUIPMENT_LIST_CostView", "Icon": "fad fa-euro-sign" }
+			]
+        },
+        {
+            "Id": "EquipmentCosts",
+            "FormId": "Custom",
+            "Layout": 1,
+			"Title": "Costos d'equips",
+            "EditAction": "FormPage",
+			"CustomAjaxSource": "Item_Equipment_GetCosts",
+			"Export": "PDF",
+			"Columns": [
+                { "DataProperty": "Name", "ReplacedBy": "D", "Linkable": true,"Orderable": true, "Search": true },
+				{ "ReplacedBy": "CI", "Width": 90, "Label": "Cal.Int", "Align": "right", "RenderData": "ColumEuroFormat" },
+				{ "ReplacedBy": "CE", "Width": 90, "Label": "Cal.Ext", "Align": "right", "RenderData": "ColumEuroFormat" },
+				{ "ReplacedBy": "VI", "Width": 90, "Label": "Ver.Int", "Align": "right", "RenderData": "ColumEuroFormat" },
+				{ "ReplacedBy": "VE", "Width": 90, "Label": "Ver.Ext", "Align": "right", "RenderData": "ColumEuroFormat" },
+				{ "ReplacedBy": "MI", "Width": 90, "Label": "Man.Int", "Align": "right", "RenderData": "ColumEuroFormat" },
+				{ "ReplacedBy": "ME", "Width": 90, "Label": "Man.Ext", "Align": "right", "RenderData": "ColumEuroFormat" },
+				{ "ReplacedBy": "RI", "Width": 90, "Label": "Rep.Int", "Align": "right", "RenderData": "ColumEuroFormat" },
+				{ "ReplacedBy": "RE", "Width": 90, "Label": "Rep.Ext", "Align": "right", "RenderData": "ColumEuroFormat" }
+            ],
+            "Sorting": {"Index": 1, "SortingType": "asc"},
+			"Filter": [
+				{ "Id": "RecordType", "Type": "CustomCheckBox", "Label": "Registres", "Options": "Calibratge intern|Calibratge extern|Verificació interna|Verificació externa|Manteniment intern|Manteniment extern|Reparació interna|Reparació externa", "Render": "EQUIPMENT_LIST_RecordFilter", "GetValue": "EQUIPMENT_RecordTypeFilter" },
+				{ "DataProperty": "FInactivate", "Type": "daterange", "Label": "Periode" }
+			],
+			"Actions": [
+				{ "Label": "Veure equips", "Action": "EQUIPMENT_LIST_EquipmentView", "Icon": "fad fa-cubes" }
 			]
         }
 	],
@@ -116,6 +147,7 @@
 				},
 				{
 					"Id": "calibratge",
+					"Hidden": true,
 					"Label": "Calibratge",
 					"MustExists": true,
 					"Rows": [
@@ -128,6 +160,7 @@
 				},
 				{
 					"Id": "varificacio",
+					"Hidden": true,
 					"Label": "Verificació",
 					"MustExists": true,
 					"Rows": [
@@ -140,12 +173,26 @@
 				},
 				{
 					"Id": "mateniments",
+					"Hidden": true,
 					"Label": "Mateniments",
 					"MustExists": true,
 					"Rows": [
 						{
 							"Fields": [
 								{ "Type": "Placeholder", "Name": "mateniments" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "reparacions",
+					"Hidden": true,
+					"Label": "Reparacions",
+					"MustExists": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Type": "Placeholder", "Name": "reparacions" }
 							]
 						}
 					]
@@ -158,18 +205,6 @@
 						{
 							"Fields": [
 								{ "Type": "Placeholder", "Name": "registres" }
-							]
-						}
-					]
-				},
-				{
-					"Id": "reparacions",
-					"Label": "Reparacions",
-					"MustExists": true,
-					"Rows": [
-						{
-							"Fields": [
-								{ "Type": "Placeholder", "Name": "reparacions" }
 							]
 						}
 					]

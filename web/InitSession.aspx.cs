@@ -57,7 +57,7 @@ public partial class InitSession : Page
 
             if (companies.Count == 1)
             {
-                this.Company = companies[0];
+                this.Company = Company.ById(companies[0].Id, instanceName);
             }
             else
             {
