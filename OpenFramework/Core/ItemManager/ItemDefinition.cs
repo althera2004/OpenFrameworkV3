@@ -602,7 +602,7 @@ namespace OpenFrameworkV3.Core.ItemManager
                 {
                     ExceptionManager.Trace(ex as Exception, string.Format(CultureInfo.InvariantCulture, "NotSupportedException -- ItemDefinition::Load({0})", fileName));
                 }
-
+                
                 res.SetEmptyProperties();
                 return res;
             }

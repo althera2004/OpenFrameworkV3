@@ -1,11 +1,13 @@
-﻿namespace OpenFrameworkV3.Web.Instances.Support
+﻿// --------------------------------
+// <copyright file="DashBoard.aspx.cs" company="OpenFramework">
+//     Copyright (c) 2013 - OpenFramework. All rights reserved.
+// </copyright>
+// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// --------------------------------
+namespace OpenFrameworkV3.Web.Instances.Support
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
     using System.Web.UI;
-    using System.Web.UI.WebControls;
 
     public partial class DashBoard : Page
     {
@@ -25,6 +27,7 @@
 
 
             var title = "Dashboard";
+            this.master.SetTitle(title);
             this.master.SetPageType("PageView");
             this.master.SetPageType("Dashboard");
         }

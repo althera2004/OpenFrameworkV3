@@ -1,4 +1,4 @@
-// 03/08/2022
+// 14/12/2022
 var Dictionary =
 {
     "Añadir": "Añadir",
@@ -259,8 +259,10 @@ var Dictionary =
     "Common_ErrorMessage_IsSelected": "Ya está seleccionado",
     "Common_ErrorResumeIntro": "Revise los siguientes errores",
     "Common_Exit": "Salir",
+    "Common_ExitQuestion": "¿Quieres salir de la aplicación",
     "Common_Export_CSV": "Exportar a CSV",
     "Common_Export_PDF": "Exportar a PDF",
+    "Common_Exporting": "Exportant dades",
     "Common_External": "Externo",
     "Common_FAQs_Popup_Title": "Editar FAQ",
     "Common_Favorites": "En seguimiento",
@@ -1165,6 +1167,8 @@ var Dictionary =
     "Popup_FAQs_Label_Answer": "Respuesta",
     "Popup_FAQs_Label_Question": "Pregunta",
     "Popup_Image_Message": "La imagen se guardará sin necesidad de guardar el resto de datos del formulario.",
+    "PopupChangePassword_ErrorMessage": "Los datos enviados no son válidos.",
+    "PopupChangePassword_SuccessMessage": "Contraseña cambiada.<br />Hay que reiniciar sessión para confirmar el cambio.",
     "por": "por",
     "Principal": "Principal",
     "Resumen": "Resúmen",

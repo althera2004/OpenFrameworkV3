@@ -7,7 +7,7 @@
     "SessionTimeout": "15m",
     "MultiCompany": true,
     "ListNumRows": 50,
-    "DefaultLanguage": "es-es",
+    "DefaultLanguage": "ca-es",
     "Security": {
         "IPAccess": false,
         "IPAccessMail": "asistencia@openframework.es",

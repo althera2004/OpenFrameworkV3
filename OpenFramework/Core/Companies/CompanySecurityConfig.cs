@@ -106,6 +106,10 @@
                                 }
                             }
                         }
+                        catch(Exception ex)
+                        {
+                            var x = ex.Message;
+                        }
                         finally
                         {
                             if (cmd.Connection.State != ConnectionState.Closed)

@@ -1,6 +1,3 @@
-USE [openf_support]
-GO
-
 /****** Object:  StoredProcedure [dbo].[Core_CompanyBankAccount_Activate]    Script Date: 03/07/2022 19:36:29 ******/
 SET ANSI_NULLS ON
 GO

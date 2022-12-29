@@ -1,0 +1,7 @@
+{
+    "ConnectionString": "Data Source=hw120.dinaserver.com;Initial Catalog=openf_german;User Id=openf_german;Password=P@ssw0rd;",
+    "Id": 2022,
+    "Name": "GERMAN",
+    "Description": "Geriàtric Manager",
+    "DefaultLanguage": "ca-es"
+}

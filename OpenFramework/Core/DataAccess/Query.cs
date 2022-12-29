@@ -55,6 +55,17 @@ namespace OpenFrameworkV3.Core.DataAccess
             return PrimaryKeysList(itemDefinition);
         }
 
+        public static string DeleteFieldDocument(string itemName, string fieldName, long itemId, long applicationUserId)
+        {
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                "UPDATE Item_{0} SET {1} = NULL, ModifiedBy = {2}, ModifiedOn = GETUTCDATE() WHERE Id = {3}",
+                itemName,
+                fieldName,
+                applicationUserId,
+                itemId);
+        }
+
         public static string PrimaryKeysList(ItemDefinition itemDefinition)
         {
             var res = new StringBuilder();
@@ -732,7 +743,7 @@ namespace OpenFrameworkV3.Core.DataAccess
                 return string.Empty;
             }
 
-            var itemDefinition = Persistence.ItemDefinitions(instanceName).First(d => d.ItemName.Equals(itemDefinitionName, StringComparison.OrdinalIgnoreCase));
+            var itemDefinition = Persistence.ItemDefinitionByName(itemDefinitionName, instanceName);
 
             var list = itemDefinition.Lists.FirstOrDefault(l => l.Id.Equals(listId, StringComparison.OrdinalIgnoreCase));
             if (list == null)
@@ -748,7 +759,7 @@ namespace OpenFrameworkV3.Core.DataAccess
         {            
             var res = new StringBuilder("");
 
-            var itemDefinition = Persistence.ItemDefinitions(instanceName).First(d => d.ItemName.Equals(itemDefinitionName, StringComparison.OrdinalIgnoreCase));
+            var itemDefinition = Persistence.ItemDefinitionByName(itemDefinitionName, instanceName);
 
             foreach (var field in itemDefinition.Fields)
             {
@@ -875,7 +886,7 @@ namespace OpenFrameworkV3.Core.DataAccess
         private static ReadOnlyCollection<ItemField> FieldsDescription(string itemDefinitionName, string instanceName)
         {
             var res = new List<ItemField>();
-            var itemDefinition = Persistence.ItemDefinitions(instanceName).First(d => d.ItemName.Equals(itemDefinitionName, StringComparison.OrdinalIgnoreCase));
+            var itemDefinition = Persistence.ItemDefinitionByName(itemDefinitionName, instanceName);
             if (itemDefinition.Layout.Description != null)
             {
                 foreach (var field in itemDefinition.Layout.Description.Fields)
@@ -896,7 +907,7 @@ namespace OpenFrameworkV3.Core.DataAccess
 
         private static ReadOnlyCollection<ItemField> FieldForeingLines(string itemDefinitionName, string instanceName)
         {
-            var itemDefinition = Persistence.ItemDefinitions(instanceName).First(d => d.ItemName.Equals(itemDefinitionName, StringComparison.Ordinal));
+            var itemDefinition = Persistence.ItemDefinitionByName(itemDefinitionName, instanceName);
             var fields = itemDefinition.Fields.Where(i => itemDefinition.ForeignListNames.Contains(itemDefinitionName)).ToList();
             return new ReadOnlyCollection<ItemField>(fields.Where(f => FieldsDescription(itemDefinitionName, instanceName).Select(a => a.Name).ToList().Contains(f.Name) == false).ToList());
         }

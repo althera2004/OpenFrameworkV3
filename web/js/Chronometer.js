@@ -41,7 +41,7 @@ function SessionRestart() {
     start = Date.now();
 }
 
-chrono();
+//chrono();
 SessionRestart();
 
 

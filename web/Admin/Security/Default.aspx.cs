@@ -13,12 +13,20 @@
         /// <summary>Master page</summary>
         public Main master;
 
+        public Main MasterPage
+        {
+            get
+            {
+                return this.master;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.master = this.Master as Main;
-            this.master.BreadCrumb.Add("Administració");
-            this.master.BreadCrumb.AddLeaf("Seguretat");
-            this.master.BreadCrumb.SetTitle("Seguretat: ");
+            this.master.BreadCrumb.Add(this.MasterPage.Translate("Common_Administration"));
+            this.master.BreadCrumb.AddLeaf(this.MasterPage.Translate("Core_Security"));
+            this.master.BreadCrumb.SetTitle(this.MasterPage.Translate("Core_Security"));
             this.master.SetPageType("pageAdmin");
 
             var securityConfig = Company.ById(this.master.CompanyId, this.master.InstanceName);

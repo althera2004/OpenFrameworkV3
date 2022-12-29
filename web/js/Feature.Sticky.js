@@ -53,19 +53,19 @@ function Feature_Sticky_SavePopup() {
 function Feature_Sticky_Delete(id) {
     var data = {
         "stickyId": id,
-        "companyId": CompanyId,
-        "applicationUserId": ApplicationUser.Id
+        "companyId": Company.Id,
+        "applicationUserId": ApplicationUser.Id,
+        "instanceName": Instance.Name
     };
     console.log(data);
     $.ajax({
         "type": "POST",
-        "url": "/Async/ItemDataServices.asmx/FeatureStickyDelete",
+        "url": "/Async/ItemService.asmx/FeatureStickyDelete",
         "contentType": "application/json; charset=utf-8",
         "dataType": "json",
         "data": JSON.stringify(data, null, 2),
         "success": function (msg) {
-            console.log(msg.d.ReturnValue);
-            NotifySuccess(Dictionary.Feature_Sticky + " eliminat correctament", Dictionary.Feature_Sticky);
+            NotifySuccess("Eliminat correctament", Dictionary.Feature_Sticky);
             $(".Sticky_" + id).fadeOut();
         },
         "error": function (msg) {

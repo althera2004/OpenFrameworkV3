@@ -38,6 +38,7 @@
             "FormId": "Custom",
             "Layout": 1,
             "EditAction": "FormPage",
+			"Export": "PDF",
 			"ButtonAddLabel": "Afegir objectiu",
 			"Columns": [
                 { "DataProperty": "Name", "Search": true },

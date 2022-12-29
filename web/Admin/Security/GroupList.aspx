@@ -9,7 +9,8 @@
                 <div class="panel-heading hbuilt">
                     <%= this.master.Translate("Core_SecurityGroup_Plural") %>
                     <div class="panel-tools">
-                    </div>s
+                        <a class="_showhide" style="cursor:pointer;" id="SECURITYGROUP_AddBtn" onclick="GoGroupNew();"><i class="fa fa-plus"></i>&nbsp;Añadir grupo</a>
+                    </div>
                 </div>
                         <div class="tableHead">
                             <table cellpadding="1" cellspacing="1" class="table">

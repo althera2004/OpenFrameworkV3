@@ -381,3 +381,43 @@ function SelectChosenMultiple(id, options, width) {
     res += "</select>";
     return res;
 }
+
+function ModalImageView(image, caption) {
+    var imageFile = image;//$("#" + sender).val();
+    if (imageFile === "") {
+        return false;
+    }
+
+    if (popupContext.ImageView === false) {
+        var res = "";
+        res += "<div id=\"ModalImage\" class=\"modal-image\">";
+        res += "    <span class=\"close-image\" onclick=\"$('#ModalImage').hide();\" style=\"cursor:pointer;\" title=\"" + Dictionary.Common_Close + "\">&times;</span>";
+        res += "    <div id=\"ModalImageDiv\" class=\"modal-image-content\" data-zoomed=\"\">";
+        res += "        <img id=\"ModalImagePic\" src=\"\" alt=\"\" />";
+        res += "    </div>";
+        res += "    <div id=\"caption\"></div>";
+        res += "</div>";
+        $("#PopupsContentHolder").append(res);
+    }
+
+    popupContext.ImageView = true;
+
+    $("#ModalImage").show();
+    $("#ModalImageDiv").data("zoomed", "");
+    $("#ModalImagePic").attr("src", "/Instances/" + Instance.Name + "/Data/Images/" + ItemDefinition.ItemName + "/" + imageFile + "?" + guid());
+    $("#ModalImagePic").attr("alt", caption);    
+    $("#caption").html(caption);
+    $("#ModalImagePic").css("max-height", containerHeight - 150 + "px");
+}
+
+function FormatBytes(bytes, decimals = 2) {
+    if (!+bytes) return '0 Bytes'
+
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}

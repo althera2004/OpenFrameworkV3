@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web.UI;
 using OpenFrameworkV3;
 using OpenFrameworkV3.Core.DataAccess;
+using OpenFrameworkV3.Core.ItemManager;
 using OpenFrameworkV3.Feature;
 using OpenFrameworkV3.Tools;
 
@@ -58,7 +59,7 @@ public partial class ItemView : Page
 
         var itemDefinition = Persistence.ItemDefinitionByName(this.ItemName, this.master.InstanceName);
         this.ItemDefinitionId = itemDefinition.Id;
-        var listDefinition = itemDefinition.Lists.First();
+        var listDefinition = OpenFrameworkV3.Core.ItemManager.ItemList.List.Empty;
         if (itemDefinition.Lists.Any(l => l.Id.Equals(this.ListId, StringComparison.OrdinalIgnoreCase)))
         {
             listDefinition = itemDefinition.Lists.First(l => l.Id.Equals(this.ListId, StringComparison.OrdinalIgnoreCase));

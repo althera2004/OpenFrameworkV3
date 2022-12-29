@@ -15,10 +15,10 @@
         protected void Page_Load(object sender, EventArgs e)
         {
             this.master = this.Master as Main;
-            this.master.BreadCrumb.Add("Administració");
-            this.master.BreadCrumb.AddEncryptedLink("Seguretat", "/Admin/Security/Default.aspx");
-            this.master.BreadCrumb.AddLeaf("Usuaris");
-            this.master.BreadCrumb.SetTitle("Seguretat: ");
+            this.master.BreadCrumb.Add(this.master.Translate("Common_Administration"));
+            this.master.BreadCrumb.AddEncryptedLink(this.master.Translate("Core_Security"), "/Admin/Security/Default.aspx");
+            this.master.BreadCrumb.AddLeaf(this.master.Translate("Core_Security_ApplicationUsers"));
+            this.master.BreadCrumb.SetTitle(this.master.Translate("Core_Security"));
             this.master.SetPageType("pageAdmin");
             this.GetUsers();
         }

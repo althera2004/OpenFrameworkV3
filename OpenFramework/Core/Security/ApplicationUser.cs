@@ -118,18 +118,18 @@ namespace OpenFrameworkV3.Core.Security
         [XmlElement(Type = typeof(Language), ElementName = "Language")]
         public Language Language { get; set; }
 
-        private List<Group> groups;
+        private List<SecurityGroup> groups;
 
-        public ReadOnlyCollection<Group> Groups
+        public ReadOnlyCollection<SecurityGroup> Groups
         {
             get
             {
                 if (this.groups == null)
                 {
-                    this.groups = new List<Group>();
+                    this.groups = new List<SecurityGroup>();
                 }
 
-                return new ReadOnlyCollection<Group>(this.groups);
+                return new ReadOnlyCollection<SecurityGroup>(this.groups);
             }
         }
 
@@ -157,12 +157,12 @@ namespace OpenFrameworkV3.Core.Security
             if (this.groups == null)
             {
                 this.groups =
-                    new List<Group>();
+                    new List<SecurityGroup>();
             }
 
             if (!this.groups.Any(g => g.Id == groupId))
             {
-                this.groups.Add(new Group { Id = groupId });
+                this.groups.Add(new SecurityGroup { Id = groupId });
             }
         }
 
@@ -283,7 +283,8 @@ namespace OpenFrameworkV3.Core.Security
                         ""AdminUser"":{4},
                         ""Profile"":{5},
                         ""Grants"":{6},
-                        ""Groups"":{7}
+                        ""Groups"":{7},
+                        ""Language"": {8}
                     }}",
                     this.Id,
                     (this.Email ?? string.Empty).ToLowerInvariant(),
@@ -292,7 +293,8 @@ namespace OpenFrameworkV3.Core.Security
                     ConstantValue.Value(this.AdminUser),
                     profileJson,
                     Grant.JsonList(new ReadOnlyCollection<Grant>(this.Grants)),
-                    Group.JsonListSimple(new ReadOnlyCollection<Group>(this.Groups)));
+                    SecurityGroup.JsonListSimple(new ReadOnlyCollection<SecurityGroup>(this.Groups)),
+                    this.Language.Json);
             }
         }
 
@@ -397,7 +399,19 @@ namespace OpenFrameworkV3.Core.Security
                                         Name = rdr.GetString(ColumnsUserGet.LanguageName)
                                     };
 
-                                    res.Profile = UserProfile.ByApplicationUserId(res.Id, companyId, instanceName);
+                                    //res.Profile = UserProfile.ByApplicationUserId(res.Id, companyId, instanceName);
+                                    res.Profile = new UserProfile
+                                    {
+                                        ApplicationUserId = rdr.GetInt64(ColumnsUserGet.Id),
+                                        Name = rdr.GetString(ColumnsUserGet.Name),
+                                        LastName = rdr.GetString(ColumnsUserGet.LastName),
+                                        LastName2 = rdr.GetString(ColumnsUserGet.LastName2),
+                                        EmailAlternative = rdr.GetString(ColumnsUserGet.EmailAlternative),
+                                        Phone = rdr.GetString(ColumnsUserGet.Phone),
+                                        Mobile = rdr.GetString(ColumnsUserGet.Mobile),
+                                        PhoneEmergency = rdr.GetString(ColumnsUserGet.PhoneEmergency),
+                                        Fax = rdr.GetString(ColumnsUserGet.Fax)
+                                    };
 
                                     res.AdminUser = rdr.GetBoolean(ColumnsUserGet.AdminUser);
                                     res.Core = rdr.GetBoolean(ColumnsUserGet.Core);
@@ -410,12 +424,13 @@ namespace OpenFrameworkV3.Core.Security
 
                                     res.grants = Grant.ByUser(res.Id, 1, instanceName).ToList();
 
-                                    res.groups = Group.ByUserId(res.Id, companyId, instanceName).ToList();
+                                    res.groups = SecurityGroup.ByUserId(res.Id, companyId, instanceName).ToList();
 
-                                    if (companyId != Constant.DefaultId)
-                                    {
-                                        res.GetShortcuts(applicationUserId, companyId, res.Language.Iso, instanceName);
-                                    }
+                                    // TODO: shorcuts
+                                    //if (companyId != Constant.DefaultId)
+                                    //{
+                                    //    res.GetShortcuts(applicationUserId, companyId, res.Language.Iso, instanceName);
+                                    //}
 
                                 }
                             }
@@ -601,20 +616,56 @@ namespace OpenFrameworkV3.Core.Security
             return res;
         }
 
-        public ActionResult Insert(long applicationUserId, long companyId, string instanceName)
+        public ActionResult Save (long applicationUserId, long companyId, string instanceName)
+        {
+            if(this.Id == Constant.DefaultId)
+            {
+                return Insert(applicationUserId, companyId, instanceName);
+            }
+            else
+            {
+                return Update(applicationUserId, companyId, instanceName);
+            }
+        }
+
+        private ActionResult Insert(long applicationUserId, long companyId, string instanceName)
         {
             var res = ActionResult.NoAction;
             /* CREATE PROCEDURE Core_User_Insert
+             *   PROCEDURE Core_User_Insert
              *   @Id bigint output,
+             *   @CompanyId bigint,
              *   @Email nvarchar(100),
              *   @Password nvarchar(50),
+             *   @Pass  nvarchar(150),
              *   @Language bigint,
-             *   @FirstName nvarchar(50),
+             *   @ApplicationUserId bigint,
+             *   @Name varchar(50),
              *   @LastName nvarchar(50),
              *   @LastName2 nvarchar(50),
+             *   @Phone nvarchar(20),
+             *   @Mobile nvarchar(20),
+             *   @PhoneEmergency nvarchar(20),
+             *   @Fax nvarchar(20),
+             *   @EmailAlternative nvarchar(100),
+             *   @Twitter nvarchar(50),
+             *   @LinkedIn nvarchar(50),
+             *   @Instagram nvarchar(50),
+             *   @Facebook nvarchar(50),
+             *   @Gender int,
+             *   @IdentificationCard nvarchar(15),
              *   @IMEI nvarchar(20),
-             *   @CompanyId bigint,
-             *   @ApplicationUserId bigint */
+             *   @BirthDate datetime,
+             *   @AddressWayType int,
+             *   @Address nvarchar(100),
+             *   @PostalCode nvarchar(10),
+             *   @City nvarchar(50),
+             *   @Province nvarchar(50),
+             *   @State nvarchar(50),
+             *   @Country nvarchar(50),
+             *   @Latitude decimal(18,8),
+             *   @Longitude decimal(18,8),
+             *   @Web  nvarchar(300) */
 
             var cns = Persistence.ConnectionString(instanceName);
             if (!string.IsNullOrEmpty(cns))
@@ -625,14 +676,24 @@ namespace OpenFrameworkV3.Core.Security
                     {
                         cmd.Connection = cnn;
                         cmd.CommandType = CommandType.StoredProcedure;
+                        var sendPass = Encrypt.EncryptString(Basics.Reverse("pass"), "OpenFramework");
                         cmd.Parameters.Add(DataParameter.OutputLong("@Id"));
                         cmd.Parameters.Add(DataParameter.Input("@Email", this.Email, 100));
                         cmd.Parameters.Add(DataParameter.Input("@Password", "pass", 50));
+                        cmd.Parameters.Add(DataParameter.Input("@Pass", sendPass, 50));
                         cmd.Parameters.Add(DataParameter.Input("@Language", this.Language.Id));
+
                         cmd.Parameters.Add(DataParameter.Input("@FirstName", this.Profile.Name, 50));
                         cmd.Parameters.Add(DataParameter.Input("@LastName", this.Profile.LastName, 50));
                         cmd.Parameters.Add(DataParameter.Input("@LastName2", this.Profile.LastName2, 50));
-                        cmd.Parameters.Add(DataParameter.Input("@IMEI", this.Profile.IMEI, 20));
+                        cmd.Parameters.Add(DataParameter.Input("@Phone", this.Profile.Phone, 20));
+                        cmd.Parameters.Add(DataParameter.Input("@Mobile", this.Profile.Mobile, 20));
+                        cmd.Parameters.Add(DataParameter.Input("@PhoneEmergency", this.Profile.PhoneEmergency, 20));
+                        cmd.Parameters.Add(DataParameter.Input("@Fax", this.Profile.Fax, 20));
+                        cmd.Parameters.Add(DataParameter.Input("@EmailAlternative", this.Profile.EmailAlternative, 100));
+                        cmd.Parameters.Add(DataParameter.Input("@Gender", this.Profile.Gender));
+                        cmd.Parameters.Add(DataParameter.Input("@IdentificationCard", this.Profile.IdentificationCard, 15));
+
                         cmd.Parameters.Add(DataParameter.Input("@CompanyId", companyId));
                         cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));
                         try
@@ -640,6 +701,7 @@ namespace OpenFrameworkV3.Core.Security
                             cmd.Connection.Open();
                             cmd.ExecuteNonQuery();
                             this.Id = Convert.ToInt64(cmd.Parameters["@Id"].Value);
+                            res.SetSuccess(string.Format(CultureInfo.InvariantCulture, "OK|{0}", this.Id));
                         }
                         finally
                         {
@@ -656,9 +718,49 @@ namespace OpenFrameworkV3.Core.Security
             return res;
         }
 
-        public ActionResult Update(long applicationUserId, long companyId, string instanceName)
+        private ActionResult Update(long applicationUserId, long companyId, string instanceName)
         {
             var res = ActionResult.NoAction;
+            return res;
+        }
+
+        public static ActionResult ChangePassword(long applicationUserId, string actual, string newPass, string instanceName, string ip)
+        {
+            var res = ActionResult.NoAction;
+            var cns = Persistence.ConnectionString(instanceName);
+            if (!string.IsNullOrEmpty(cns))
+            {
+                using(var cmd = new SqlCommand("Core_User_ChangePassword"))
+                {
+                    using(var cnn = new SqlConnection(cns))
+                    {
+                        var realActual = Encrypt.EncryptString(Basics.Reverse(actual), "OpenFramework");
+                        var realNewPass = Encrypt.EncryptString(Basics.Reverse(newPass), "OpenFramework");
+
+                        cmd.Connection = cnn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));
+                        cmd.Parameters.Add(DataParameter.Input("@Actual", realActual, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@NewPass", realNewPass, 50));
+                        cmd.Parameters.Add(DataParameter.OutputInt("@Result"));
+
+                        try
+                        {
+                            cmd.Connection.Open();
+                            cmd.ExecuteNonQuery();
+                            res.SetSuccess(cmd.Parameters["@Result"].Value);
+                        }
+                        finally
+                        {
+                            if(cmd.Connection.State != ConnectionState.Closed)
+                            {
+                                cmd.Connection.Close();
+                            }
+                        }
+                    }
+                }
+            }
+
             return res;
         }
     }

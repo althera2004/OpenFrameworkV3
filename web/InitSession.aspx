@@ -12,6 +12,7 @@
     
     <script type="text/javascript" charset="utf-8" src ="/js/base64.js"></script>
     <script type="text/javascript" charset="utf-8" src ="/js/navigation.js"></script>
+    <script type="text/javascript" charset="utf-8" src ="/js/NumberFormat.js"></script>
     <script type="text/javascript" charset="utf-8" src ="/js/common.js"></script>
         <script>
             var PageType = "Init";

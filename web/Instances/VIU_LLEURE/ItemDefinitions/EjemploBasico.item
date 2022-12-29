@@ -1,0 +1,11 @@
+﻿{
+    "Id": 1,
+    "ItemName": "EjemploBasico",
+    "Layout": {
+        "Label": "Básico"
+    },
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 100, "Required": true }
+    ]
+}

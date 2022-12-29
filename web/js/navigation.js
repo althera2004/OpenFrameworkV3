@@ -73,25 +73,16 @@ function GoEncryptedDocumentSign(id) {
     window.open(url);
 }
 
-function GoCleanedView(itemName, itemId, formId, params) {
-    if (typeof formId === "undefined" || formId === null || formId === "") {
-        formId = "custom";
-    }
-
-    var definition = GetItemDefinitionByName(itemName);
-
-    var query = "&d=" + definition.Id + "." + formId;
+function GoHome() {
+    var query = "&I=" + Instance.Name;
+    query += "&C=" + Company.Id;
+    query += "&L=" + Language;
     if (typeof optionId !== "undefined" && optionId !== null && optionId > 0) {
-        query += "." + optionId;
+        query += "&optionId=" + optionId;
     }
     else if (typeof ActualOptionId !== "undefined" && ActualOptionId !== null && ActualOptionId > 0) {
-        query += "." + ActualOptionId;
+        query += "&optionId=" + ActualOptionId;
     }
-    else {
-        query += ".0";
-    }
-
-    query += "." + itemId;
 
     if (typeof params !== "undefined" && params !== null) {
         for (var x = 0; x < params.length; x++) {
@@ -99,9 +90,38 @@ function GoCleanedView(itemName, itemId, formId, params) {
         }
     }
 
-    var url = "/PageView.aspx?" + query;
+    var url = "/Instances/" + Instance.Name + "/Pages/Dashboard.aspx?" + $.base64.encode(guid() + query);
     Navigation_Context.urlAfterDirty = url;
     if (DetectDirty() === true) { return false; }
+    $("#bigmenu").hide();
+    document.location = url;
+}
+
+function GoEncryptedView(itemName, listId, itemId, formId, params) {
+    var query = "&I=" + Instance.Name;
+    query += "&C=" + Company.Id;
+    query += "&Item=" + itemName;
+    query += "&List=" + ListId;
+    query += "&Id=" + itemId;
+    query += "&F=" + formId;
+    query += "&L=" + Language;
+    if (typeof optionId !== "undefined" && optionId !== null && optionId > 0) {
+        query += "&optionId=" + optionId;
+    }
+    else if (typeof ActualOptionId !== "undefined" && ActualOptionId !== null && ActualOptionId > 0) {
+        query += "&optionId=" + ActualOptionId;
+    }
+
+    if (typeof params !== "undefined" && params !== null) {
+        for (var x = 0; x < params.length; x++) {
+            query += "&" + params[x];
+        }
+    }
+
+    var url = "/ItemView.aspx?" + $.base64.encode(guid() + query);
+    Navigation_Context.urlAfterDirty = url;
+    if (DetectDirty() === true) { return false; }
+    $("#bigmenu").hide();
     document.location = url;
 }
 

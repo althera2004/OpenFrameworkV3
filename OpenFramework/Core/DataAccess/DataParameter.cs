@@ -54,6 +54,21 @@ namespace OpenFrameworkV3.Core.DataAccess
             return res;
         }
 
+        /// <summary>Gets a input SQL Parameter with string value</summary>
+        /// <param name="name">Parameter name</param>
+        /// <param name="value">string value</param>
+        /// <returns>SQL parameter</returns>
+        public static SqlParameter Input(string name, TimeSpan value)
+        {
+            var res = new SqlParameter(SetName(name), SqlDbType.Time)
+            {
+                Direction = ParameterDirection.Input
+            };
+
+            res.Value = value;
+            return res;
+        }
+
         /// <summary>Gets a input SQL Parameter with string value with length limit</summary>
         /// <param name="name">Parameter name</param>
         /// <param name="value">String value</param>

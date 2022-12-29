@@ -2,6 +2,11 @@
     "Id": 3,
     "ItemName": "Customer",
 	"Description": "Client",
+	"Features": {
+		"Attach": true,
+		"ContactPerson": true,
+		"Sticky": true
+	},
     "Layout": {
         "Icon": "fad fa-user-tie",
         "Label": "Client",

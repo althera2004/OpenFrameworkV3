@@ -62,3 +62,6 @@ window.addEventListener("devtoolschange", function (e) {
     console.log("is DevTools open?", e.detail.open);
     console.log("and DevTools orientation?", e.detail.orientation);
 });
+
+// Attach events to fiexed master items
+$("#HeaderMenuLogoutLink").on("click", CORE_Logout);

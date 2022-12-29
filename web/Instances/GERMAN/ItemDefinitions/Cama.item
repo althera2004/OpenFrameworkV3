@@ -1,0 +1,39 @@
+﻿{
+    "Id": 2122,
+    "ItemName": "Cama",
+	"Description": "Llit",
+
+    "Layout": {
+        "Icon": "fa fa-hospital-alt",
+        "Label": "Llit",
+        "LabelPlural": "Llits",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Numero" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "PrimaryKeys": [ ],
+    "ForeignValues": [ {"ItemName": "Habitacion"}, {"ItemName": "Residente"} ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Numero", "Label": "Descripció", "Type": "text", "Length": 10, "Required": true },
+        { "Name": "HabitacionId", "Label": "Habitació", "Type": "long", "Required": true, "ColumnDataType": "Text", "FK": true },
+        { "Name": "ResidenteId", "Label": "Usuari", "Type": "long", "ColumnDataType": "Text", "FK": true }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": 3,
+			"Columns": [
+                { "DataProperty": "HabitacionId", "Search": true, "Linkable": true, "Orderable": true, "Width": 100 },
+                { "DataProperty": "Numero", "Label": "Llit","Search": true, "Linkable": true, "Orderable": true , "Width": 120},
+                { "DataProperty": "ResidenteId", "Search": true,"Linkable": true, "Orderable": true }
+            ]
+        }
+	]
+}

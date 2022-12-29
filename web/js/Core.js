@@ -81,3 +81,25 @@ function Core_ReloadMenu() {
         }
     });
 }
+
+function Core_ReloadDictionary() {
+    var data = {
+        "instanceName": Instance.Name
+    };
+
+    $.ajax({
+        "type": "POST",
+        "url": "/Async/InstanceService.asmx/ReloadDictionary",
+        "contentType": "application/json; charset=utf-8",
+        "dataType": "json",
+        "data": JSON.stringify(data, null, 2),
+        "success": function (response) {
+            var result = response.d;
+
+            if (result.Success === true) {
+                localStorage.setItem('Dictionary', result.ReturnValue);
+                RenderMenu();
+            }
+        }
+    });
+}

@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Default" %>
 
     <!DOCTYPE html>
-    <html lang="ca-es">
+    <html lang="<%=this.InstanceLanguage %>">
     <head>
         <meta charset="utf-8" />
         <title><%=this.InstanceName %> - Open Framework</title>
@@ -97,9 +97,10 @@
             }
 
             .dd-select, .dd-container, dd-options dd-click-off-close{width:150px!important}
-             .dd-desc{display:none !important}
-        .dd-selected, .dd-option{padding:2px !important; height:30px;}
-        .dd-option-image,.dd-selected-image{margin-top:3px !important;margin-left:2px !important}
+            .dd-desc{display:none !important}
+            .dd-selected, .dd-option{padding:2px !important; height:30px;}
+            .dd-option-image,.dd-selected-image{margin-top:3px !important;margin-left:2px !important;margin-top:6px!important;}
+            .dd-selected-text, .dd-option-text {margin-top:3px!important; cursor:pointer;}
 
             #CmbPais a { color:#000; text-shadow: 1px 1px 1px #fff;}
             .dd-options {
@@ -129,17 +130,19 @@
         <script type="text/javascript" src="/assets/js/jquery.ddslick.min.js"></script>
         <script type="text/javascript">
             localStorage.clear();
+            var Instance = <%=this.Instance.Config.JsonData %>;
+            localStorage.setItem("Instance", JSON.stringify(Instance));
             var test = "<%=this.ServerTest%>";
             var ddData = [{ "text": "Català", "value": "45", "selected": true, "description": "Català", "imageSrc": "assets/flags/45.png" }, { "text": "Español", "value": "1", "selected": false, "description": "Español", "imageSrc": "assets/flags/1.png" }, { "text": "Français", "value": "7", "selected": false, "description": "Français", "imageSrc": "assets/flags/7.png" }, { "text": "English", "value": "12", "selected": false, "description": "English", "imageSrc": "assets/flags/12.png" }];
             var landPage = "<%=this.LandPage %>";
-            var language = navigator.language || navigator.userLanguage || "ca";
+            var language = Instance.DefaultLanguage;
             var ip = "<%=this.IP %>";
             var multiCompany = <%= this.MultiCompany %>;
             var instanceName = "<%=this.InstanceName %>";
             var MFA = "<%=this.MFA%>";
             var Dictionary =
                 {
-                    "es": {
+                    "es-es": {
                         "Title": "Acceso a la aplicación",
                         "Btn": "Acceder",
                         "BtnPublicAccess": "Aceso público",
@@ -151,7 +154,7 @@
                         "PasswordInvalid": "El mail y/o la contraseña no son válidos",
                         "Remember": "Recuperar contraseña"
                     },
-                    "ca": {
+                    "ca-es": {
                         "Title": "Accès a l'aplicació",
                         "Btn": "Accedir",
                         "BtnPublicAccess": "Accés públic",
@@ -166,8 +169,6 @@
             };
 
             window.onload = function () {
-                language = language.split("-")[0];
-            
                 $("#PageTitle").html(Dictionary[language].Title);
                 $("#BtnLogin").html(Dictionary[language].Btn);
                 $("#ErrorSpan").html(Dictionary[language].PasswordInvalid);
@@ -226,7 +227,7 @@
                                     <div class="widget-body">
                                         <div class="widget-main" style="text-align: center;">
                                             <h4 class="header black lighter bigger" id="PageTitle" style="font-weight: bold;">&nbsp;</h4>
-                                            <img src="<%=this.Logo %>" alt="<%=this.InstanceName %>" title="<%=this.InstanceName %>" style="width:100%;" />
+                                            <img src="<%=this.Logo %>" alt="<%=this.InstanceName %>" title="<%=this.InstanceName %>" style="max-width:100%;" />
                                             <div class="space-6"></div>
                                             <form id="LoginForm" action="InitSession.aspx" method="post">
                                                 <div style="display: none;">
@@ -238,7 +239,7 @@
                                                 <fieldset>
                                                     <div class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="text" class="form-control TxtUserName" placeholder="Email" id="<%=this.AntiCache %>" value="jcastilla@openframework.cat" spellcheck="false" autocomplete="off" />
+                                                            <input type="text" class="form-control TxtUserName" placeholder="Email" id="<%=this.AntiCache %>" value="info@openframework.cat" spellcheck="false" autocomplete="off" />
                                                         </span>
                                                     </div>
                                                     <div class="block clearfix" style="margin-top:8px;">
@@ -276,11 +277,11 @@
                                                 </fieldset>
                                             </form>
                                             <hr />
-                                                <div style="text-align:left;color:#aaa;">
-                                                    IP: <span id="IpSpan"></span>
-                                                    <br />
-                                                    <span style="color:#999;">Open</span><strong style="color:#55779f">Framework</strong><%=this.FrameworkVersion %>
-                                                </div>
+                                            <div style="text-align:left;color:#aaa;">
+                                                IP: <span id="IpSpan"></span>
+                                                <br />
+                                                <span style="color:#999;">Open</span><strong style="color:#55779f">Framework</strong><%=this.FrameworkVersion %>
+                                            </div>
                                         </div>
                                     </div>
                                     <% if (!string.IsNullOrEmpty(this.MFA)) { %>

@@ -79,7 +79,7 @@ function Item(config) {
 			$("#FormBtnSave").removeAttr("title");
 		} else {
 			$("#FormBtnSave").disable();
-			$("#FormBtnSave").attr("title", "No hay cambios por guardar");
+			$("#FormBtnSave").attr("title", Dictionary.Common_NoChangesToSave);
         }
 	}
 
@@ -140,7 +140,7 @@ function Item(config) {
 							ItemData.OriginalItemData = { ...ItemData.ActualData };
 							$("#BreadCrumbLabel").html(ItemData.GetDescription());
 							$("#FormBtnSave").disable();
-							$("#FormBtnSave").attr("title", "No hay cambios por guardar");
+							$("#FormBtnSave").attr("title", Dictionary.Common_NoChangesToSave);
 
 							// Actualizar footer status
 							$("#FooterStatusModifiedBy").html(ApplicationUser.Profile.FullName);
@@ -371,7 +371,30 @@ function ItemFormById(itemDefinition, id) {
 		}
 	}
 
-	return null;
+	return DefaultFormDefinition(itemDefinition, id);
+}
+
+function DefaultFormDefinition(itemDefinition, id) {
+	var rows = [];
+	for (var f = 0; f < itemDefinition.Fields.length; f++) {
+		if (itemDefinition.Fields[f].Name === "Id") {
+			continue;
+		}
+
+		rows.push({ "Fields": [{ "Name": itemDefinition.Fields[f].Name }] });
+	}
+
+	return {
+		"Id": id,
+		"FormType": "Default",
+		"Tabs": [
+			{
+				"Id": "badic",
+				"Label": "Dades bàsiques",
+				"Rows": rows
+			}
+		]
+    }
 }
 
 function ItemListById(itemDefinition, id) {
@@ -384,11 +407,8 @@ function ItemListById(itemDefinition, id) {
 			return result[0];
 		}
 	}
-	else {
-		return DefaultListDefinition(itemDefinition);
-    }
 
-	return null;
+	return DefaultListDefinition(itemDefinition);
 }
 
 function FieldByName(itemDefinition, name) {
@@ -727,12 +747,12 @@ function PopupTracesRender(data) {
 
 function DefaultListDefinition(itemDefinition) {
 	var columns = [];
-	for (var f = 0; f < itemDefinition.Fields; f++) {
+	for (var f = 0; f < itemDefinition.Fields.length; f++) {
 		if (itemDefinition.Fields[f].Name === "Id") {
 			continue;
 		}
 
-		columns.push({ "DataProperty": itemDefinition.Fields[f] });
+		columns.push({ "DataProperty": itemDefinition.Fields[f].Name });
 	}
 
 	var res =
@@ -786,18 +806,6 @@ function Item_InactivateConfirm() {
 			NotifySaveError(msg.responseText);
 		}
 	});
-}
-
-function ItemDefinition_HasFeature(itemDefinition, feature) {
-	if (typeof itemDefinition !== "undefined" && itemDefinition !== null) {
-		if (typeof itemDefinition.Features !== "undefined" && itemDefinition.Features !== null) {
-			if (typeof itemDefinition.Features[feature] !== "undefined" && itemDefinition.Features[feature] !== null) {
-				return itemDefinition.Features[feature];
-            }
-        }
-    }
-
-	return false;
 }
 
 function ItemGetDescription(itemDefinition, itemData) {
@@ -930,99 +938,9 @@ function ItemDefinition_PrimaryKeysDescription(itemName) {
 	return res;
 }
 
-
-
-function SupportsFirmafy(itemDefinition) {
+function FeatureIsEnabled(itemDefinition, featureName) {
 	if (typeof itemDefinition.Features !== "undefined") {
-		if (typeof itemDefinition.Features.Firmafy !== "undefined" &&
-			itemDefinition.Features.Attachs !== null &&
-			itemDefinition.Features.Attachs === true) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-function SupportsAttachment(itemDefinition) {
-	if (typeof itemDefinition.Features !== "undefined") {
-		if (typeof itemDefinition.Features.Attachs !== "undefined" &&
-			itemDefinition.Features.Attachs !== null &&
-			itemDefinition.Features.Attachs === true) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-function SupportsSticky(itemDefinition) {
-	if (typeof itemDefinition.Features !== "undefined") {
-		if (typeof itemDefinition.Features.Sticky !== "undefined" &&
-			itemDefinition.Features.Sticky !== null &&
-			itemDefinition.Features.Sticky === true) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-function SupportsBankAccount(itemDefinition) {
-	if (typeof itemDefinition.Features !== "undefined") {
-		if (typeof itemDefinition.Features.BankAccount !== "undefined" &&
-			itemDefinition.Features.BankAccount !== null &&
-			itemDefinition.Features.BankAccount === true) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-function SupportsInvoices(itemDefinition) {
-	if (typeof itemDefinition.Features !== "undefined") {
-		if (typeof itemDefinition.Features.Invoices !== "undefined" &&
-			itemDefinition.Features.Invoices !== null &&
-			itemDefinition.Features.Invoices === true) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-function SupportsFAQs(itemDefinition) {
-	if (typeof itemDefinition.Features !== "undefined") {
-		if (typeof itemDefinition.Features.FAQs !== "undefined" &&
-			itemDefinition.Features.FAQs !== null &&
-			itemDefinition.Features.FAQs === true) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-function SupportsContactPerson(itemDefinition) {
-	if (typeof itemDefinition.Features !== "undefined") {
-		if (typeof itemDefinition.Features.ContactPerson !== "undefined" &&
-			itemDefinition.Features.ContactPerson !== null &&
-			itemDefinition.Features.ContactPerson === true) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-function SupportsMailLink(itemDefinition) {
-	if (typeof itemDefinition.Features !== "undefined") {
-		if (typeof itemDefinition.Features.MailLink !== "undefined" &&
-			itemDefinition.Features.MailLink !== null &&
-			itemDefinition.Features.MailLink === true) {
-			return true;
-		}
+		return itemDefinition.Features[featureName] === true;
 	}
 
 	return false;

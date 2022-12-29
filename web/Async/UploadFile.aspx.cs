@@ -2,7 +2,7 @@
 // <copyright file="UploadFile.aspx.cs" company="OpenFramework">
 //     Copyright (c) OpenFramework. All rights reserved.
 // </copyright>
-// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
 namespace OpenFramework.Web.Async
 {
@@ -16,6 +16,7 @@ namespace OpenFramework.Web.Async
     using OpenFrameworkV3.Core;
     using OpenFrameworkV3.Core.Activity;
     using OpenFrameworkV3.Core.DataAccess;
+    using OpenFrameworkV3.Core.Security;
     using OpenFrameworkV3.Feature;
     using OpenFrameworkV3.Tools;
 
@@ -29,15 +30,13 @@ namespace OpenFramework.Web.Async
         {
             var debug = string.Empty;
             var res = ActionResult.NoAction;
-            var instanceName = string.Empty;
             var cns = string.Empty;
             
             var file = this.Request.Files[0];
 
             string itemName = this.Request.Form["itemName"];
             string fieldName = this.Request.Form["fieldName"];
-
-            
+            var instanceName = this.Request.Form["instanceName"];            
 
             long itemId = Convert.ToInt64(this.Request.Form["itemId"]);
             long companyId = Convert.ToInt64(this.Request.Form["companyId"]);
@@ -235,6 +234,26 @@ namespace OpenFramework.Web.Async
                 {
                     file.SaveAs(fileName);
                 }
+
+                var trace = string.Format(
+                        CultureInfo.InvariantCulture,
+                        @"{5},{{{5}{4}{4}""user"":""{0}"",{5}{4}{4}""date"": ""{1:dd/MM/yyyy hh:mm:ss}"",{5}{4}{4}""changes"":
+                        [{{
+                            ""Field"": ""{2}"",
+                            ""Original"": ""Subir documento"",
+                            ""Actual"": ""{3}""
+                        }}]
+
+                        }}",
+                        ApplicationUser.ById(applicationUserId, instanceName).Profile.FullName,
+                        DateTime.UtcNow,
+                        fieldName,
+                        Path.GetFileName(fileName),
+                        '\t',
+                        '\n');
+
+
+                ActionLog.TraceItemData(instanceName, itemName, itemId, trace);
 
                 res.SetSuccess(Path.GetFileName(fileName));
             }

@@ -107,6 +107,29 @@ namespace OpenFrameworkV3.Core
                                         LocaleName = rdr.GetString(ColumnsLanguageGet.LocaleName),
                                         Iso = rdr.GetString(ColumnsLanguageGet.Iso),
                                         RightToLeft = rdr.GetBoolean(ColumnsLanguageGet.RightToLeft),
+                                        CreatedBy = new ApplicationUser
+                                        {
+                                            Id = rdr.GetInt64(ColumnsLanguageGet.CreatedBy),
+                                            Profile = new UserProfile
+                                            {
+                                                ApplicationUserId = rdr.GetInt64(ColumnsLanguageGet.CreatedBy),
+                                                Name = rdr.GetString(ColumnsLanguageGet.CreatedByFirstName),
+                                                LastName = rdr.GetString(ColumnsLanguageGet.CreatedByLastName),
+                                                LastName2 = rdr.GetString(ColumnsLanguageGet.CreatedByLastName2)
+                                            }
+                                        },
+                                        CreatedOn = rdr.GetDateTime(ColumnsLanguageGet.CreatedOn),
+                                        ModifiedBy = new ApplicationUser
+                                        {
+                                            Id = rdr.GetInt64(ColumnsLanguageGet.ModifiedBy),
+                                            Profile = new UserProfile
+                                            {
+                                                ApplicationUserId = rdr.GetInt64(ColumnsLanguageGet.ModifiedBy),
+                                                Name = rdr.GetString(ColumnsLanguageGet.ModifiedByFirstName),
+                                                LastName = rdr.GetString(ColumnsLanguageGet.ModifiedByLastName),
+                                                LastName2 = rdr.GetString(ColumnsLanguageGet.ModifiedByLastName2)
+                                            }
+                                        },
                                         ModifiedOn = rdr.GetDateTime(ColumnsLanguageGet.ModifiedOn),
                                         Active = rdr.GetBoolean(ColumnsLanguageGet.Active)
                                     });

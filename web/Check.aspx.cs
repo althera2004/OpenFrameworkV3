@@ -25,7 +25,7 @@ public partial class Check : Page
 
     private void GetListInstances()
     {
-        var instances = Persistence.Check();
+        var instances = Persistence.ListOfInstances;
         var res = new StringBuilder();
         var first = true;
         foreach (var instance in instances)

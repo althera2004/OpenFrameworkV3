@@ -2,7 +2,7 @@
 // <copyright file="Default.cs" company="OpenFramework">
 //     Copyright (c) 2013 - OpenFramework. All rights reserved.
 // </copyright>
-// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// <author>Juan Castilla Calderón - jcastilla@openframework.cat</author>
 // --------------------------------
 using System;
 using System.Configuration;
@@ -21,13 +21,13 @@ public partial class Default : Page
     /// <summary>Instance name</summary>
     private string instanceName;
 
-    private Instance instance;
+    public Instance Instance { get; private set; }
 
     public string MultiCompany
     {
         get
         {
-            return this.instance.Config.MultiCompany ? Constant.JavaScriptTrue : Constant.JavaScriptFalse;
+            return this.Instance.Config.MultiCompany ? Constant.JavaScriptTrue : Constant.JavaScriptFalse;
         }
     }
 
@@ -36,7 +36,7 @@ public partial class Default : Page
     {
         get
         {
-            return this.instance.Name;
+            return this.Instance.Name;
         }
     }
 
@@ -45,7 +45,7 @@ public partial class Default : Page
     {
         get
         {
-            return this.instance.Config.Security.MFA;
+            return this.Instance.Config.Security.MFA;
         }
     }
 
@@ -60,8 +60,9 @@ public partial class Default : Page
         get
         {
             Assembly web = Assembly.LoadFrom(this.Request.PhysicalApplicationPath + @"\Bin\OpenFramework.dll");
-            AssemblyName webName = web.GetName();
-            string version = webName.Version.ToString();
+            //AssemblyName webName = web.GetName();
+            //string version = webName.Version.ToString();
+            string version = web.ImageRuntimeVersion;
             return String.Format("- version {0}", version);
         }
     }
@@ -71,7 +72,7 @@ public partial class Default : Page
     {
         get
         {
-            return Instance.Logo(this.instance.Name).Replace(".png", ".png?" + Guid.NewGuid());
+            return Instance.Logo(this.Instance.Name).Replace(".png", ".png?" + Guid.NewGuid());
         }
     }
 
@@ -80,7 +81,7 @@ public partial class Default : Page
         get
         {
             var res = new StringBuilder();
-            string path = Instance.Path.Base(this.instance.Name);
+            string path = Instance.Path.Base(this.Instance.Name);
             if (!path.EndsWith(@"\", StringComparison.OrdinalIgnoreCase))
             {
                 path = string.Format(CultureInfo.InvariantCulture, @"{0}\", path);
@@ -130,6 +131,14 @@ public partial class Default : Page
         }
     }
 
+    public string InstanceLanguage
+    {
+        get
+        {
+            return this.Instance.Config.DefaultLanguage;
+        }
+    }
+
     public string ServerTest { get; private set; }
 
     public string LanguageBrowser { get; private set; }
@@ -138,19 +147,7 @@ public partial class Default : Page
 
     protected void Page_Init()
     {
-        Instance.CheckPersistence();
-    }
-
-    /// <summary>Page's load event</summary>
-    /// <param name="sender">Loaded page</param>
-    /// <param name="e">Event's arguments</param>
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        if (this.Request.UserLanguages != null)
-        {
-            this.LanguageBrowser = this.Request.UserLanguages[0];
-        }
-
+        this.instanceName = ConfigurationManager.AppSettings["InstanceName"].ToUpperInvariant();
         if (this.Request.QueryString["c"] != null)
         {
             this.instanceName = this.Request.QueryString["c"];
@@ -170,9 +167,31 @@ public partial class Default : Page
             }
         }
 
-        this.instance = Persistence.InstanceByName(Instance.InstanceName);
+        if (string.IsNullOrEmpty(this.instanceName))
+        {
+            this.Instance = Persistence.InstanceByName(Instance.InstanceName);
+        }
+        else
+        {
+            Persistence.AddInstance(Instance.LoadDefinition(this.instanceName, true));
+            this.Instance = Persistence.InstanceByName(this.instanceName);
+        }
+    }
+
+    /// <summary>Page's load event</summary>
+    /// <param name="sender">Loaded page</param>
+    /// <param name="e">Event's arguments</param>
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (this.Request.UserLanguages != null)
+        {
+            this.LanguageBrowser = this.Request.UserLanguages[0];
+        }
+
+        
+
         this.IP = this.GetUserIP();
-        if (this.instance.Config.Security.IPAccess)
+        if (this.Instance.Config.Security.IPAccess)
         {
             //var checkIP = IPAccess.CheckIP(this.instanceName, this.IP, 0);
             //if (checkIP.Success)
@@ -185,7 +204,7 @@ public partial class Default : Page
             //}
         }
 
-        ServerTest = this.instance.Name;
+        ServerTest = this.Instance.Name;
 
         CleanTemporalFiles();
         this.ObtainLandPage();

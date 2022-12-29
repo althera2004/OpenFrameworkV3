@@ -1,18 +1,25 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="OpenFrameworkV3.Web.Admin.Instance.Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentStyles" Runat="Server">
+    <link rel="stylesheet" href="/assets/css/codemirror.css" />
+
     <style type="text/css">
-        .itemDiv {
-            padding: 6px;
-            cursor:pointer;
+        #TableHeader td {padding:4px;}
+
+        input[type=checkbox] {
+            margin: 5px 0 0 0 !important;
+            height: 15px !important;
         }
 
-        .itemDiv table {
-            border:1px solid #aaa;
-            background-color:#eee;
-            width:100%;
-            padding:6px;
+        h4 {
+            margin-top:12px;
+            border-bottom:1px dashed;
         }
+
+        .CodeMirror-line {margin-left: 0px!important;padding: 0 40px!important;}
+
+        .cm-s-default{ border:1px solid #ccc;}
+        
 
         input[type=checkbox] {
             margin: 5px 0 0 0 !important;
@@ -26,6 +33,9 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentScriptVars" Runat="Server">
+    <script type="text/javascript">
+        var scriptFiles = <%=this.ScriptFiles %>;
+    </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentWorkSpace" Runat="Server">
     <div class="row" id="PersistentFields">
@@ -120,7 +130,30 @@
                 </div>
                 <div id="tab-items" class="tab-pane">
                     <div class="hpanel">
-                        <div id="ItemsDiv"></div>
+                        <div class="table-responsive" id="ListFieldsScrollTableDiv">
+                            <table class="table table-bordered table-striped" style="margin: 0">
+                                <thead class="thin-border-bottom">
+                                    <tr>
+                                        <th style="width:225px;">Nom</th>
+                                        <th>Codi</th>
+                                        <th style="width:60px;">Scripts</th>
+                                        <th style="width:415px;">Funcionalitats</th>
+                                    </tr>
+                               </thead>
+                            </table>
+                            <div id="ListFieldsDiv" style="overflow: hidden scroll; padding: 0px; height: 501px;">
+                                <table class="table table-bordered table-striped" style="border-top: none;">
+                                    <tbody id="ItemsDataList"></tbody>
+                                </table>
+                            </div>
+                            <table class="table table-bordered table-striped" style="margin: 0">
+                                <thead class="this-border-bottom">
+                                    <tr>
+                                        <th style="color: #aaa;"><i>Nº de ítems:&nbsp;<span id="ListItemsTotal"></span></i></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div id="tab-fixedLists" class="tab-pane">
@@ -128,7 +161,13 @@
                         <div id="FixedListsDiv"></div>
                     </div>
                 </div>
-                <div id="tab-scripts" class="tab-pane">
+                <div id="tab-scripts" class="tab-pane">                    
+                    <div class="hpanel">
+                        <!-- PageScript -->
+                        <textarea id="Editor" rows="50"><%= this.InstanceCommonScript %></textarea>
+                    </div>
+                </div>
+                <div id="_tab-scripts" class="tab-pane">
                     <div class="hpanel">
                         <dl>
                             <dt><dfn>happiness</dfn></dt>
@@ -254,6 +293,10 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="ContentScriptFiles" Runat="Server">
+    <!--script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.js"></!--script-->
+    <script type="text/javascript" src="/assets/js/codemirror.js"></script>
+    <script type="text/javascript" src="/assets/js/codemirror_sql.js"></script>
+    <script type="text/javascript" src="/assets/js/codemirror_javascript.js"></script>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="ContentScripts" Runat="Server">
     <script type="text/javascript">

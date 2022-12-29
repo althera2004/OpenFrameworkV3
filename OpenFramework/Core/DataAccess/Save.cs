@@ -367,9 +367,8 @@ namespace OpenFrameworkV3.Core.DataAccess
         /// <param name="applicationUser">User that realizes action</param>
         /// <param name="itemName">Item name</param>
         /// <param name="instanceName">Name of actual instance</param>
-        /// <param name="connectionString">String connection to database</param>
         /// <returns>Result of action</returns>
-        public static ActionResult Delete(long itemId, long userId, string itemName, string instanceName, string connectionString)
+        public static ActionResult Delete(long itemId, long userId, string itemName, string instanceName)
         {
             var res = ActionResult.NoAction;
             var cns = Persistence.ConnectionString(instanceName);
@@ -424,7 +423,7 @@ namespace OpenFrameworkV3.Core.DataAccess
             {
                 if (instance.Config.DeleteAction == DeleteAction.Delete)
                 {
-                    return Delete(itemId, userId, itemName, instanceName, instance.Config.ConnectionString);
+                    return Delete(itemId, userId, itemName, instanceName);
                 }
                 else
                 {

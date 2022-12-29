@@ -1,7 +1,4 @@
 ﻿function CustomActions() {
-    console.log("wwww");
-
-
     $("#ChkSameAddress").on("click", MAILBOXES_ChkSameAddress_Changed);
     MAILBOXES_ChkSameAddress_Changed();
 }
@@ -34,7 +31,7 @@ function MAILBOXES_ChkSameAddress_Changed() {
 
 function MAILBOXES_CheckBlackListMain() {
     if ($("#MainMailMadress").val() === "") {
-        PopupWarning("S'ha d'inidicar l'adreça de mail", Dictionary.Common_Warning);
+        PopupWarning(Dictionary.Core_MailBox_Error_EmailRequired, Dictionary.Common_Warning);
     }
     else {
         MAILBOXES_CheckBlackList($("#MainMailMadress").val().split('@')[1]);
@@ -51,36 +48,36 @@ function MAILBOXES_Validate() {
 
     if ($("#MainMailMadress").val() === "") {
         ok = false;
-        errorMessages.push("Direccion obligatoria");
+        errorMessages.push(Dictionary.Core_MailBox_Error_EmailRequired);
     } else {
         if (validateEmail($("#MainMailMadress").val()) === false) {
             ok = false;
-            errorMessages.push("Direccion no válida");
+            errorMessages.push(Dictionary.Core_MailBox_Error_EmailMalformed);
         }
     }
 
     if ($("#MainServer").val() === "") {
         ok = false;
-        errorMessages.push("servidor obligatoria");
+        errorMessages.push(Dictionary.Core_MailBox_Error_ServerRequired);
     }
 
     if ($("#MainMailUser").val() === "") {
         ok = false;
-        errorMessages.push("usuario obligatoria");
+        errorMessages.push(Dictionary.Core_MailBox_Error_UserRequired);
     }
 
     if ($("#MainMailPassword").val() === "") {
         ok = false;
-        errorMessages.push("password obligatoria");
+        errorMessages.push(Dictionary.Core_MailBox_Error_PasswordRequired);
     }
 
     if ($("#MainSendPort").val() === "") {
         ok = false;
-        errorMessages.push("puerto obligatoria");
+        errorMessages.push(Dictionary.Core_MailBox_Error_PortRequired);
     }
 
     if (ok === false) {
-        var errorText = "Revise los siguientes datos:<ul>";
+        var errorText = Dictionary.Common_ErrorResumeTitle + ":<ul>";
         for (var e = 0; e < errorMessages.length; e++) {
             errorText += "<li>" + errorMessages[e] + "</li>";
         }

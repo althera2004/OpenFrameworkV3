@@ -1,0 +1,37 @@
+﻿{
+    "Id": 2,
+    "ItemName": "Anticoagulante",
+	"Description": "Anticoagulant",
+    "Layout": {
+        "Icon": "fa fa-list",
+        "Label": "Anticoagulant",
+        "LabelPlural": "Anticoagulants",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Nombre" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Nombre", "Label": "Tipo", "Type": "text", "Length": 100, "Required": true },
+        { "Name": "Grupo", "Label": "Grupo", "Type": "int", "Required": true, "FK": true },
+        { "Name": "Alerta", "Label": "Precisa control", "Type": "boolean" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": 2,
+			"Columns": [
+                { "DataProperty": "Nombre", "Linkable": true, "Orderable": true, "Search": true  },
+                { "DataProperty": "Grupo", "Width": 120, "Linkable": true, "Orderable": true  },
+                { "DataProperty": "Alerta", "Width": 100  }
+            ], 
+            "Sorting": { "Index": 1, "SortingType": "asc" }
+        }
+	]
+}

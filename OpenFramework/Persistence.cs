@@ -18,7 +18,6 @@ namespace OpenFrameworkV3
     {
         private static Dictionary<string, Instance> instances;
         private static Dictionary<string, string> connectionsString;
-        private static Dictionary<string, ReadOnlyCollection<MailBox>> mailBox;
 
         private static Dictionary<string, Dictionary<string,string>> dictionary;
 
@@ -43,11 +42,10 @@ namespace OpenFrameworkV3
             {
                 if (dictionary.ContainsKey(key))
                 {
-                    dictionary[key].Remove(language);
+                    dictionary.Remove(key);
                 }
 
                 dictionary.Add(key, corpus);
-
             }
         }
 
@@ -60,6 +58,7 @@ namespace OpenFrameworkV3
 
             return new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
         }
+
         public static bool DictionaryExists(string language, string instanceName)
         {
             if (dictionary != null)
@@ -82,28 +81,7 @@ namespace OpenFrameworkV3
             {
                 DictionaryAdd(language, instanceName);
             }
-        }
-
-        public static MailBox MailBoxByCode(string code, string instanceName)
-        {
-            if (mailBox == null)
-            {
-                return null;
-            }
-
-            if(mailBox.Count > 0)
-            {
-                if (mailBox.ContainsKey(instanceName))
-                {
-                    if (mailBox[instanceName].Any(m => m.Code.Equals(code, System.StringComparison.OrdinalIgnoreCase)))
-                    {
-                        return mailBox[instanceName].First(m => m.Code.Equals(code, System.StringComparison.OrdinalIgnoreCase));
-                    }
-                }
-            }
-
-            return null;
-        }
+        }       
 
         public static ReadOnlyCollection<ItemDefinition> ItemDefinitions(string instanceName)
         {
@@ -172,6 +150,11 @@ namespace OpenFrameworkV3
             }
         }
 
+        /// <summary>
+        /// Gets connecction string to dababase of instance
+        /// </summary>
+        /// <param name="instanceName">Instance Name</param>
+        /// <returns>Connecction string to dababase of instance</returns>
         public static string ConnectionString(string instanceName)
         {
             if (connectionsString == null)
@@ -188,6 +171,9 @@ namespace OpenFrameworkV3
             return string.Empty;
         }
 
+        /// <summary>Gets instance by name</summary>
+        /// <param name="instanceName">Name of instance</param>
+        /// <returns>Instance object</returns>
         public static Instance InstanceByName(string instanceName)
         {
             if (string.IsNullOrEmpty(instanceName))
@@ -207,6 +193,9 @@ namespace OpenFrameworkV3
             }
         }
 
+        /// <summary>Check is exists instance</summary>
+        /// <param name="instanceName">Name of instance</param>
+        /// <returns>A value indicating if instance exists</returns>
         public static bool InstanceExists(string instanceName)
         {
             instanceName = instanceName.ToUpperInvariant();
@@ -219,6 +208,8 @@ namespace OpenFrameworkV3
             return instances.ContainsKey(instanceName);
         }
 
+        /// <summary>Adds instance to persistence</summary>
+        /// <param name="instance">Instance object</param>
         public static void AddInstance(Instance instance)
         {
             instance.Name = instance.Name.ToUpperInvariant();
@@ -256,18 +247,23 @@ namespace OpenFrameworkV3
             AddConnectionString(instance.Name, instance.Config.ConnectionString);
         }
 
-        public static ReadOnlyCollection<string> Check()
+        /// <summary>Gets the list of names of instances</summary>
+        /// <returns>List of names of instances</returns>
+        public static ReadOnlyCollection<string> ListOfInstances
         {
-            var res = new List<string>();
-            if(instances != null)
+            get
             {
-                foreach(var instance in instances)
+                var res = new List<string>();
+                if (instances != null)
                 {
-                    res.Add(instance.Key);
+                    foreach (var instance in instances)
+                    {
+                        res.Add(instance.Key);
+                    }
                 }
-            }
 
-            return new ReadOnlyCollection<string>(res);
+                return new ReadOnlyCollection<string>(res);
+            }
         }
     }
 }

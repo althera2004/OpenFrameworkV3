@@ -1,6 +1,14 @@
 ﻿function DOCUMENT_CustomActions() {
 	console.log("DOCUMENT_CustomActions");
-	
+	DOCUMENT_Layout();
+	DOCUMENT_Events();	
+}
+
+function DOCUMENT_Layout() {
+	console.log("No DOCUMENT layout");
+}
+
+function DOCUMENT_Events() {
 	$("#RB_Origin_1").on("click", DOCUMENT_OriginChanged);
 	$("#RB_Origin_2").on("click", DOCUMENT_OriginChanged);
 }
@@ -24,7 +32,12 @@ function DOCUMENT_OriginChanged() {
 	}
 }
 
-
 function DOCUMENT_CUSTOM_FormFillAfter(){
 	DOCUMENT_OriginChanged();
+}
+
+function DOCUMENT_ToArchive() {
+}
+
+function DOCUMENT_NewRevision (){
 }

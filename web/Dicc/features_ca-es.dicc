@@ -1,4 +1,4 @@
-﻿Feature_Attachment_TabTitle::Adjunts
+﻿Feature_Attach_TabTitle::Adjunts
 Feature_WhatYouMissed::Allò que t'has perdut
 Feature_WhatYouMissed_HeaderList_Date::Data
 Feature_WhatYouMissed_HeaderList_Category::Categoria
@@ -79,6 +79,7 @@ Feature_Sticky_Label_SendTo::Que ho vegi
 Feature_Sticky_Label_Message::Missatge				  
 Core_Instance_Portal::Portal
 Core_Instance_ScopeView::Visualització per àmbits activada
+Feature_BankAccount::Comptes bancaris
 Feature_BankAccount_TabTitle::Comptes bancaris
 Feature_BankAccount_BtnAdd::Afegir compte bancari
 Feature_BankAccount_HeaderEntidad::Entitat
@@ -86,6 +87,7 @@ Feature_BankAccount_HeaderIBAN::IBAN
 Feature_BankAccount_HeaderSwift::SWIFT
 Feature_BankAccount_HeaderPrincipal::Principal
 Feature_BankAccount_HeaderAlias::Alias
+Feature_BankAccount_ErrorMessage_MainUndelete::No es pot eliminar perque és el compte principal
 Feature_Sign_Uploading::Registrant signatura...
 Feature_Sign_Firmafy_LoginMessage::Accedint a plataforma Firmafy
 Feature_Sign_Firmafy_GetUserIdMessage::Obtenint usuari
@@ -103,3 +105,14 @@ Feature_CreditCard_Label_Main::Principal
 Feature_CreditCard_Label_SandBox::Pruebas
 Feature_CreditCard_SavingConfig::Desant configuració de tarjeta
 Feature_CreditCard_SaveSuccess_Message::Configuració desada amb èxit
+Feature_BankAccount_FooterTip::Comptes IBAN per a la facturació de serveis oferts
+Feature_Signature::Signatures
+Feature_ContactPerson::Contactes
+Feature_PostalAddress::Adreces
+Common_DropFilesToUpload::Arrosega fitxers per a pujar-los<br /> ó clicka aquí per seleccionar
+Feature_Attach_Message_TooBigSize::Fitxer massa gran ({{filesize}}MB). Màxim permés: {{maxFilesize}}MB.
+Feature_Attach_Message_Overload::Superat el límit d'fitxers per pujar
+Feature_Attach_Message_FileTypeUnallowed::Tipus de fitxer no permés
+Feature_Attach_Message_SelectToUpload1::Seleccionar fitxers
+Feature_Attach_Message_SelectToUpload2::per a pujar
+Feature_Attach_Message_SelectToUpload3::O arrossega'ls aquí des del teu explorador

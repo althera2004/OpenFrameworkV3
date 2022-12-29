@@ -14,12 +14,17 @@
 
         public MailBox ThirdParty { get; private set; }
 
+        public string Translate(string text)
+        {
+            return this.master.Translate(text);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.master = this.Master as Main;
-            this.master.BreadCrumb.Add("Administració");
-            this.master.BreadCrumb.AddEncryptedLink("Configuració de companyia", "/Admin/Company/");
-            this.master.BreadCrumb.AddLeaf("Correos electrónicos");
+            this.master.BreadCrumb.Add(Translate("Common_Administration"));
+            this.master.BreadCrumb.AddEncryptedLink(Translate("Core_Admin_Company"), "/Admin/Company/");
+            this.master.BreadCrumb.AddLeaf(Translate("Core_MailBoxes"));
             this.master.BreadCrumb.SetTitle("Companyia: " + this.master.InstanceName);
             this.master.SetPageType("pageAdmin");
 

@@ -587,6 +587,7 @@ namespace OpenFrameworkV3.Core.Companies
                                 if (rdr.HasRows)
                                 {
                                     rdr.Read();
+                                    res.InstanceName = instanceName;
                                     res.Id = rdr.GetInt64(ColumnsCompanyGet.Id);
                                     res.Name = rdr.GetString(ColumnsCompanyGet.Name);
                                     res.RazonSocial = rdr.GetString(ColumnsCompanyGet.RazonSocial);

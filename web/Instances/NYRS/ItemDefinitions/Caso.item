@@ -1,0 +1,316 @@
+﻿{
+    "Id": 1,
+    "ItemName": "Caso",
+    "Layout": {
+        "Icon": "fa fa-heartbeat",
+        "Label": "Caso",
+        "LabelPlural": "Casos",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+				{ "Name": "Code" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"NeedFK": [],
+	"ForeignValues": [],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Code", "Label": "Código", "Type": "text", "Length": 100 },
+        { "Name": "EstudioStatus", "Label": "Código", "Type": "text", "Length": 5 },
+        { "Name": "InvestigadorId", "Label": "Investigador", "Type": "text", "Length": 100 },
+        { "Name": "UnidadId", "Label": "Unidad", "Type": "text", "Length": 100 },
+        { "Name": "DatosClinicos", "Label": "DatosClinicos", "Type": "text", "Length": 100 },
+        { "Name": "PacienteNombre", "Label": "Nombre", "Type": "text", "Length": 30 },
+        { "Name": "PacienteApellidos", "Label": "Apellidos", "Type": "text", "Length": 50 },
+        { "Name": "PacienteDNI", "Label": "DNI", "Type": "text", "Length": 15 },
+        { "Name": "PacienteEdad", "Label": "Edad", "Type": "int" },
+        { "Name": "PacienteTelefono", "Label": "Teléfono", "Type": "text", "Length": 15 },
+        { "Name": "PacienteEmail", "Label": "Email", "Type": "email" },
+		{ "Name": "PacienteSexo", "Label": "Sexo", "Type": "text", "Length": 1 },
+		{ "Name": "PacienteNotificacion", "Label": "Notificación", "Type": "boolean" },
+		{ "Name": "HasData", "Label": "Datos", "Type": "boolean" },
+		{ "Name": "HasVideo", "Label": "Videos", "Type": "boolean" },
+        { "Name": "ContactoNombre", "Label": "Contacto", "Type": "text", "Length": 50 },
+        { "Name": "ContactoTelefono", "Label": "Teléfono contacto", "Type": "text", "Length": 15 },
+		{ "Name": "ConsentimientoOral", "Label": "Consentimiento oral", "Type": "boolean" },
+		{ "Name": "Traslado", "Label": "Traslado", "Type": "text", "Length": 3 },
+		{ "Name": "TiempoLlegada", "Label": "Tiempo llegada", "Type": "time" },
+		{ "Name": "HoraLlegada", "Label": "Hora llegada", "Type": "time" },
+		{ "Name": "EscalaSTAI1", "Label": "Escala STAI", "Type": "text", "Length": 6 },
+		{ "Name": "EscalaSTAI2", "Label": "Escala STAI", "Type": "text", "Length": 6 },
+		{ "Name": "EscalaSTAI3", "Label": "Escala STAI", "Type": "text", "Length": 6 },
+		{ "Name": "Confort1", "Label": "Confort", "Type": "int" },
+		{ "Name": "Confort2", "Label": "Confort", "Type": "int" },
+		{ "Name": "Confort3", "Label": "Confort", "Type": "int" },
+		{ "Name": "Dolor1", "Label": "Dolor", "Type": "int" },
+		{ "Name": "Dolor2", "Label": "Dolor", "Type": "int" },
+		{ "Name": "Dolor3", "Label": "Dolor", "Type": "int" },
+		{ "Name": "TAD1", "Label": "Diastólica", "Type": "int" },
+		{ "Name": "TAS1", "Label": "Sistólica", "Type": "int" },
+		{ "Name": "TAM1", "Label": "Media", "Type": "int" },
+		{ "Name": "TAD2", "Label": "Diastólica", "Type": "int" },
+		{ "Name": "TAS2", "Label": "Sistólica", "Type": "int" },
+		{ "Name": "TAM2", "Label": "Media", "Type": "int" },
+		{ "Name": "TAD3", "Label": "Diastólica", "Type": "int" },
+		{ "Name": "TAS3", "Label": "Sistólica", "Type": "int" },
+		{ "Name": "TAM3", "Label": "Media", "Type": "int" },
+		{ "Name": "FC1", "Label": "Frecuencia cardiaca", "Type": "int" },
+		{ "Name": "FR1", "Label": "Frecuencia respiratoria", "Type": "int" },
+		{ "Name": "SO1", "Label": "Saturación oxígeno", "Type": "int" },
+		{ "Name": "FC2", "Label": "Frecuencia cardiaca", "Type": "int" },
+		{ "Name": "FR2", "Label": "Frecuencia respiratoria", "Type": "int" },
+		{ "Name": "SO2", "Label": "Saturación oxígeno", "Type": "int" },
+		{ "Name": "FC3", "Label": "Frecuencia cardiaca", "Type": "int" },
+		{ "Name": "FR3", "Label": "Frecuencia respiratoria", "Type": "int" },
+		{ "Name": "SO3", "Label": "Saturación oxígeno", "Type": "int" },
+		{ "Name": "Firma", "Label": "Firma", "Type": "imagefile" },
+		{ "Name": "ECQ", "Label": "ECQ", "Type": "imagefile" },
+		{ "Name": "Video1Played", "Label": "Visualizado", "Type": "boolean" },
+		{ "Name": "Video2Played", "Label": "Visualizado", "Type": "boolean" },
+		{ "Name": "Video3Played", "Label": "Visualizado", "Type": "boolean" },
+		{ "Name": "Video4Played", "Label": "Visualizado", "Type": "boolean" },
+		{ "Name": "Video5Played", "Label": "Visualizado", "Type": "boolean" },
+		{ "Name": "Video1Completed", "Label": "Completado", "Type": "boolean" },
+		{ "Name": "Video2Completed", "Label": "Completado", "Type": "boolean" },
+		{ "Name": "Video3Completed", "Label": "Completado", "Type": "boolean" },
+		{ "Name": "Video4Completed", "Label": "Completado", "Type": "boolean" },
+		{ "Name": "Video5Completed", "Label": "Completado", "Type": "boolean" },
+		{ "Name": "Video1Duration", "Label": "Duración", "Type": "int" },
+		{ "Name": "Video2Duration", "Label": "Duración", "Type": "int" },
+		{ "Name": "Video3Duration", "Label": "Duración", "Type": "int" },
+		{ "Name": "Video4Duration", "Label": "Duración", "Type": "int" },
+		{ "Name": "Video5Duration", "Label": "Duración", "Type": "int" },
+		{ "Name": "Video1Viewed", "Label": "Visto", "Type": "int" },
+		{ "Name": "Video2Viewed", "Label": "Visto", "Type": "int" },
+		{ "Name": "Video3Viewed", "Label": "Visto", "Type": "int" },
+		{ "Name": "Video4Viewed", "Label": "Visto", "Type": "int" },
+		{ "Name": "Video5Viewed", "Label": "Visto", "Type": "int" },
+		{ "Name": "LocalizacionDolor", "Label": "Localización dolor", "Type": "text", "Length": 10 },
+		{ "Name": "LocalizacionInfarto", "Label": "LocalizacionInfarto", "Type": "text", "Length": 10 },
+		{ "Name": "TipoAntecedente", "Label": "Tipo de antecednete", "Type": "text", "Length": 50 },
+		{ "Name": "HoraAparicionDolor", "Label": "Hora de aparición dolor", "Type": "time" },
+		{ "Name": "HoraECQ", "Label": "Hora de realización de ECG", "Type": "time" },
+		{ "Name": "FINI", "Label": "Fecha", "Type": "datetime" }
+    ],
+    "Lists": [
+        {
+			"Id": "Custom",
+			"FormId": "Custom",
+			"Layout": 1,
+			"EditAction": "FormPage",
+			"Export": "Excel",
+			"Columns": [
+				{ "DataProperty": "Code", "Label": "Tipo", "Width": 100, "Orderable":true, "Search": true, "Linkable": true, "RenderData": "CASO_Tipo" },
+				{ "DataProperty": "Code","Width": 90, "Orderable":true, "Search": true },
+				{ "DataProperty": "InvestigadorId", "Width":250, "Orderable":true, "Search": true },
+				{ "DataProperty": "UnidadId", "Width":100, "Orderable":true, "Search": true },
+				{ "DataProperty": "PacienteNombre", "Orderable":true, "Search": true, "RenderData": "CASO_PacienteNombreCompleto" },
+				{ "DataProperty": "FINI", "Orderable":true, "RenderData": "CASO_FINIText" },
+				{ "DataProperty": "PacienteApellidos", "HiddenList": true },
+				{ "DataProperty": "EstudioStatus", "HiddenList": true }
+			],
+            "Sorting": {"Index": 1, "SortingType": "asc"}
+        }
+    ],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Code" },
+								{ "Name": "InvestigadorId" },
+								{ "Name": "UnidadId" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "basic",
+					"Label": "Datos",
+					"Rows": [
+						{
+							"Label": "Datos paciente",
+							"Fields": [
+								{ "Name": "PacienteNombre" },
+								{ "Name": "PacienteApellidos"}								
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "PacienteDNI" },
+								{ "Name": "PacienteEdad" },
+								{ "Name": "PacienteSexo" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "PacienteTelefono" },
+								{ "Name": "PacienteEmail" },
+								{ "Name": "PacienteNotificacion" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "ContactoTelefono" },
+								{ "Name": "ContactoNombre" },
+								{ "Type": "Blank" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "ConsentimientoOral" },
+								{ "Type": "Blank", "ColSpan": 2 }
+							]
+						},
+						{
+							"Label": "Datos traslado",
+							"Fields": [
+								{ "Name": "Traslado" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "TiempoLlegada" },
+								{ "Name": "HoraLlegada" },
+								{ "Type": "Blank" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "datosEstudio",
+					"Label": "Datos estudio",
+					"Rows": [
+						{
+							"Label": "Datos estudio Inicial",
+							"Fields": [
+								{ "Name": "EscalaSTAI1" },
+								{ "Name": "Confort1"},
+								{ "Name": "Dolor1"},
+								{ "Type": "Blank" }	
+							]
+						},
+						{
+							"Fields": [
+								{ "Type": "Free", "Id": "TA1" },
+								{ "Name": "TAD1" },
+								{ "Name": "TAM1"},
+								{ "Name": "TAS1"}								
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "FC1" },
+								{ "Name": "FR1"},
+								{ "Name": "SO1"},
+								{ "Type": "Blank" }								
+							]
+						},
+						{
+							"Label": "Datos estudio Intermedio",
+							"Fields": [
+								{ "Name": "EscalaSTAI2" },
+								{ "Name": "Confort2"},
+								{ "Name": "Dolor2"}
+							]
+						},
+						{
+							"Fields": [
+								{ "Type": "Free", "Id": "TA2" },
+								{ "Name": "TAD2" },
+								{ "Name": "TAM2"},
+								{ "Name": "TAS2"}								
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "FC2" },
+								{ "Name": "FR2"},
+								{ "Name": "SO2"}								
+							]
+						},
+						{
+							"Label": "Datos estudio Final",
+							"Fields": [
+								{ "Name": "EscalaSTAI3" },
+								{ "Name": "Confort3"},
+								{ "Name": "Dolor3"}
+							]
+						},
+						{
+							"Fields": [
+								{ "Type": "Free", "Id": "TA3" },
+								{ "Name": "TAD3" },
+								{ "Name": "TAM3"},
+								{ "Name": "TAS3"}								
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "FC3" },
+								{ "Name": "FR3"},
+								{ "Name": "SO3"}								
+							]
+						}
+					]
+				},
+				{
+					"Id": "datosClinicos",
+					"Label": "Datos clínicos",
+					"Rows": [
+						{
+							"Label": "Datos clínicos",
+							"Fields": [
+								{ "Type": "PlaceHolder", "Name": "DatosClinicosRadio" }
+							]
+						}
+					]
+				},
+				{
+					"Id": "visionado",
+					"Label": "Visionado de vídeos",
+					"Rows": [
+						{
+							"Label": "Visionado de vídeos",
+							"Fields": [
+								{ "Type": "PlaceHolder", "Name": "Videos" }				
+							]
+						}
+					]
+				},
+				{
+					"Id": "farmacos",
+					"Label": "Registro de fármacos",
+					"Rows": [
+						{
+							"Id": "FarmacoByCaso",
+							"Label": "Registro de fármacos",
+							"ItemList": "Farmaco",
+							"ListId": "ByCaso"
+						}
+					]
+				},
+				{
+					"Id": "incidencias",
+					"Label": "Incidencias",
+					"Rows": [
+						{
+							"Id": "IndicenciaByCaso",
+							"Label": "Incidencias",
+							"ItemList": "Incidencia",
+							"ListId": "ByCaso"
+						}
+					]
+				}
+			]
+		}
+	]
+}

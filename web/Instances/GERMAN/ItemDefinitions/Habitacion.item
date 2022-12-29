@@ -1,0 +1,41 @@
+﻿{
+    "Id": 212,
+    "ItemName": "Habitacion",
+	"Description": "Habitacions dormitoris del centre",
+    "Layout": {
+        "Icon": "fa fa-hospital-alt",
+        "Label": "Habitació",
+        "LabelPlural": "Habitacions",
+        "Description": {
+            "Pattern": "{0} - {1} - {2}",
+            "Fields": [
+                { "Name": "Numero" },
+                { "Name": "Descripcion" },
+                { "Name": "Planta" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "PrimaryKeys": [ ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Numero", "Label": "Número", "Type": "text", "Length": 10, "Required": true },
+        { "Name": "Descripcion", "Label": "Descripción", "Type": "text", "Length": 100, "Required": true },
+        { "Name": "Planta", "Label": "Planta", "Type": "text", "Length": 100, "Required": true },
+        { "Name": "NCamas", "Label": "Nº llits", "Type": "int", "Required": true }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": 3,
+			"Columns": [
+                { "DataProperty": "Numero", "Linkable": true, "Width": 90, "Align": "right" },
+                { "DataProperty": "Descripcion", "Linkable": true },
+                { "DataProperty": "Planta", "Linkable": true, "Width": 110 },
+                { "DataProperty": "NCamas", "Linkable": true, "Width": 110}
+            ]
+        }
+	]
+}

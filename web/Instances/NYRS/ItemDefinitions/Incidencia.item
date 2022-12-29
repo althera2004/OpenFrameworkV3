@@ -1,0 +1,53 @@
+﻿{
+    "Id": 2,
+    "ItemName": "Incidencia",
+    "Layout": {
+        "Icon": "fa fa-exclamation",
+        "Label": "Incidencia",
+        "LabelPlural": "Incidencias",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+				{ "Name": "Otra" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"NeedFK": [],
+	"ForeignValues": [{"ItemName": "Caso"}],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "CasoId", "Type": "long", "Required": true },
+        { "Name": "Cinetosis", "Label": "Cinetosis", "Type": "int" },
+        { "Name": "IncidenciaUsoDispositivo", "Label": "Uso dispositivo", "Type": "int" },
+        { "Name": "HoraFin", "Label": "Hora", "Type": "time" },
+		{ "Name": "Otra", "Label": "Otra",  "Type": "text", "Width": 150 }
+    ],
+    "Lists": [
+        {
+			"Id": "Custom",
+			"FormId": "Custom",
+			"Layout": 1,
+			"EditAction": "FormPage",
+			"Columns": [
+				
+			],
+            "Sorting": {"Index": 1, "SortingType": "asc"}
+        },
+		{
+            "Id": "ByCaso",
+            "FormId": "Custom",
+            "Layout": "ReadOnly",
+            "EditAction": "ReadOnly",
+			"Columns": [
+                { "DataProperty": "Otra" },
+                { "DataProperty": "Cinetosis", "Width": 90, "Align": "center", "RenderData": "INCIDENCIA_ColumnCinetosis" },				
+                { "DataProperty": "IncidenciaUsoDispositivo", "Width": 90, "Align": "center", "RenderData": "INCIDENCIA_ColumnUsoDispositivo" },
+                { "DataProperty": "HoraFin", "Width": 90, "Align": "center", "RenderData": "INCIDENCIA_ColumnHora" }
+            ],
+			"Parameters": [ {"Name": "CasoId", "Value": "#actualItemId#"} ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        }
+    ],
+	"Forms": []
+}

@@ -1,0 +1,54 @@
+﻿{
+    "Id": 3,
+    "ItemName": "Farmaco",
+    "Layout": {
+        "Icon": "fa fa-pill",
+        "Label": "Fármaco",
+        "LabelPlural": "Fármacos",
+        "Description": {
+            "Pattern": "{0} / {1} ",
+            "Fields": [
+				{ "Name": "Nombre" },
+				{ "Name": "Via" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"NeedFK": [],
+	"ForeignValues": [{"ItemName": "Caso"}],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "CasoId", "Type": "long", "Required": true },
+        { "Name": "Nombre", "Label": "Fármaco", "Type": "text", "Length": 100 },
+        { "Name": "Via", "Label": "Vía administración", "Type": "text", "Length": 100 },
+        { "Name": "Dosis", "Label": "Dosis", "Type": "decimal" },
+        { "Name": "Unidad", "Label": "Unidad", "Type": "text", "Length": 100 }
+    ],
+    "Lists": [
+        {
+			"Id": "Custom",
+			"FormId": "Custom",
+			"Layout": 1,
+			"EditAction": "FormPage",
+			"Columns": [
+				
+			],
+            "Sorting": {"Index": 1, "SortingType": "asc"}
+        },
+		{
+            "Id": "ByCaso",
+            "FormId": "Custom",
+            "Layout": "ReadOnly",
+            "EditAction": "ReadOnly",
+			"Columns": [
+                { "DataProperty": "Nombre" },
+                { "DataProperty": "Via", "Width": 200, "Label": "Vía" },				
+                { "DataProperty": "Dosis", "Width": 90, "Align": "right" },
+                { "DataProperty": "Unidad", "Width": 250, "Align": "left" }
+            ],
+			"Parameters": [ {"Name": "CasoId", "Value": "#actualItemId#"} ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
+        }
+    ],
+	"Forms": []
+}

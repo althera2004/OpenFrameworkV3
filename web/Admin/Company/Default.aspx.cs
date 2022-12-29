@@ -8,6 +8,14 @@
         /// <summary>Master page</summary>
         private Main master;
 
+        public Main MasterPage
+        {
+            get
+            {
+                return this.master;
+            }
+        }
+
         public string QueryBase
         {
             get

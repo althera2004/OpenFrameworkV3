@@ -197,6 +197,7 @@
     <Compile Include="Core\Bindings\ColumnsScopeGet.cs" />
     <Compile Include="Core\Bindings\ColumnsUserGetForList.cs" />
     <Compile Include="Core\Companies\CompanyBankAccount.cs" />
+    <Compile Include="Core\Companies\CompanyConfig.cs" />
     <Compile Include="Core\Companies\CompanyContactPerson.cs" />
     <Compile Include="Core\Companies\CompanyPostalAddress.cs" />
     <Compile Include="Core\Activity\ActionResult.cs" />
@@ -260,12 +261,11 @@
     <Compile Include="Core\Security\AccessPolicy.cs" />
     <Compile Include="Core\Security\ApplicationUser.cs" />
     <Compile Include="Core\Security\Grant.cs" />
-    <Compile Include="Core\Security\Group.cs" />
+    <Compile Include="Core\Security\SecurityGroup.cs" />
     <Compile Include="Core\Security\IPAccess.cs" />
     <Compile Include="Core\Security\UserProfile.cs" />
     <Compile Include="Core\Security\ScopeView.cs" />
     <Compile Include="Core\DataAccess\StoredParameterQuery.cs" />
-    <Compile Include="Core\Security\UserGrant.cs" />
     <Compile Include="DifferenciableAttribute.cs" />
     <Compile Include="Export\PdfTemplateDefinition.cs" />
     <Compile Include="Export\SqlStoredParameter.cs" />
@@ -331,7 +331,7 @@
     <Compile Include="DynamicJsonObject.cs" />
     <Compile Include="Feature\AlertDefinition.cs" />
     <Compile Include="Feature\AlertFieldPosition.cs" />
-    <Compile Include="Feature\Attachs.cs" />
+    <Compile Include="Feature\Attach.cs" />
     <Compile Include="Feature\Bindings\ColumnsFAQsGet.cs" />
     <Compile Include="Feature\Bindings\ColumnsNewsGet.cs" />
     <Compile Include="Feature\Bindings\ColumnsTagsGet.cs" />

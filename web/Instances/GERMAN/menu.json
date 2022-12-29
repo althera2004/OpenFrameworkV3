@@ -1,0 +1,19 @@
+[
+	{
+    "Label": "Gestió del centre",
+    "Icon": "far fa-building",
+    "Options": [
+		{ "Leaf": true, "Item": "Habitacion", "Groups": [4] },
+		{ "Leaf": true, "Item": "Cama", "Groups": [4] }
+    ]
+  },
+	{
+    "Label": "Gestió salut",
+    "Icon": "far fa-pills",
+    "Options": [
+		{ "Leaf": true, "Item": "Dieta", "Groups": [4] },
+		{ "Leaf": true, "Item": "Alergia" },
+		{ "Leaf": true, "Item": "Anticoagulante" }
+    ]
+  }
+]

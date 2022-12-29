@@ -16,3 +16,9 @@ CREATE TABLE [dbo].[Core_Membership](
 	[Active] [bit] NOT NULL
 ) ON [PRIMARY]
 GO
+
+INSERT INTO [dbo].[Core_Membership]([GroupId] ,[UserId] ,[CompanyId] ,[Main] ,[CreatedBy] ,[CreatedOn] ,[ModifiedBy] ,[ModifiedOn] ,[Active]) VALUES (1 ,1 ,0 ,0 ,1 ,GETUTCDATE() ,1 ,GETUTCDATE(), 1)
+INSERT INTO [dbo].[Core_Membership]([GroupId] ,[UserId] ,[CompanyId] ,[Main] ,[CreatedBy] ,[CreatedOn] ,[ModifiedBy] ,[ModifiedOn] ,[Active]) VALUES (2 ,1 ,0 ,0 ,1 ,GETUTCDATE() ,1 ,GETUTCDATE(), 1)
+INSERT INTO [dbo].[Core_Membership]([GroupId] ,[UserId] ,[CompanyId] ,[Main] ,[CreatedBy] ,[CreatedOn] ,[ModifiedBy] ,[ModifiedOn] ,[Active]) VALUES (3 ,1 ,0 ,0 ,1 ,GETUTCDATE() ,1 ,GETUTCDATE(), 1)
+GO
+

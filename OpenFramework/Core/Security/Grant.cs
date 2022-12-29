@@ -56,6 +56,9 @@ namespace OpenFrameworkV3.Core.Security
         /// <summary>Gets or sets the item grants by code</summary>
         public string Grants { get; set; }
 
+        /// <summary>Gets or sets the identifier of company</summary>
+        public long CompanyId { get; set; }
+
         /// <summary>Gets or sets the usear that creates grant</summary>
         public ApplicationUser CreatedBy { get; set; }
 
@@ -101,7 +104,7 @@ namespace OpenFrameworkV3.Core.Security
             if (!string.IsNullOrEmpty(cns))
             {
 
-                using (var cmd = new SqlCommand("Core_User_GetGrants"))
+                using (var cmd = new SqlCommand("SecurityGrants_ByUser"))
                 {
                     using (var cnn = new SqlConnection(cns))
                     {
@@ -118,7 +121,7 @@ namespace OpenFrameworkV3.Core.Security
                                 {
                                     res.Add(new Grant
                                     {
-                                        SecurityGroupId = rdr.GetInt64(ColumnsGrantGet.GroupId),
+                                        SecurityGroupId = rdr.GetInt64(ColumnsGrantGet.SecurityGroupId),
                                         ApplicationUserId = rdr.GetInt64(ColumnsGrantGet.ApplicationUserId),
                                         Grants = rdr.GetString(ColumnsGrantGet.Grants),
                                         ItemName = rdr.GetString(ColumnsGrantGet.ItemName),
@@ -167,15 +170,13 @@ namespace OpenFrameworkV3.Core.Security
         /// <returns>List of security group grants</returns>
         public static ReadOnlyCollection<Grant> ByGroup(long groupId, long companyId, string instanceName)
         {
-            /* CREATE PROCEDURE [dbo].[Core_SecurityGroup_GetGrants]
-             *   @SecurityGroupId bigint */
             var source = string.Format(CultureInfo.InvariantCulture, "UserGrant::ByGroup({0}, {1})", groupId, instanceName);
             var res = new List<Grant>();
 
             var cns = Persistence.ConnectionString(instanceName);
             if (!string.IsNullOrEmpty(cns))
             {
-                using (var cmd = new SqlCommand("Core_SecurityGroup_GetGrants"))
+                using (var cmd = new SqlCommand("SecurityGrants_ByGroup"))
                 {
                     using (var cnn = new SqlConnection(cns))
                     {
@@ -192,7 +193,7 @@ namespace OpenFrameworkV3.Core.Security
                                 {
                                     res.Add(new Grant
                                     {
-                                        SecurityGroupId = rdr.GetInt64(ColumnsGrantGet.GroupId),
+                                        SecurityGroupId = rdr.GetInt64(ColumnsGrantGet.SecurityGroupId),
                                         ApplicationUserId = rdr.GetInt64(ColumnsGrantGet.ApplicationUserId),
                                         Grants = rdr.GetString(ColumnsGrantGet.Grants),
                                         ItemName = rdr.GetString(ColumnsGrantGet.ItemName),
@@ -465,25 +466,57 @@ namespace OpenFrameworkV3.Core.Security
             return false;
         }
 
+        public static ActionResult SaveGroupGrants(long groupId, string grants, long applicationUserId, long companyId, string instancename)
+        {
+            var res = ActionResult.NoAction;
+            foreach(var grant in grants.Split('|'))
+            {
+                if (!string.IsNullOrEmpty(grant))
+                {
+                    long itemId = Convert.ToInt64(grant.Split('.')[0]);
+                    string grantValue = grant.Split('.')[1];
+                    var newGrant = new Grant
+                    {
+                        ApplicationUserId = Constant.DefaultId,
+                        CompanyId = companyId,
+                        Grants = grantValue,
+                        ItemId = itemId,
+                        ItemName = Persistence.ItemDefinitionById(itemId, instancename).ItemName,
+                        SecurityGroupId = groupId
+                    };
+
+
+                    res = newGrant.Save(applicationUserId, instancename);
+                    if (!res.Success)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return res;
+        }
+
         /// <summary>Saves user grant into database</summary>
         /// <param name="applicationUserId">Identifier of user that performs the action</param>
-        /// <param name="connectionString">String for database connection</param>
+        /// <param name="instanceName">Name of instance</param>
         /// <returns>Result of action</returns>
         public ActionResult Save(long applicationUserId, string instanceName)
         {
-            var source = string.Format(CultureInfo.InvariantCulture, "UserGrant::Save({0},{1},{2})", this.Json, applicationUserId, instanceName);
+            var source = string.Format(CultureInfo.InvariantCulture, "Grant::Save({0},{1},{2})", this.Json, applicationUserId, instanceName);
             var res = ActionResult.NoAction;
             var cns = Persistence.ConnectionString(instanceName);
             if (!string.IsNullOrEmpty(cns))
             {
-                using (var cmd = new SqlCommand("Core_UserGrant_Save"))
+                using (var cmd = new SqlCommand("SecurityGrants_Save"))
                 {
                     using (var cnn = new SqlConnection(cns))
                     {
                         cmd.Connection = cnn;
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add(DataParameter.Input("@UserId", this.ApplicationUserId));
                         cmd.Parameters.Add(DataParameter.Input("@SecurityGroupId", this.SecurityGroupId));
+                        cmd.Parameters.Add(DataParameter.Input("@SecurityUserId", this.ApplicationUserId));
+                        cmd.Parameters.Add(DataParameter.Input("@CompanyId", this.CompanyId));
                         cmd.Parameters.Add(DataParameter.Input("@ItemId", this.ItemId));
                         cmd.Parameters.Add(DataParameter.Input("@ItemName", this.ItemName, 50));
                         cmd.Parameters.Add(DataParameter.Input("@Grants", this.Grants, 15));

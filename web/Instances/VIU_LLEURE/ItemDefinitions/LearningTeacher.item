@@ -1,0 +1,91 @@
+﻿{
+    "Id": 206,
+    "ItemName": "LearningTeacher",
+	"Features": {"Attachs": true, "UserAssignation": true},
+    "Layout": {
+        "Icon": "fa fa-user-graduate",
+        "Label": "Formador",
+        "LabelPlural": "Formadors",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"NeedFK": [ "Learning" ],
+    "ForeignValues": [ { "ItemName": "Core_User" } ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Name", "Label": "Nom", "Type": "text", "Length": 200, "Required": true },
+        { "Name": "NIF", "Label": "NIF", "Type": "text", "Length": 10, "Required": true },
+        { "Name": "Externo", "Label": "Extern", "Type": "boolean", "DataFormat": { "Name": "ToBooleanCheck" } },
+        { "Name": "Email", "Label": "Email", "Type": "email" },
+        { "Name": "Phone", "Label": "Telèfon", "Type": "text", "Length": 15 },
+		{ "Name": "Address", "Label": "Adreça", "Type": "text", "Length": 100, "Required": true },
+		{ "Name": "LocationPostalCodeId", "Label": "C.P. Localitat", "Type": "Long", "Required": true },
+		{ "Name": "LOPD", "Label": "LOPD", "Type": "boolean", "DataFormat": { "Name": "ToBooleanCheck" } },
+		{ "Name": "Core_UserId", "Label": "Usuari", "Type": "applicationUser" },
+		{ "Name": "CertificacioAntecedentes", "Label": "Certificat antecedents", "Type": "DocumentFile" }		
+    ],
+	"Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": 3,
+            "Columns": [
+                { "DataProperty": "Name", "Search": true, "Orderable": true, "Linkable": true },
+                { "DataProperty": "Email", "Search": true, "Width": 250 },
+                { "DataProperty": "Phone", "Search": true, "Width": 120 },
+                { "DataProperty": "Externo", "Search": true, "Width": 80 }
+            ]
+        }
+	],
+	"Forms": [ 
+		{
+            "Id": "Custom",
+            "FormType": "Custom",
+            "DefaultSelected": true,
+            "Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Name", "ColSpan": 2 },
+								{ "Name": "NIF" },
+								{ "Name": "Externo" }
+							]
+						}
+					]
+				},
+                {
+                    "Label": "Datos",
+                    "Id": "Data",
+                    "Rows": [
+                        {
+                            "Fields": [
+                                { "Name": "Email", "ColSpan": 2 },
+								{ "Name": "Phone" }
+                            ]
+                        },
+                        {
+                            "Fields": [
+                                { "Name": "Address", "ColSpan": 2 },
+								{ "Name": "LocationPostalCodeId" }
+                            ]
+                        },
+                        {
+                            "Fields": [
+                                { "Name": "CertificacioAntecedentes" },
+                                { "Name": "LOPD" }
+                            ]
+                        }
+					]
+				}
+            ]
+        }
+	]
+}

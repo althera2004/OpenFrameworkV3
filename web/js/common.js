@@ -38,6 +38,20 @@ jQuery.fn.localDatePicker = function () {
     return this.datepicker({ "autoclose": true, "todayHighlight": true, "language": iso });
 }
 
+jQuery.fn.localTimePicker = function () {
+    var iso = "ca";
+    if (HasPropertyValue(ApplicationUser.Language)) {
+        if (HasPropertyValue(ApplicationUser.Language.JavaScriptISO)) {
+            iso = ApplicationUser.Language.JavaScriptISO;
+        }
+    }
+
+    return this.datetimepicker({
+        "format": "HH:mm",
+        "locale": iso
+    });
+}
+
 jQuery.fn.replaceClass = function (oldClass, newClass) {
     return this.removeClass(oldClass).addClass(newClass);
 }
@@ -72,7 +86,7 @@ function LocalStorageGetJson(key) {
         res = JSON.parse(localStorage.getItem(key));
     }
     catch (ex) {
-        console.log(ex);
+        console.log("Dictionary " + key, ex);
     }
 
     return res;
@@ -164,7 +178,14 @@ function GetDate(date, separator, nullable) {
         year += 2000;
     }
 
-    return new Date(year, month, day);
+    var d = new Date();
+    d.setUTCFullYear(year);
+    d.setUTCMonth(month);
+    d.setUTCDate(day);
+    d.setUTCHours(0);
+    d.setUTCMinutes(0);
+    d.setUTCSeconds(0);
+    return d;
 }
 
 function GetDateTextFromZulu(date, separator, nullable) {
@@ -238,15 +259,33 @@ function GrantsByItem(itemName) {
 }
 
 function GrantCanWriteByItem(itemName) {
-    return true;
+    if (ApplicationUser.AdminUser === true) { return true; }
+    var grant = ApplicationUser.Grants.filter(g => g.ItemName.toLowerCase() === itemName.toLowerCase())[0];
+    if (typeof grant !== "undefined" && grant.Grants.indexOf("R") !== -1) {
+        return true;
+    }
+
+    return false;
 }
 
 function GrantCanReadByItem(itemName) {
-    return true;
+    if (ApplicationUser.AdminUser === true) { return true; }
+    var grant = ApplicationUser.Grants.filter(g => g.ItemName.toLowerCase() === itemName.toLowerCase())[0];
+    if (typeof grant !== "undefined" && grant.Grants.indexOf("W") !== -1) {
+        return true;
+    }
+
+    return false;
 }
 
 function GrantCanDeleteByItem(itemName) {
-    return true;
+    if (ApplicationUser.AdminUser === true) { return true; }
+    var grant = ApplicationUser.Grants.filter(g => g.ItemName.toLowerCase() === itemName.toLowerCase())[0];
+    if (typeof grant !== "undefined" && grant.Grants.indexOf("D") !== -1) {
+        return true;
+    }
+
+    return false;
 }
 // --------------------------------
 
@@ -381,4 +420,13 @@ function FormatBytes(bytes, decimals) {
         sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
         i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+}
+
+function CORE_Logout() {
+    PopupConfirm(Dictionary.Common_ExitQuestion, Dictionary.Common_Warning, CORE_Logout_Confirmed)
+}
+
+function CORE_Logout_Confirmed() {
+    localStorage.clear();
+    document.location = "/";
 }

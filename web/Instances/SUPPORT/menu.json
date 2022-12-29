@@ -6,7 +6,7 @@
 		"Icon": "fad fa-tasks",
 		"Options": [
 			{ "Leaf": true, "Item": "Tasca" },
-			{ "Leaf": true, "Item": "Tasca", "ListId": "Incidencias" },
+			{ "Leaf": true, "Item": "Tasca", "ListId": "Corrección" },
 			{ "Leaf": true, "Item": "Tasca", "ListId": "ModificarDades" },
 			{ "Leaf": true, "Item": "Tasca", "ListId": "ModificarFuncionalidad" },
 			{ "Leaf": true, "Item": "Tasca", "ListId": "NuevaFuncionalidad" },

@@ -1,5 +1,6 @@
 ﻿Añadir::Afegir
 Avatar::Avatar
+Core_Admin_Company::Configuració de companyia
 Core_Security_MenuLabel::Seguretat
 Core_Feature_DiccionaryLabel::Diccionaris
 BAR_Popup_NoElements::No hi han elements
@@ -60,6 +61,7 @@ Common_Calendar_Label_Date::Data
 Common_Calendar_Label_Location::Lloc
 Common_Calendar_Label_Text::Descripció
 Common_Uploading::Pujant
+Common_Loging::Accedint
 Common_Cancel::Cancel·lar
 Common_CanNotDelete::No es pot eliminar
 Common_Change::Canviar
@@ -155,6 +157,7 @@ Common_ErrorResumeIntro::Revisi els següents errors
 Common_Exit::Sortir
 Common_Export_CSV::Exportar a CSV
 Common_Export_PDF::Exportar a PDF
+Common_Exporting::Exportando datos
 Common_External::Extern
 Common_FAQs_Popup_Title::Editar FAQ
 Common_Favorites::En seguiment
@@ -281,6 +284,9 @@ Common_Popup_ChangePassword_Label_Confirmation::Confirmar
 Common_Popup_ChangePassword_Label_New::Nova
 Common_Popup_ChangePassword_Message::Després de canviar la contrasenya es reiniciará la sessió.
 Common_Popup_ChangePassword_Title::Canviar contrasenya
+Common_Popup_ChangePassword_ConditionsMessage::Condicions de la contrasenya
+Common_Popup_ChangePassword_MinimumMessage::Número mínim de caracters
+Common_Popup_ChangePassword_CharsTypeMessage::Tipus de caracters
 Common_PopupUrgent_Title::Atendre una urgència
 Common_Premium_Module::Mòdul PREMIUM
 Common_Previous::Anterior
@@ -289,7 +295,7 @@ Common_PrintPdf::Imprimir en PDF
 Common_Profile::Perfil
 Common_QR_Message::Escanegi el següent codi QR amb la seva aplicació de verificació
 Common_QR_Popup_Title::Verificació d'identitat
-Common_RegisterCount::Nº registres
+Common_RegisterCount::Nº de registres
 Common_Reload::Mostrar
 Common_Report_Rendering::Generant informe...
 Common_Required::Obligatori
@@ -585,6 +591,23 @@ Core_Item_Tab_ListScript::Script de llista
 Core_Item_Tab_Main::Dades bàsiques
 Core_MailBox_Btn_AddMailBox::Afegir bústia
 Core_MailBoxes::Bústies de correus
+Core_MailBox_FormTitle1::Usuari i paraules de pas
+Core_MailBox_FormTitle2::Enviaments a tercers
+Core_MailBox_Tip1::No que apareixerà com a remitent del correu.
+Core_MailBox_Label_Email::Email
+Core_MailBox_Label_SenderName::Nom
+Core_MailBox_LabeL_User::Usuari
+Core_MailBox_Label_Password::Paraula de pas
+Core_MailBox_Label_Server::Servidor
+Core_MailBox_Label_Type::Tipus
+Core_MailBox_Label_Port::Port
+Core_MailBox_Explanation1::Aquesta adreça de correu es fa servir per a l'enviament de credencials de accés quan es dona d'alta un usuari a la aplicació, per al restabliment de paraules de pas i per a la doble autenticació d'usuaris
+Core_MailBox_Explanation2::Aquesta adreça de correu es fa servir per a l'enviament a tercers com notificacions, adjunts de documentació, factures, etc...
+Core_MailBox_Tip2::Els ports per a enviaments són 25 (per a enviaments smtp) i 465 (per a enviaments SSL).
+Core_MailBox_Tip3::Aquestes dades són proporcionades pel seu proveïdor de servei de correu electrònic
+Core_MailBox_Button_SendTest::Enviament de comprobació
+Core_MailBox_Button_BlackList::Comprobar black list
+Common_Footer_Label_Actions::Accions
 Core_MailConfig_Header_Email::Usuari
 Core_MailConfig_Header_Name::Bústia
 Core_MailConfig_Header_Port::Port
@@ -706,12 +729,13 @@ Feature_Alert_DataDescripcion::Ítem implicat
 Feature_Alert_HeaderCategory::Categoria
 Feature_Alert_LargeDescription::Descripció
 Feature_Alert_Responsible::Responsable
-Feature_Attachment_TabTitle::Adjunts
+Feature_Attach_TabTitle::Adjunts
 Feature_Firmafy_TabTitle::Firmafy
 Feature_Invoices_TabTitle::Facturació
 Feature_Attachs::Permet afegir adjunts
 Feature_Attachs_Tooltip::Admet adjunts
 Feature_Attachs_Tooltip_Off::Sense adjunts
+Feature_ContactPerson_TabTile::Personas de contacto
 Feature_ContactPerson_BtnAdd::Afegir contacte
 Feature_ContactPerson_Field_Email1::Email 1
 Feature_ContactPerson_Field_Email2::Email 2
@@ -1015,3 +1039,33 @@ Core_Security_MaintainSession_ExpiredAttempts::Número d'intents restants
 Core_Security_MaintainSession_Title::S'ha detectat una llarga durada d'inactivitat.<br />Introdueixi de nou la seva paraula de pas per a continuar.<br>
 Common_NoChanges::No hi ha canvis
 Core_BAR_NoChanged::No es pot eliminar perque està en ús
+Common_ExitQuestion::Vols sortir de l'aplicació
+PopupChangePassword_ErrorMessage::Les dades enviades no són vàlides.
+PopupChangePassword_SuccessMessage::Paraula de pas canviada.<br />Es reiniciarà la sessió per a confirmar el canvi.
+Core_Security_ApplicationUsers::Usuaris de l'aplicació
+Core_Security_ApplicationUser::usuari
+Core_Security::Seguretat
+Core_Security_ApplicationUsers_Header_Email::Email
+Core_Security_ApplicationUsers_Header_Name::Nom
+Core_Security_ApplicationUsers_Header_Language::Idioma
+Core_Security_ApplicationUsers_Header_Core::Core
+Core_Security_ApplicationUsers_Header_Admin::Administrador
+Core_Security_ApplicationUser_Label_Email::Email
+Core_Security_ApplicationUser_Label_FirstName::Nom
+Core_Security_ApplicationUser_Label_LastNames::Cognoms
+Core_Security_ApplicationUser_Label_Gender::Sexe
+Core_Security_ApplicationUser_Label_Gender0::Grup
+Core_Security_ApplicationUser_Label_Gender1::Home
+Core_Security_ApplicationUser_Label_Gender2::Dona
+Core_Security_Groups::Grups de seguretat
+Core_MailBox_Error_EmailRequired::L'adreça de correu és obligatòria
+Core_MailBox_Error_EmailMalformed::L'adreça de correo no és vàlida
+Core_MailBox_Error_ServerRequired::El servidor de correu és obligatori
+Core_MailBox_Error_UserRequired::L'usuari és obligatori
+Core_MailBox_Error_PasswordRequired::La paraula de pas és obligatòria
+Core_MailBox_Error_PortRequired::El port d'enviament és obligatori
+Common_ErrorResumeTitle::Revisi les següentes dades
+Core_Contract_Services::Serveis contractats
+Item_Attachment_Btn_New::Afegir adjunt
+Core_Documents::Gestió documental
+Common_NoChangesToSave::No hi ha canvis per a desar

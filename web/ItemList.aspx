@@ -39,7 +39,6 @@
         ListSources[0].RenderPageList();
         ListSources[0].GetData();
 
-
         ListsItemSearch.push({
             "Tabid": "0",
             "ItemName": ListSources[0].ItemName,
@@ -61,6 +60,5 @@
         } else {
             console.log("No custom actions", "<%= this.ItemName.ToUpperInvariant()%>_List_CustomActions");
         }
-
     </script>
 </asp:Content>

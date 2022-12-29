@@ -21,6 +21,8 @@ function PageList(config) {
     this.ActionsButtonsCount = 0;
     this.TabId = typeof config.TabId !== "undefined" ? config.TabId : "NoTab";
 
+    console.log("ListDefinition", this.ListDefinition);
+
     // --------------------- RENDERING
     this.Search = function () {
         console.log("nav-search-input", $("#nav-search-input").val());
@@ -100,6 +102,13 @@ function PageList(config) {
         this.CalculateWidths(this.ListDefinition, this.ItemDefinition);
 
         var Title = GetPropertyValue(this.ListDefinition.Title, this.ItemDefinition.Layout.LabelPlural);
+        if (typeof Title === "undefined") {
+            Title = this.ItemDefinition.Layout.LabelPlural;
+        }
+        if (typeof Title === "undefined") {
+            Title = this.ItemDefinition.Layout.Label;
+        }
+
         var ButtonAddLabel = this.ButtonAddLabel();
 
         res += "<div id=\"" + this.ComponentId + "_List\" class=\"ListContainer\">";
@@ -182,7 +191,7 @@ function PageList(config) {
         res += "    </div><!-- panel-body -->";
 
         res += "    <div class=\"panel-footer panel-footer-list\">";
-        res += "      Nombre de registres: <strong id=\"" + this.ComponentId + "_ListCount\">&nbsp;-</strong>";
+        res += "      " + Dictionary.Common_RegisterCount + ": <strong id=\"" + this.ComponentId + "_ListCount\">&nbsp;-</strong>";
         res += "    </div><!-- panel-body -->";
 
         res += "  </div>";
@@ -774,9 +783,16 @@ function PageList(config) {
             var buttonDelete = false;
 
             // En listas ItemLink, sólo se puede eliminar, para añadir hay que usar el combo y el botón añadir
-            if (this.ListDefinition.EditAction === "ItemLink" && GrantCanWriteByItem(this.ItemName)) {
+            if (this.ListDefinition.EditAction === "ReadOnly") {
+                buttonEdit = false;
+                buttonDelete = false;
+            }
+            else if (this.ListDefinition.EditAction === "ItemLink" && GrantCanWriteByItem(this.ItemName)) {
                 buttonDelete = true;
                 buttonEdit = false;
+            }
+            else {
+                buttonDelete = GrantCanWriteByItem(this.ItemName);
             }
 
             if (buttonEdit) {
@@ -1102,7 +1118,7 @@ function PageList(config) {
         else if (typeof column.Linkable !== "undefined" && column.Linkable !== null && column.Linkable === true) {
             var itemName = "";
 
-            if (field !== null && !IsFK(field.Name, itemDefinition)) {
+            if (field !== null && !IsFK(itemDefinition, field.Name)) {
                 textData = "<a id=\"" + rowData.Id + "\" onclick=\"" + editAction + "\" style=\"cursor:pointer;\">";
                 textData += rowData[dataKeyName];
                 textData += "</a>";
@@ -1127,6 +1143,7 @@ function PageList(config) {
                 }
                 else {
                     searchData = textData;
+                    textData = rowData[dataKeyName]["Value"];
                     if (GrantCanReadByItem(itemName) !== true) {
                         cellData = rowData[dataKeyName]["Value"];
                     }
@@ -1200,6 +1217,7 @@ function PageList(config) {
                 if (HasPropertyValue(field.FixedListName) === true) {
                     if (typeof rowData[dataKeyName] !== "undefined" && rowData[dataKeyName] !== null) {
                         cellData = FixedLists[field.FixedListName][rowData[dataKeyName]];
+                        textData = cellData;
                     }
                 }
 
@@ -1221,6 +1239,7 @@ function PageList(config) {
                 }
             } else if (field.Type.toLowerCase() === "money") {
                 cellData = ToMoneyFormat(rowData[dataKeyName]);
+                textData = cellData;
             }
             else if (field.Type.toLowerCase() === "fixedlistmultiple") {
                 var dataValue = rowData[dataKeyName];
@@ -1262,7 +1281,7 @@ function PageList(config) {
             }
         }
 
-        if (cellData === null) { cellData = ""; }
+        if (cellData === null) { cellData = ""; textData = "";}
 
         if (HasPropertyEnabled(column.Search) || HasPropertyEnabled(column.Filter)) {
             ListSearchAddItem(itemDefinition.ItemName, listDefinitionId, searchData);
@@ -2135,7 +2154,6 @@ function GetDataFromListDefinitionStandaloneGo(data) {
             }
             else {
                 console.log("GetDataFromListDefinitionStandaloneGo", data.ItemName);
-                if (debugConsole === true) { console.time("TableFillData", data.ItemName + " --> " + data.ListId); }
                 GetDataCallBack(data);
             }
         },
@@ -2167,15 +2185,18 @@ function List_SortGo(configId) {
     var config = LocalStorageGetJson(configId);
     if (config === null) {
         var x = ItemListById(list.ItemDefinition, list.ListId);
+        var sortingType = "";
         console.log("Sorting", x.Sorting);
-        var column = x.Columns[x.Sorting.Index - 1];
-        var config = {
-            "actualOrder": x.Sorting.SortingType.toUpperCase(),
-            "dataProperty": column.DataProperty,
-            "sortType": "text"
-        };
+        if (typeof x.Sorting !== "undefined") {
+            var column = x.Columns[x.Sorting.Index - 1];
+            var config = {
+                "actualOrder": x.Sorting.SortingType.toUpperCase(),
+                "dataProperty": column.DataProperty,
+                "sortType": "text"
+            };
 
-        console.log("default config", config);
+            console.log("default config", config);
+        }
 
         LocalStorageSetJson(configId, config);
 

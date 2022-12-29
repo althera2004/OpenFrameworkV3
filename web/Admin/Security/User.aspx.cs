@@ -18,10 +18,10 @@
         {
             this.master = this.Master as Main;
             this.master.BreadCrumb.Add("Administració");
-            this.master.BreadCrumb.AddEncryptedLink("Seguretat", "/Admin/Security/Default.aspx");
-            this.master.BreadCrumb.AddEncryptedLink("Usuaris", "/Admin/Security/UserList.aspx");
-            this.master.BreadCrumb.AddLeaf("Usuaris");
-            this.master.BreadCrumb.SetTitle("Seguretat: ");
+            this.master.BreadCrumb.AddEncryptedLink(this.master.Translate("Core_Security"), "/Admin/Security/Default.aspx");
+            this.master.BreadCrumb.AddEncryptedLink(this.master.Translate("Core_Security_ApplicationUsers"), "/Admin/Security/UserList.aspx");
+            this.master.BreadCrumb.AddLeaf("");
+            this.master.BreadCrumb.SetTitle(this.master.Translate("Core_Security_ApplicationUsers"));
             this.master.SetPageType("pageAdmin");
             this.master.AddScript("/Admin/Security/User.js");
 
@@ -33,7 +33,7 @@
 
         private void GetGroups()
         {
-            var groups = OpenFrameworkV3.Core.Security.Group.All(1, this.master.InstanceName);
+            var groups = OpenFrameworkV3.Core.Security.SecurityGroup.All(1, this.master.InstanceName);
             var res = new StringBuilder();
             foreach (var group in groups)
             {

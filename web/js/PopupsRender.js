@@ -1039,7 +1039,7 @@ function PopupConfirmLaunchYes() {
         PopupConfirm_Context.YesCallBackAction();
     }
 
-    if (AfterLoginPopupActive === true) {
+    if (typeof AfterLoginPopupActive !== "undefined" && AfterLoginPopupActive === true) {
         $("#AfterLoginLocker").show();
         $("#AfterLoginContent").show();
     }
@@ -1051,7 +1051,7 @@ function PopupConfirmLaunchNo() {
         PopupConfirm_Context.NoCallBackAction();
     }
 
-    if (AfterLoginPopupActive === true) {
+    if (typeof AfterLoginPopupActive !== "undefined" && AfterLoginPopupActive === true) {
         $("#AfterLoginLocker").show();
         $("#AfterLoginContent").show();
     }

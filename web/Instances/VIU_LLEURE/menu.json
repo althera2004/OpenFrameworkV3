@@ -1,0 +1,12 @@
+[
+	{ "Leaf": true, "Item": "EjemploBasico" },
+		{
+		"Label": "Formacions",
+		"Icon": "fad fa-chalkboard-teacher",
+		"Options": [
+			{ "Leaf": true, "Item": "Learning" },
+			{ "Leaf": true, "Item": "LearningTeacher" },
+			{ "Leaf": true, "Item": "LearningStatus" }
+		]
+	}
+]

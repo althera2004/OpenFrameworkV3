@@ -15,16 +15,17 @@
         {
             this.master = this.Master as Main;
             this.master.BreadCrumb.Add("Administració");
-            this.master.BreadCrumb.AddEncryptedLink("Seguretat", "/Admin/Security/Default.aspx");
-            this.master.BreadCrumb.AddLeaf("Grups");
-            this.master.BreadCrumb.SetTitle("Seguretat: ");
+            this.master.BreadCrumb.Add(this.master.Translate("Common_Administration"));
+            this.master.BreadCrumb.AddEncryptedLink(this.master.Translate("Core_Security"), "/Admin/Security/Default.aspx");
+            this.master.BreadCrumb.AddLeaf(this.master.Translate("Core_Security_Groups"));
+            this.master.BreadCrumb.SetTitle(this.master.Translate("Core_Security"));
             this.master.SetPageType("pageAdmin");
             this.GetGroups();
         }
 
         private void GetGroups()
         {
-            var groups = OpenFrameworkV3.Core.Security.Group.All(this.master.CompanyId, this.master.InstanceName);
+            var groups = SecurityGroup.All(this.master.CompanyId, this.master.InstanceName);
             var res = new StringBuilder();
             foreach(var group in groups)
             {

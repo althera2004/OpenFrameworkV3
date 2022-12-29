@@ -12,22 +12,26 @@
                 </div>
                 <div class="panel-body">
                     <div class="form-group" style="clear: both">
+                        <label class="col-xs-2">Tamaño mínimo</label>
+                        <div class="col-xs-10">
+                            <input type="number" id="PasswordLength" />
+                        </div>
                         <label class="col-xs-2">Complejidad</label>
                         <div class="col-sm-2">
                             <label>
-                                <input type="radio" checked="" value="option1" id="RBComplexity1" name="RBPasswordComplexity">
+                                <input type="radio" checked="" value="option1" id="RBComplexity1" name="RBPasswordComplexity" />
                                 Básica
                             </label>
                         </div>
                         <div class="col-sm-2">
                             <label>
-                                <input type="radio" checked="" value="option1" id="RBComplexity2" name="RBPasswordComplexity">
+                                <input type="radio" checked="" value="option1" id="RBComplexity2" name="RBPasswordComplexity" />
                                 Robusta
                             </label>
                         </div>
                         <div class="col-sm-6">
                             <label>
-                                <input type="radio" checked="" value="option1" id="RBComplexity3" name="RBPasswordComplexity">
+                                <input type="radio" checked="" value="option1" id="RBComplexity3" name="RBPasswordComplexity" />
                                 Muy robusta
                             </label>
                         </div>
@@ -72,7 +76,7 @@
                     <div class="form-group row">
                         <label class="col-sm-4 control-label">Nº intentos fallidos antes de bloquear usuario</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" id="FailedAttempts" value="" />
+                            <input type="number" class="form-control" id="FailedAttempts" value="" />
                         </div>
                         <label class="col-sm-2 control-label">Guardar accesos fallidos</label>
                         <div class="col-sm-1">

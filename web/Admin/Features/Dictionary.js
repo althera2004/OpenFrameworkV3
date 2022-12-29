@@ -6,9 +6,6 @@
     $("#FormBtnSave").before("<button class=\"btn btn-info\"><i class=\"fa fa-recycle\"></i> Recarregar diccionary</button>");
     $("#FormBtnSave").before("<button class=\"btn btn-info\"><i class=\"fa fa-download\"></i> Descarregar fitxer</button>");
 
-    /*
-                    <button class=\"btn btn-success btn-sm\">Recarregar diccionary</button>
-                    <button class=\"btn btn-info btn-sm\">Descarregar fitxer</button>*/
     ResizeWorkArea();
     GetDictionaryData();
 };

@@ -40,18 +40,37 @@
             "Layout": 1,
             "EditAction": "FormPage",
 			"ButtonAddLabel": "Afegir indicador",
+			"Export": "CSV",
 			"Columns": [
-                { "DataProperty": "Name", "Search": true },
-                { "DataProperty": "DateStart", "Width": 100 },
-                { "DataProperty": "ProcessId", "Width": 250, "Align": "left" },
-                { "DataProperty": "EmployeeId", "Width": 300, "Search": true, "Align": "left" },
+                { "DataProperty": "Name", "Search": true, "Orderable": true },
+                { "DataProperty": "DateStart", "Width": 100, "Orderable": true },
+                { "DataProperty": "ProcessId", "Width": 250, "Align": "left", "Orderable": true },
+                { "DataProperty": "EmployeeId", "Width": 300, "Search": true, "Align": "left", "Orderable": true },
 				{ "DataProperty": "FInactivate", "HiddenList": true }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
             "Sorting": {"Index": 1, "SortingType": "asc"},
-			"Actions": [
-				{ "Label": "Imprimir", "Icon": "fal fa-file-pdf", "Action": "DOCUMENT_List_Print" }
-			],
+			"Filter": [
+				{ "DataProperty": "DateStart", "Type": "DateRange" },
+				{ "Id": "type", "Type": "CustomSelect","Label": "Tipus", "Options": "Tots|Vinculat a procés|Vinculat a objetciu" },
+				{ "DataProperty": "FInactivate", "Label":"Estat", "Type": "ISNULL", "Options": "Actiu|Tancat" }
+			]
+        },
+        {
+            "Id": "ByProcess",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"ButtonAddLabel": "Afegir indicador",
+			"Export": "CSV",
+			"Columns": [
+                { "DataProperty": "Name", "Search": true },
+                { "DataProperty": "DateStart", "Width": 100 },
+                { "DataProperty": "EmployeeId", "Width": 300, "Search": true, "Align": "left" },
+				{ "DataProperty": "FInactivate", "HiddenList": true }
+            ],
+			"Parameters": [ {"Name": "ProcessId", "Value": "#actualItemId#"}, {"Name": "Active", "Value": "1"} ],
+            "Sorting": {"Index": 1, "SortingType": "asc"},
 			"Filter": [
 				{ "DataProperty": "DateStart", "Type": "DateRange" },
 				{ "Id": "type", "Type": "CustomSelect","Label": "Tipus", "Options": "Tots|Vinculat a procés|Vinculat a objetciu" },

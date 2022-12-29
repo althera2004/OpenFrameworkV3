@@ -110,6 +110,7 @@
     padding: 0;
     position: relative;
 }
+.panel-tools a { cursor:pointer; }
 .tableHead table {margin-bottom:0}
 
 .hpanel.hred .panel-body { border-top: 2px solid #d3413b;}
@@ -131,7 +132,8 @@
     line-height: 1.428571429;
 }
 
-.blue { color:#3498db;}
+.blue { color:#3498db; }
+.black { color:#000; }
 
 .hpanel-table table>tbody>tr>td { border-top:none; border-bottom:1px solid #ccc; border-right:1px solid #eee; }
 .hpanel-table table>thead>tr>th { border-top:none; border-bottom:1px solid #ccc; border-right:1px solid #eee; background-color:#e8f3fb; }
@@ -334,3 +336,58 @@ textarea.form-control { font-size:12px; }
     cursor: pointer;
     margin-right: 6px;
 }
+
+.profile-info-name { width:200px; }
+
+.RowItem:hover { cursor:pointer; background-color:#d7e0e7!important; }
+
+.modal-image {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    z-index: 9999;
+    text-align: center;
+}
+
+#ModalImagePic {
+	max-height: 80%;
+	max-width: 80%;
+}
+
+#caption {
+    margin: auto;
+    display: block;
+    position: fixed;
+    width: 80%;
+    max-width: 700px;
+    color: #ccc;
+    top: 20px;
+    left: 20px;
+}
+
+/* The Close Button */
+.close-image {
+    position: fixed;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.breadcrumb-home-icon a {
+    cursor:pointer;
+}
+
+.dz-success .dz-remove { display:none;}
+.dz-success .fa-ban { display: none; }
+.dz-success .fa-check { display: inline; }

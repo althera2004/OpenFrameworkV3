@@ -13,6 +13,7 @@ Chosen_default_no_result_text::No hay resultados
 Chosen_default_single_text::Selecione una opción
 Chosen_NoResultsText::No hay coincidencias
 Common_Accept::Aceptar
+Common_Loging::Accediendo
 Common_AcceptAndExit::Aceptar y salir
 Common_Action_Success::Operación realizada con éxito
 Common_Actions::Acciones
@@ -153,6 +154,7 @@ Common_ErrorResumeIntro::Revise los siguientes errores
 Common_Exit::Salir
 Common_Export_CSV::Exportar a CSV
 Common_Export_PDF::Exportar a PDF
+Common_Exporting::Exportant dades
 Common_External::Externo
 Common_FAQs_Popup_Title::Editar FAQ
 Common_Favorites::En seguimiento
@@ -703,7 +705,7 @@ Feature_Alert_DataDescripcion::Ítem implicado
 Feature_Alert_HeaderCategory::Categoria
 Feature_Alert_LargeDescription::Descripción
 Feature_Alert_Responsible::Responsable
-Feature_Attachment_TabTitle::Adjuntos
+Feature_Attach_TabTitle::Adjuntos
 Feature_Firmafy_TabTitle::Firmafy
 Feature_Invoices_TabTitle::Facturación
 Feature_Attachs::Permite añadir adjuntos
@@ -1015,3 +1017,6 @@ Core_IPAccess_LabelCountry::País
 Core_IPAccess_LabelRegion::Región
 Core_IPAccess_LabelCity::Localidad
 Core_IPAccess_LabelISP::ISP
+Common_ExitQuestion::¿Quieres salir de la aplicación
+PopupChangePassword_ErrorMessage::Los datos enviados no son válidos.
+PopupChangePassword_SuccessMessage::Contraseña cambiada.<br />Hay que reiniciar sessión para confirmar el cambio.

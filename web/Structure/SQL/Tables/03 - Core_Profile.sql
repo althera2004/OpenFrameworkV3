@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[Core_Profile](
 	[PhoneEmergency] [nvarchar](20) NULL,
 	[Fax] [nvarchar](20) NULL,
 	[EmailAlternative] [nvarchar](100) NULL,
-	[Twiter] [nvarchar](50) NULL,
+	[Twitter] [nvarchar](50) NULL,
 	[LinkedIn] [nvarchar](50) NULL,
 	[Instagram] [nvarchar](50) NULL,
 	[Facebook] [nvarchar](50) NULL,
@@ -42,3 +42,14 @@ CREATE TABLE [dbo].[Core_Profile](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
+INSERT INTO [dbo].[Core_Profile]
+           ([ApplicationUserId]
+           ,[Name]
+           ,[LastName])
+     VALUES
+           (1
+           ,'Open'
+           ,'Framework')
+GO
+

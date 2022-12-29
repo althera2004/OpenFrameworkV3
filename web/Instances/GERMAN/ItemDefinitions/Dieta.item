@@ -1,0 +1,33 @@
+﻿{
+    "Id": 2017,
+    "ItemName": "Dieta",
+	"Description": "Tipus de dietes",
+    "Layout": {
+        "Icon": "fa fa-utensils",
+        "Label": "Dieta",
+        "LabelPlural": "Dietes",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Nombre" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Nombre", "Label": "Tipo", "Type": "text", "Length": 100, "Required": true },
+        { "Name": "Incompabilidad", "Label": "Incompatiblitat", "Type": "text", "Length": 150 }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": 2,
+			"Columns": [
+                { "DataProperty": "Nombre", "Linkable": true, "Orderable": true, "Search": true  }
+            ]
+        }
+	]
+}

@@ -179,6 +179,11 @@ function ITEMDEFINTNITION_CreateSQL() {
     res += " (\n";
     res += "  [Id][bigint] IDENTITY(1, 1) NOT NULL,\n";
     res += "  [CompanyId][bigint] NOT NULL,\n";
+    res += "  [CreatedBy][bigint] NOT NULL,\n";
+    res += "  [CreatedOn][datetime] NOT NULL,\n";
+    res += "  [ModifiedBy][bigint]  NOT NULL,\n";
+    res += "  [ModifiedOn][datetime] NOT NULL,\n";
+    res += "  [Active][bit] NOT NULL,\n";
     res += "  -- Item fields\n";
 
     for (var f = 0; f < ItemDefinition.Fields.length; f++) {
@@ -223,11 +228,6 @@ function ITEMDEFINTNITION_CreateSQL() {
     }
 
     res += "  -- End item fields\n";
-    res += "  [CreatedBy][bigint] NOT NULL,\n";
-    res += "  [CreatedOn][datetime] NOT NULL,\n";
-    res += "  [ModifiedBy][bigint]  NOT NULL,\n";
-    res += "  [ModifiedOn][datetime] NOT NULL,\n";
-    res += "  [Active][bit] NOT NULL,\n";
     res += "  CONSTRAINT[PK_Item_" + ItemDefinition.ItemName + "] PRIMARY KEY CLUSTERED\n";
     res += "  ( [Id] ASC )\n";
     res += "  WITH\n";

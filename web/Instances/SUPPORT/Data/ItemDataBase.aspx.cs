@@ -1,4 +1,10 @@
-﻿namespace OpenFrameworkV3.Web.Instances.Support
+﻿// --------------------------------
+// <copyright file="ItemDataBase.aspx.cs" company="OpenFramework">
+//     Copyright (c) 2013 - OpenFramework. All rights reserved.
+// </copyright>
+// <author>Juan Castilla Calderón - jcastilla@openframework.es</author>
+// --------------------------------
+namespace OpenFrameworkV3.Web.Instances.Support
 {
     using System;
     using System.Collections.Generic;
@@ -82,9 +88,6 @@
                 case "GETLIST":
                     res = this.GetList();
                     break;
-                case "ITEM_CUSTOMERCOMPANY_GETALL":
-                    res = this.Item_CustomerCompany_GetAll();
-                    break;
                 default:
                     var connectionString = Persistence.ConnectionString(this.instanceName);
                     if (this.Request.QueryString["params"] == null)
@@ -120,26 +123,6 @@
             this.Response.Flush();
             this.Response.SuppressContent = true;
             this.ApplicationInstance.CompleteRequest();
-        }
-
-        private string Item_CustomerCompany_GetAll()
-        {
-            string res = Json.EmptyJsonList;
-            var parameters = new List<SqlParameter>
-            {
-                DataParameter.Input("@CompanyId", this.companyId)
-            };
-
-            try
-            {
-                res = SqlStream.GetSqlStream("Item_CustomerCompany_GetAll", new ReadOnlyCollection<SqlParameter>(parameters), Persistence.ConnectionString(this.instanceName));
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.Trace(ex as Exception, "ItemCustomerCompany_GetAll(" + this.companyId + ")");
-            }
-
-            return res;
         }
     }
 }

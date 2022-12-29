@@ -8,39 +8,36 @@
         <div class="col-lg-6">
             <div class="hpanel hgreen">
                 <div class="panel-heading hbuilt">
-                    Usuarios y contraseñas
+                    <%= this.Translate("Core_MailBox_FormTitle1") %>
                 </div>
                 <div class="panel-body">
-                    <p>
-                        Esta dirección de correo se emplea para el envio de credenciales de acceso cuando se da de alta un usuario en la aplicación, para el renicio de contraseñas y para la doble autenticación de usuarios
-                    </p>
+                    <p><%=this.Translate("Core_MailBox_Explanation1") %></p>
                     <form method="get" class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Email</label>
+                            <label class="col-sm-2 control-label"><%=this.Translate("Core_MailBox_Label_Email") %></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="MainMailMadress" value="<%=this.Main.MailAddress %>">
+                                <input type="text" class="form-control" id="MainMailMadress" value="<%=this.Main.MailAddress %>" />
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Nombre</label>
+                            <label class="col-sm-2 control-label"><%=this.Translate("Core_MailBox_Label_SenderName") %></label>
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="MainSenderName" value="<%=this.Main.SenderName %>" />
-                                <span class="help-block m-b-none">Nombre que aparecerá como remitente del correo.</span>
+                                <span class="help-block m-b-none"><%=this.Translate("Core_MailBox_Tip1") %></span>
                             </div>
                         </div>
                         <div class="panel-body">
-                            Estos datos son proporcionados por su proveedor de servicio de correo electrónico
+                            <%=this.Translate("Core_MailBox_Tip3") %>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Usuario</label>
-
+                                <label class="col-sm-2 control-label"><%=this.Translate("Core_MailBox_Label_User") %></label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="MainMailUser" value="<%=this.Main.MailUser %>" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Password</label>
+                                <label class="col-sm-2 control-label"><%=this.Translate("Core_MailBox_Label_Password") %></label>
 
                                 <div class="col-sm-10">
                                     <input type="password" class="form-control" id="MainMailPassword" value="<%=this.Main.MailPassword%>" />
@@ -48,7 +45,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Servidor</label>
+                                <label class="col-sm-2 control-label"><%=this.Translate("Core_MailBox_Label_Server") %></label>
 
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="MainServer" value="<%=this.Main.Server%>" />
@@ -56,18 +53,11 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Tipo</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="MainMailBoxType" value="<%=this.Main.MailBoxType%>" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">Puerto de envío</label>
+                                <label class="col-lg-2 control-label"><%=this.Translate("Core_MailBox_Label_Port") %></label>
 
                                 <div class="col-lg-10">
                                     <input type="number" class="form-control" id="MainSendPort" value="<%=this.Main.SendPort %>" />
-                                    <span class="help-block m-b-none">Los puertos de envío son 25 (para envíos smtp) y 465 (para envíos SSL).</span>
+                                    <span class="help-block m-b-none"><%= this.Translate("Core_MailBox_Tip2") %></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -83,22 +73,20 @@
                 </div>
 
                 <div class="panel-footer">
-                    <label>Acciones:</label>&nbsp;
-                    <button type="button" id="MainBtnSave" class="btn btn-xs btn-info" onclick="MAILBOXES_SaveMain();">Guardar</button>
-                    <button type="button" id="MainBtnSendTest" class="btn btn-xs btn-info">Envío de comprobación</button>
-                    <button type="button" id="MainBtnCheck" class="btn btn-danger btn-xs" onclick="MAILBOXES_CheckBlackListMain();">Comprobar Black List</button>
+                    <label><%=this.Translate("Common_Footer_Label_Actions") %>:</label>&nbsp;
+                    <button type="button" id="MainBtnSave" class="btn btn-xs btn-info" onclick="MAILBOXES_SaveMain();"><%=this.Translate("Common_Save") %></button>
+                    <button type="button" id="MainBtnSendTest" class="btn btn-xs btn-info"><%=this.Translate("Core_MailBox_Button_SendTest") %></button>
+                    <button type="button" id="MainBtnCheck" class="btn btn-danger btn-xs" onclick="MAILBOXES_CheckBlackListMain();"><%=this.Translate("Core_MailBox_Button_BlackList") %></button>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
             <div class="hpanel hblue">
                 <div class="panel-heading hbuilt">
-                    Envíos a terceros
+                    <%= this.Translate("Core_MailBox_FormTitle2") %>
                 </div>
                 <div class="panel-body">
-                    <p>
-                        Esta dirección de correo se emplea para el envio a terceros como noticaciones, adjuntos de documentación, facturas, etc...
-                    </p>
+                    <p><%=this.Translate("Core_MailBox_Explanation2") %></p>
                     <form method="get" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-xs-12">
@@ -106,7 +94,7 @@
                                 Usar la misma dirección de correo que para envíos a usuarios.</label>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Email</label>
+                            <label class="col-sm-2 control-label"><%=this.Translate("Core_MailBox_Label_Email") %></label>
 
                             <div class="col-sm-10">
                                 <input type="text" id="Third_MailAddress" class="form-control" value="<%=this.ThirdParty.MailAddress %>" />
@@ -114,24 +102,24 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Nombre</label>
+                            <label class="col-sm-2 control-label"><%=this.Translate("Core_MailBox_Label_SenderName") %></label>
 
                             <div class="col-sm-10">
                                 <input type="text" id="Third_SenderName" class="form-control" value="<%=this.ThirdParty.SenderName %>" />
-                                <span class="help-block m-b-none">Nombre que aparecerá como remitente del correo.</span>
+                                <span class="help-block m-b-none"><%=this.Translate("Core_MailBox_Tip1") %></span>
                             </div>
                         </div>
                         <div class="panel-body">
-                            Estos datos son proporcionados por su proveedor de servicio de correo electrónico
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Usuario</label>
-
-                    <div class="col-sm-10">
-                        <input type="password" id="Third_MailUser" class="form-control" name="password" />
-                    </div>
-                </div>
+                            <%=this.Translate("Core_MailBox_Tip3") %>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Password</label>
+                                <label class="col-sm-2 control-label"><%=this.Translate("Core_MailBox_Label_User") %></label>
+
+                                <div class="col-sm-10">
+                                    <input type="password" id="Third_MailUser" class="form-control" name="password" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><%=this.Translate("Core_MailBox_Label_Password") %></label>
 
                                 <div class="col-sm-10">
                                     <input type="password" id="Third_MailPassword" class="form-control" name="password" />
@@ -139,25 +127,18 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Servidor</label>
+                                <label class="col-sm-2 control-label"><%=this.Translate("Core_MailBox_Label_Server") %></label>
 
                                 <div class="col-sm-10">
                                     <input type="text" id="Third_Server" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Tipo</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="ThirdMailBoxType" value="<%=this.ThirdParty.MailBoxType%>" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">Puerto de envío</label>
+                                <label class="col-lg-2 control-label"><%=this.Translate("Core_MailBox_Label_Port") %></label>
 
                                 <div class="col-lg-10">
                                     <input type="number" id="Third_SendPort" class="form-control" />
-                                    <span class="help-block m-b-none">Los puertos de envío son 25 (para envíos smtp) y 465 (para envíos SSL).</span>
+                                    <span class="help-block m-b-none"><%= this.Translate("Core_MailBox_Tip2") %></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -173,10 +154,10 @@
                 </div>
 
                 <div class="panel-footer">
-                    <label>Acciones:</label>&nbsp;
-                    <button type="button" id="ThirdBtnSave" class="btn btn-xs btn-info">Guardar</button>
-                    <button type="button" id="ThirdBtnSendTest" class="btn btn-xs btn-info">Envío de comprobación</button>
-                    <button type="button" id="ThirdBtnCheck" class="btn btn-danger btn-xs">Comprobar Black List</button>
+                    <label><%=this.Translate("Common_Footer_Label_Actions") %>:</label>&nbsp;
+                    <button type="button" id="ThirdBtnSave" class="btn btn-xs btn-info"><%=this.Translate("Common_Save") %></button>
+                    <button type="button" id="ThirdBtnSendTest" class="btn btn-xs btn-info"><%=this.Translate("Core_MailBox_Button_SendTest") %></button>
+                    <button type="button" id="ThirdBtnCheck" class="btn btn-danger btn-xs"><%=this.Translate("Core_MailBox_Button_BlackList") %></button>
                 </div>
             </div>
         </div>

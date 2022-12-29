@@ -107,30 +107,90 @@ CREATE TABLE [dbo].[Core_CompanyContactPerson](
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[Core_CompanyAddress]  WITH CHECK ADD  CONSTRAINT [FK_Core_CompanyAddress_Core_Company] FOREIGN KEY([CompanyId])
-REFERENCES [dbo].[Core_Company] ([Id])
+/****** Object:  Table [dbo].[Core_Company_Config]    Script Date: 15/12/2022 16:13:20 ******/
+SET ANSI_NULLS ON
 GO
 
-ALTER TABLE [dbo].[Core_CompanyAddress] CHECK CONSTRAINT [FK_Core_CompanyAddress_Core_Company]
+SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER TABLE [dbo].[Core_CompanyBankAccount]  WITH CHECK ADD  CONSTRAINT [FK_Core_CompanyBankAccount_Core_Company] FOREIGN KEY([CompanyId])
-REFERENCES [dbo].[Core_Company] ([Id])
+CREATE TABLE [dbo].[Core_Company_Config](
+	[CompanyId] [bigint] NOT NULL,
+	[DocumentHistory] [bit] NOT NULL,
+	[DocumentDelete] [int] NOT NULL,
+	[DocumentTemporalAlive] [int] NOT NULL,
+	[MassDownload] [bit] NOT NULL,
+	[AvailableDocuments] [bigint] NOT NULL,
+	[AvailableImages] [bigint] NOT NULL,
+	[DiskQuote] [bigint] NOT NULL,
+	[FeatureSticky] [bit] NOT NULL,
+	[FeatureCustomAlerts] [bit] NOT NULL,
+	[FeatureUserLock] [bit] NOT NULL,
+	[FeatureFollowing] [bit] NOT NULL,
+	[FeatureCustomLayout] [bit] NOT NULL,
+	[OnPremise] [bit] NOT NULL,
+	[SAT] [int] NOT NULL,
+	[CustomConfig] [bit] NOT NULL
+) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[Core_CompanyBankAccount] CHECK CONSTRAINT [FK_Core_CompanyBankAccount_Core_Company]
+SET ANSI_NULLS ON
 GO
 
-ALTER TABLE [dbo].[Core_CompanyConfig]  WITH CHECK ADD  CONSTRAINT [FK_Core_CompanyConfig_Core_Company] FOREIGN KEY([CompanyId])
-REFERENCES [dbo].[Core_Company] ([Id])
+SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER TABLE [dbo].[Core_CompanyConfig] CHECK CONSTRAINT [FK_Core_CompanyConfig_Core_Company]
+CREATE TABLE [dbo].[Core_MailBox](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[CompanyId] [bigint] NOT NULL,
+	[SenderName] [nvarchar](100) NULL,
+	[Main] [bit] NOT NULL,
+	[Code] [nchar](20) NOT NULL,
+	[MailAddress] [nvarchar](150) NOT NULL,
+	[Server] [nchar](100) NOT NULL,
+	[MailBoxType] [nvarchar](10) NOT NULL,
+	[ReadPort] [int] NOT NULL,
+	[SendPort] [int] NOT NULL,
+	[SSL] [bit] NULL,
+	[MailUser] [nvarchar](100) NOT NULL,
+	[MailPassword] [nvarchar](50) NOT NULL,
+	[Description] [nvarchar](100) NULL,
+	[CreatedBy] [bigint] NOT NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[ModifiedBy] [bigint] NOT NULL,
+	[ModifiedOn] [datetime] NOT NULL,
+	[Active] [bit] NOT NULL,
+ CONSTRAINT [PK_Core_MailBox] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[Core_CompanyContactPerson]  WITH CHECK ADD  CONSTRAINT [FK_Core_CompanyContactPerson_Core_Company] FOREIGN KEY([CompanyId])
-REFERENCES [dbo].[Core_Company] ([Id])
+
+
+SET ANSI_NULLS ON
 GO
 
-ALTER TABLE [dbo].[Core_CompanyContactPerson] CHECK CONSTRAINT [FK_Core_CompanyContactPerson_Core_Company]
+SET QUOTED_IDENTIFIER ON
 GO
+
+CREATE TABLE [dbo].[Core_Company_SecurityConfig](
+	[CompanyId] [bigint] NULL,
+	[IPAccess] [bit] NULL,
+	[PasswordComplexity] [int] NULL,
+	[Traceability] [int] NULL,
+	[GrantPermission] [int] NULL,
+	[FailedAttempts] [int] NULL,
+	[MinimumPasswordLength] [int] NULL,
+	[GroupUserMain] [bit] NULL,
+	[FailedAttemptsMailNotification] [nvarchar](150) NULL,
+	[MFA] [int] NULL,
+	[CorporativeUsers] [bit] NULL,
+	[FailedAttemptsSaveDays] [int] NULL,
+	[PasswordCaducity] [bit] NULL,
+	[PasswordCaducityDays] [int] NULL,
+	[PasswordRepeat] [bit] NULL
+) ON [PRIMARY]
+GO
+

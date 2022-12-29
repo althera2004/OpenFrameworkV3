@@ -8,15 +8,15 @@
     <div class="row" id="PersistentFields">
         <div class="form-group col-xs-12">
             <div class="row">
-                <label id="Email_Label" class="col-sm-1 control-label">Email</label>
+                <label id="Email_Label" class="col-sm-1 control-label"><%=this.master.Translate("Core_Security_ApplicationUser_Label_Email") %><span style="color:#f00">*</span></label>
                 <div class="col-sm-3">
                     <input id="Email" type="text" class="form-control" value="" />
                 </div>
-                <label id="Name_Label" class="col-sm-1 control-label">Nom</label>
+                <label id="Name_Label" class="col-sm-1 control-label"><%=this.master.Translate("Core_Security_ApplicationUser_Label_FirstName") %><span style="color:#f00">*</span></label>
                 <div class="col-sm-2">
                     <input id="FirstName" type="text" class="form-control" value="" />
                 </div>
-                <label id="LastName_Label" class="col-sm-1 control-label">Cognoms</label>
+                <label id="LastName_Label" class="col-sm-1 control-label"><%=this.master.Translate("Core_Security_ApplicationUser_Label_LastNames") %></label>
                 <div class="col-sm-4">
                     <input id="LastName" type="text" class="form-control" style="width: 45%; float: left;" value="" />
                     <input id="LastName2" type="text" class="form-control" style="width: 45%; float: left; margin-left: 8px;" value="" />
@@ -40,32 +40,11 @@
                             <div class="panel-body form-group" style="border: none;">
 
                                 <div class="col-xs-4" id="DivGender" style="margin-top: 8px; display: none;">
-                                    <label class="col-sm-3">Sexe</label>
+                                    <label class="col-sm-3"><%=this.master.Translate("Core_Security_ApplicationUser_Label_Gender") %></label>
                                     <div class="col-sm-9">
-                                        <input type="radio" name="RBGener" />&nbsp;Home&nbsp;&nbsp;
-                                        <input type="radio" name="RBGener" />&nbsp;Dona&nbsp;&nbsp;
-                                        <input type="radio" name="RBGener" />&nbsp;Grup
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-4" id="DivBirthDate" style="margin-top: 8px; display: none;">
-                                    <label class="col-sm-4">D.Naixement</label>
-                                    <div class="col-sm-8">
-                                        <input id="BirthDate" type="text" class="form-control" value="" />
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-4" id="DivIdentificationCard" style="margin-top: 8px; display: none;">
-                                    <label class="col-sm-6">Document identitat</label>
-                                    <div class="col-sm-6">
-                                        <input id="IdentificationCard" type="text" class="form-control" value="" />
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-4" id="DivNacionality" style="margin-top: 8px; display: none;">
-                                    <label class="col-sm-6">Nacionalitat</label>
-                                    <div class="col-sm-6">
-                                        <input id="Nacionality" type="text" class="form-control" value="" />
+                                        <input type="radio" name="RBGener" />&nbsp;<%=this.master.Translate("Core_Security_ApplicationUser_Label_Gender0") %>&nbsp;&nbsp;
+                                        <input type="radio" name="RBGener" />&nbsp;<%=this.master.Translate("Core_Security_ApplicationUser_Label_Gender1") %>&nbsp;&nbsp;
+                                        <input type="radio" name="RBGener" />&nbsp;<%=this.master.Translate("Core_Security_ApplicationUser_Label_Gender2") %>
                                     </div>
                                 </div>
                             </div>
@@ -89,33 +68,6 @@
                                     <label class="col-sm-2">Fax</label>
                                     <div class="col-sm-10">
                                         <input id="Fax" type="text" class="form-control" value="" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-heading" id="SocialTitle" style="display: none;">Xarxes socials</div>
-                            <div class="panel-body form-group" id="SocialData" style="border: none; display: none;">
-                                <div class="col-xs-6" id="DivLinkedIn" style="margin-top: 8px; display: none;">
-                                    <label class="col-sm-3"><i class="fab fa-linkedin"></i>&nbsp;LinkedIn</label>
-                                    <div class="col-sm-9">
-                                        <input id="LinkedIn" type="text" class="form-control" value="" />
-                                    </div>
-                                </div>
-                                <div class="col-xs-6" id="DivTwitter" style="margin-top: 8px; display: none;">
-                                    <label class="col-sm-3"><i class="fab fa-twitter"></i>&nbsp;Twitter</label>
-                                    <div class="col-sm-9">
-                                        <input id="Twitter" type="text" class="form-control" value="" />
-                                    </div>
-                                </div>
-                                <div class="col-xs-6" id="DivInstagram" style="margin-top: 8px; display: none;">
-                                    <label class="col-sm-3"><i class="fab fa-instagram"></i>&nbsp;Instagram</label>
-                                    <div class="col-sm-9">
-                                        <input id="Instagram" type="text" class="form-control" value="" />
-                                    </div>
-                                </div>
-                                <div class="col-xs-6" id="DivFacebook" style="margin-top: 8px; display: none;">
-                                    <label class="col-sm-3"><i class="fab fa-facebook"></i>&nbsp;Facebook</label>
-                                    <div class="col-sm-9">
-                                        <input id="Facebook" type="text" class="form-control" value="" />
                                     </div>
                                 </div>
                             </div>

@@ -1,0 +1,54 @@
+﻿{
+    "Id": 1,
+    "ItemName": "Alergia",
+	"Description": "Tipus de Al·lèrgies i intorleràncies",
+    "Layout": {
+        "Icon": "fa fa-utensils",
+        "Label": "Al·lèrgia",
+        "LabelPlural": "Al·lèrgies",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Nombre" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Nombre", "Label": "Nom", "Type": "text", "Length": 100, "Required": true },
+        { "Name": "Tipo", "Label": "Tipus", "Type": "FixedList", "FixedListName": "TipoAlergia" }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": 3,
+			"Columns": [
+                { "DataProperty": "Nombre", "Linkable": true, "Orderable": true, "Search": true  },
+				{ "DataProperty": "Tipo", "Orderable": true, "Width": 200, "Align": "left" }
+            ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Label": "Etiqueta pestaña",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Nombre", "ColSpan": 2 },
+								{ "Name": "Tipo" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

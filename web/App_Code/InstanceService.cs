@@ -42,6 +42,7 @@ public class InstanceService : WebService
         try
         {
             var data = ApplicationDictionary.GetCorpus(language, instanceName);
+            Persistence.DictionaryAdd(language, instanceName);
             ApplicationDictionary.CreateJavascriptFile(language, instanceName);
             res.SetSuccess(data);
         }
@@ -109,6 +110,37 @@ public class InstanceService : WebService
         catch (Exception ex)
         {
             res.SetFail(ex);
+        }
+
+        return res;
+    }
+
+    [WebMethod]
+    public ActionResult ReloadDictionary(string instanceName)
+    {
+        var res = ActionResult.NoAction;
+        var debug = instanceName;
+        try
+        {
+            var languages = Language.All(instanceName);
+            debug = "1";
+            foreach (var language in languages)
+            {
+                debug = language.Name;
+                if (!language.Active)
+                {
+                    continue;
+                }
+
+                var data = ApplicationDictionary.GetCorpus(language.Iso, instanceName);
+                ApplicationDictionary.CreateJavascriptFile(language.Iso, instanceName);
+            }
+
+            res.SetSuccess();
+        }
+        catch (Exception ex)
+        {
+            res.SetFail(debug);
         }
 
         return res;

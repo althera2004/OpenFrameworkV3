@@ -20,7 +20,8 @@
 		{ "Name": "Code", "Label": "Codi", "Type": "text", "Length": 10, "Required": true },
 		{ "Name": "Name", "Label": "Nom", "Type": "text", "Length": 150, "Required": true },
 		{ "Name": "Tipo", "Label": "Tipus", "Type": "fixedlist", "FixedListName": "InstanciaTipo" },
-		{ "Name": "Url", "Label": "Url", "Type": "url" }
+		{ "Name": "Url", "Label": "Url", "Type": "url" },
+		{ "Name": "UrlPRE", "Label": "PRE-Producción", "Type": "url" }
 		
     ],
     "Lists": [
@@ -64,7 +65,12 @@
 						{
 							"Fields": [
 								{ "Name": "Tipo" },
-								{ "Name": "Url", "Colspan": 2 }
+								{ "Type": "Blank", "Colspan": 2 }
+							]
+						},{
+							"Fields": [
+								{ "Name": "Url" },
+								{ "Name": "UrlPRE" }
 							]
 						}
 					]

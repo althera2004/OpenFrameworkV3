@@ -55,14 +55,18 @@ namespace OpenFrameworkV3.Core
             }
         }
 
-        public static void CheckPersistence()
+        public static void CheckPersistence(string instanceName)
         {
-            var instanceName = Instance.InstanceName;
             if (!Persistence.InstanceExists(instanceName))
             {
                 var instance = Instance.LoadDefinition(instanceName, true);
                 Persistence.AddInstance(instance);
             }
+        }
+
+        public static void CheckPersistence()
+        {
+            CheckPersistence(Instance.InstanceName);
         }
 
         public ReadOnlyCollection<ItemDefinition> ItemDefinitions

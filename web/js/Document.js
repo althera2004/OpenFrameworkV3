@@ -5,11 +5,17 @@
     "mode": null
 };
 
+var DeleteFieldDocument_Context = {
+    "fieldName": null,
+    "fileName": null
+}
+
 function FieldDocument_View(e) {
     var fieldName = FieldDocument_GetFieldName(e);
     var value = FieldDocument_GetValue(fieldName);
     if (value !== null && value !== "") {
-        alert("FieldDocument_View " + fieldName);
+        var path = "/Instances/" + Instance.Name + "/Data/" + ItemDefinition.ItemName + "/" + ItemData.OriginalItemData.Id + "/" + value + "?" + guid();
+        window.open(path);
     }
 }
 
@@ -22,8 +28,39 @@ function FieldDocument_Delete(e) {
     var fieldName = FieldDocument_GetFieldName(e);
     var value = FieldDocument_GetValue(fieldName);
     if (value !== null && value !== "") {
-        alert("FieldDocument_Delete " + fieldName);
+
+        DeleteFieldDocument_Context.fieldName = fieldName;
+        DeleteFieldDocument_Context.fileName = value;
+
+        PopupConfirm("Vol eliminar <strong>"+value+"</strong>?<br/><i>Aquesta acció no es pot desfer.</i>", Dictionary.Common_Warning, FieldDocument_Delete_Confirmed);
     }
+}
+
+function FieldDocument_Delete_Confirmed() {
+    var data = {
+        "itemName": ItemDefinition.ItemName,
+        "fieldName": DeleteFieldDocument_Context.fieldName,
+        "fileName": DeleteFieldDocument_Context.fileName,
+        "itemId": ItemData.ActualData.Id,
+        "applicationUserId": ApplicationUser.Id,
+        "companyId": Company.Id,
+        "instanceName": Instance.Name
+    };
+    $.ajax({
+        "type": "POST",
+        "url": "/Async/ItemService.asmx/FieldDocummentDelete",
+        "contentType": "application/json; charset=utf-8",
+        "dataType": "json",
+        "data": JSON.stringify(data, null, 2),
+        "success": function (msg) {
+            if (msg.d.Success === true) {
+                FormFieldDocument_SetVoid(DeleteFieldDocument_Context.fieldName);
+            }
+        },
+        "error": function (msg) {
+            PopupWaring(msg.responseText);
+        }
+    });
 }
 
 function FieldDocument_Sign(e) {
@@ -174,7 +211,7 @@ function UploadFile(fieldName, mode, signature, historial, gallery, callback) {
             }
 
             fieldValueText = "<strong>" + fieldValueText + "</strong>";
-            GetFileAttributes(PopupUploadFile_Context.itemName, fieldName, PopupUploadFile_Context.itemId, extension);
+            GetFileAttributes(PopupUploadFile_Context.itemName, fieldName, PopupUploadFile_Context.itemId);
         }
 
         if (typeof callback !== "undefined") {
@@ -199,7 +236,11 @@ function UploadFile(fieldName, mode, signature, historial, gallery, callback) {
         console.log(fieldValue);
         $("#PopupModalFileTitle").html(title);
         $("#PopupUploadFileFieldName").html(fieldLabel);
-        $("#PopupUploadFileFieldValue").html(fieldValue);
+        if (fieldValue !== null) {
+            $("#PopupUploadFileFieldValue").html(fieldValue + "&nbsp;<i class=\"fa fa-eye blue\" style=\"cursor:pointer;\" onclick=\"$('#" + fieldName+"_BtnView').click();\"></i>");
+        } else {
+            $("#PopupUploadFileFieldValue").html("<i>No hi ha document</i>");
+        }
         $("#LauncherPopupUploadFile").click();
         popupContext.FileUpload = true;
     }
@@ -208,18 +249,16 @@ function UploadFile(fieldName, mode, signature, historial, gallery, callback) {
     }
 }
 
-
-
-function GetFileAttributes(itemName, fieldName, itemId, extension) {
+function GetFileAttributes(itemName, fieldName, itemId) {
     var data = {
         "itemName": itemName,
-        "fieldName": fieldName,
+        "fileName": ItemData.ActualData[fieldName],
         "itemId": itemId,
-        "extension": extension
+        "instanceName": Instance.Name
     };
     $.ajax({
         "type": "POST",
-        "url": "/Async/ItemDataServices.asmx/FileAttributes",
+        "url": "/Async/ItemService.asmx/GetFieldFileAttributes",
         "contentType": "application/json; charset=utf-8",
         "dataType": "json",
         "data": JSON.stringify(data, null, 2),
@@ -227,10 +266,12 @@ function GetFileAttributes(itemName, fieldName, itemId, extension) {
             console.log(msg.d.ReturnValue);
             var result = null;
             eval("result=" + msg.d.ReturnValue + ";");
-            if (result.Length > 0) {
-                $("#PopupUploadFileActuaLength").html(FormatBytes(result.Length, 2));
-                $("#PopupUploadFileActuaCreatedOn").html(result.CreatedOn);
-                $("#PopupUploadFileInfo").show();
+            if (result !== null) {
+                if (result.Length > 0) {
+                    $("#PopupUploadFileActuaLength").html(FormatBytes(result.Length, 2));
+                    $("#PopupUploadFileActuaCreatedOn").html(result.CreatedOn);
+                    $("#PopupUploadFileInfo").show();
+                }
             }
         },
         "error": function (msg) {
@@ -286,8 +327,8 @@ function UploadFileGo() {
         }
 
         fd.append("itemName", PopupUploadFile_Context.itemName);
-        fd.append("instanceName", InstanceName);
-        fd.append("companyId", CompanyId);
+        fd.append("instanceName", Instance.Name);
+        fd.append("companyId", Company.Id);
         fd.append("itemId", PopupUploadFile_Context.itemId);
         fd.append("fieldName", PopupUploadFile_Context.fieldName);
         fd.append("signature", PopupUploadFile_Context.signature);
@@ -316,20 +357,21 @@ function UploadFileGo() {
                     $("#" + PopupUploadFile_Context.fieldName).val(result);
                     PopupSuccess(Dictionary.Common_Upload_Success_Message + " <strong>" + xhr.responseText + "</strong> " + Dictionary.Common_Upload_Success_Message2, Dictionary.Common_Upload_Success_Title);
                     if (PopupUploadFile_Context.mode === UploadFileMode.Gallery) {
-                        Feature_Attachment_Retrieve();
+                        Feature_Attach_Retrieve();
                     }
 
                     if (PopupUploadFile_Context.mode === UploadFileMode.Field) {
-                        $(".AuxButtonView_" + PopupUploadFile_Context.fieldName + " i").css("color", LayoutColor.InconButtonActive);
-                        $(".AuxButtonDelete_" + PopupUploadFile_Context.fieldName + " i").css("color", LayoutColor.IconButtonDelete);
-                        $(".AuxButtonDelete_" + PopupUploadFile_Context.fieldName).removeAttr("disabled");
-                        itemData[PopupUploadFile_Context.fieldName] = result;
-                        originalItemData[PopupUploadFile_Context.fieldName] = result;
+                        $("#" + PopupUploadFile_Context.fieldName + "_BtnView i").enable();
+                        $("#" + PopupUploadFile_Context.fieldName + "_BtnView i").css("color", LayoutColor.InconButtonActive);
+                        $("#" + PopupUploadFile_Context.fieldName + "_BtnDelete i").enable();
+                        $("#" + PopupUploadFile_Context.fieldName + "_BtnDelete i").css("color", LayoutColor.IconButtonDelete);
+                        ItemData.OriginalItemData[PopupUploadFile_Context.fieldName] = result;
+                        ItemData.ActualData[PopupUploadFile_Context.fieldName] = result;
                     }
 
                     if (HasPropertyEnabled(PopupUploadFile_Context.signature)) {
-                        $("#DocumentDownloadIcon" + PopupUploadFile_Context.fieldName).removeAttr("disabled");
-                        $("#DocumentDownloadIcon" + PopupUploadFile_Context.fieldName).css("color", "#333");
+                        $("#" + PopupUploadFile_Context.fieldName + "_BtnView i").removeAttr("disabled");
+                        $("#" + PopupUploadFile_Context.fieldName + "_BtnView i").css("color", "#333");
                         $("#DocumentDeleteIcon" + PopupUploadFile_Context.fieldName).removeAttr("disabled");
                         $("#DocumentDeleteIcon" + PopupUploadFile_Context.fieldName).css("color", "#f33");
                         $("#DocumentSignIcon" + PopupUploadFile_Context.fieldName).attr("title", Dictionary.Common_Btn_SignedDocument);
@@ -343,7 +385,8 @@ function UploadFileGo() {
                         PopupUploadFile_Context.AfterUploadCallback();
                     }
 
-                    SignatureContext_RemoveForUpload(PopupUploadFile_Context.fieldName);
+                    // weke-signature
+                    //SignatureContext_RemoveForUpload(PopupUploadFile_Context.fieldName);
                 }
                 else {
                     $("#PopupUploadFileError").html(xhr.responseText);
@@ -363,3 +406,156 @@ function UploadFileGo() {
         return false;
     }
 }
+
+function FormFieldDocument_SetVoid(id) {
+    $("#" + id + "_BtnView").disable();
+    $("#" + id + "_BtnView i").css("color", LayoutColor.Inactive);
+    $("#" + id + "_BtnDelete").disable();
+    $("#" + id + "_BtnDelete i").css("color", LayoutColor.Inactive);
+    $("#" + id).val("");
+    ItemData.OriginalItemData[id] = null;
+    ItemData.ActualData[id] = null;
+}
+
+// ------------- Generación de documentos
+// -------------------------------------------
+var DocumentCreateSilence = [];
+function Document_Create_PreCondition(id) {
+    var preConditionName = itemDefinition.ItemName.toUpperCase() + "_" + id;
+    console.log("PreCondition", preConditionName);
+    var preCondition = eval("typeof " + preConditionName + ";");
+    if (preCondition === "function") {
+        return eval(itemDefinition.ItemName.toUpperCase() + "_" + id + "();");
+    }
+
+    return { "Result": true };
+}
+
+function Document_Create(url, fieldName) {
+    $("#DocumentAddIcon" + fieldName).addClass("fa-spin");
+    $("#DocumentAddIcon" + fieldName).addClass("fa-spinner");
+    $("#DocumentAddIcon" + fieldName).removeClass("fa-plus");
+    $.getJSON(url,
+        function (data) {
+            var silence = false;
+            var temp = [];
+
+            // Si el campo está oculto por no existir se muestra
+            $("#" + data.FieldName + "Container").show();
+            $("#" + data.FieldName + "Label").show();
+
+            if (data.FileUrl.indexOf("SignaturesTemporal/") === -1) {
+                SetFieldValue(data.FieldName, data.FileUrl);
+                // Si el documento es de un campo se lanza desde el botón "view" del campo
+                if (HasPropertyValue(data.FieldName)) {
+                    FEATURE_Documents_RestoreAddButton(data.FieldName);
+
+                    if ($("#DocumentSign" + data.FieldName).length > 0) {
+                        $("#DocumentSign" + data.FieldName).css("color", "#000");
+                    }
+
+                    // Se muestra el campo por si estaba oculto al no haber documento
+                    $("#" + data.FieldName + "Label").show();
+                    $("#" + data.FieldName + "Container").show();
+
+                    // Primero se revisa si el documento se crea en modo silencio
+                    for (var s = 0; s < DocumentCreateSilence.length; s++) {
+                        if (DocumentCreateSilence[s] === fieldName) {
+                            silence = true;
+                            break;
+                        }
+                    }
+
+                    // En caso de crearse en modo silencio se elimina de la lista
+                    if (silence === true) {
+                        for (var s2 = 0; s2 < DocumentCreateSilence.length; s2++) {
+                            if (DocumentCreateSilence[s2].FieldName !== fieldName) {
+                                temp.push(DocumentCreateSilence[s2]);
+                            }
+                        }
+
+                        DocumentCreateSilence = temp;
+                    }
+
+                    if (silence === false) {
+                        Form_ShowFile(data.FieldName, itemData.Id);
+                    }
+                }
+                else {
+                    window.open(data.FileUrl);
+                    if (Feature_Attach_Retrieve()) {
+                        Feature_Attach_Retrieve();
+                    }
+                }
+            }
+            else {
+                // Se restaura el botón "+"
+                $("#DocumentAddIcon" + data.FieldName).removeClass("fa-spinner");
+                $("#DocumentAddIcon" + data.FieldName).removeClass("fa-spin");
+                $("#DocumentAddIcon" + data.FieldName).addClass("fa-plus");
+                FieldSetSignable(data.FieldName);
+                SignaturesContext_UpdateCount(data.FieldName, 0);
+
+                // Primero se revisa si el documento se crea en modo silencio
+                for (var ss = 0; ss < DocumentCreateSilence.length; ss++) {
+                    if (DocumentCreateSilence[ss] === fieldName) {
+                        silence = true;
+                        break;
+                    }
+                }
+
+                // En caso de crearse en modo silencio se elimina de la lista
+                if (silence === true) {
+                    for (var ss2 = 0; ss2 < DocumentCreateSilence.length; ss2++) {
+                        if (DocumentCreateSilence[ss2].FieldName !== fieldName) {
+                            temp.push(DocumentCreateSilence[ss2]);
+                        }
+                    }
+
+                    DocumentCreateSilence = temp;
+                }
+
+                if (silence === false) {
+                    window.open("/Instances/" + InstanceName + "/Data/" + itemDefinition.ItemName + "/" + itemData.Id + "/" + data.FileUrl + "?" + guid());
+                }
+
+                var lastId = -1;
+                for (var x = 0; x < SignatureStatus.length; x++) {
+                    if (SignatureStatus[x].Id === lastId) {
+                        lastId--;
+                    }
+                }
+
+                SignatureStatus.push({
+                    "CompanyId": CompanyId,
+                    "Count": 0,
+                    "FieldName": fieldName,
+                    "Id": lastId,
+                    "ItemDefinitionId": 203,
+                    "ItemId": itemData.Id
+                });
+
+            }
+
+            // El callback del botón es independiente de si se firma o no
+            var callback = data.FieldName + "BtnAddDocument_AfterCallback";
+            var typeofCallback = eval("typeof " + callback);
+            if (typeofCallback === "function") {
+                eval(callback + "();");
+            }
+
+            PopupWorkingHide();
+        }).error(function (e) {
+            console.log(e);
+            if (e.readyState === 4 && e.status === 200) {
+                if (typeof data !== "undefined") {
+                    if (HasPropertyValue(data.FieldName)) {
+                        FEATURE_Documents_RestoreAddButton(data.FieldName);
+                    }
+                }
+
+                console.log(eval(e.responseText));
+            }
+        });
+}
+// -------------------------------------------

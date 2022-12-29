@@ -1,7 +1,12 @@
 ﻿window.onload = function () {
     SECURITYUSER_SetLayout();
 
-    $("#BreadCrumbLabel").html(userData.Email + " - " + userData.Profile.FullName);
+    if (originalUserData.Id < 0) {
+        $("#BreadCrumbLabel").html(Dictionary.Core_ApplicationUser_NewUser);
+    }
+    else {
+        $("#BreadCrumbLabel").html(userData.Email + " - " + userData.Profile.FullName);
+    }
 
     $("#Email").val(userData.Email);
     $("#IMEI").val(userData.IMEI);
@@ -40,6 +45,7 @@
     ReplaceClick("FormBtnSave", SECURITYUSER_Save);
     ReplaceClick("FormBtnDelete", SECURITYUSER_Delete);
     $("#FormBtnSave").enable();
+    $("#FormBtnSave").show();
     $("#FooterStatus").invisible();
     $("#logofooter").show();
     var demo2 = $('.demo2').bootstrapDualListbox({
@@ -56,15 +62,17 @@
 }
 
 function SECURITYUSER_SetLayout() {
-    if (Instance.Profile.NameFormat === 0) {
-        $("#LastName").hide();
-        $("#LastName2").hide();
-        $("#LastName_Label").hide();
-        $("#FirstName").parent().replaceClass("col-sm-2", "col-sm-4");
-    }
-    else if (Instance.Profile.NameFormat === 1) {
-        $("#LastName2").hide();
-        $("#LastName").css("width", "75%");
+    if (typeof Instance.Profile !== "undefined") {
+        if (Instance.Profile.NameFormat === 0) {
+            $("#LastName").hide();
+            $("#LastName2").hide();
+            $("#LastName_Label").hide();
+            $("#FirstName").parent().replaceClass("col-sm-2", "col-sm-4");
+        }
+        else if (Instance.Profile.NameFormat === 1) {
+            $("#LastName2").hide();
+            $("#LastName").css("width", "75%");
+        }
     }
 
     if (Instance.Profile.Gender === true) { $("#DivGender").show(); }
@@ -97,9 +105,84 @@ function SECURITYUSER_SetLayout() {
 }
 
 function SECURITYUSER_Save() {
-    alert("SECURITYUSER_Save");
+    // user, long applicationUserId, long companyId, string instanceName
+    var data = {
+        "user": {
+            "Id": userData.Id,
+            "Email": $("#Email").val(),
+            "Password": "*******************",
+            "Language": { "Id": 1},
+            "Profile": {
+                "ApplicationUserId": userData.Id,
+                "Name": $("#FirstName").val(),
+                "LastName": $("#LastName").val(),
+                "LastName2": $("#LastName2").val(),
+                "Phone": $("#Phone").val(),
+                "Mobile": $("#Mobile").val(),
+                "Fax": $("#Fax").val(),
+                "IMEI": null,
+                "EmailAlternative": $("#EmailAlternative").val(),
+                "IdentificationCard": null,
+                "Nacionality": 0,
+                "Gender": 0
+            },
+            "Grants": [],
+            "Groups": []
+        },
+        "applicationUserId": ApplicationUser.Id,
+        "companyId": Company.Id,
+        "instanceName": Instance.Name
+    }
+
+    $.ajax({
+        "type": "POST",
+        "url": "/Async/SecurityService.asmx/ApplicationUserSave",
+        "contentType": "application/json; charset=utf-8",
+        "dataType": "json",
+        "data": JSON.stringify(data, null, 2),
+        "success": function (msg) {
+            console.log(msg);
+            var result = msg.d.ReturnValue;
+            console.log(result);
+            SECURITYUSER_ById(result.split('|')[1] * 1);
+        },
+        "error": function (msg) {
+            PopupWarning(msg.responseText);
+        }
+    });
 }
 
 function SECURITYUSER_Delete() {
     alert("SECURITYUSER_Delete");
+}
+
+function SECURITYUSER_ById(applicationUserId) {
+    var data = {
+        "applicationUserId": applicationUserId,
+        "instanceName": Instance.Name
+    };
+
+    $.ajax({
+        "type": "POST",
+        "url": "/Async/SecurityService.asmx/ApplicationUserById",
+        "contentType": "application/json; charset=utf-8",
+        "dataType": "json",
+        "data": JSON.stringify(data, null, 2),
+        "success": function (msg) {
+            console.log(msg);
+            eval("userData = " + msg.d.ReturnValue + ";");
+            SECURITYSERVER_FillForm();
+        },
+        "error": function (msg) {
+            PopupWarning(msg.responseText);
+        }
+    });
+}
+
+function SECURITYSERVER_FillForm() {
+    $("#BreadCrumbLabel").html(userData.Email + " - " + userData.Profile.FullName);
+    $("#Email").val(userData.Email);
+    $("#FirstName").val(userData.Profile.Name);
+    $("#LastName").val(userData.Profile.LastName);
+    $("#LastName2").val(userData.Profile.LastName2);
 }

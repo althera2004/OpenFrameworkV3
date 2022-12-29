@@ -15,13 +15,13 @@
 
                          <div class="col-sm-2">
                              <label>
-                                 <input type="radio" checked="" value="option1" id="RBHistoryNo" name="RBHistory">
+                                 <input type="radio" checked="" value="option1" id="RBHistoryNo" name="RBHistory" />
                                  No
                              </label>
                          </div>
                          <div class="col-sm-2">
                              <label>
-                                 <input type="radio" checked="" value="option1" id="RBHistoryYes" name="RBHistory">
+                                 <input type="radio" checked="" value="option1" id="RBHistoryYes" name="RBHistory" />
                                  Sí
                              </label>
                          </div>

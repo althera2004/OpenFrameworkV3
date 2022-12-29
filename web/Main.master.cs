@@ -33,7 +33,7 @@ public partial class Main : MasterPage
 
     public void SetTitle(string title)
     {
-        this.title = title;
+        this.title = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", this.InstanceName, title);
     }
 
     public void SetPageType(string pageType)

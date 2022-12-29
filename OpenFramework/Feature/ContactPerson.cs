@@ -27,38 +27,26 @@ namespace OpenFrameworkV3.Feature
         [XmlElement(Type = typeof(long), ElementName = "Id")]
         public long Id { get; set; }
 
-        [XmlElement(Type = typeof(long), ElementName = "CompanyId")]
-        public long CompanyId { get; set; }
-
         [XmlElement(Type = typeof(string), ElementName = "FirstName")]
         public string FirstName { get; set; }
 
         [XmlElement(Type = typeof(string), ElementName = "LastName")]
         public string LastName { get; set; }
 
-        [XmlElement(Type = typeof(string), ElementName = "LastName2")]
-        public string LastName2 { get; set; }
+        [XmlElement(Type = typeof(string), ElementName = "Phone")]
+        public string Phone { get; set; }
 
-        [XmlElement(Type = typeof(string), ElementName = "PhoneJob")]
-        public string PhoneJob { get; set; }
+        [XmlElement(Type = typeof(string), ElementName = "Mobile")]
+        public string Mobile { get; set; }
 
-        [XmlElement(Type = typeof(string), ElementName = "PhonePersonal")]
-        public string PhonePersonal { get; set; }
-
-        [XmlElement(Type = typeof(string), ElementName = "PhoneEmergency")]
-        public string PhoneEmergency { get; set; }
-
-        [XmlElement(Type = typeof(string), ElementName = "Email1")]
-        public string Email1 { get; set; }
+        [XmlElement(Type = typeof(string), ElementName = "Email")]
+        public string Email { get; set; }
 
         [XmlElement(Type = typeof(string), ElementName = "Email2")]
         public string Email2 { get; set; }
 
-        [XmlElement(Type = typeof(string), ElementName = "JobPosition")]
-        public string JobPosition { get; set; }
-
-        [XmlElement(Type = typeof(bool), ElementName = "Principal")]
-        public bool Principal { get; set; }
+        [XmlElement(Type = typeof(int), ElementName = "JobPosition")]
+        public int JobPosition { get; set; }
 
         [XmlElement(Type = typeof(long), ElementName = "ItemDefinitionId")]
         public long ItemDefinitionId { get; set; }
@@ -103,16 +91,6 @@ namespace OpenFrameworkV3.Feature
                     res += this.LastName;
                 }
 
-                if (!string.IsNullOrEmpty(this.LastName2))
-                {
-                    if (!string.IsNullOrEmpty(res))
-                    {
-                        res += " ";
-                    }
-
-                    res += this.LastName2;
-                }
-
                 return res;
             }
         }
@@ -128,17 +106,13 @@ namespace OpenFrameworkV3.Feature
                 return new ContactPerson
                 {
                     Id = Constant.DefaultId,
-                    CompanyId = Constant.DefaultId,
                     FirstName = string.Empty,
                     LastName = string.Empty,
-                    LastName2 = string.Empty,
-                    JobPosition = string.Empty,
-                    Email1 = string.Empty,
+                    JobPosition = 0,
+                    Email = string.Empty,
                     Email2 = string.Empty,
-                    PhoneJob = string.Empty,
-                    PhonePersonal = string.Empty,
-                    PhoneEmergency = string.Empty,
-                    Principal = false,
+                    Phone = string.Empty,
+                    Mobile = string.Empty,
                     CreatedBy = ApplicationUser.Empty,
                     CreatedOn = DateTime.Now,
                     ModifiedBy = ApplicationUser.Empty,
@@ -156,33 +130,25 @@ namespace OpenFrameworkV3.Feature
                     CultureInfo.InvariantCulture,
                     @"{{
                         ""Id"":{0},
-                        ""CompanyId"": {1},
-                        ""FirstName"":""{2}"",
-                        ""LastName"":""{3}"",
-                        ""LastName2"":""{4}"",
-                        ""FullName"":""{5}"",
-                        ""Principal"":{6},
-                        ""JobPosition"":""{7}"",
-                        ""PhoneJob"":""{8}"",
-                        ""PhonePersonal"":""{9}"",
-                        ""PhoneEmergency"":""{10}"",
-                        ""Email1"":""{11}"",
-                        ""Email2"":""{12}"",
-                        ""ItemDefinitionId"":{13},
-                        ""ItemId"":{14},
-                        ""Active"":{15}}}",
+                        ""FirstName"":""{1}"",
+                        ""LastName"":""{2}"",
+                        ""FullName"":""{3}"",
+                        ""JobPosition"":{4},
+                        ""Phone"":""{5}"",
+                        ""Mobile"":""{6}"",
+                        ""Email"":""{7}"",
+                        ""Email2"":""{8}"",
+                        ""ItemDefinitionId"":{9},
+                        ""ItemId"":{10},
+                        ""Active"":{11}}}",
                     this.Id,
-                    this.CompanyId,
                     Tools.Json.JsonCompliant(this.FirstName),
                     Tools.Json.JsonCompliant(this.LastName),
-                    Tools.Json.JsonCompliant(this.LastName2),
                     Tools.Json.JsonCompliant(this.FullName),
-                    ConstantValue.Value(this.Principal),
                     Tools.Json.JsonCompliant(this.JobPosition),
-                    Tools.Json.JsonCompliant(this.PhoneJob),
-                    Tools.Json.JsonCompliant(this.PhonePersonal),
-                    Tools.Json.JsonCompliant(this.PhoneEmergency),
-                    Tools.Json.JsonCompliant(this.Email1),
+                    Tools.Json.JsonCompliant(this.Phone),
+                    Tools.Json.JsonCompliant(this.Mobile),
+                    Tools.Json.JsonCompliant(this.Email),
                     Tools.Json.JsonCompliant(this.Email2),
                     this.ItemDefinitionId,
                     this.ItemId,
@@ -220,13 +186,9 @@ namespace OpenFrameworkV3.Feature
             var res = ContactPerson.Empty;
             var user = ApplicationUser.Actual;
             var cns = Persistence.ConnectionString(instanceName);
-            /* CREATE PROCEDURE Feature_ContactPerson_GetById
-             *   @Id bigint,
-             *   @CompanyId bigint,
-             *   @ApplicationUserId bigint */
             if (!string.IsNullOrEmpty(cns))
             {
-                using (var cmd = new SqlCommand("Feature_ContactPerson_GetById"))
+                using (var cmd = new SqlCommand("Feature_ContactPerson_ById"))
                 {
                     using (var cnn = new SqlConnection(cns))
                     {
@@ -242,17 +204,13 @@ namespace OpenFrameworkV3.Feature
                                 while (rdr.Read())
                                 {
                                     res.Id = rdr.GetInt64(ColumnsContactPersonGet.Id);
-                                    res.CompanyId = rdr.GetInt64(ColumnsContactPersonGet.CompanyId);
                                     res.FirstName = rdr.GetString(ColumnsContactPersonGet.FirstName);
                                     res.LastName = rdr.GetString(ColumnsContactPersonGet.LastName);
-                                    res.LastName2 = rdr.GetString(ColumnsContactPersonGet.LastName2);
-                                    res.JobPosition = rdr.GetString(ColumnsContactPersonGet.JobPosition);
-                                    res.Email1 = rdr.GetString(ColumnsContactPersonGet.Email1);
+                                    res.JobPosition = rdr.GetInt32(ColumnsContactPersonGet.JobPosition);
+                                    res.Email = rdr.GetString(ColumnsContactPersonGet.Email);
                                     res.Email2 = rdr.GetString(ColumnsContactPersonGet.Email2);
-                                    res.PhoneJob = rdr.GetString(ColumnsContactPersonGet.PhoneJob);
-                                    res.PhonePersonal = rdr.GetString(ColumnsContactPersonGet.PhonePersonal);
-                                    res.PhoneEmergency = rdr.GetString(ColumnsContactPersonGet.PhoneEmergency);
-                                    res.Principal = rdr.GetBoolean(ColumnsContactPersonGet.Principal);
+                                    res.Phone = rdr.GetString(ColumnsContactPersonGet.Phone).Trim();
+                                    res.Mobile = rdr.GetString(ColumnsContactPersonGet.Mobile).Trim();
                                     res.Active = rdr.GetBoolean(ColumnsContactPersonGet.Active);
                                     res.CreatedBy = new ApplicationUser
                                     {
@@ -297,18 +255,13 @@ namespace OpenFrameworkV3.Feature
             return res;
         }
 
-        public static ReadOnlyCollection<ContactPerson> ByItemId(long itemDefinitionId, long companyId, long itemId, string instanceName)
+        public static ReadOnlyCollection<ContactPerson> ByItemId(long itemDefinitionId, long itemId, string instanceName)
         {
             var res = new List<ContactPerson>();
             var cns = Persistence.ConnectionString(instanceName);
-            /* CREATE PROCEDURE Feature_ContactPerson_GetByItemId
-             *   @ItemId bigint,
-             *   @ItemDefinitionId bigint,
-             *   @CompanyId bigint,
-             *   @ApplicationUserId bigint */
             if (!string.IsNullOrEmpty(cns))
             {
-                using (var cmd = new SqlCommand("Feature_ContactPerson_GetByItemId"))
+                using (var cmd = new SqlCommand("Feature_ContactPerson_ByItemId"))
                 {
                     using (var cnn = new SqlConnection(cns))
                     {
@@ -316,7 +269,6 @@ namespace OpenFrameworkV3.Feature
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add(DataParameter.Input("@ItemId", itemId));
                         cmd.Parameters.Add(DataParameter.Input("@ItemDefinitionId", itemDefinitionId));
-                        cmd.Parameters.Add(DataParameter.Input("@CompanyId", companyId));
                         try
                         {
                             cmd.Connection.Open();
@@ -327,17 +279,13 @@ namespace OpenFrameworkV3.Feature
                                     res.Add(new ContactPerson
                                     {
                                         Id = rdr.GetInt64(ColumnsContactPersonGet.Id),
-                                        CompanyId = rdr.GetInt64(ColumnsContactPersonGet.CompanyId),
                                         FirstName = rdr.GetString(ColumnsContactPersonGet.FirstName),
                                         LastName = rdr.GetString(ColumnsContactPersonGet.LastName),
-                                        LastName2 = rdr.GetString(ColumnsContactPersonGet.LastName2),
-                                        JobPosition = rdr.GetString(ColumnsContactPersonGet.JobPosition),
-                                        Email1 = rdr.GetString(ColumnsContactPersonGet.Email1),
+                                        JobPosition = rdr.GetInt32(ColumnsContactPersonGet.JobPosition),
+                                        Email = rdr.GetString(ColumnsContactPersonGet.Email),
                                         Email2 = rdr.GetString(ColumnsContactPersonGet.Email2),
-                                        PhoneJob = rdr.GetString(ColumnsContactPersonGet.PhoneJob),
-                                        PhonePersonal = rdr.GetString(ColumnsContactPersonGet.PhonePersonal),
-                                        PhoneEmergency = rdr.GetString(ColumnsContactPersonGet.PhoneEmergency),
-                                        Principal = rdr.GetBoolean(ColumnsContactPersonGet.Principal),
+                                        Phone = rdr.GetString(ColumnsContactPersonGet.Phone).Trim(),
+                                        Mobile = rdr.GetString(ColumnsContactPersonGet.Mobile).Trim(),
                                         Active = rdr.GetBoolean(ColumnsContactPersonGet.Active),
                                         CreatedBy = new ApplicationUser
                                         {
@@ -424,17 +372,13 @@ namespace OpenFrameworkV3.Feature
                         cmd.Connection = cnn;
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add(DataParameter.OutputLong("@Id"));
-                        cmd.Parameters.Add(DataParameter.Input("@CompanyId", this.CompanyId));
-                        cmd.Parameters.Add(DataParameter.Input("@FirstName", this.FirstName, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@LastName", this.LastName, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@LastName2", this.LastName2, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@JobPosition", this.JobPosition, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@Email1", this.Email1, 150));
+                        cmd.Parameters.Add(DataParameter.Input("@FirstName", this.FirstName, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@LastName", this.LastName, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@JobPosition", this.JobPosition));
+                        cmd.Parameters.Add(DataParameter.Input("@Email1", this.Email, 150));
                         cmd.Parameters.Add(DataParameter.Input("@Email2", this.Email2, 150));
-                        cmd.Parameters.Add(DataParameter.Input("@PhoneJob", this.PhoneJob, 20));
-                        cmd.Parameters.Add(DataParameter.Input("@PhonePersonal", this.PhonePersonal, 20));
-                        cmd.Parameters.Add(DataParameter.Input("@PhoneEmergency", this.PhoneEmergency, 20));
-                        cmd.Parameters.Add(DataParameter.Input("@Principal", this.Principal));
+                        cmd.Parameters.Add(DataParameter.Input("@Phone", this.Phone, 15));
+                        cmd.Parameters.Add(DataParameter.Input("@Mobile", this.Mobile, 15));
                         cmd.Parameters.Add(DataParameter.Input("@ItemDefinitionId", this.ItemDefinitionId));
                         cmd.Parameters.Add(DataParameter.Input("@ItemId", this.ItemId));
                         cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));
@@ -493,17 +437,13 @@ namespace OpenFrameworkV3.Feature
                         cmd.Connection = cnn;
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add(DataParameter.Input("@Id", this.Id));
-                        cmd.Parameters.Add(DataParameter.Input("@CompanyId", this.CompanyId));
-                        cmd.Parameters.Add(DataParameter.Input("@FirstName", this.FirstName, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@LastName", this.LastName, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@LastName2", this.LastName2, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@JobPosition", this.JobPosition, 100));
-                        cmd.Parameters.Add(DataParameter.Input("@Email1", this.Email1, 150));
-                        cmd.Parameters.Add(DataParameter.Input("@Email2", this.Email2, 150));
-                        cmd.Parameters.Add(DataParameter.Input("@PhoneJob", this.PhoneJob, 20));
-                        cmd.Parameters.Add(DataParameter.Input("@PhonePersonal", this.PhonePersonal, 20));
-                        cmd.Parameters.Add(DataParameter.Input("@PhoneEmergency", this.PhoneEmergency, 20));
-                        cmd.Parameters.Add(DataParameter.Input("@Principal", this.Principal));
+                        cmd.Parameters.Add(DataParameter.Input("@FirstName", this.FirstName, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@LastName", this.LastName, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@JobPosition", this.JobPosition));
+                        cmd.Parameters.Add(DataParameter.Input("@Email1", this.Email, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@Email2", this.Email2, 50));
+                        cmd.Parameters.Add(DataParameter.Input("@Phone", this.Phone, 15));
+                        cmd.Parameters.Add(DataParameter.Input("@Mobile", this.Mobile, 15));
                         cmd.Parameters.Add(DataParameter.Input("@ItemDefinitionId", this.ItemDefinitionId));
                         cmd.Parameters.Add(DataParameter.Input("@ItemId", this.ItemId));
                         cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));

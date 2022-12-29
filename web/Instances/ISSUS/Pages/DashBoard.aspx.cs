@@ -1,11 +1,7 @@
 ﻿namespace OpenFrameworkV3.Web.Instances.Support
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
     using System.Web.UI;
-    using System.Web.UI.WebControls;
 
     public partial class DashBoard : Page
     {
@@ -25,7 +21,7 @@
 
 
             var title = "Dashboard";
-            this.master.SetTitle("weke");
+            this.master.SetTitle(title);
             this.master.SetPageType("PageView");
             this.master.SetPageType("Dashboard");
         }

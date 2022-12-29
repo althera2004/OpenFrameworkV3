@@ -47,12 +47,12 @@
         <div class="col-lg-4">
             <div class="hpanel hgreen">
                 <div class="panel-heading hbuilt">
-                    Política de contraseñas
+                    <%=this.MasterPage.Translate("Core_Security_PasswordPolicy") %>
                 </div>
                 <div class="panel-body">
                     <p>
                         <button type="button" style="height: 100px; font-size: 16px;" class="AdminCompanyButton  col-xs-12 btn btn-app btn-success" onclick="GoEncryptedPage('/Admin/Security/General.aspx');">
-                            <i class="fa fa-key"></i>&nbsp;&nbsp;Política de contraseñas&nbsp;&nbsp;</button>
+                            <i class="fa fa-key"></i>&nbsp;&nbsp;<%=this.MasterPage.Translate("Core_Security_PasswordPolicy") %>&nbsp;&nbsp;</button>
                     </p>
                 </div>
             </div>
@@ -60,12 +60,12 @@
         <div class="col-lg-4">
             <div class="hpanel hgreen">
                 <div class="panel-heading hbuilt">
-                    Política de acceso
+                    <%=this.MasterPage.Translate("Core_Security_AccessPolicy") %>
                 </div>
                 <div class="panel-body">
                     <p>
                         <button type="button" style="height: 100px; font-size: 16px;" class="AdminCompanyButton  col-xs-12 btn btn-app btn-success" onclick="GoEncryptedPage('/Admin/Security/AccessPolicy.aspx');">
-                            <i class="fa fa-user-lock"></i>&nbsp;&nbsp;Política de acceso&nbsp;&nbsp;</button>
+                            <i class="fa fa-user-lock"></i>&nbsp;&nbsp;<%=this.MasterPage.Translate("Core_Security_AccessPolicy") %>&nbsp;&nbsp;</button>
                     </p>
                 </div>
             </div>
@@ -73,12 +73,12 @@
         <div class="col-lg-4">
             <div class="hpanel hgreen">
                 <div class="panel-heading hbuilt">
-                    Permisos
+                    <%=this.MasterPage.Translate("Core_Security_GrantsPolicy") %>
                 </div>
                 <div class="panel-body">
                     <p>
                         <button type="button" style="height: 100px; font-size: 16px;" class="AdminCompanyButton  col-xs-12 btn btn-app btn-success" onclick="GoEncryptedPage('/Admin/Security/Grants.aspx');">
-                            <i class="fa fa-user-shield"></i>&nbsp;&nbsp;Permisos de usuarios&nbsp;&nbsp;</button>
+                            <i class="fa fa-user-shield"></i>&nbsp;&nbsp;<%=this.MasterPage.Translate("Core_Security_GrantsPolicy") %>&nbsp;&nbsp;</button>
                     </p>
                 </div>
             </div>
@@ -88,12 +88,12 @@
         <div class="col-lg-4">
             <div class="hpanel hblue">
                 <div class="panel-heading hbuilt">
-                    Usuarios
+                    <%=this.MasterPage.Translate("Core_Security_ApplicationUsers") %>
                 </div>
                 <div class="panel-body">
                     <p>
                         <button type="button" style="height:100px;font-size:16px;" class="AdminCompanyButton  col-xs-12 btn btn-app btn-info"  onclick="GoEncryptedPage('/Admin/Security/UserList.aspx');">
-                            <i class="fa fa-user"></i>&nbsp;&nbsp;Usuarios&nbsp;&nbsp;</button>
+                            <i class="fa fa-user"></i>&nbsp;&nbsp;<%=this.MasterPage.Translate("Core_Security_ApplicationUsers") %>&nbsp;&nbsp;</button>
                     </p>
                 </div>
             </div>
@@ -101,12 +101,12 @@
         <div class="col-lg-4">
             <div class="hpanel hblue">
                 <div class="panel-heading hbuilt">
-                    Grupos
+                    <%=this.MasterPage.Translate("Core_Security_Groups") %>
                 </div>
                 <div class="panel-body">
                     <p>
                         <button type="button" style="height:100px;font-size:16px;" class="AdminCompanyButton  col-xs-12 btn btn-app btn-info" onclick="GoEncryptedPage('/Admin/Security/GroupList.aspx');">
-                            <i class="fa fa-users"></i>&nbsp;&nbsp;Grupos&nbsp;&nbsp;</button>
+                            <i class="fa fa-users"></i>&nbsp;&nbsp;<%=this.MasterPage.Translate("Core_Security_Groups") %>&nbsp;&nbsp;</button>
                     </p>
                 </div>
             </div>
@@ -114,12 +114,12 @@
         <div class="col-lg-4">
             <div class="hpanel hblue">
                 <div class="panel-heading hbuilt">
-                    Usuarios externos
+                    <%=this.MasterPage.Translate("Core_Security_ExternalUsers") %>
                 </div>
                 <div class="panel-body">
                     <p>
                         <button type="button" style="height:100px;font-size:16px;" class="AdminCompanyButton  col-xs-12 btn btn-app btn-info" onclick="GoEncryptedPage('/Instances/Storage/Pages/DashboardOcupacion.aspx?YWM9MSZvcHRpb25JZD0w');">
-                            <i class="fa fa-user-circle"></i>&nbsp;&nbsp;Usuarios externos&nbsp;&nbsp;</button>
+                            <i class="fa fa-user-circle"></i>&nbsp;&nbsp;<%=this.MasterPage.Translate("Core_Security_ExternalUsers") %>&nbsp;&nbsp;</button>
                     </p>
                 </div>
             </div>

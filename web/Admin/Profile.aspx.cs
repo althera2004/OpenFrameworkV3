@@ -17,11 +17,14 @@ public partial class Admin_Profile : Page
         }
     }
 
+    public string Translate(string text)
+    {
+        return this.master.Translate(text);
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         this.master = this.Master as Main;
-
-
         this.master.SetTitle("Perfil d'usuari");
         this.master.BreadCrumb.AddLeaf("Usuari");
         this.master.SetPageType("Profile");

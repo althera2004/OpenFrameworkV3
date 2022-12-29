@@ -12,11 +12,13 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using Newtonsoft.Json;
 using OpenFrameworkV3;
+using OpenFrameworkV3.Core;
 using OpenFrameworkV3.Core.Activity;
 using OpenFrameworkV3.Core.DataAccess;
 using OpenFrameworkV3.Core.ItemManager;
@@ -57,13 +59,20 @@ public class ItemService : WebService
         //    {
         //        if (itemId > 0)
         //        {
-                    var tag = Tag.ByItemId(itemId, itemDefinitionId, companyId, instanceName);
-                    res.SetSuccess(tag);
+        var tag = Tag.ByItemId(itemId, itemDefinitionId, companyId, instanceName);
+        res.SetSuccess(tag);
         //        }
         //    }
         //}
 
         return res;
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult FieldDocummentDelete(string itemName, string fieldName, string fileName, long itemId, long applicationUserId, long companyId, string instanceName)
+    {
+        return ItemData.DeleteFieldDocument(itemName, fieldName, fileName, itemId, applicationUserId, companyId, instanceName);
     }
 
     [WebMethod(EnableSession = true)]
@@ -85,7 +94,7 @@ public class ItemService : WebService
                     data);
                 res.SetSuccess(datares);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 res.SetFail(ex);
             }
@@ -114,11 +123,11 @@ public class ItemService : WebService
             listDefinition = itemDefinition.Lists.First(l => l.Id.Equals(listDefinitionId, StringComparison.OrdinalIgnoreCase) == true);
         }
 
-        if(!string.IsNullOrEmpty(listDefinition.CustomAjaxSource))
+        if (!string.IsNullOrEmpty(listDefinition.CustomAjaxSource))
         {
-            using(var cmd = new SqlCommand(listDefinition.CustomAjaxSource))
+            using (var cmd = new SqlCommand(listDefinition.CustomAjaxSource))
             {
-                using(var cnn = new SqlConnection(instance.Config.ConnectionString))
+                using (var cnn = new SqlConnection(instance.Config.ConnectionString))
                 {
                     cmd.Connection = cnn;
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -140,7 +149,7 @@ public class ItemService : WebService
                                 cmd.Parameters.Add(DataParameter.Input(parameter.Name, parameter.Value));
                                 break;
                         }
-                    }                    
+                    }
 
                     var data = SqlStream.SQLJSONStream(cmd);
 
@@ -162,9 +171,9 @@ public class ItemService : WebService
         return res;
     }
 
-   [WebMethod(EnableSession = true)]
+    [WebMethod(EnableSession = true)]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string GetList(string itemName, string listDefinitionId, string parametersList,long companyId, string instanceName)
+    public string GetList(string itemName, string listDefinitionId, string parametersList, long companyId, string instanceName)
     {
         var instance = Persistence.InstanceByName(instanceName);
         var itemBuilder = instance.ItemDefinitions.First(d => d.ItemName.Equals(itemName, StringComparison.OrdinalIgnoreCase));
@@ -182,7 +191,7 @@ public class ItemService : WebService
             //        break;
             //}
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             res = string.Format(CultureInfo.InvariantCulture, @"{{""ItemName"":""{1}"", ""ListId"":""{2}"", ""data"":""{0}""}}", Json.JsonCompliant(ex.Message), itemName, listDefinitionId);
         }
@@ -196,7 +205,7 @@ public class ItemService : WebService
     {
         var res = ActionResult.NoAction;
         var itemDefinitions = Persistence.ItemDefinitions(instanceName).Where(i => i.Features.Persistence == true);
-        foreach(var itemDefinition in itemDefinitions)
+        foreach (var itemDefinition in itemDefinitions)
         {
             itemDefinition.CreatePersistenceScript(instanceName);
         }
@@ -206,7 +215,7 @@ public class ItemService : WebService
 
     [WebMethod(EnableSession = true)]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public ActionResult Inactivate (string itemName, long itemId, long applicationUserId,long companyId, string instanceName)
+    public ActionResult Inactivate(string itemName, long itemId, long applicationUserId, long companyId, string instanceName)
     {
         return OpenFrameworkV3.Core.DataAccess.Save.Inactivate(itemName, itemId, companyId, applicationUserId, instanceName);
     }
@@ -221,7 +230,7 @@ public class ItemService : WebService
             var data = ActionLog.TraceItemDataGet(instanceName, itemName, itemId);
             res.SetSuccess(data);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             res.SetFail(ex);
         }
@@ -232,7 +241,7 @@ public class ItemService : WebService
 
     [WebMethod(EnableSession = true)]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public ActionResult Save(long itemDefinitionId, long itemId,string itemData, long applicationUserId, long companyId, string instanceName)
+    public ActionResult Save(long itemDefinitionId, long itemId, string itemData, long applicationUserId, long companyId, string instanceName)
     {
         var res = ActionResult.NoAction;
         var serializer = new JavaScriptSerializer();
@@ -249,7 +258,7 @@ public class ItemService : WebService
         var values = string.Empty;
 
         dynamic obj = serializer.Deserialize(itemData, typeof(object));
-        foreach(var data in obj)
+        foreach (var data in obj)
         {
             var fieldName = data["Field"];
             var original = data["Original"];
@@ -285,7 +294,7 @@ public class ItemService : WebService
             res = cmd.ExecuteCommand;
             if (res.Success)
             {
-                res.SetSuccess(string.Format(CultureInfo.InvariantCulture,"UPDATE|{0}", itemId));
+                res.SetSuccess(string.Format(CultureInfo.InvariantCulture, "UPDATE|{0}", itemId));
                 if (res.Success)
                 {
                     var trace = string.Format(
@@ -350,8 +359,6 @@ public class ItemService : WebService
                 }
             };
         }
-
-        
         
         return res;
     }
@@ -393,7 +400,7 @@ public class ItemService : WebService
         var users = ApplicationUser.All(companyId, instanceName);
         var res = new StringBuilder("[");
         var first = true;
-        foreach(var user in users)
+        foreach (var user in users)
         {
             res.AppendFormat(
                 CultureInfo.InvariantCulture,
@@ -401,7 +408,7 @@ public class ItemService : WebService
                 first ? string.Empty : ",",
                 user.JsonKeyValue);
             first = false;
-        }      
+        }
 
         res.Append("]");
         return res.ToString();
@@ -413,9 +420,9 @@ public class ItemService : WebService
         var dataItem = Read.All<string>(itemName, instanceName);
 
         bool first = true;
-        foreach(var item in dataItem)
+        foreach (var item in dataItem)
         {
-            if(first)
+            if (first)
             {
                 first = false;
             }
@@ -438,35 +445,35 @@ public class ItemService : WebService
         return res.ToString();
     }
 
-    private string GetListSQL(string itemName, string listDefinitionId, string parametersList,long companyId, string instanceName)
+    private string GetListSQL(string itemName, string listDefinitionId, string parametersList, long companyId, string instanceName)
     {
         var instance = Persistence.InstanceByName(instanceName);
         var definition = instance.ItemDefinitions.First(d => d.ItemName.Equals(itemName, StringComparison.OrdinalIgnoreCase));
-        if(definition == null)
+        if (definition == null)
         {
             return Json.EmptyJsonList;
         }
 
         var listDefinition = definition.Lists.FirstOrDefault(l => l.Id.Equals(listDefinitionId, StringComparison.OrdinalIgnoreCase));
-        if(listDefinition == null)
+        if (listDefinition == null)
         {
             listDefinition = List.Default(definition);
         }
 
         var parameters = new Dictionary<string, string>();
-        foreach(var parameter in parametersList.Split('|'))
+        foreach (var parameter in parametersList.Split('|'))
         {
-            if(!string.IsNullOrEmpty(parameter))
+            if (!string.IsNullOrEmpty(parameter))
             {
                 parameters.Add(parameter.Split('^')[0], parameter.Split('^')[1]);
             }
         }
 
-        if(listDefinition.Parameters != null && listDefinition.Parameters.Count > 0)
+        if (listDefinition.Parameters != null && listDefinition.Parameters.Count > 0)
         {
-            foreach(var listParameter in listDefinition.Parameters)
+            foreach (var listParameter in listDefinition.Parameters)
             {
-                if(!parameters.Any(p => p.Key.Equals(listParameter.Name, StringComparison.OrdinalIgnoreCase)))
+                if (!parameters.Any(p => p.Key.Equals(listParameter.Name, StringComparison.OrdinalIgnoreCase)))
                 {
                     parameters.Add(listParameter.Name, listParameter.Value);
                 }
@@ -504,12 +511,26 @@ public class ItemService : WebService
 
     [WebMethod(EnableSession = true)]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public ActionResult GetFileAttributes(string fileName)
+    public ActionResult GetFieldFileAttributes(string fileName, long itemId, string itemName, string instanceName)
     {
         var res = ActionResult.NoAction;
-        FileAttributes attributes = File.GetAttributes(fileName);
+        var path = Instance.Path.Data(instanceName);
+        path += "\\" + itemName + "\\";
+        path += itemId.ToString() + "\\" + fileName;
 
-        
+        if (File.Exists(path))
+        {
+            var data = string.Format(
+                CultureInfo.InvariantCulture,
+                @"{{""CreatedOn"":""{0}"", ""Length"":{1}}}",
+                File.GetLastWriteTime(path),
+                new FileInfo(path).Length);
+            res.SetSuccess(data);
+        }
+        else
+        {
+            res.SetSuccess(Constant.JavaScriptNull);
+        }
 
         return res;
     }
@@ -529,5 +550,33 @@ public class ItemService : WebService
         };
 
         return sticky.Insert(applicationUserId, instanceName);
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult FeatureStickyDelete(long stickyId, long companyId, long applicationUserId, string instanceName)
+    {
+        return Sticky.Inactivate(stickyId, companyId, applicationUserId, instanceName);
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult ItemAttachs_add(Attach attach, long applicationUserId, string instanceName)
+    {
+        return attach.Insert(applicationUserId, instanceName);
+    }
+    
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string ItemAttachs(long itemDefinitionId, long itemId, string instanceName)
+    {
+        return Attach.JsonList(Attach.ByItem(itemDefinitionId, itemId, instanceName));
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string ItemContactPerson(long itemDefinitionId, long itemId, string instanceName)
+    {
+        return ContactPerson.JsonList(ContactPerson.ByItemId(itemDefinitionId, itemId, instanceName));
     }
 }

@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ConsentimientoInformado.aspx.cs" Inherits="OpenFrameworkV3.NYRS.Export.ConsentimientoInformado" %>

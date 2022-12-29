@@ -178,9 +178,18 @@
 					"MustExists": true,
 					"Rows": [
 						{
-							"Fields": [
-								{ "Type": "Placeholder", "Name": "mateniments" }
-							]
+							"Id": "maintenanceDefinitionRow",
+							"Label": "Manteniments",
+							"ItemList": "EquipmentMaintenanceDefinition",
+							"ListId": "ByEquipment",
+							"FilterFields": [ { "Field": "Equipment" } ]
+						},
+						{
+							"Id": "maintenanceRecordsRow",
+							"Label": "Manteniments realitzats",
+							"ItemList": "EquipmentMaintenanceRecord",
+							"ListId": "ByEquipment",
+							"FilterFields": [ { "Field": "Equipment" } ]
 						}
 					]
 				},

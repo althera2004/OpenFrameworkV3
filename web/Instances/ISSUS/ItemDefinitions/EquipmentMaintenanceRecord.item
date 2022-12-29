@@ -39,6 +39,21 @@
                 { "DataProperty": "Vto", "Length": 90 }
             ],
             "Sorting": {"Index": 1, "SortingType": "asc"} 
+        },		
+        {
+            "Id": "ByEquipment",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Data", "Linkable": true, "Search": true, "Length": 90 },				
+                { "DataProperty": "EquipmentMaintenanceDefinitionId", "Linkable": true, "Search": true },
+                { "DataProperty": "Observacions", "Linkable": true, "Search": true, "Length": 90 },
+                { "DataProperty": "EmployeeId", "Linkable": true, "Search": true, "Length": 150 },
+                { "DataProperty": "Amount", "Search": true, "Length": 150 },
+                { "DataProperty": "Vto", "Search": true, "Length": 90 }
+            ],
+            "Sorting": {"Index": 1, "SortingType": "asc"} 
         }
 	],
 	"Forms": [

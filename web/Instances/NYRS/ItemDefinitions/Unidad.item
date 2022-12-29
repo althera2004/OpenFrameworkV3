@@ -1,0 +1,53 @@
+﻿{
+    "Id": 5,
+    "ItemName": "Unidad",
+    "Layout": {
+        "Icon": "fa fa-ambulance",
+        "Label": "Unidad",
+        "LabelPlural": "Unidades",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+				{ "Name": "Nombre" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"NeedFK": [],
+	"ForeignValues": [{"ItemName": "Caso"}],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Nombre", "Label": "Nombre", "Type": "text", "Length": 50 }
+    ],
+    "Lists": [
+        {
+			"Id": "Custom",
+			"FormId": "Custom",
+			"Layout": 1,
+			"EditAction": "FormPage",
+			"Columns": [
+					{"DataProperty":"Nombre", "Search": true}
+			],
+            "Sorting": {"Index": 1, "SortingType": "asc"}
+        }
+    ],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Nombre" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

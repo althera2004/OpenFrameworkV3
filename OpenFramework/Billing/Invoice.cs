@@ -25,6 +25,7 @@ namespace OpenFrameworkV3.Billing
     using OpenFrameworkV3.Core.DataAccess;
     using OpenFrameworkV3.Core.ItemManager;
     using OpenFrameworkV3.Core.Security;
+    using OpenFrameworkV3.Mail;
     using OpenFrameworkV3.Tools;
     using SepaWriter;
 
@@ -2926,7 +2927,7 @@ namespace OpenFrameworkV3.Billing
         {
             var res = ActionResult.NoAction;
             var company = Company.ById(invoice.CompanyId, Persistence.ConnectionString(instanceName));
-            var mailBox = Persistence.MailBoxByCode(mailBoxName, instanceName);
+            var mailBox = MailBox.ByCompanyId(invoice.CompanyId, instanceName).First(m=>m.Main == true);
             var body = string.Empty;
             var templatePath = string.Format(HttpContext.Current.Request.PhysicalApplicationPath + "Billing\\Mail.tplx");
             using (var input = new StreamReader(templatePath))
@@ -2959,7 +2960,7 @@ namespace OpenFrameworkV3.Billing
 
             var mailMessage = new MailMessage
             {
-                From = new MailAddress(mailBox.MailAddress, company.Name),
+                From = new MailAddress(mailBox.MailAddress, mailBox.SenderName),
                 Subject = invoice.Subject,
                 Body = body,
                 IsBodyHtml = true

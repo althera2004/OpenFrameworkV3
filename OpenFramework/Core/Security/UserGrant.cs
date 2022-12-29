@@ -111,7 +111,7 @@ namespace OpenFrameworkV3.Core.Security
                             {
                                 res.Add(new UserGrant
                                 {
-                                    SecurityGroupId = rdr.GetInt64(ColumnsGrantGet.GroupId),
+                                    SecurityGroupId = rdr.GetInt64(ColumnsGrantGet.SecurityGroupId),
                                     ApplicationUserId = rdr.GetInt64(ColumnsGrantGet.ApplicationUserId),
                                     Grants = rdr.GetString(ColumnsGrantGet.Grants),
                                     ItemName = rdr.GetString(ColumnsGrantGet.ItemName),
@@ -153,7 +153,7 @@ namespace OpenFrameworkV3.Core.Security
             return new ReadOnlyCollection<UserGrant>(res);
         }
 
-        public static ReadOnlyCollection<UserGrant> ForGroups(string connectionString, ReadOnlyCollection<Group> groups)
+        public static ReadOnlyCollection<UserGrant> ForGroups(string connectionString, ReadOnlyCollection<SecurityGroup> groups)
         {
             var source = string.Format(CultureInfo.InvariantCulture, "UserGrant::ForGroups({0})", connectionString);
             var res = new List<UserGrant>();
@@ -170,7 +170,7 @@ namespace OpenFrameworkV3.Core.Security
                         {
                             while (rdr.Read())
                             {
-                                long securityGroupId = rdr.GetInt64(ColumnsGrantGet.GroupId);
+                                long securityGroupId = rdr.GetInt64(ColumnsGrantGet.SecurityGroupId);
                                 long itemId = rdr.GetInt64(ColumnsGrantGet.ItemId);
 
                                 if (groups.Any(gr => gr.Id == securityGroupId))
@@ -262,7 +262,7 @@ namespace OpenFrameworkV3.Core.Security
                             {
                                 res.Add(new UserGrant
                                 {
-                                    SecurityGroupId = rdr.GetInt64(ColumnsGrantGet.GroupId),
+                                    SecurityGroupId = rdr.GetInt64(ColumnsGrantGet.SecurityGroupId),
                                     ApplicationUserId = rdr.GetInt64(ColumnsGrantGet.ApplicationUserId),
                                     Grants = rdr.GetString(ColumnsGrantGet.Grants),
                                     ItemName = rdr.GetString(ColumnsGrantGet.ItemName),

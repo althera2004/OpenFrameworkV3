@@ -16,15 +16,15 @@ $(document).ready(function () {
     var ddData = [
         {
             "text": "Català",
-            "value": "ca",
-            "selected": true,
+            "value": "ca-es",
+            "selected": language === "ca-es",
             "description": "Català",
             "imageSrc": "/assets/img/flags/cat.png"
         },
         {
             "text": "Castellano",
-            "value": "es",
-            "selected": false,
+            "value": "es-es",
+            "selected": language === "es-es",
             "description": "Castellano",
             "imageSrc": "/assets/img/flags/esp.png"
         }
@@ -314,8 +314,6 @@ function getIp() {
             pair = pair.split('=');
             return obj[pair[0]] = pair[1], obj;
         }, {});
-        console.log(data);
-
         ip = data.ip;
         $("#IpSpan").html(DOMPurify.sanitize(ip));
     });

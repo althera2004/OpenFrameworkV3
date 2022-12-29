@@ -28,6 +28,20 @@
         if (this.Definition === null) {
             this.Definition = this.FormDefinitionDefault();
         }
+
+        if (GrantCanWriteByItem(ItemDefinition.ItemName) === false) {
+            $("#FormBtnSave").remove();
+        }
+        else {
+            $("#FormBtnSave").show();
+        }
+
+        if (GrantCanDeleteByItem(ItemDefinition.ItemName) === false) {
+            $("#FormBtnDelete").remove();
+        }
+        else {
+            $("#FormBtnDelete").show();
+        }
     };
 
     this.Fill = function (data) {
@@ -130,6 +144,19 @@
             console.log($("#" + this.id).val());
         });
 
+        $.each($(".fieldDocumentControl"), function () {
+            var fieldName = $(this)[0].id;
+            var dataValue = data[fieldName];
+            if (typeof dataValue !== "undefined" && dataValue !== null && dataValue !== "") {
+                $("#" + fieldName + "_BtnView i").css("color", LayoutColor.Label);
+                $("#" + fieldName + "_BtnDelete i").css("color", LayoutColor.IconButtonDelete);
+            } else {
+                $("#" + fieldName + "_BtnView i").css("color", LayoutColor.Inactive);
+                $("#" + fieldName + "_BtnDelete i").css("color", LayoutColor.Inactive);
+            }
+
+        });
+
         var afterFillAction = itemDefinition.ItemName.toUpperCase() +"_" + this.FormId.toUpperCase() + "_FormFillAfter";
         var type = eval("typeof " + afterFillAction);
         if (type === "function") {
@@ -138,6 +165,14 @@
 
         if (data.Id > 0) {
             $(".TabMustExists").removeClass("TabMustExists");
+
+            if (FeatureIsEnabled(ItemDefinition, "Attach")) {
+                Feature_Attach_Retrieve();
+            }
+
+            if (FeatureIsEnabled(ItemDefinition, "ContactPerson")) {
+                Feature_ContactPerson_Retrieve();
+            }
         }
     }
 
@@ -194,6 +229,8 @@
         $(".form-control").on("change", ItemUpdateData);
         $(".datepicker").on("change", ItemUpdateData);
         $(".datepicker").localDatePicker();
+        $(".timepicker").on("change", ItemUpdateData);
+        $(".timepicker").localTimePicker();
         $(".form-radio").on("click", ItemUpdateDataFormRadio);
         $(".input-group-button-url").on("click", GroupButtonUrlClicked);
         console.log("Life cycle", "RenderForm end " + ListSources.length);
@@ -220,6 +257,8 @@
         $(".BtnDocumentDelete").on("click", FieldDocument_Delete)
         $(".BtnDocumentSign").on("click", FieldDocument_Sign)
         $(".BtnDocumentHistory").on("click", FieldDocument_History)
+
+        $(".tabSelect").on("click", CORE_FormTabClicked);
     }
 
     this.RenderFooterActions = function () {
@@ -337,14 +376,17 @@
             }
         }
 
-        if (ItemDefinition_HasFeature(this.ItemDefinition, "Attachs")) {
-            res += "<li id=\"tabSelect-Attachs\" class=\"tabSelect\"><a data-toggle=\"tab\" href=\"#tab-Attachs\" aria-expanded=\"false\"><i class=\"fa fa-paperclip\"></i>&nbsp;" + Dictionary.Feature_Attachment_TabTitle + "</a></li>";
+        if (FeatureIsEnabled(this.ItemDefinition, "ContactPerson")) {
+            res += "<li id=\"tabSelect-ContactPerson\" class=\"tabSelect\"><a data-toggle=\"tab\" href=\"#tab-ContactPerson\" aria-expanded=\"false\">" + Dictionary.Feature_ContactPerson_TabTitle + "</a></li>";
         }
 
-        if (SupportsSticky(this.ItemDefinition)) {
+        if (FeatureIsEnabled(this.ItemDefinition, "Attach")) {
+            res += "<li id=\"tabSelect-Attach\" class=\"tabSelect\"><a data-toggle=\"tab\" href=\"#tab-Attach\" aria-expanded=\"false\"><i class=\"fa fa-paperclip\"></i>&nbsp;" + Dictionary.Feature_Attach_TabTitle + "</a></li>";
+        }
+
+        if (FeatureIsEnabled(this.ItemDefinition, "Sticky")) {
             res += "<li id=\"Btn_Feature_StickyAdd\" title=\"" + Dictionary.Feature_Sticking_Add + "\" onclick=\"Feature_Sticky_ShowPopup();\"><i class=\"fa fa-sticky-note\"></i>";
         }
-
 
         $("#" + targetId + "Tabs").html(res);
         $(".tabSelect").on("click", LayoutTabSelected)
@@ -378,10 +420,21 @@
             }
         }
 
-        if (ItemDefinition_HasFeature(this.ItemDefinition, "Attachs")) {
-            res += "<div id=\"tab-Attachs\" class=\"tab-pane\">";
+        if (FeatureIsEnabled(this.ItemDefinition, "Attach")) {
+            res += "<div id=\"tab-Attach\" class=\"tab-pane\">";
             res += "<div class=\"hpanel\">";
             res += "<div class=\"panel-body panel-body-form\">";
+            res += Feature_Attachs_RenderTab();
+            res += "</div>";
+            res += "</div>";
+            res += "</div>";
+        }
+
+        if (FeatureIsEnabled(this.ItemDefinition, "ContactPerson")) {
+            res += "<div id=\"tab-ContactPerson\" class=\"tab-pane\">";
+            res += "<div class=\"hpanel\">";
+            res += "<div class=\"panel-body panel-body-form\">";
+            res += Feature_ContactPerson_RenderTab();
             res += "</div>";
             res += "</div>";
             res += "</div>";
@@ -519,6 +572,9 @@
                 }
 
                 switch (field.Type.toLowerCase()) {
+                    case "time":
+                        res += RenderFieldTime(field, finalSpan);
+                        break;
                     case "datetime":
                         res += RenderFieldDate(field, finalSpan);
                         break;
@@ -673,7 +729,7 @@ function RenderFieldDocumentFile(field, span, fieldForm) {
 
     res += "<div class=\"col-sm-" + (span - 1) + "\">";
     res += "  <div class=\"input-group fieldDocument\">";
-    res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control\" autocomplete=\"off\" readonly=\"readonly\" />";
+    res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control fieldDocumentControl\" autocomplete=\"off\" readonly=\"readonly\" />";
 
     if (config.indexOf("A") !== -1) {
         res += "    <span id=\"" + field.Name + "_BtnView\" class=\"input-group-addon BtnDocumentView\" title=\"Veure\"><i class=\"fa fa-eye\"></i></span>";
@@ -684,7 +740,7 @@ function RenderFieldDocumentFile(field, span, fieldForm) {
     }
 
     if (config.indexOf("D") !== -1) {
-        res += "    <span id=\"" + field.Name + "_BtnDelete\" class=\"input-group-addon BtnDocumentDelete\" title=\"Eliminar\"><i class=\"fa fa-times grey\"></i></span>";
+        res += "    <span id=\"" + field.Name + "_BtnDelete\" class=\"input-group-addon BtnDocumentDelete\" title=\"Eliminar\"><i class=\"fa fa-times\"></i></span>";
     }
 
     if (config.indexOf("S") !== -1) {
@@ -891,6 +947,17 @@ function RenderFieldDate(field, span) {
     return res;
 }
 
+function RenderFieldTime(field, span) {
+    var res = "";
+    res += "<div class=\"col-sm-" + (span - 1) + "\">";
+    res += "  <div class=\"input-group time\" style=\"width:112px;\">";
+    res += "    <input id=\"" + field.Name + "\" type=\"text\" class=\"form-control timepicker\" autocomplete=\"off\" style=\"width:85px;\">";
+    res += "    <span id=\"" + field.Name + "BtnTimepicker\" class=\"input-group-addon\" onclick=\"$('#" + field.Name + "').focus();\"><i class=\"fa fa-clock\"></i></span>";
+    res += "  </div>";
+    res += "</div>";
+    return res;
+}
+
 function RenderFieldDecimal(field, span, fieldForm) {
     var precission = 3;
     if (HasPropertyValue(field.Precission)) {
@@ -1050,4 +1117,14 @@ function HasLayout(fieldForm, layout) {
     }
 
     return false;
+}
+
+function CORE_FormTabClicked(tabSender) {
+    console.log(tabSender);
+    console.log("Id", tabSender.currentTarget.id);
+
+    // Adapting table attachs height
+    if (tabSender.currentTarget.id === "tabSelect-Attachs") {
+        $("#tab-Attachs .panel-body-list").height($("#tab-Attachs .panel-body").height() - 90);
+    }
 }

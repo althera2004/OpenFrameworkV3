@@ -8,7 +8,7 @@
     <div class="row" id="PersistentFields">
         <div class="form-group col-xs-12">
             <div class="row">
-                <label id="Name_Label" for="Name" class="col-sm-1 control-label">Nom</label>
+                <label id="Name_Label" for="Name" class="col-sm-1 control-label">Nom<span style="color:#f00;">*</span></label>
                 <div class="col-sm-5">
                     <input id="Name" type="text" class="form-control" value="<%=this.GroupData.Name %>" />
                 </div>
@@ -21,7 +21,8 @@
                 <ul class="nav nav-tabs" id="FormTabs">
                     <li id="tabSelect-basic" class="tabSelect active"><a data-toggle="tab" href="#tab-basic" aria-expanded="false">Dades bàsiques</a></li>
                     <li id="tabSelect-membership" class="tabSelect"><a data-toggle="tab" href="#tab-membership" aria-expanded="false">Membres</a></li>
-                    <li id="tabSelect-varificacio" class="tabSelect"><a data-toggle="tab" href="#tab-grants" aria-expanded="false">Permissos</a></li>
+                    <li id="tabSelect-dataGrants" class="tabSelect"><a data-toggle="tab" href="#tab-dataGrants" aria-expanded="false">Accés a dades</a></li>
+                    <li id="tabSelect-specialGrants" class="tabSelect"><a data-toggle="tab" href="#tab-specialGrants" aria-expanded="false">Permissos especials</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-basic" class="tab-pane active">
@@ -47,16 +48,57 @@
                         </div>
                     </div>
                     <div id="tab-membership" class="tab-pane">
+                        <div class="panel-body panel-body-form">
                             <div class="panel-heading">Membres</div>
                             <div>
                                 <select multiple="multiple" size="10" name="duallistbox_membership" class="membership" title="duallistbox_membership">
                                     <asp:Literal runat="server" ID="LtUsers"></asp:Literal>
                                 </select>
                             </div>
+                        </div>
                     </div>
-                    <div id="tab-grants" class="tab-pane">
+                    <div id="tab-dataGrants" class="tab-pane">
                         <div class="panel-body panel-body-form">
                             <h5>Accés a dades</h5>
+                            
+
+                            <div id="AccessGrants_List" class="ListContainer">
+                                <div class="hpanel hblue hpanel-table" style="margin: 0;">
+                                    <div class="tableHead">
+                                        <table cellpadding="1" cellspacing="1" class="table">
+                                            <thead id="AccessGrants_ListHead">
+                                                <tr>
+                                                    <th id="th1" colspan="2" class="search" data-sortfield="Name" data-sorttype="text" data-tableid="AccessGrants">Nom</th>
+                                                    <th id="th2" style="width: 100px;text-align:center" class="search">Lectura</th>
+                                                    <th id="th3" style="width: 100px;text-align:center" class="search">Modificació</th>
+                                                    <th id="th4" style="width: 100px;text-align:center" class="search">Eliminació</th>
+                                                    <th style="padding: 0; width: 27px; border-right: none;"></th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="panel-body panel-body-list" style="height: 671px;">
+                                        <div class="table-responsive">
+                                            <div class="table-body" style="max-height: 100%; height: 100%">
+                                                <table cellpadding="1" cellspacing="1" class="table" style="max-height: 100%">
+                                                    <tbody style="max-height: 100%" id="AccessGrants_ListBody">
+                                                        <asp:Literal runat="server" ID="LtAccessGrants"></asp:Literal>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- panel-body -->
+                                    <div class="panel-footer panel-footer-list">Nº ítems: <strong id="AccessGrants_ListCount">8</strong>    </div>
+                                    <!-- panel-body -->
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div id="tab-specialGrants" class="tab-pane">
+                        <div class="panel-body panel-body-form">
                             <h5>Permissos especials</h5>
                         </div>
                     </div>

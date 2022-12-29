@@ -24,13 +24,19 @@ namespace OpenFrameworkV3.Web.Admin.Company
             Instance.CheckPersistence();
         }
 
+        public string Translate(string text)
+        {
+            return this.master.Translate(text);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.master = this.Master as Main;
-            this.master.BreadCrumb.Add("Administració");
-            this.master.BreadCrumb.AddEncryptedLink("Configuració de companyia", "/Admin/Company/");
-            this.master.BreadCrumb.AddLeaf("Cuentas bancarias");
-            this.master.BreadCrumb.SetTitle("Companyia: " );
+            this.master.BreadCrumb.Add(Translate("Common_Administration"));
+            this.master.BreadCrumb.AddEncryptedLink(Translate("Core_Admin_Company"), "/Admin/Company/");
+            this.master.BreadCrumb.AddLeaf(Translate("Feature_BankAccount"));
+            this.master.BreadCrumb.SetTitle("Companyia: " + this.master.InstanceName);
+            this.master.SetPageType("pageAdmin");
 
             this.master.AddScript("/js/jquery.mask.js");
             this.master.AddScript("/Admin/Company/BankAccount.js");

@@ -1,10 +1,11 @@
-﻿Feature_Attachment_TabTitle::Adjuntos
+﻿Feature_Attach_TabTitle::Adjuntos
 Feature_WhatYouMissed::Lo que te has perdido
 Feature_WhatYouMissed_HeaderList_Date::Fecha
 Feature_WhatYouMissed_HeaderList_Category::Categoria
 Feature_WhatYouMissed_HeaderList_Affected::ítem implicado
 Feature_WhatYouMissed_HeaderList_Concept::Concepto
 Feature_DocumentSign_NotSigned::Falta firmar el documento
+Feature_ContactPerson_TabTile::Persones de contacte
 Common_Feature_Alert_AfterLogin_Popup_Title::Estas tares requiere una acción inmediata
 Features_FAQs_PopupDelete_Title::Eliminar FAQ
 Features_FAQs_Publish::Publicar
@@ -96,3 +97,10 @@ Feature_Sign_Wacom_NotAvailable2::Puede ver |aquí| el documento para descargar 
 Feature_Sign_Firmafy_Config::Configuración Firmafy
 Feature_Sign_Firmafy_SavingConfig::Guardando configuración
 Feature_Sign_Popup_Title::Firmar documento
+Common_DropFilesToUpload::Arrastras archivos para subirlos<br /> o pulsa aquí para seleccionar
+Feature_Attach_Message_TooBigSize::Archivo demasiado grande ({{filesize}}MB). Màximo permitido: {{maxFilesize}}MB.
+Feature_Attach_Message_Overload::Superado el límite de archivos para subir
+Feature_Attach_Message_FileTypeUnallowed::Tipo de archivo no permitido
+Feature_Attach_Message_SelectToUpload1::Seleccionar archivos
+Feature_Attach_Message_SelectToUpload2::para subir
+Feature_Attach_Message_SelectToUpload3::O arrastra aquí desde tu explorador

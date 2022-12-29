@@ -2,6 +2,7 @@
     "Id": 15,
     "ItemName": "Process",
 	"Description": "Desenvolupament",
+	"Features": { "Attachs": true },
     "Layout": {
         "Icon": "fad fa-cogs",
         "Label": "Procés",
@@ -87,9 +88,11 @@
 					"Label": "Indicadors",
 					"Rows": [
 						{
-							"Fields": [
-								{ "Type": "Placeholder", "Name": "indicadors" }
-							]
+							"Id": "indicadorsRow",
+							"Label": "Indicadors",
+							"ItemList": "Indicador",
+							"ListId": "ByProcess",
+							"FilterFields": [ { "Field": "Process" }]
 						}
 					]
 				}
