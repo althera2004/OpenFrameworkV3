@@ -123,7 +123,6 @@ public class InstanceService : WebService
         try
         {
             var languages = Language.All(instanceName);
-            debug = "1";
             foreach (var language in languages)
             {
                 debug = language.Name;
@@ -134,6 +133,8 @@ public class InstanceService : WebService
 
                 var data = ApplicationDictionary.GetCorpus(language.Iso, instanceName);
                 ApplicationDictionary.CreateJavascriptFile(language.Iso, instanceName);
+
+                Persistence.DictionaryAdd(language.Iso, instanceName);
             }
 
             res.SetSuccess();

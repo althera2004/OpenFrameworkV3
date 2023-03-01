@@ -45,12 +45,8 @@ $(document).ready(function () {
     $("#BtnPublicAccess").on("click", PublicAccess);
     $("#BtnRemember").on("click", Remember);
 
-    // weke: falta recordar contraseña
-    $("#BtnRemember").remove();
     $(".TxtUserName").focus();
     $(".TxtPassword").vkb({ "IsPassword": true });
-	//$(".TxtUserName").val("");
-	//$(".TxtPassword").val("");
     $(".TxtName").on("keyup", TxtNameChanged);
     $("img").on("dragstart", function (event) { event.preventDefault(); });
 });
@@ -110,10 +106,7 @@ function Login() {
             "data": JSON.stringify(data, null, 2),
             "success": function (msg) {
                 var result = msg.d;
-
                 console.log(result);
-
-                //return false;
 
                 if (result.Success === true) {
 
@@ -149,11 +142,13 @@ function Login() {
                     }
 
                     if (logOnResult.MultipleCompany === true) {
+                        ResetLayout();
                         document.location = "/Select.aspx?" + $.base64.encode((result.ReturnValue.Id * 1975).toString() + "-weke");
                         return false;
                     }
 
                     if (logOnResult.Corporative === false) {
+                        ResetLayout();
                         var query = "&I=" + instanceName;
                         query += "&C=" + logOnResult.CompanyId;
                         query += "&U=" + logOnResult.Id;
@@ -194,6 +189,16 @@ function Login() {
                     $("#CompanyId").val(result.CompanyId);
                     $("#Password").val($(".TxtPassword").val());
                     document.getElementById("LoginForm").action = "ResetPassword.aspx";
+                    $("#ErrorSpan").hide();
+                    $("#ErrorSpan").html("");
+                    $("#Remember").hide();
+                    $("#BtnLogin").removeAttr("disabled");
+                    $("#BtnLogin").html(Dictionary[language].Btn);
+                    $("#BtnPublicAccess").removeAttr("disabled");
+                    $("#BtnPublicAccess").html(Dictionary[language].BtnPublicAccess);
+                    $("#BtnLogin").show();
+                    $("#BtnLoginQR").show();
+                    $("#LoadingMessage").hide();
                     $("#LoginForm").submit();
                     return false;
                 }
@@ -247,7 +252,7 @@ function PassKeyBoardToggle() {
 }
 
 function Remember() {
-    document.location = "Remember.aspx?" + btoa(unescape(encodeURIComponent(instanceName)));
+    document.location = "PasswordRecovery.aspx?" + btoa(unescape(encodeURIComponent(instanceName)));
 }
 
 function PublicAccess() {
@@ -327,4 +332,17 @@ function guid() {
     }
 
     return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4();
+}
+
+function ResetLayout() {
+    $("#ErrorSpan").hide();
+    $("#ErrorSpan").html("");
+    $("#Remember").hide();
+    $("#BtnLogin").removeAttr("disabled");
+    $("#BtnLogin").html(Dictionary[language].Btn);
+    $("#BtnPublicAccess").removeAttr("disabled");
+    $("#BtnPublicAccess").html(Dictionary[language].BtnPublicAccess);
+    $("#BtnLogin").show();
+    $("#BtnLoginQR").show();
+    $("#LoadingMessage").hide();
 }

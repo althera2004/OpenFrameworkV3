@@ -1,0 +1,14 @@
+[	
+		{ "Leaf": true, "Item": "Centro" },
+	{
+    "Label": "Configuració",
+    "Icon": "fas fa-cog",
+    "Options": [
+		{ "Leaf": true, "Item": "Colectivo" },
+		{ "Leaf": true, "Item": "Partner" },
+		{ "Leaf": true, "Item": "Zona" },
+		{ "Leaf": true, "Item": "ServiceCategory" },
+		{ "Leaf": true, "Item": "ServiceConcept" }
+    ]
+  }
+]

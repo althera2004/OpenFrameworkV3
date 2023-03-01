@@ -16,6 +16,7 @@ namespace OpenFrameworkV3.Core.Security
     using System.Text;
     using OpenFrameworkV3.Core.Activity;
     using OpenFrameworkV3.Core.Bindings;
+    using OpenFrameworkV3.Core.Companies;
     using OpenFrameworkV3.Core.DataAccess;
 
     /// <summary>Implments user grants</summary>
@@ -76,7 +77,7 @@ namespace OpenFrameworkV3.Core.Security
             return new string((grants1 + grants2).ToCharArray().Distinct().ToArray());
         }
 
-        /// <summary>Gets JSON structure of an user grant</summary>
+        /// <summary>Gets JSON structure of grant</summary>
         public string Json
         {
             get
@@ -466,6 +467,36 @@ namespace OpenFrameworkV3.Core.Security
             return false;
         }
 
+        public static ActionResult SaveUserGrants(long userId, string grants, long applicationUserId, long companyId, string instancename)
+        {
+            var res = ActionResult.NoAction;
+            foreach (var grant in grants.Split('|'))
+            {
+                if (!string.IsNullOrEmpty(grant))
+                {
+                    long itemId = Convert.ToInt64(grant.Split('.')[0]);
+                    string grantValue = grant.Split('.')[1];
+                    var newGrant = new Grant
+                    {
+                        ApplicationUserId = userId,
+                        CompanyId = companyId,
+                        Grants = grantValue,
+                        ItemId = itemId,
+                        ItemName = Persistence.ItemDefinitionById(itemId, instancename).ItemName,
+                        SecurityGroupId = Constant.DefaultId
+                    };
+                    
+                    res = newGrant.Save(applicationUserId, instancename);
+                    if (!res.Success)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return res;
+        }
+
         public static ActionResult SaveGroupGrants(long groupId, string grants, long applicationUserId, long companyId, string instancename)
         {
             var res = ActionResult.NoAction;
@@ -484,8 +515,7 @@ namespace OpenFrameworkV3.Core.Security
                         ItemName = Persistence.ItemDefinitionById(itemId, instancename).ItemName,
                         SecurityGroupId = groupId
                     };
-
-
+                    
                     res = newGrant.Save(applicationUserId, instancename);
                     if (!res.Success)
                     {

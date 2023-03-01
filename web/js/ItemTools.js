@@ -13,6 +13,8 @@ function Item(config) {
 		this.ActualData = { ...normalizedData };
 		this.OriginalTags = [];
 		this.ActualTags = [];
+		this.Origin = config.Origin;
+		this.OriginConfig = config.OriginConfig;
 	}
 
 	this.Differences = function () {
@@ -135,16 +137,28 @@ function Item(config) {
 							if (actionType === "INSERT") {
 								var newId = msg.d.ReturnValue.split('|')[1] * 1;
 								ItemData.ActualData.Id = newId;
-                            }
+							}
 
 							ItemData.OriginalItemData = { ...ItemData.ActualData };
-							$("#BreadCrumbLabel").html(ItemData.GetDescription());
-							$("#FormBtnSave").disable();
-							$("#FormBtnSave").attr("title", Dictionary.Common_NoChangesToSave);
 
-							// Actualizar footer status
-							$("#FooterStatusModifiedBy").html(ApplicationUser.Profile.FullName);
-							$("#FooterStatusModifiedOn").html(TodayText());
+							if (ItemData.Origin === "form") {
+								$("#BreadCrumbLabel").html(ItemData.GetDescription());
+								$("#FormBtnSave").disable();
+								$("#FormBtnSave").attr("title", Dictionary.Common_NoChangesToSave);
+
+								// Actualizar footer status
+								$("#FooterStatusModifiedBy").html(ApplicationUser.Profile.FullName);
+								$("#FooterStatusModifiedOn").html(TodayText());
+							}
+
+							if (ItemData.Origin === "ListInEdit" ) {
+								//var d = ListDataById(ListSources[0].ListId, ListSources[0].ItemName, ItemData.OriginConfig.ItemId);
+								ListSources[0].UpdateData(ItemData.OriginalItemData);
+								res = ListSources[0].RenderRow(ItemData.OriginalItemData, { "Grants": "RWD" }, ListSources[0].ListDefinition, ListSources[0].ItemDefinition);
+								$(ItemData.OriginConfig.TrId).html($(res).html());
+                            }
+
+
 						}
 						else {
 							NotifySaveError(msg.d.MessageError);

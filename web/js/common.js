@@ -253,12 +253,15 @@ function FeatureEnabled(featureName) {
 
 // --------- GRANTS ---------------
 function GrantsByItem(itemName) {
-    return {
-        "Grants": "RWD"
-    };
+    var grant = ApplicationUser.Grants.filter(g => g.ItemName === itemName);
+    if (grant.length > 0) {
+        return grant[0];
+    }
+
+    return { "Grants": "" };
 }
 
-function GrantCanWriteByItem(itemName) {
+function GrantCanReadByItem(itemName) {
     if (ApplicationUser.AdminUser === true) { return true; }
     var grant = ApplicationUser.Grants.filter(g => g.ItemName.toLowerCase() === itemName.toLowerCase())[0];
     if (typeof grant !== "undefined" && grant.Grants.indexOf("R") !== -1) {
@@ -268,7 +271,7 @@ function GrantCanWriteByItem(itemName) {
     return false;
 }
 
-function GrantCanReadByItem(itemName) {
+function GrantCanWriteByItem(itemName) {
     if (ApplicationUser.AdminUser === true) { return true; }
     var grant = ApplicationUser.Grants.filter(g => g.ItemName.toLowerCase() === itemName.toLowerCase())[0];
     if (typeof grant !== "undefined" && grant.Grants.indexOf("W") !== -1) {

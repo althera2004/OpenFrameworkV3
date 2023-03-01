@@ -1,0 +1,717 @@
+﻿{
+    "Id": 204,
+    "ItemName": "Residente",
+	"Description": "Usuaris del centre",
+	"Features": {"Attachs": true},
+    "Layout": {
+        "Icon": "far fa-id-badge",
+        "Label": "Usuari",
+        "LabelPlural": "Usuaris",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [ { "Name": "Nombre" } ]
+        },
+        "EditionType": "inline"
+    },
+	"NeedFK": [  ],
+    "ForeignValues": [ {"ItemName": "Dieta"},{"ItemName": "Tarifa"}, {"ItemName": "Cama"}, {"ItemName": "Habitacion"} ],
+    "Fields": [
+	
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Code", "Label": "Codi", "Type": "text", "Length": 10, "Required": true, "CodeSequence": "residentes" },
+        { "Name": "Nombre", "Label": "Nom", "Type": "text", "Length": 100, "Required": true },
+        { "Name": "CIF", "Label": "DNI/NIE/PASS", "Type": "text", "Length": 15, "Required": true },
+        { "Name": "FechaNAC", "Label": "D.Naixement", "Type": "datetime", "Required": true },
+		
+        { "Name": "Professio", "Label": "Professió", "Type": "text", "Length": 50 },
+        { "Name": "NivellEstudis", "Label": "Nivell estudis", "Type": "text", "Length": 20 },
+        { "Name": "EstatCivil", "Label": "Estat civil", "Type": "text", "Length": 20 },
+		
+		{ "Name": "FechaAlta", "Label": "Data ingrés", "Type": "datetime", "Required": true },
+        { "Name": "DP", "Label": "Nº expedient DP", "Type": "text", "Length": 50 },
+        { "Name": "Procedencia", "Label": "Procedència", "Type": "text", "Length": 100 },
+        { "Name": "Grado", "Label": "Grau", "Type": "int" },
+        { "Name": "GradoAlta", "Label": "Grau", "Type": "int" },
+        { "Name": "FechaRevisionGrado", "Label": "Data sol·licitud revisió", "Type": "datetime" },
+        { "Name": "FechaVisitaRevisionGrado", "Label": "Data valoració revisió", "Type": "datetime" },
+        { "Name": "FechaRealRevisionGrado", "Label": "Data resolució", "Type": "datetime" },
+		{ "Name": "ProcedeRevisionGrado", "Label": "No procedeix", "Type": "boolean" },
+        { "Name": "IBAN", "Label": "IBAN", "Type": "iban", "Length": 30, "Required": true },
+		{ "Name": "HabitacionId", "Label": "Habitació", "Type": "long", "Required": true, "ColumnDataType": "Text", "FK": true },
+		{ "Name": "CamaId", "Label": "Habitació", "Type": "long", "Required": true, "ColumnDataType": "Text", "FK": true },
+        { "Name": "Poliza", "Label": "Pòlissa", "Type": "text", "Length": 50 },
+        { "Name": "PolizaCompany", "Label": "Asseguradora", "Type": "text", "Length": 50 },
+        { "Name": "PolizaTelefono", "Label": "Telèfon", "Type": "text", "Length": 15 },
+		{ "Name": "FeDeVida", "Label": "Fé de vida", "Type": "DocumentFile" },
+		
+        { "Name": "FechaBaja", "Label": "Baixa", "Type": "datetime" },
+		{ "Name": "MotivoBajaId", "Label": "Motiu", "Type": "long", "ColumnDataType": "Text", "FK": true },
+		{ "Name": "MotivoBajaDescripcion", "Label": "Descripció", "Type": "text", "Length": 100 },
+		{ "Name": "BaixaCausaPrimaria", "Label": "Causa primària", "Type": "text", "Length": 100 },
+		{ "Name": "BaixaCausaSecundaria", "Label": "Causa secundària", "Type": "text", "Length": 100 },
+		{ "Name": "CertificatDefuncio", "Label": "Certificat de defunció", "Type": "DocumentFile" },	
+        { "Name": "Deposito", "Label": "Depósit", "Type": "money" },		
+		
+		{ "Name": "Contracte", "Label": "Contracte", "Type": "DocumentFile" },
+		{ "Name": "RRI", "Label": "RRI", "Type": "DocumentFile" },
+		{ "Name": "SEPA", "Label": "SEPA", "Type": "DocumentFile" },
+		{ "Name": "AutoritzacioSortides", "Label": "Autorització sortides", "Type": "DocumentFile" },
+		{ "Name": "AutoritzacioFarmacia", "Label": "Autorització farmàcia", "Type": "DocumentFile" },
+		{ "Name": "AutoritzacioContencions", "Label": "Autorització contencions", "Type": "DocumentFile" },
+		{ "Name": "FinalizacionPrescripcioContencions", "Label": "Retirada contencions", "Type": "DocumentFile" },
+		{ "Name": "AcordNoContencio", "Label": "Conformitat per la no prescripció de contencions", "Type": "DocumentFile" },
+		{ "Name": "AutoritzacioUPP", "Label": "Notificació UPP", "Type": "DocumentFile" },
+		{ "Name": "FitxaIngres", "Label": "Fitxa ingrés", "Type": "DocumentFile" },
+		{ "Name": "LiquidacioReserva", "Label": "Liquidació reserva de plaça", "Type": "DocumentFile" },
+		{ "Name": "ReservaPlaza", "Label": "Reserva de plaça", "Type": "DocumentFile" },
+		{ "Name": "DocumentPreingres", "Label": "Informe mèdic pre-ingrés", "Type": "DocumentFile" },
+		{ "Name": "CambioHabitacion", "Label": "Canvi d'habitació", "Type": "DocumentFile" },
+		{ "Name": "ConsentimentPrescripcioContencions", "Label": "Autorització per col·locació de mesures de contenció", "Type": "DocumentFile" },
+		{ "Name": "NegativaContencions", "Label": "Negativa per a la col·locació de mesures de contenció", "Type": "DocumentFile" },
+		{ "Name": "PrescripcioContencions", "Label": "Prescripció i revisió de contencions", "Type": "DocumentFile" },
+		{ "Name": "AutorizacionEmpadronamiento", "Label": "Autorización empadronament", "Type": "DocumentFile" },
+		{ "Name": "NoHospitalFamiliar", "Label": "Consentiment de no ingrés hospitalari", "Type": "DocumentFile" },
+		{ "Name": "AutorizacionDra7horas", "Label": "Autorització 7 hores", "Type": "DocumentFile" },
+		{ "Name": "NegativaDisfagia", "Label": "Document negativa a prescripció dieta disfàgia", "Type": "DocumentFile" },
+		{ "Name": "AdopcioMesuresConfort", "Label": "Adopció mesures confort", "Type": "DocumentFile" },
+		{ "Name": "NoConsentimentRCP", "Label": "No consentiment RCP (reanimació cardiopulmonar)", "Type": "DocumentFile" },
+		{ "Name": "InformeMedic", "Label": "Informe mèdic", "Type": "DocumentFile" },
+		{ "Name": "InformeEnfermeria", "Label": "Informe infermeria", "Type": "DocumentFile" },
+		{ "Name": "InformeFisio", "Label": "Informe fisio", "Type": "DocumentFile" },
+		{ "Name": "InformeTreballSocial", "Label": "Informe treball social", "Type": "DocumentFile" },
+		{ "Name": "InformeEducadorSocial", "Label": "Informe educació social", "Type": "DocumentFile" },
+		{ "Name": "InformeTOcupacional", "Label": "Informe teràpia ocupacional", "Type": "DocumentFile" },
+		{ "Name": "InformePsico", "Label": "Informe psicològic", "Type": "DocumentFile" },
+		{ "Name": "InformePlaDeVida", "Label": "Pla d'atenció de vida", "Type": "DocumentFile" },
+		{ "Name": "SolicitutAnalisis", "Label": "Analítica", "Type": "DocumentFile" },
+		{ "Name": "SolicitutPAO", "Label": "Petició d'articles ortopèdics", "Type": "DocumentFile" },
+		{ "Name": "ValidacioContencions", "Label": "Revisió contencions", "Type": "DocumentFile" },
+		{ "Name": "ABVD", "Label": "ABVD", "Type": "DocumentFile" },
+		{ "Name": "DocAltresIngreso", "Label": "Altres", "Type": "DocumentFile" },
+		{ "Name": "DocAltresMedico", "Label": "Altres", "Type": "DocumentFile" },
+		{ "Name": "DocAltresTSocial", "Label": "Altres", "Type": "DocumentFile" },
+		{ "Name": "TSRevisioGrau", "Label": "Resolució grau dependència", "Type": "DocumentFile" },
+		{ "Name": "TSResolucioPIA", "Label": "Resolució PIA", "Type": "DocumentFile" },
+		{ "Name": "TSCalculadora", "Label": "Calculadora", "Type": "DocumentFile" },
+		{ "Name": "TSModificacioDades", "Label": "Modificació dades", "Type": "DocumentFile" },
+		{ "Name": "DocHistorialHospital", "Label": "Informes mèdics hospital", "Type": "DocumentFile" },
+		{ "Name": "DocHistorialClinico", "Label": "Historial clínic", "Type": "DocumentFile" },
+		{ "Name": "DocHistorialMedic", "Label": "Doc. historial medicació", "Type": "DocumentFile" },
+		{ "Name": "RegistroCaidas", "Label": "Registre caigudes", "Type": "DocumentFile" },
+		{ "Name": "PeticionInterconsulta", "Label": "Petició interconsulta", "Type": "DocumentFile" },
+		{ "Name": "TrasllatUrgencies", "Label": "Trasllat a urgències", "Type": "DocumentFile" },
+		{ "Name": "TransportSanitari", "Label": "Petició transport sanitari", "Type": "DocumentFile" },
+		{ "Name": "DocMetodoVigilancia", "Label": "Métode de vigilància", "Type": "DocumentFile" },
+		{ "Name": "NegativaRetiradaContencions", "Label": "Negativa retirada contencions", "Type": "DocumentFile" },
+		
+        { "Name": "ReportHistorialClinicLast", "Type": "datetime" },
+        { "Name": "ReportEnfemeriaLast", "Type": "datetime" },
+        { "Name": "ReportTreballSocialLast", "Type": "datetime" },
+        { "Name": "ReportFisioLast", "Type": "datetime" },
+        { "Name": "ReportTOcupacionalLast", "Type": "datetime" },
+        { "Name": "ReportEducadorSocialLast", "Type": "datetime" },
+        { "Name": "ReportPsicoLast", "Type": "datetime" },
+		
+		{ "Name": "LocationAddress", "Label": "Adreça", "Type": "text", "Length": 100 },
+		{ "Name": "LocationPostalCodeId", "Label": "C.P.", "Type": "long", "ColumnDataType": "Text", "FK": true },
+		{ "Name": "LocationCityId", "Label": "Localitat", "Type": "long", "ColumnDataType": "Text", "FK": true },
+		{ "Name": "LocationProvinceId", "Label": "Província", "Type": "long", "ColumnDataType": "Text", "FK": true },
+		{ "Name": "LocationCountryId", "Label": "País", "Type": "long", "ColumnDataType": "Text", "FK": true },
+		{ "Name": "Bloque", "Label": "Bloc", "Type": "text", "Length": 10 },
+		{ "Name": "Numero", "Label": "Numero", "Type": "text", "Length": 150 },
+		{ "Name": "Pis", "Label": "Pis", "Type": "text", "Length": 150 },
+		{ "Name": "Porta", "Label": "Porta", "Type": "text", "Length": 150 },
+		
+		{ "Name": "EnNombreDe", "Label": "EnNombreDe", "Type": "int" },
+		
+		{ "Name": "SeguroUsuario", "Label": "Assegurança", "Type": "boolean", "Required":  true },
+		{ "Name": "SeguroPoliza", "Label": "Pólissa", "Type": "text", "Length": 50 },
+		{ "Name": "SeguroAseguradora", "Label": "Asseguradora", "Type": "text", "Length": 50 },
+		{ "Name": "SeguroTelefono", "Label": "Telèfon", "Type": "text", "Length": 20 },		
+		
+		{ "Name": "Incapacitacion", "Label": "Incapacitació", "Type": "int" },
+		{ "Name": "IncapacitacionTutor", "Label": "Tutor", "Type": "text", "Length": 150 },
+		{ "Name": "IncapacitacionTutorNIF", "Label": "NIF", "Type": "text", "Length": 15 },
+		{ "Name": "IncapacitacionDocument", "Label": "Document", "Type": "DocumentFile" },
+        { "Name": "GuardaDeFet", "Label": "Guarda de fet", "Type": "int" },
+		{ "Name": "GuardaDeFetTutor", "Label": "Tutor", "Type": "text", "Length": 150 },
+		{ "Name": "GuardaDeFetTutorNIF", "Label": "NIF", "Type": "text", "Length": 15 },
+		{ "Name": "GuardaDeFetDocument", "Label": "Document", "Type": "DocumentFile" },
+		{ "Name": "DeterioramentCognitiu", "Label": "Deteriorament cognitiu", "Type": "bool" },
+		
+		{ "Name": "ContactePrincipalName", "Label": "Nom contacte", "Type": "text", "Length": 150, "Required": true },
+		{ "Name": "ContactePrincipalNIF", "Label": "NIF", "Type": "text", "Length": 15, "Required": true },
+		{ "Name": "ContactePrincipalParentesco", "Label": "Parentesc", "Type": "text", "Length": 15 },
+		{ "Name": "ContactePrincipalTel1", "Label": "Telèfon", "Type": "text", "Length": 15, "Required": true },
+		{ "Name": "ContactePrincipalTel2", "Label": "Telèfon 2", "Type": "text", "Length": 15 },
+		{ "Name": "ContactePrincipalTel3", "Label": "Telèfon 3", "Type": "text", "Length": 15 },
+		{ "Name": "ContactePrincipalEmail", "Label": "Email", "Type": "text", "Length": 150, "Required": true },
+		{ "Name": "ContactePrincipalEmai2", "Label": "Email 2", "Type": "text", "Length": 150 },
+		{ "Name": "ContactePrincipalDirección", "Label": "Adreça", "Type": "text", "Length": 150 },
+		{ "Name": "ContactePrincipalBloque", "Label": "Bloc", "Type": "text", "Length": 10 },
+		{ "Name": "ContactePrincipalNumero", "Label": "Número", "Type": "text", "Length": 150 },
+		{ "Name": "ContactePrincipalPis", "Label": "Pis", "Type": "text", "Length": 150 },
+		{ "Name": "ContactePrincipalPorta", "Label": "Porta", "Type": "text", "Length": 150 },
+		{ "Name": "ContactePrincipalPoblacio", "Label": "Població", "Type": "text", "Length": 150 },
+		{ "Name": "ContactePrincipalUrgencia", "Label": "Urgència", "Type": "bool", "DataFormat": { "Name": "ToBooleanCheck" } },
+		{ "Name": "ContactePrincipalFamiliar", "Label": "Famíla directa", "Type": "bool", "DataFormat": { "Name": "ToBooleanCheck" } },        
+		
+        { "Name": "CIP", "Label": "CIP", "Type": "text", "Length": 15 },
+        { "Name": "Anticoagulantes", "Label": "Anticoagulants", "Type": "text", "Length": 150 },
+        { "Name": "Sintrom", "Label": "Sintrom", "Type": "datetime" },
+        { "Name": "Protesis", "Label": "Prótesis", "Type": "text", "Length": 100 },
+        { "Name": "Alergias", "Label": "Al·lergies", "Type": "text", "Length": 100 },
+		
+        { "Name": "EscalaNorton", "Label": "Escala Norton", "Type": "DocumentFile" },
+        { "Name": "EscalaBarthel", "Label": "Escala Barthel", "Type": "DocumentFile" },
+        { "Name": "EscalaDownton", "Label": "Escala Downton", "Type": "DocumentFile" },
+        { "Name": "EscalaTinetti", "Label": "Escala Tinetti", "Type": "DocumentFile" },
+        { "Name": "EscalaMEC", "Label": "Escala MEC", "Type": "DocumentFile" },
+        { "Name": "SintromDocument", "Label": "Doc.sintrom", "Type": "DocumentFile" },
+		
+		{ "Name": "CV_OSBasal", "Label": "Comportament", "Type": "Text", "Length": 5 },
+		{ "Name": "CV_TABasal1", "Label": "Comportament", "Type": "Text", "Length": 4 },
+		{ "Name": "CV_TABasal2", "Label": "Comportament", "Type": "Text", "Length": 4 },
+		{ "Name": "CV_GliBasal", "Label": "Comportament", "Type": "Text", "Length": 10 },
+		{ "Name": "CV_PBasal", "Label": "Comportament", "Type": "Text", "Length": 5 },
+		{ "Name": "CV_TBasal", "Label": "Comportament", "Type": "Text", "Length": 5 },
+		{ "Name": "CV_OS", "Label": "OS", "Type": "Text", "Length": 3 },
+		{ "Name": "CV_OSDia", "Label": "Hores dia", "Type": "text", "Length": 50 },
+		{ "Name": "CV_OSNit", "Label": "Hores nit", "Type": "text", "Length": 15 },
+		{ "Name": "CV_TA", "Label": "TA", "Type": "Text", "Length": 3 },
+		{ "Name": "CV_Gli", "Label": "Gli", "Type": "Text", "Length": 5 },
+		{ "Name": "CV_P", "Label": "Pols", "Type": "Text", "Length": 2 },
+		
+		{ "Name": "FC_EstatCognitiu", "Label": "Estat cognitiu", "Type": "text", "Length": 1 },
+        { "Name": "FC_Demencia", "Label": "FC_Demencia", "Type": "text", "Length": 50 },
+        { "Name": "FC_DemenciaSiNo", "Label": "Demencia", "Type": "bool", "DataFormat": { "Name": "ToBooleanCheck" } },
+		{ "Name": "FC_Orientacio", "Label": "Orientació", "Type": "text", "Length": 6 },
+		{ "Name": "FC_Memoria", "Label": "Memória", "Type": "Text", "Length": 1 },
+		{ "Name": "FC_Comprensio", "Label": "Comprensió", "Type": "Text", "Length": 1 },
+		{ "Name": "FC_Comportament", "Label": "Comportament", "Type": "Text", "Length": 5 },
+		
+		
+		{ "Name": "AVD_Alimentacion", "Label": "Alimentacion", "Type": "Text", "Length": 3 },
+		{ "Name": "AVD_AlimentacioAltres", "Label": "Altres", "Type": "Text", "Length": 50 },
+		{ "Name": "AVD_Espesseit", "Label": "Espesseit", "Type": "bool", "DataFormat": { "Name": "ToBooleanCheck" } },
+		{ "Name": "AVD_Descansar", "Label": "Descansar", "Type": "Text", "Length": 4 },
+		{ "Name": "Enllitat", "Label": "Enllitat", "Type": "Text", "Length": 150 },
+		{ "Name": "AVD_Higiene", "Label": "Higiene", "Type": "Text", "Length": 3 },
+		{ "Name": "AVD_HigieneFrecuencia", "Label": "Freqüència", "Type": "Text", "Length": 50 },
+		{ "Name": "AVD_Vestir", "Label": "Vestir", "Type": "Text", "Length": 3 },
+		
+		{ "Name": "AVD_Continencia", "Label": "Continencia", "Type": "Text", "Length": 19 },
+        { "Name": "AVD_Sonda", "Label": "Sonda vesical", "Type": "bool", "DataFormat": { "Name": "ToBooleanCheck" } },
+		{ "Name": "AVD_SondaInici", "Label": "Data inici", "Type": "datetime" },
+		{ "Name": "AVD_SondaDarrerCanvi", "Label": "Darrer canvi", "Type": "datetime" },
+		{ "Name": "AVD_SondaCanvi", "Label": "Data canvi/retirada", "Type": "datetime" },
+		{ "Name": "SondaNum", "Label": "Num", "Type": "Text", "Length": 2 },
+		{ "Name": "AVD_WC", "Label": "WC", "Type": "int" },
+		
+		{ "Name": "AVD_Mobilitat", "Label": "Mobilitat", "Type": "Text", "Length": 9 },
+		{ "Name": "AVD_MobilitatBPAO", "Label": "D.PAO", "Type": "datetime" },
+		{ "Name": "AVD_MobilitatCPAO", "Label": "D.PAO", "Type": "datetime" },
+		{ "Name": "AVD_MobilitatDPAO", "Label": "D.PAO", "Type": "datetime" },
+		
+		{ "Name": "AVD_Caigudes", "Label": "Caigudes", "Type": "Text", "Length": 4 },
+		
+		{ "Name": "AVD_Pell", "Label": "Pell", "Type": "Text", "Length": 13 },
+		
+		{ "Name": "AVD_Comunicacio", "Label": "Comunicacio", "Type": "Text", "Length": 14 },
+		{ "Name": "AVD_ComunicacioParla", "Label": "Parla", "Type": "Text", "Length": 50 },
+		{ "Name": "AVD_ComunicacioVisio", "Label": "Visió", "Type": "Text", "Length": 50 },
+		{ "Name": "AVD_ComunicacioOida", "Label": "Oïda", "Type": "Text", "Length": 50 },		
+		{ "Name": "AVD_Idioma", "Label": "Idioma", "Type": "Text", "Length": 50 },
+		
+		{ "Name": "AVD_Religion", "Label": "Religion", "Type": "Text", "Length": 50 },
+		{ "Name": "AVD_Participacio", "Label": "Participacio", "Type": "Text", "Length": 1 },
+		{ "Name": "ComponentCognitiu", "Label": "Component cognitiu", "Type": "Text", "Length": 13 },
+		
+        { "Name": "RegimenDietetic", "Label": "Régim dietètic", "Type": "text", "Length": 100 },
+        { "Name": "ObservacionesResidente", "Label": "Observacions", "Type": "textarea", "Length": 500 },
+        { "Name": "MotiuIngres", "Label": "Motiu d'ingrés", "Type": "textarea", "Length": 500 },
+        { "Name": "Photo", "Label": "Foto", "Type": "ImageFile" },
+		
+		{ "Name": "PlazaFechaEfecto", "Label": "D.Efecte", "Type": "datetime" },
+        { "Name": "PlazaTipo", "Label": "Tipus de plaça", "Type": "int" },
+        { "Name": "PlazaImporte", "Label": "Import total", "Type": "money" },
+        { "Name": "PlazaImporteUsuario", "Label": "Usuari", "Type": "money" },
+        { "Name": "PlazaImporteGene", "Label": "Generalitat", "Type": "money" },
+        { "Name": "PlazaPEV", "Label": "PEV", "Type": "money" },
+        { "Name": "PlazaIVA", "Label": "IVA", "Type": "money" },
+		{ "Name": "PlazaEndosada", "Label": "Endosada", "Type": "bool", "DataFormat": { "Name": "ToBooleanCheck" } },
+		{ "Name": "CuotaTemporal", "Label": "Temporal", "Type": "bool", "DataFormat": { "Name": "ToBooleanCheck" } },
+		{ "Name": "PendienteCalculadora", "Label": "Pendent rebre calculadora", "Type": "bool", "DataFormat": { "Name": "ToBooleanCheck" } },
+		{ "Name": "FechaSolicitud", "Label": "D.sol·licitut", "Type": "datetime" },
+		{ "Name": "FechaRevision", "Label": "D.resolució", "Type": "datetime" },
+		
+		{ "Name": "Telefono", "Label": "Telèfon", "Type": "text", "Length": 15 },
+		{ "Name": "Email", "Label": "Email", "Type": "Email", "Length": 150 },
+		
+		{ "Name": "SignContracte", "Label": "Incapacitació", "Type": "int" },
+		{ "Name": "SignLiquidacioReserva", "Label": "Incapacitació", "Type": "int" },
+		{ "Name": "SignReglamentIntern", "Label": "Incapacitació", "Type": "int" },
+		{ "Name": "SignReservaPlaza", "Label": "Incapacitació", "Type": "int" },
+		
+		{ "Name": "Disfagia", "Label": "Disfàgia", "Type": "boolean" },
+		{ "Name": "MACA", "Label": "MACA", "Type": "boolean" },
+		{ "Name": "FechaAnalitica", "Label": "Data analítica", "Type": "datetime" },
+		{ "Name": "FechaGuardaFetSolicitud", "Label": "Data sol·licitut", "Type": "datetime" },
+		{ "Name": "FechaResolucionGuardaFet", "Label": "Data resolució", "Type": "datetime" },
+		{ "Name": "FechaIncapcitatSolicitud", "Label": "Data sol·licitut", "Type": "datetime" },
+		{ "Name": "FechaResolucionIncapacitat", "Label": "Data resolució", "Type": "datetime" },
+		{ "Name": "ResolucionIncapacidad", "Label": "Nº registre", "Type": "text", "Lengt": 50 },
+		{ "Name": "SituacionFamiliar", "Label": "Situació familiar", "Type": "textarea", "Length": 4000 },
+		{ "Name": "HistoriaFamiliar", "Label": "Situació familiar", "Type": "textarea", "Length": 4000 },
+        { "Name": "Genograma", "Label": "Genograma", "Type": "ImageFile" },
+		
+		{ "Name": "F_AMRB", "Label": "F_AMRB", "Type": "bool", "DataFormat": { "Name": "ToBooleanCheck" } },
+		{ "Name": "F_AM", "Label": "F_AM", "Type": "Text", "Length": 9 },
+		{ "Name": "F_AM_Altres", "Label": "Altres", "Type": "Text", "Length": 50 },
+		{ "Name": "F_GM", "Label": "F_GM", "Type": "Text", "Length": 16 },
+		{ "Name": "F_AM2", "Label": "F_AM2", "Type": "Text", "Length": 8 },
+		{ "Name": "F_PP", "Label": "F_PP", "Type": "Text", "Length": 7 },
+		{ "Name": "F_PP_Altres", "Label": "Altres", "Type": "Text", "Length": 50 },
+		{ "Name": "F_TR", "Label": "F_TR", "Type": "Text", "Length": 16 },
+		{ "Name": "F_TR_Grua", "Label": "F_TR_Grua", "Type": "Text", "Length": 3 },
+		{ "Name": "F_CD", "Label": "F_CD", "Type": "Text", "Length": 16 },
+		{ "Name": "F_DM", "Label": "F_DM", "Type": "Text", "Length": 8 },
+		{ "Name": "F_DMNew", "Label": "F_DMNew", "Type": "Text", "Length": 10 },
+		{ "Name": "F_IN", "Label": "F_IN", "Type": "Text", "Length": 1 },
+		{ "Name": "F_R", "Label": "F_R", "Type": "Text", "Length": 7 },
+		{ "Name": "F_R_Altres", "Label": "Altres", "Type": "Text", "Length": 50 },
+		{ "Name": "F_PA", "Label": "F_PA", "Type": "Text", "Length": 6 },
+		{ "Name": "F_T", "Label": "F_T", "Type": "Text", "Length": 26 },
+		{ "Name": "F_T_Altres", "Label": "Altres", "Type": "Text", "Length": 50 },
+		{ "Name": "FisioDataValoracioLast", "Label": "Darrera valoració", "Type": "datetime" },
+		{ "Name": "TOcupacionalDataValoracioLast", "Label": "Darrera valoració", "Type": "datetime" },
+		{ "Name": "EducadorSocialDataValoracioLast", "Label": "Darrera valoració", "Type": "datetime" },
+		{ "Name": "PsicoDataValoracioLast", "Label": "Darrera valoració", "Type": "datetime" },		
+		{ "Name": "RegistreGlicemia", "Label": "Registre glicèmia", "Type": "Text", "Length": 35 },
+		
+		{ "Name": "ServeisFactura", "Label": "Facturar serveis", "Type": "bool" },
+		{ "Name": "Solids", "Label": "Sòlids (dieta turmix)", "Type": "bool" },
+		{ "Name": "LiquidsEspessidors", "Label": "Liquids amb espesseïdors", "Type": "bool" },
+		{ "Name": "Suplements", "Label": "Suplement proteic", "Type": "bool" },
+		
+		{ "Name": "EscalaNortonResult", "Type": "int" },
+		{ "Name": "EscalaBarthelResult", "Type": "int" },
+		{ "Name": "EscalaTinettiEquilibriResult", "Type": "int" },
+		{ "Name": "EscalaTinettiMarxaResult", "Type": "int" },
+		{ "Name": "EscalaDowntonResult", "Type": "int" },
+		{ "Name": "EscalaMECResult", "Type": "int" },
+		{ "Name": "EscalaMECResultGDS", "Type": "int" },
+		
+		
+		{ "Name": "SuplementsText", "Label": "Tipus", "Type": "text", "Length": 50 },
+		{ "Name": "SuplementsHorari", "Label": "Horari", "Type": "text", "Length": 50 },
+		{ "Name": "Oxigenoterapia", "Type": "bool" },
+		{ "Name": "OxigenoterapiaLxm", "Type": "text", "Length": 15 },
+		{ "Name": "7Horas", "Type": "bool" },
+		{ "Name": "Pesame", "Label": "Condol", "Type": "bool", "DataFormat": { "Name": "ToBooleanCheck" } },
+		{ "Name": "Colostomia", "Type": "text", "Length": 150 }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": 3,
+			"CustomAjaxSource": "Item_Residente_GetAll",
+			"Columns": [
+                { "DataProperty": "Nombre", "ReplacedBy": "N", "Label": "Usuari", "Search": true, "Orderable": true,  "Linkable": true },
+                { "DataProperty": "FechaAlta", "ReplacedBy": "FA","Orderable": true, "Width": 90 },
+                { "DataProperty": "FechaNAC", "Label":"D.Naix", "ReplacedBy": "FN","Orderable": true, "Width": 90 },
+                { "DataProperty": "Grado", "ReplacedBy": "G", "Width": 60, "Align": "center", "RenderData": "RESIDENTE_GradoColumn" },
+                { "DataProperty": "HabitacionId", "ReplacedBy": "H", "Width": 90, "Align": "center", "Search": true, "Orderable": true },
+				{ "DataProperty": "Co", "Label": "Contacte", "Width": 200 },
+				{ "DataProperty": "T", "Label": "Telèfon", "Width": 120 },
+                { "DataProperty": "FechaRevisionGrado", "ReplacedBy": "FR", "HiddenList": true }
+            ]
+        },
+        {
+            "Id": "ResidentesBaja",
+            "FormId": "Custom",
+			"Title": "Usuaris de baixa",
+			"Label": "Usuaris de baixa",
+            "Layout": 1,
+            "EditAction": 3,
+			"CustomAjaxSource": "Item_Residente_GetAllBaja",
+			"Columns": [
+                { "DataProperty": "Nombre", "ReplacedBy": "N", "Label": "Usuari", "Search": true, "Orderable": true,  "Linkable": true },
+                { "DataProperty": "FechaAlta", "ReplacedBy": "FA","Orderable": true, "Width": 90 },
+                { "DataProperty": "FechaNAC", "Label":"D.Naix", "ReplacedBy": "FN","Orderable": true, "Width": 90 },
+                { "DataProperty": "FechaBaja", "ReplacedBy": "FB","Orderable": true, "Width": 90 },
+				{ "DataProperty": "Co", "Label": "Contacte", "Width": 200 },
+				{ "DataProperty": "T", "Label": "Telèfon", "Width": 120 },
+				{ "DataProperty": "Pesame", "ReplacedBy": "P", "Label": "Condol", "Width": 90, "Render": "RESIDENTE_BtnPesame", "Align": "center" },
+				{ "DataProperty": "MotivoBaja", "ReplacedBy": "M", "HiddenList": true }
+            ]
+        }
+    ],
+    "Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Actions": [
+				{
+					"Action": "RESIDENTE_ABVDPrint",
+					"Icon": "fa fa-address-card",
+					"Label": "Generar ABVD"
+				},
+				{
+					"Action": "RESIDENTE_SetOut",
+					"Icon": "fa fa-sign-out",
+					"Label": "L'usuari és fora del centre"
+				},
+				{
+					"Action": "RESIDENTE_SetReunionInterdisciplinar",
+					"Icon": "fa fa-users",
+					"Label": "Pla d'Atenció Individual"
+				},
+				{
+					"Action": "RESIDENTE_RegistreCaigudes",
+					"Icon": "fa fa-user-injured",
+					"Label": "Registrar caiguda"
+				},
+				{
+					"Action": "RESIDENTE_InformeTOcupacional",
+					"Icon": "fa fa-file-plus",
+					"Label": "Generar nou informe de teràpia ocupacional",
+					"Tab": "TOcupacional"
+				},
+				{
+					"Action": "RESIDENTE_InformePlaDeVida",
+					"Icon": "fa fa-file-plus",
+					"Label": "Generar nou pla d'atenció de vida",
+					"Tab": "Educador"
+				},
+				{
+					"Action": "RESIDENTE_InformeEducadorSocial",
+					"Icon": "fa fa-file-plus",
+					"Label": "Generar nou informe del educador social",
+					"Tab": "Educador"
+				},
+				{
+					"Action": "RESIDENTE_InformeTreballSocial",
+					"Icon": "fa fa-file-plus",
+					"Label": "Generar nou informe treball social",
+					"Tab": "TreballSocial"
+				},
+				{
+					"Action": "RESIDENTE_InformeFisio",
+					"Icon": "fa fa-file-plus",
+					"Label": "Generar nou informe fisio",
+					"Tab": "Fisio"
+				},
+				{
+					"Action": "RESIDENTE_InformePsico",
+					"Icon": "fa fa-file-plus",
+					"Label": "Generar nou informe psicològic",
+					"Tab": "Psico"
+				},
+				{
+					"Action": "RESIDENTE_InformeEnfermeria",
+					"Icon": "fa fa-file-plus",
+					"Label": "Generar nou informe infemeria",
+					"Tab": "Infemeria"
+				},
+				{
+					"Action": "RESIDENTE_RegistreGlicemia",
+					"Icon": "fa fa-edit",
+					"Label": "Planificar registre de glicèmia",
+					"Tab": "Infemeria"
+				},
+				{
+					"Action": "RESIDENTEUPP_Print",
+					"Icon": "fa fa-file-pdf",
+					"Label": "Imprimir llista UPPs",
+					"Tab": "Infemeria"
+				},
+				{
+					"Action": "RESIDENTECura_Print",
+					"Icon": "fa fa-file-pdf",
+					"Label": "Imprimir llista de cures",
+					"Tab": "Infemeria"
+				},
+				{
+					"Action": "RESIDENTE_InformeMedic",
+					"Icon": "fa fa-file-plus",
+					"Label": "Generar nou informe médic",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTE_AutorizacionContencions_ConfirmedSi",
+					"Icon": "fa fa-file",
+					"Label": "Autorització per a la col·locació de mesures de contenció",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTE_AutorizacionContencions_ConfirmedNo",
+					"Icon": "fa fa-file",
+					"Label": "Negativa per a la col·locació de mesures de contenció",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTECONTENCIONES_NegativaResitadaContencions",
+					"Icon": "fa fa-file",
+					"Label": "Negativa per a la retirada de mesures de contenció",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTECONTENCIONES_AcordNoContencio",
+					"Icon": "fa fa-handshake",
+					"Label": "Conformitat per la no prescripció de contencions",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTE_MesuresConfort",
+					"Icon": "fa fa-file",
+					"Label": "Adopció mesures de confort",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTE_ConsentimientoNoIngres",
+					"Icon": "fa fa-file",
+					"Label": "Consentiment de no ingrés hospitalari",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTE_ConsentimientoNoRCP",
+					"Icon": "fa fa-heartbeat",
+					"Label": "No consentiment RCP",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTE_Disfagia_Popup",
+					"Icon": "fa fa-file",
+					"Label": "Negativa a prescripció dieta disfàgia",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTE_PeticionInterconsulta_Popup",
+					"Icon": "fa fa-user-md",
+					"Label": "Petició interconsulta",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTE_PeticionPAO_Popup",
+					"Icon": "fa fa-wheelchair",
+					"Label": "Petició d'articles ortopèdics",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTE_PeticionTransporteSanitario_Popup",
+					"Icon": "fa fa-ambulance",
+					"Label": "Petició transport sanitari",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTE_Doctora7Horas",
+					"Icon": "fa fa-clock",
+					"Label": "Autorització 7 hores",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "RESIDENTE_Doctora7HorasFinalitzacio",
+					"Icon": "fa fa-clock",
+					"Label": "Finalizació d'autorització 7 hores",
+					"Tab": "Medicacion"
+				},
+				{
+					"Action": "TrasllatUrgencies",
+					"Icon": "fa fa-stretcher",
+					"Label": "Trasllat a urgències"
+				},
+				{
+					"Action": "RESIDENTE_ProgramarVisitaMedica",
+					"Icon": "fa fa-calendar",
+					"Label": "Programar visita mèdica"
+				},
+				{
+					"Action": "FeDeVidaSend",
+					"Icon": "fa fa-file-import",
+					"Label": "Imprimir i enviar fé de vida",
+					"Tab": "data"
+				},
+				{
+					"Action": "FeDeVida",
+					"Icon": "fa fa-file",
+					"Label": "Imprimir fé de vida",
+					"Tab": "data"
+				},
+				{
+					"Action": "RESIDENTE_SolicitudIncapacitacion",
+					"Icon": "fa fa-file-pdf",
+					"Label": "Sol·licitut d'incapacitació",
+					"Tab": "TreballSocial"
+				},
+				{
+					"Action": "RESIDENTE_SetBaixa",
+					"Icon": "fa fa-cog",
+					"Label": "Ha causat baixa",
+					"Tab": "data"
+				},
+				{
+					"Action": "RESIDENTESeguimientos_Print",
+					"Icon": "fa fa-file-pdf",
+					"Label": "Imprimir seguiments usuari"
+				}
+			],
+			"Tabs": [
+				{
+					"Persistent": true,
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Code" },
+								{ "Name": "Nombre" },
+								{ "Name": "CIF", "Align": "right" }
+							]
+						},
+						{
+							"Id": "RowPersistence2",
+							"Hidden": true,
+							"Fields": [
+								{ "Name": "Edad" },
+								{ "Name": "Photo" }
+							]
+						}
+					]
+				},
+				{
+					"Label": "Dades personals",
+					"Id": "data",
+					"Rows": [
+					{
+						"Fields": [
+							{ "Name": "FechaAlta" },
+							{ "Name": "FechaNAC", "ColSpan": 2 },
+							{ "Name": "HabitacionId" }
+						]
+					},
+					{
+						"Fields": [
+							{ "Name": "CIP" },
+							{ "Name": "Procedencia" },
+							{ "Name": "DP" },
+							{ "Type": "Blank" }
+						]
+					},
+					{
+						"Id": "RowServeisFactura",
+						"Fields": [
+							{ "Name": "ServeisFactura" },
+							{ "Name": "Pesame", "Label": "Condol a la familia, pujar certificat defunció i trucar tanatori per a les flors", "ColSpan": 2 }
+						]
+					},
+					{
+						"Hidden": true,
+						"Fields": [
+							{ "Name": "7Horas" }
+						]
+					},
+					{
+						"Label": "Adreça",
+						"Expandible": "Popup",
+						"ExpandibleGroup": "address",
+						"ExpandibleCollapsed": true,
+						"Fields": [
+							{ "Name": "LocationAddress" },
+							{ "Name": "LocationPostalCodeId" },
+							{ "Name": "LocationCountryId" }
+						]
+					},
+					{
+						"ExpandibleGroup": "address",
+						"Fields": [
+							{ "Name": "Email" },
+							{ "Name": "Telefono" },
+							{ "Type": "Blank" }
+						]
+					},
+					{
+						"Label": "Persona responsable",
+						"Id": "PersonaResponsable",
+						"Expandible": "Popup",
+						"ExpandibleGroup": "personaresponsable",
+						"ExpandibleCollapsed": false,
+						"Fields": [
+							{ "Name": "EnNombreDe" }
+						]
+					},
+					{
+						"Label": "Grau",
+						"Id": "RowGrau",
+						"Fields": [
+							{ "Name": "Grado" },
+							{ "Name": "FechaRevisionGrado", "Compact": true },
+							{ "Name": "FechaVisitaRevisionGrado", "Compact": true },
+							{ "Name": "FechaRealRevisionGrado", "Compact": true }
+						]
+					},
+					{
+						"Label": "Incapacitació",
+						"Expandible": "Popup",
+						"ExpandibleGroup": "Incapacitacio",
+						"ExpandibleCollapsed": true,
+						"Fields": [
+							{ "Name": "Incapacitacion" },
+							{ "Name": "IncapacitacionTutor", "ColSpan": 2 },
+							{ "Name": "IncapacitacionTutorNIF" }
+						]
+					},
+					{
+						"Label": "Guarda de fet",
+						"Expandible": "Popup",
+						"ExpandibleGroup": "GuardaDeFet",
+						"ExpandibleCollapsed": true,
+						"Fields": [
+							{ "Name": "GuardaDeFet" },
+							{ "Name": "GuardaDeFetDocument", "ColSpan": 2, "Config": "LVUA" },
+							{ "Name": "DeterioramentCognitiu" }
+						]
+					},
+					{
+						"ExpandibleGroup": "GuardaDeFet",
+						"Fields": [
+							{ "Type": "Blank" },
+							{ "Name": "GuardaDeFetTutor", "Label": "Guardador/a", "ColSpan": 2 },
+							{ "Name": "GuardaDeFetTutorNIF" }
+						]
+					},
+					{
+						"ExpandibleGroup": "GuardaDeFet",
+						"Fields": [
+							{ "Type": "Blank" },
+							{ "Name": "FechaGuardaFetSolicitud" },
+							{ "Name": "FechaResolucionGuardaFet" },
+							{ "Type": "Blank" }
+						]
+					},
+					{
+						"Label": "Assegurança de defunció",
+						"Expandible": "Popup",
+						"ExpandibleGroup": "Defuncio",
+						"ExpandibleCollapsed": true,
+						"Fields": [
+							{ "Name": "SeguroUsuario" },
+							{ "Name": "SeguroPoliza" },
+							{ "Name": "SeguroAseguradora" },
+							{ "Name": "SeguroTelefono" }
+						]
+					},
+					{
+						"Label": "Observacions",
+						"Fields": [
+							{ "Name": "ObservacionesResidente" }
+						]
+					},
+					{
+						"Label": "Motiu d'ingrés",
+						"Fields": [
+							{ "Name": "MotiuIngres" }
+						]
+					}
+				]}]}]}

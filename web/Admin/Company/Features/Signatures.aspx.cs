@@ -13,6 +13,11 @@
             Instance.CheckPersistence();
         }
 
+        public string Translate(string key)
+        {
+            return this.master.Translate(key);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.master = this.Master as Main;

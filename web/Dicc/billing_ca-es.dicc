@@ -25,6 +25,8 @@ Billing_IVA_1::Exempt
 Billing_IVA_2::Super reduït 4%
 Billing_IVA_3::Reduït 10%
 Billing_IVA_4::General 21%
+Core_BankAccount_Message_SuccessAdd::Compte bancari afegit correctament
+Core_BankAccount_Message_SuccessUpdate::Compte bancari modificat correctament
 Core_BankAccount::Compte bancari
 Core_BankAccounts::Comptes bancaris
 Core_BankAccount_List::Llistat de comptes bancaris

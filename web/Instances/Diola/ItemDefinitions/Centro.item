@@ -1,0 +1,64 @@
+﻿{
+    "Id": 205,
+    "ItemName": "Centro",
+	"Description": "Centros",
+	"Features": {"Attachs": true},
+    "Layout": {
+        "Icon": "far fa-building",
+        "Label": "Centro",
+        "LabelPlural": "Centros",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [ { "Name": "Nombre" } ]
+        },
+        "EditionType": "inline"
+    },
+	"NeedFK": [  ],
+    "ForeignValues": [ { "ItemName": "LocationPostalCode" } ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Code", "Label": "Codi", "Type": "text", "Length": 10, "Required": true, "CodeSequence": "centros" },
+        { "Name": "Status", "Label": "Estado", "Type": "FixedList", "FixedListName": "CentroStatus", "Required": true },
+        { "Name": "Nombre", "Label": "Nom", "Type": "text", "Length": 100, "Required": true },
+        { "Name": "Tel1", "Label": "Teléfono1", "Type": "text", "Length": 15, },
+        { "Name": "Tel2", "Label": "Teléfono2", "Type": "text", "Length": 15, },
+        { "Name": "Email", "Label": "Email", "Type": "email" },
+        { "Name": "WebSite", "Label": "Web", "Type": "url" },
+        { "Name": "Direccion", "Label": "Dirección", "Type": "text", "Length": 150, "Required": true },
+        { "Name": "LocationPostalCodeId", "Label": "C.P.", "Type": "long", "Required": true },
+		{ "Name": "Servicios", "Label": "Tipo", "Type": "text", "Length": 5, "Required": true },
+		{ "Name": "Categoria", "Label": "Categoría", "Type": "FixedList", "FixedListName": "CategoriaCentro" } ,
+		{ "Name": "Comentarios", "Label": "Comentarios", "Type": "textarea" },
+		{ "Name": "Concertacion", "Label": "Conertación", "Type": "integer" },
+		
+		
+        { "Name": "ContractNumber", "Label": "Nºcontrato", "Type": "text", "Length": 20, "Required": true },
+        { "Name": "ContractStart", "Label": "Inicio contrato", "Type": "datetime" },
+        { "Name": "ContractEnds", "Label": "Fin contrato", "Type": "datetime" },
+		{ "Name": "NRSS", "Label": "NºRegistro servicios sociales", "Type": "text", "Length": 30 },
+        { "Name": "RCivilExpiration", "Label": "Seguro R. Civil - Fecha expiración", "Type": "datetime" },
+        { "Name": "RazonSocialNombre", "Label": "Nombre", "Type": "text", "Length": 150 },
+        { "Name": "RazonSocialCIF", "Label": "CIF", "Type": "text", "Length": 15 },
+        { "Name": "RazonSocialDireecion", "Label": "Dirección", "Type": "text", "Length": 150, "Required": true },
+        { "Name": "RazonSocialCP", "Label": "C.P.", "Type": "long", "Required": true },
+        { "Name": "RazonSocialTel1", "Label": "Teléfono1", "Type": "text", "Length": 15, },
+        { "Name": "RazonSocialTel2", "Label": "Teléfono2", "Type": "text", "Length": 15, },
+        { "Name": "RazonSocialRepresentanta", "Label": "Representante legal", "Type": "text", "Length": 100, },
+        { "Name": "RazonSocialCargo", "Label": "Cargo de representación", "Type": "text", "Length": 50, },
+		
+		{ "Name": "IBAN", "Label": "IBAN", "Type": "IBAN" },
+		{ "Name": "TipoFacturación", "Label": "Tipo de facturación", "Type": "FixedList", "FixedListName": "TipoFacturacion", "Required": true } 
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Nombre" },
+                { "DataProperty": "Categoria", "Width": 120, "RenderData": "CENTRO_CategoriaColumn" }
+            ]
+        }
+    ]
+}

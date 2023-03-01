@@ -10,16 +10,16 @@
             <div class="row">
                 <label id="Email_Label" class="col-sm-1 control-label"><%=this.master.Translate("Core_Security_ApplicationUser_Label_Email") %><span style="color:#f00">*</span></label>
                 <div class="col-sm-3">
-                    <input id="Email" type="text" class="form-control" value="" />
+                    <input id="Email" type="text" class="form-control" value="<%=this.UserData.Email %>" />
                 </div>
                 <label id="Name_Label" class="col-sm-1 control-label"><%=this.master.Translate("Core_Security_ApplicationUser_Label_FirstName") %><span style="color:#f00">*</span></label>
                 <div class="col-sm-2">
-                    <input id="FirstName" type="text" class="form-control" value="" />
+                    <input id="FirstName" type="text" class="form-control" value="<%=this.UserData.Profile.Name %>" />
                 </div>
                 <label id="LastName_Label" class="col-sm-1 control-label"><%=this.master.Translate("Core_Security_ApplicationUser_Label_LastNames") %></label>
                 <div class="col-sm-4">
-                    <input id="LastName" type="text" class="form-control" style="width: 45%; float: left;" value="" />
-                    <input id="LastName2" type="text" class="form-control" style="width: 45%; float: left; margin-left: 8px;" value="" />
+                    <input id="LastName" type="text" class="form-control" style="width: 45%; float: left;" value="<%=this.UserData.Profile.LastName %>" />
+                    <input id="LastName2" type="text" class="form-control" style="width: 45%; float: left; margin-left: 8px;" value="<%=this.UserData.Profile.LastName2 %>" />
                 </div>
             </div>
         </div>
@@ -114,7 +114,42 @@
                     <div id="tab-grants" class="tab-pane">
                         <div class="panel-body panel-body-form">
                             <h5>Accés a dades</h5>
-                            <h5>Permissos especials</h5>
+                            
+
+                            <div id="AccessGrants_List" class="ListContainer">
+                                <div class="hpanel hblue hpanel-table" style="margin: 0;">
+                                    <div class="tableHead">
+                                        <table cellpadding="1" cellspacing="1" class="table">
+                                            <thead id="AccessGrants_ListHead">
+                                                <tr>
+                                                    <th id="th1" colspan="2" class="search" data-sortfield="Name" data-sorttype="text" data-tableid="AccessGrants">Nom</th>
+                                                    <th id="th2" style="width: 100px;text-align:center" class="search">Lectura</th>
+                                                    <th id="th3" style="width: 100px;text-align:center" class="search">Modificació</th>
+                                                    <th id="th4" style="width: 100px;text-align:center" class="search">Eliminació</th>
+                                                    <th style="padding: 0; width: 27px; border-right: none;"></th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="panel-body panel-body-list" style="height: 671px;">
+                                        <div class="table-responsive">
+                                            <div class="table-body" style="max-height: 100%; height: 100%">
+                                                <table cellpadding="1" cellspacing="1" class="table" style="max-height: 100%">
+                                                    <tbody style="max-height: 100%" id="AccessGrants_ListBody">
+                                                        <asp:Literal runat="server" ID="LtAccessGrants"></asp:Literal>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- panel-body -->
+                                    <div class="panel-footer panel-footer-list">Nº ítems: <strong id="AccessGrants_ListCount">8</strong>    </div>
+                                    <!-- panel-body -->
+                                </div>
+                            </div>
+
+
+                        </div>
                         </div>
                     </div>
                     <div id="tab-Attachs" class="tab-pane">

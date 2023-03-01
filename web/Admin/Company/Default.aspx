@@ -135,6 +135,22 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 col-xs-4">
+            <div class="hpanel hblue">
+                <div class="panel-heading hbuilt">
+                    <%=this.MasterPage.Translate("Core_ApplicationUser_MenuLabel") %>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        <button type="button" class="AdminCompanyButton col-xs-12 btn btn-app btn-info" onclick="GoEncryptedPage('/Admin/Company/ProfileConfig.aspx');">
+                            <i class="fa fa-users"></i>&nbsp;&nbsp<%=this.MasterPage.Translate("Common_UserProfile") %>&nbsp;&nbsp;</button>
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    Dades dels usuaris
+                </div>
+            </div>
+        </div>
 
     </div>
     <div class="row">

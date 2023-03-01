@@ -51,12 +51,17 @@ namespace OpenFrameworkV3
 
         public static ReadOnlyDictionary<string, string> Dictionary(string language, string instanceName)
         {
-            if(DictionaryExists(language, instanceName))
+            if (DictionaryExists(language, instanceName))
             {
                 return new ReadOnlyDictionary<string, string>(dictionary[DictionaryKey(language, instanceName)]);
             }
+            else
+            {
+                DictionaryAdd(language, instanceName); 
+                return new ReadOnlyDictionary<string, string>(dictionary[DictionaryKey(language, instanceName)]);
+            }
 
-            return new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+            //return new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
         }
 
         public static bool DictionaryExists(string language, string instanceName)

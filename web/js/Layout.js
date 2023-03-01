@@ -141,7 +141,6 @@ function RenderMenuOption(option) {
 
 function RenderBreadCrumb() {
     if (PageType === "PageView") {
-
         if (typeof ListId !== "undefined") {
             list = ItemListById(ItemDefinition, ListId);
             var listLabel = ItemDefinition.Layout.LabelPlural;
@@ -195,8 +194,23 @@ function ToBooleanIcon(value) {
     if (typeof value === "undefined") { return ""; }
     if (value === null) { return ""; }
     if (value === "") { return ""; }
-    if (value === true || value === "true") { return "<i class=\"fal fa-lg fa-fw fa-check\"></i>"; }
-    if (value === false || value === "false") { return "<i class=\"fal fa-lg fa-fw fa-times\"></i>"; }
+    if (value === true || value === "true") {
+        return { "data": "<i class=\"fas fa-check green\"></i>", "title": Dictionary.Common_Yes };
+    }
+    if (value === false || value === "false") {
+        return { "data": "<i class=\"fas fa-times red\"></i>", "title": Dictionary.Common_No };
+    }
+    return "";
+}
+
+function ToBooleanIconNull(value) {
+    if (typeof value === "undefined") { return ""; }
+    if (value === null) { return ""; }
+    if (value === "") { return ""; }
+    if (value === true || value === "true") {
+        return { "data": "<i class=\"fas fa-check green\"></i>", "title": "" };
+    }
+    if (value === false || value === "false") { return ""; }
     return "";
 }
 
@@ -204,8 +218,12 @@ function ToBooleanCheck(value) {
     if (typeof value === "undefined") { return ""; }
     if (value === null) { return ""; }
     if (value === "") { return ""; }
-    if (value === true || value === "true") { return "<i class=\"fal fa-lg fa-fw fa-check-square\"></i>"; }
-    if (value === false || value === "false") { return "<i class=\"fal fa-lg fa-fw fa-square grey\"></i>"; }
+    if (value === true || value === "true") {
+        return { "data": "<i class=\"fal fa-lg fa-fw fa-check-square\"></i>", "title": Dictionary.Common_Yes };
+    }
+    if (value === false || value === "false") {
+        return { "data": "<i class=\"fal fa-lg fa-fw fa-square grey\"></i>", "title": Dictionary.Common_No };
+    }
     return "";
 }
 
@@ -213,7 +231,9 @@ function ToBooleanCheckNull(value) {
     if (typeof value === "undefined") { return ""; }
     if (value === null) { return ""; }
     if (value === "") { return ""; }
-    if (value === true || value === "true") { return "<i class=\"fal fa-lg fa-fw fa-check\"></i>"; }
+    if (value === true || value === "true") {
+        return { "data": "<i class=\"fal fa-lg fa-fw fa-check\"></i>", "title": "" } ;
+    }
     return "";
 }
 
@@ -420,4 +440,105 @@ function FormatBytes(bytes, decimals = 2) {
     const i = Math.floor(Math.log(bytes) / Math.log(k))
 
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}
+
+var inlineContext = {
+    "originalHtml": [],
+    "itemName": "",
+    "listId": "",
+    "itemDefinition": null,
+    "list": null
+}
+
+function InLineEdition(itemName, listId, itemId, formId) {
+    inlineContext.itemName = itemName;
+    inlineContext.listId = listId;
+    inlineContext.originalHtml.push({ "Id": itemId, "trId": "#" + itemName + "_" + listId + "_ListBody #" + itemId, "html": $("#" + itemName + "_" + listId + "_ListBody #" + itemId).html() });
+
+    var editedTd = "#" + itemName + "_" + listId + "_ListBody #" + itemId + " TD";
+
+    var itemDefinition = ItemDefinitionByName(itemName);
+    var list = ItemListById(itemDefinition, listId);
+
+    inlineContext.itemDefinition = itemDefinition;
+    inlineContext.list = list;
+
+    $.each($(editedTd), function (indice, cell) {
+        if ($(cell).hasClass("action-buttons")) {
+            var content = "<a class=\"RowButtonAction green ace-icon fas fa-save bigger-120\" id=\"5\" onclick=\"InLineEditionSave(" + itemId + ");\" title=\"" + Dictionary.Common_Save + "\"></a>";
+            content += "<a class=\"RowButtonAction red ace-icon fas fa-ban bigger-120\" id =\"5\" onclick=\"InLineEditionCancel(" + itemId + ");\" title=\"" + Dictionary.Common_Cancel + "\"></a>";
+            $(cell).html(content);
+        }
+        else {
+            var fieldName = list.Columns[indice].DataProperty;
+            var field = FieldByName(itemDefinition, fieldName);
+
+            var data = GetItemById(PageListById(itemName, listId), itemId);
+
+            var content = "";
+
+            switch (field.Type.toLowerCase()) {
+                case "text":
+                    $(cell).css("padding", "0px");
+                    $(cell).css("padding-left", "4px");
+                    $(cell).css("vertical-align", "middle");
+                    content = "<input class=\"editInline\" type=\"text\" value=\""+ data[fieldName] +"\"/>";
+                    break;
+                default:
+                    contect = field.Type;
+                    break;
+            }
+
+            $(cell).html(content);
+            $(cell).css("background-color", "#f9f9be");
+        }
+    });   
+}
+
+function InLineEditionCancel(itemId) {
+    var pageList = ListById(inlineContext.listId, inlineContext.itemName);
+    var originalData = ListDataById(inlineContext.listId, inlineContext.itemName, itemId);
+    var html = pageList.RenderRow(originalData, { "Grants": "RWD" }, pageList.ListDefinition, pageList.ItemDefinition);
+
+    var tr = inlineContext.originalHtml.filter(t => t.Id == itemId);
+    if (tr.length > 0) {
+       // $(tr[0].trId).html(tr[0].html);
+        $(tr[0].trId).html($(html).html());
+    }
+}
+
+function InLineEditionSave(itemId) {
+    var trId = "#" + inlineContext.itemName + "_" + inlineContext.listId + "_ListBody #" + itemId;
+    console.log(trId);
+
+    var originalData = ListDataById(inlineContext.listId, inlineContext.itemName, itemId);
+
+    ItemData = new Item({
+        "ItemDefinition": inlineContext.itemDefinition,
+        "OriginalItemData": originalData,
+        "Origin": "ListInEdit",
+        "OriginConfig": {
+            "ItemId": itemId,
+            "TrId": trId
+        }
+    });
+
+    $.each($(trId + " INPUT"), function (indice, cell) {
+        var fieldName = inlineContext.list.Columns[indice].DataProperty;
+        var field = FieldByName(inlineContext.itemDefinition, fieldName);
+        ItemData.UpdateData(fieldName, $(cell)[0].value);
+    });
+
+    // Updatar la tabla
+    var pageList = ListById(inlineContext.listId, inlineContext.itemName);
+    for (var x = 0; x < pageList.Data.length; x++) {
+        if (pageList.Data[x].Id === itemId) {
+            console.log(pageList.Data[x]);
+            console.log(ItemData.ActualData);
+            pageList.Data[x] = ItemData.ActualData;
+        }
+    }
+
+    console.log(ItemData);
+    ItemData.Save();
 }

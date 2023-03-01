@@ -33,16 +33,16 @@
                                 <div class="panel-body">
                                     <div class="col-xs-6">
                                         <label>Acciones:</label>&nbsp;
-                                     <button class="btn btn-info btn-sm">Detectar dispositivo</button>&nbsp;
-                                     <button class="btn btn-info btn-sm">Probar captura de firma</button>
+                                     <button type="button" class="btn btn-info btn-sm">Detectar dispositivo</button>&nbsp;
+                                     <button type="button" class="btn btn-info btn-sm">Probar captura de firma</button>
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="form-explanation alert alert-block alert-info" style="padding: 8px;">
-                                            <table>
+                                            <table style="width:100%;">
                                                 <tbody>
                                                     <tr>
-                                                        <td style="vertical-align: top;"><i class="ace-icon fa fa-info-circle info fa-2x"></i>&nbsp;</td>
-                                                        <td>
+                                                        <td style="vertical-align: top;padding:8px;"><i class="ace-icon fa fa-info-circle info fa-2x"></i>&nbsp;</td>
+                                                        <td style="text-align:center;">
                                                             Tenga preparada la tableta digitalizadora de firmas.
                                                             <br />
                                                             <img src="/img/wacom.png" />
@@ -54,9 +54,9 @@
                                     </div>
                                 </div>
                                 <div class="panel-footer">
-                                    <label>Acciones:</label>&nbsp;
-                                     <button class="btn btn-xs">Activar</button>
-                                    <button class="btn btn-danger btn-xs">Desactivar</button>
+                                    <label><%=this.Translate("Common_FooterLabelActions") %>:</label>&nbsp;
+                                    <button type="button" class="btn btn-xs"><%= this.Translate("Common_FooterBtnActivate") %></button>
+                                    <button type="button" class="btn btn-danger btn-xs"><%= this.Translate("Common_FooterBtnInactivate") %></button>
                                 </div>
                             </div>
                         </div>
@@ -75,19 +75,19 @@
                                             <div class="form-group">
                                                 <label id="UserLabel" class="formFieldLabel col-sm-2">Código<span style="color: #ff0000;">*</span></label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" id="User" class="col-xs-12 col-sm-12 codesequence tooltip-info formData" value="jcastilla@openframework.es" onblur="this.value = $.trim(this.value);" spellcheck="false" data-validation="required">
+                                                    <input type="text" id="User" class="col-xs-12 col-sm-12 codesequence tooltip-info formData" value="jcastilla@openframework.es" onblur="this.value = $.trim(this.value);" spellcheck="false" data-validation="required" />
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label id="PasswordLabel" class="formFieldLabel col-sm-2">Nombre<span style="color: #ff0000;">*</span></label>
                                                 <div class="col-sm-10">
-                                                    <input type="password" id="Password" class="col-xs-12 col-sm-12  tooltip-info formData" value="V@nessa57" onblur="this.value = $.trim(this.value);" spellcheck="false" data-validation="required">
+                                                    <input type="password" id="Password" class="col-xs-12 col-sm-12  tooltip-info formData" value="V@nessa57" onblur="this.value = $.trim(this.value);" spellcheck="false" data-validation="required" />
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label id="CIFLabel" class="formFieldLabel col-sm-2">CIF</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" id="CIF" class="col-xs-12 col-sm-12  tooltip-info formData" value="53072025P" onblur="this.value = $.trim(this.value);" spellcheck="false" data-validation="required" readonly="readonly">
+                                                    <input type="text" id="CIF" class="col-xs-12 col-sm-12  tooltip-info formData" value="53072025P" onblur="this.value = $.trim(this.value);" spellcheck="false" data-validation="required" readonly="readonly" />
                                                 </div>
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@
                                                 <table>
                                                     <tbody>
                                                         <tr>
-                                                            <td style="vertical-align: top;"><i class="ace-icon fa fa-info-circle info fa-2x"></i>&nbsp;</td>
+                                                            <td style="vertical-align: top;padding:8px;"><i class="ace-icon fa fa-info-circle info fa-2x"></i>&nbsp;</td>
                                                             <td>Se deben introducir los datos de la cuenta de Firmafy.<br>
                                                                 El correcto funcionamiento depende de <a href="http:www.firmafy.com" target="_blank">Firmafy.com</a>. OpenFramework sólo envía los datos a Firmafy para que proceda a la firma de los documentos.
                                                             </td>
@@ -108,9 +108,9 @@
                                     </div>
                                 </div>
                                 <div class="panel-footer">
-                                    <label>Acciones:</label>&nbsp;
-                            <button class="btn btn-success btn-xs">Activar</button>
-                                    <button class="btn btn-xs">Desactivar</button>
+                                    <label><%=this.Translate("Common_FooterLabelActions") %>:</label>&nbsp;
+                                    <button type="button" class="btn btn-success btn-xs"><%= this.Translate("Common_FooterBtnActivate") %></button>
+                                    <button type="button" class="btn btn-xs"><%= this.Translate("Common_FooterBtnInactivate") %></button>
                                 </div>
                             </div>
                         </div>
@@ -127,9 +127,9 @@
                                     A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.
                                 </div>
                                 <div class="panel-footer">
-                                    <label>Acciones:</label>&nbsp;
-                            <button class="btn btn-xs">Activar</button>
-                                    <button class="btn btn-danger btn-xs">Desactivar</button>
+                                    <label><%=this.Translate("Common_FooterLabelActions") %>:</label>&nbsp;
+                                    <button type="button" class="btn btn-xs"><%= this.Translate("Common_FooterBtnActivate") %></button>
+                                    <button type="button" class="btn btn-danger btn-xs"><%= this.Translate("Common_FooterBtnInactivate") %></button>
                                 </div>
                             </div>
                         </div>

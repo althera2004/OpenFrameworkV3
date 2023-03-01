@@ -1,0 +1,44 @@
+﻿{
+    "Id": 2003,
+    "ItemName": "LocationPostalCode",
+    "Features": {
+      "Persistence": true,
+	  "Geolocation": true
+    },
+    "Layout": {
+        "Icon": "fa fa-city",
+        "Label": "Codi postal",
+        "LabelPlural": "Codis postals",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Code" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+	"ForeignValues": [ {"ItemName": "LocationCity" } ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true, "width": 60 },
+        { "Name": "Code", "Label": "Codi", "Type": "text", "Length": 15, "Required": true },
+        { "Name": "LocationCityId", "Label": "Localitat", "Type": "long", "ColumnDataType": "Text", "FK": true },
+		{ "Name": "Latitude", "Type": "text", "Label": "Latitut", "Length": 15 },
+		{ "Name": "Longitude", "Type": "text", "Label": "Longitut", "Length": 15 }
+    ],
+	"Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "InLine",
+			"PageSize": 50,
+			"Columns": [
+                { "DataProperty": "Code", "Label": "Codi", "Search": true, "Orderable": true, "Linkable": true, "Width": 80 },
+                { "DataProperty": "LocationCityId", "Orderable": true, "Linkable": true, "Search": true },
+                { "DataProperty": "Latitude", "Width": 120, "Align": "right" },
+                { "DataProperty": "Longitude", "Width": 120, "Align": "right" }
+            ]
+        }
+	],
+	"CustomFK": "FK_LocationPostalCode"
+}

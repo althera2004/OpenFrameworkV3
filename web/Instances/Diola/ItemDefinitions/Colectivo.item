@@ -1,0 +1,42 @@
+﻿{
+    "Id": 201, 
+	"ItemName": "Colectivo",
+	"Description": "Colectivo",
+    "Layout": {
+        "Icon": "far fa-clinic-medical",
+        "Label": "Colectivo",
+        "LabelPlural": "Colectivos",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [ { "Name": "Nombre" } ]
+        },
+        "EditionType": "inline"
+    },
+    "ForeignValues": [ {"ItemName": "LocationPostalCode" } ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Nombre", "Label": "Nombre", "Type": "text", "Length": 150, "Required": true },
+        { "Name": "NRegistro", "Label": "Nºregistro", "Type": "text", "Length": 10 },
+        { "Name": "Direccion", "Label": "Dirección", "Type": "text", "Length": 100 },
+        { "Name": "LocationPostalCodeId", "Label": "C.P.", "Type": "long" },
+        { "Name": "Tel1", "Label": "Teléfono 1", "Type": "text", "Length": 10 },
+        { "Name": "Tel2", "Label": "Teléfono 2", "Type": "text", "Length": 10 },
+        { "Name": "Fax", "Label": "FAX", "Type": "text", "Length": 10 },
+        { "Name": "Email", "Label": "Email", "Type": "email" },
+        { "Name": "Web", "Label": "Web", "Type": "url" }
+    ],
+	"Lists": [ 
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "FormPage",
+			"Columns": [
+                { "DataProperty": "Nombre", "Search": true, "Orderable": true, "Linkable": true },
+                { "DataProperty": "NRegistro", "Width": 100, "Search": true, "Orderable": true, "Linkable": true },
+                { "DataProperty": "Tel1", "Width": 100, "Search": true, "Orderable": true, "Linkable": true },
+                { "DataProperty": "Email", "Width": 200, "Search": true, "Orderable": true, "Linkable": true }
+            ]
+        }
+	]
+}

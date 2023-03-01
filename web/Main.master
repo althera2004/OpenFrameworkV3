@@ -535,6 +535,7 @@
 		<script src="/js/PopupItem.js"></script>
 		<script src="/js/ItemTools.js"></script>
 		<script src="/js/Search.js"></script>
+		<script src="/assets/js/jquery.mask.js"></script>
 		
         <script charset="utf-8" type="text/javascript" src="/assets/js/tellis-sticky-note.js"></script>
         <script charset="utf-8" type="text/javascript" src="/js/Feature.Sticky.js"></script>
@@ -1030,6 +1031,8 @@ variables above and don't change anything in the actual loader code
             </div>
         </div>
     </div>
+
+	<div style="position:fixed;right:0;bottom:0;visibility:hidden" id="BottonSquare">AA</div>
 
 	<script type="text/javascript" src="/js/chronometer.js"></script>
 	<script type="text/javascript">

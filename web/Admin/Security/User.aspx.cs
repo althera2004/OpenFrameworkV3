@@ -29,6 +29,7 @@
 
             this.UserData = ApplicationUser.ById(userId,this.master.CompanyId, this.master.InstanceName);
             this.GetGroups();
+            this.RenderAccessGrants();
         }
 
         private void GetGroups()
@@ -49,6 +50,44 @@
             }
 
             this.LtGroups.Text = res.ToString();
+        }
+
+        private void RenderAccessGrants()
+        {
+            var res = new StringBuilder();
+            foreach (var itemDefinition in this.master.Instance.ItemDefinitions.OrderBy(d => d.Layout.Label))
+            {
+                res.AppendFormat(CultureInfo.InvariantCulture, @"<tr class=""GrantRow"" id=""Item_{0}"">", itemDefinition.Id);
+                res.AppendFormat(
+                    CultureInfo.InvariantCulture,
+                    @"<td style=""width:30px;""><i class=""{0} blue""></i></td><td>{1}</td>",
+                    itemDefinition.Layout.Icon,
+                    itemDefinition.Layout.Label);
+
+                var r = false;
+                var w = false;
+                var d = false;
+                if (this.UserData.Grants.Any(g => g.ItemId == itemDefinition.Id))
+                {
+                    var grant = this.UserData.Grants.First(g => g.ItemId == itemDefinition.Id);
+                    r = grant.Grants.Contains("R");
+                    w = grant.Grants.Contains("W");
+                    d = grant.Grants.Contains("D");
+                }
+
+                res.AppendFormat(
+                    CultureInfo.InvariantCulture,
+                    @"
+                        <td style=""text-align:center;width:100px;""><i class=""fa {0}""></td>
+                        <td style=""text-align:center;width:100px;""><i class=""fa {1}""></td>
+                        <td style=""text-align:center;width:100px;""><i class=""fa {2}""></td>",
+                    r ? "fa-check green" : "fa-ban red",
+                    w ? "fa-check green" : "fa-ban red",
+                    d ? "fa-check green" : "fa-ban red");
+                res.Append("</tr>");
+            }
+
+            this.LtAccessGrants.Text = res.ToString();
         }
     }
 }

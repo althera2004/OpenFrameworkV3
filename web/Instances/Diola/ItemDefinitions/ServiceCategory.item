@@ -1,0 +1,30 @@
+﻿{
+    "Id": 500, 
+	"ItemName": "ServiceCategory",
+	"Description": "Categoría de servicio",
+    "Layout": {
+        "Icon": "far fa-list",
+        "Label": "Categoría",
+        "LabelPlural": "Categoría",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [ { "Name": "Nombre" } ]
+        },
+        "EditionType": "inline"
+    },
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Nombre", "Label": "Nombre", "Type": "text", "Length": 150, "Required": true }
+    ],
+	"Lists": [ 
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "InLine",
+			"Columns": [
+                { "DataProperty": "Nombre", "Search": true, "Orderable": true, "Linkable": true }
+            ]
+        }
+	]
+}

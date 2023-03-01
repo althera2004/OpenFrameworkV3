@@ -1,0 +1,90 @@
+﻿{
+    "Id": 2071,
+    "ItemName": "Tarifa",
+    "Layout": {
+        "Icon": "fas fa-dollar-sign",
+        "Label": "Tarifa",
+        "LabelPlural": "Tarifes",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Nombre" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "PrimaryKeys": [ ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Nombre", "Label": "Nom de la tarifa", "Type": "text", "Length": 100, "Required": true },
+        { "Name": "ImportG0", "Label": "Import sense grau", "Type": "money", "Required": true, "FK": true },
+        { "Name": "ImportG1", "Label": "Grau 1", "Type": "money", "Required": true, "FK": true },
+        { "Name": "ImportG2", "Label": "Grau 2", "Type": "money", "Required": true, "FK": true },
+        { "Name": "ImportG3", "Label": "Grau 3", "Type": "money", "Required": true, "FK": true },
+        { "Name": "Periodo", "Label": "Periode", "Type": "int", "FK": true },
+        { "Name": "TipoPlaza", "Label": "Tipus de plaça", "Type": "int", "FK": true },
+        { "Name": "IVA", "Label": "IVA", "Type": "int", "FK": true }
+    ],
+	"Lists": [ 
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+			"PageSize": 50,
+            "EditAction": 3,
+            "Columns": [
+                { "DataProperty": "Nombre", "Linkable": true },
+                { "DataProperty": "TipoPlaza", "Width": 150, "RenderData": "TARIFA_TipoPlaza", "Align": "left" },
+                { "DataProperty": "IVA", "Width": 60, "Linkable": true },
+                { "DataProperty": "ImportG1", "Width": 120 },
+                { "DataProperty": "ImportG2", "Width": 120 },
+                { "DataProperty": "ImportG3", "Width": 120 },
+                { "DataProperty": "Periodo", "Width": 120, "RenderData": "TARIFA_PeriodoColumn", "Align": "left" }
+            ]
+        }
+	],
+	"Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"Tabs": [
+				{
+					"Id": "data",
+					"Label": "Tarifa",
+					"Rows": [
+						{
+							"Fields": [
+								{ "Name": "Nombre" },
+								{ "Name": "TipoPlaza", "ColSpan":2 },
+								{ "Type": "Blank" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "IVA" },
+								{ "Name": "Periodo" },
+								{ "Type": "Blank" },
+								{ "Type": "Blank" }
+							]
+						},
+						{
+							"Label": "Imports",
+							"Fields": [
+								{ "Name": "ImportG1" },
+								{ "Name": "ImportG2" },
+								{ "Name": "ImportG3" },
+								{ "Type": "Blank" }
+							]
+						},
+						{
+							"Hidden": true,
+							"Fields": [
+								{ "Name": "ImportG0" }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

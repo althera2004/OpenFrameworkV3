@@ -57,6 +57,15 @@ public class SecurityService : WebService
 
     [WebMethod(EnableSession = false)]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public ActionResult RecoverPassword(string credential)
+    {
+        var dataClean = Basics.Base64Decode(credential).Replace("||||", "¶");
+        var parts = dataClean.Split('¶');
+        return ApplicationUser.RecoverPassword(parts[0], parts[1], parts[2]);
+    }
+
+    [WebMethod(EnableSession = false)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public ActionResult ChangePassword(string credential)
     {
         var dataClean = Basics.Base64Decode(credential).Replace("||||", "¶");

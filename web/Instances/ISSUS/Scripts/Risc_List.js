@@ -14,18 +14,24 @@
 }
 
 function RISC_ResultColumn(data, row) {
+	console.log(data , row);
 	var res = data;
 	
 	if(row.E === 3) {
 		res = {
 			"data": "<strong class=\"red\">"+data+"</strong>",
-			"title": ""
+			"title": "Significatiu"
 		};
 	}
 	else if(row.E === 2) {
 		res = {
-			"data": "<strong>"+data+"</strong>",
-			"title": ""
+			"data": "<strong class=\"orange\">"+data+"</strong>",
+			"title": "Assumit"
+		};
+	} else {
+		res = {
+			"data": "<strong class=\"green\">"+data+"</strong>",
+			"title": "No significatiu"
 		};
 	}
 	
@@ -36,6 +42,14 @@ function RISC_CUSTOM_AfterFill() {
 	console.log("RISC_CUSTOM_AfterFill");
 	$.each($("#Risc_Custom_ListBody tr"), function(a,i) {
 		var cell = $(i).children()[0];
+		if($(cell).data("orderdata") === 1)
+		{
+			$(i).css("backgroundColor", "#f0f9f2");
+		}
+		if($(cell).data("orderdata") === 2)
+		{
+			$(i).css("backgroundColor", "#f9f0f2");
+		}
 		if($(cell).data("orderdata") === 3)
 		{
 			$(i).css("backgroundColor", "#f9f0f2");

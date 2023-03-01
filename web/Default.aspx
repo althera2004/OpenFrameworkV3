@@ -150,7 +150,7 @@
                         "BtnCorporativeCancel": "Cancelar",
                         "MsgCorporative": "Accederá con un usuario corporativo.<br />Por favor, indique su nombre para indentificarse.",
                         "Cnn": "Conectando...",
-                        "UserRequired": "L'usuari és obligatori",
+                        "UserRequired": "El usuario es obligatorio",
                         "PasswordInvalid": "El mail y/o la contraseña no son válidos",
                         "Remember": "Recuperar contraseña"
                     },
@@ -162,7 +162,7 @@
                         "BtnCorporativeCancel": "Cancel·lar",
                         "MsgCorporative": "Accedirà amb un usuari corporatiu.<br />Si us plau, indiqui el seu nom par a indentificar-se.",
                         "Cnn": "Conectant...",
-                        "UserRequired": "El usuario es obligatorio",
+                        "UserRequired": "L'usuari és obligatori",
                         "PasswordInvalid": "El mail i/o la paraula de pas no són vàlids",
                         "Remember": "Recuperar paraula de pas"
                     }
@@ -262,7 +262,7 @@
                                                     </h4>
                                                     <div id="Remember" style="display: none;">
                                                         <hr />
-                                                        <button type="button" class="pull-right btn btn-sm btn-success col-xs-12" id="BtnRemember"></button>
+                                                        <button type="button" class="pull-right btn btn-sm btn-success col-xs-12" id="BtnRemember">dfdfdf</button>
                                                     </div>
                                                     <div id="Corporative" style="display: none;">
                                                         <div id="CorporativeMessage" style="text-align: left; padding: 4px; border: 1px solid #ddd; background-color: #f0f0f0;"></div>

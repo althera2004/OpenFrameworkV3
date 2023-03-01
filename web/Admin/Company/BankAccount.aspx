@@ -65,7 +65,7 @@ table.scroll tbody {
         </div>
         <div class="col-lg-12" id="BankAccountForm" style="display:none;">
             <div class="hpanel hblue">
-                <div class="panel-heading hbuilt">
+                <div class="panel-heading hbuilt" id="BankAccountFormTitle">
                     Editar cuenta bancaria
                 </div>
                 <div class="panel-body">
@@ -129,7 +129,6 @@ table.scroll tbody {
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ContentScriptFiles" runat="server">
-    <script type="text/javascript" src="/Admin/Company/BankAccount.js"></script>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="ContentScripts" runat="server">
     <script type="text/javascript">

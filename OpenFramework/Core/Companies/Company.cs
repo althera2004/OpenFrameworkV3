@@ -646,7 +646,7 @@ namespace OpenFrameworkV3.Core.Companies
                                     res.adresses = CompanyPostalAddress.ByCompany(res.Id, instanceName).ToList();
                                     res.contactPersons = CompanyContactPerson.ByCompany(res.Id, instanceName).ToList();
 
-                                    res.SecurityConfig = CompanySecurityConfig.Get(res.Id, instanceName);
+                                    res.SecurityConfig = CompanySecurityConfig.ByCompany(res.Id, instanceName);
                                 }
                             }
 

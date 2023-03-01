@@ -1,0 +1,33 @@
+﻿{
+    "Id": 501, 
+	"ItemName": "ServiceConcept",
+	"Description": "Servicio",
+    "Layout": {
+        "Icon": "far fa-list",
+        "Label": "Servicio",
+        "LabelPlural": "Servicios",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [ { "Name": "Nombre" } ]
+        },
+        "EditionType": "inline"
+    },
+    "ForeignValues": [ { "ItemName": "ServiceCategory" } ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Nombre", "Label": "Nombre", "Type": "text", "Length": 150, "Required": true },
+        { "Name": "ServiceCategoryId", "Label": "Categoría", "Type": "long", "Required": true }
+    ],
+	"Lists": [ 
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "InLine",
+			"Columns": [
+                { "DataProperty": "Nombre", "Search": true, "Orderable": true, "Linkable": true },
+                { "DataProperty": "ServiceCategoryId","Width": 200, "Search": true, "Orderable": true, "Linkable": true }
+            ]
+        }
+	]
+}

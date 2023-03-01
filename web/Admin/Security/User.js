@@ -75,7 +75,7 @@ function SECURITYUSER_SetLayout() {
         }
     }
 
-    if (Instance.Profile.Gender === true) { $("#DivGender").show(); }
+    /*if (Instance.Profile.Gender === true) { $("#DivGender").show(); }
     if (Instance.Profile.BirthDate === true) { $("#DivBirthDate").show(); }
     if (Instance.Profile.IdentificationCard === true) { $("#DivIdentificationCard").show(); }
     if (Instance.Profile.Nacionality === true) { $("#DivNacionality").show(); }
@@ -100,7 +100,7 @@ function SECURITYUSER_SetLayout() {
     if (existsSocial === true) {
         $("#SocialTitle").show();
         $("#SocialData").show();
-    }
+    }*/
 
 }
 

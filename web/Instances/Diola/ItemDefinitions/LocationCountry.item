@@ -1,0 +1,32 @@
+﻿{
+    "Id": 2000,
+    "ItemName": "LocationCountry",
+    "Layout": {
+        "Icon": "fa fa-globe",
+        "Label": "Pais",
+        "LabelPlural": "Paissos",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Name" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "PrimaryKeys": [ ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Name", "Label": "Nom", "Type": "text", "Length": 50, "Required": true }
+    ],
+	"Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "InLine",
+			"Columns": [
+                { "DataProperty": "Name", "Search": true, "Orderable": true, "Linkable": true }
+            ]
+        }
+	]
+}

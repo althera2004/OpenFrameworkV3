@@ -47,10 +47,11 @@
                 { "DataProperty": "Name", "Search": true, "Orderable": true },
                 { "DataProperty": "DocumentCategoryId", "Width": 200, "Search": true },
                 { "DataProperty": "Origin", "Width": 90 },
-                { "DataProperty": "Location", "Width": 150 },
+                { "DataProperty": "Location", "Width": 150, "Render": "DOCUMENT_Columnlocation" },
                 { "DataProperty": "Revisio", "Width": 50, "Label": "Rev." },
                 { "DataProperty": "FAlta", "Width": 90 },
-                { "DataProperty": "FInactivate", "HiddenList": true }
+                { "DataProperty": "FInactivate", "HiddenList": true },
+                { "DataProperty": "Document", "HiddenList": true }
             ],
             "Sorting":  {"Index": 1, "SortingType": "asc"},
 			"Filter": [

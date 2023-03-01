@@ -1,4 +1,10 @@
-﻿function BANKACCOUNT_RenderTable() {
+﻿$(document).ready(function () {
+    $("#IBAN").mask("SS00 0000 0000 0000 0000 0000", {
+        "placeholder": "____ ____ ____ ____ ____ ____"
+    });
+});
+
+function BANKACCOUNT_RenderTable() {
     var res = "";
     for (var b = 0; b < BankAccounts.length; b++) {
         res += BANKACCOUNT_RenderRow(BankAccounts[b]);
@@ -15,7 +21,7 @@ function BANKACCOUNT_RenderRow(data) {
     res += "    <td style=\"width:250px;\">" + data.IBAN + "</td>";
     res += "    <td>" + data.BankName + "</td>";
     res += "    <td style=\"width:250px;\">" + data.Alias + "</td>";
-    res += "    <td style=\"width:120px;text-align: center;\">" + (data.Main ? "<i class=\"fa fa-check\"></i>" : "") + "</td>";
+    res += "    <td style=\"width:120px;text-align: center;\">" + (data.Main ? "<i class=\"fa fa-check green\"></i>" : "") + "</td>";
     res += "    <td class=\"action-buttons\" data-buttons=\"2\" style=\"width: 77px; white-space: nowrap;\">";
     res += "      <a onclick=\"BANKACCOUNT_Edit(" + data.Id + ");\" class=\"BankAccountActionButton\">";
     res += "        <i class=\"fa fa-pencil-alt\"></i>";
@@ -29,6 +35,7 @@ function BANKACCOUNT_RenderRow(data) {
 }
 
 var BANKACCOUNT_FormShowed = false;
+var action = null;
 function BANKACCOUNT_ShowForm() {
     BANKACCOUNT_FormShowed = true;
     $("#BankAccountForm").show();
@@ -53,6 +60,8 @@ function BANKACCOUNT_Add() {
         return false;
     }
 
+    action = "ADD";
+    $("#BankAccountFormTitle").html("Añadir cuenta bancaria");
     $("#BANKACCOUNT_Id").val(-1);
     $("#BankName").val("");
     $("#IBAN").val("");
@@ -77,7 +86,10 @@ function BANKACCOUNT_Edit(id) {
         PopupWarning("Editando", Dictionary.Common_Warning);
         return false;
     }
+
+    action = "UPDATE";
     var bankAccount = BANKACCOUNT_ById(id);
+    $("#BankAccountFormTitle").html("Editar cuenta bancaria");
     $("#BANKACCOUNT_Id").val(id);
     $("#BankName").val(bankAccount.BankName);
     $("#IBAN").val(bankAccount.IBAN);
@@ -111,7 +123,7 @@ function BANKACCOUNT_Save() {
         "account": {
             "Id": $("#BANKACCOUNT_Id").val() * 1,
             "CompanyId": Company.Id,
-            "IBAN": $("#IBAN").val(),
+            "IBAN": $("#IBAN").val().split('-').join(''),
             "Swift": $("#SWIFT").val(),
             "BankName": $("#BankName").val(),
             "Main": $("#CBMain").prop("checked"),
@@ -138,9 +150,9 @@ function BANKACCOUNT_Save() {
                 BANKACCOUNT_HideForm();
                 BANKACCOUNT_ByCompany();
 
-                var text = "IBAN " + (action === "UPDATE" ? "modificada" : "añadida") + " correctamente.";
-
-                $("#MainBtnSave").notify(text, { "position": "top", "className": "success" });
+                var text = action === "UPDATE" ? Dictionary.Core_BankAccount_Message_SuccessUpdate : Dictionary.Core_BankAccount_Message_SuccessAdd;
+                $("#BottonSquare").notify(text, { "position": "top right", "className": "success" });
+                //$("#MainBtnSave").notify(text, { "position": "top", "className": "success" });
             }
             else {
                 PopupWarning(msg.d.MessageError, Dictionary.Common_Warning);
@@ -170,11 +182,8 @@ function BANKACCOUNT_ByCompany() {
         "dataType": "json",
         "data": JSON.stringify(data, null, 2),
         "success": function (msg) {
-            console.log(msg.d);
-
             eval("BankAccounts=" + msg.d + ";");
             BANKACCOUNT_RenderTable();
-
         },
         "error": function (msg) {
             PopupWarning(msg.responseText);

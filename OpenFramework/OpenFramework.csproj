@@ -215,6 +215,7 @@
     <Compile Include="Core\Bindings\ColumnsUserGet.cs" />
     <Compile Include="Core\Companies\CompanySecurityConfig.cs" />
     <Compile Include="Core\Configuration\BillingConfig.cs" />
+    <Compile Include="Core\Configuration\UserProfileConfig.cs" />
     <Compile Include="Core\Configuration\Config.cs" />
     <Compile Include="Core\Configuration\CustomConfig.cs" />
     <Compile Include="Core\DataAccess\DataAdapter.cs" />
@@ -301,6 +302,7 @@
     <Compile Include="Core\ItemManager\ItemGeolocation.cs" />
     <Compile Include="Mail\Bindings\ColumnsMailBoxGet.cs" />
     <Compile Include="Mail\MailBox.cs" />
+    <Compile Include="Mail\MailManager.cs" />
     <Compile Include="Reports\FieldData.cs" />
     <Compile Include="Reports\ImageData.cs" />
     <Compile Include="Reports\PdfReportTemplate.cs" />

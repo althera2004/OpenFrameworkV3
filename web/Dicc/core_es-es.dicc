@@ -39,6 +39,8 @@ Common_Attach_BtnDownloadAll::Descargar todo
 Common_Attach_TabTitle::Documentos adjuntos
 Common_Back::Volver
 Common_BrowserUpgrade::Please upgrade your browser, because your current browser lacks some new features we need!
+Common_FooterBtnActivate::Activar
+Common_FooterBtnInactivate::Desctivar
 Common_Btn_AddDocument::Crear document
 Common_Btn_DeleteDocument::Eliminar documento
 Common_Btn_DeleteDocumentHistory::Eliminar document
@@ -583,6 +585,7 @@ Core_Item_Tab_Json::Defición del ítem
 Core_Item_Tab_ListScript::Script de lista
 Core_Item_Tab_Main::Datos básicos
 Core_MailBox_Btn_AddMailBox::Añadir buzón
+Core_MailBox_Label_User::Usuario
 Core_MailBoxes::Buzones de correos
 Core_MailConfig_Header_Email::Usuario
 Core_MailConfig_Header_Name::Buzón

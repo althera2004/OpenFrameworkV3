@@ -38,7 +38,7 @@ namespace OpenFrameworkV3.Web.Admin.Company
             this.master.BreadCrumb.SetTitle("Companyia: " + this.master.InstanceName);
             this.master.SetPageType("pageAdmin");
 
-            this.master.AddScript("/js/jquery.mask.js");
+            //this.master.AddScript("/js/jquery.mask.js");
             this.master.AddScript("/Admin/Company/BankAccount.js");
 
             var bankAccounts = CompanyBankAccount.ByCompany(this.master.CompanyId, this.master.InstanceName);

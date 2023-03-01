@@ -22,6 +22,8 @@ namespace OpenFrameworkV3.Core.Security
     using OpenFrameworkV3.Core.DataAccess;
     using OpenFrameworkV3.Core.ItemManager;
     using OpenFrameworkV3.Core.Navigation;
+    using OpenFrameworkV3.Mail;
+    using OpenFrameworkV3.Security;
     using OpenFrameworkV3.Tools;
 
     public class ApplicationUser
@@ -422,7 +424,27 @@ namespace OpenFrameworkV3.Core.Security
 
                                     res.Active = rdr.GetBoolean(ColumnsUserGet.Active);
 
-                                    res.grants = Grant.ByUser(res.Id, 1, instanceName).ToList();
+                                    if (res.AdminUser)
+                                    {
+                                        // Si es adminUser tiene acceso a todo
+                                        res.grants = new List<Grant>();
+                                        foreach(var item in Persistence.ItemDefinitions(instanceName))
+                                        {
+                                            res.grants.Add(new Grant
+                                            {
+                                                ApplicationUserId = res.Id,
+                                                CompanyId = companyId,
+                                                Grants = "RWD",
+                                                ItemId = item.Id,
+                                                ItemName = item.ItemName,
+                                                SecurityGroupId = Constant.DefaultId
+                                            });
+                                        }
+                                    }
+                                    else
+                                    {
+                                        res.grants = Grant.ByUser(res.Id, companyId, instanceName).ToList();
+                                    }
 
                                     res.groups = SecurityGroup.ByUserId(res.Id, companyId, instanceName).ToList();
 
@@ -519,6 +541,48 @@ namespace OpenFrameworkV3.Core.Security
             return new ReadOnlyCollection<ApplicationUser>(res);
         }
 
+        public static ReadOnlyCollection<long> CompanyMemeberShip(long applicationUserId, string instanceName)
+        {
+            var res = new List<long>();
+            var cns = string.Empty;
+            using(var instance = Persistence.InstanceByName(instanceName))
+            {
+                cns = instance.Config.ConnectionString;
+            }
+
+            if (!string.IsNullOrEmpty(cns))
+            {
+                using (var cmd = new SqlCommand("Core_CompanyMemberShip_ByUser"))
+                {
+                    using(var cnn = new SqlConnection(cns))
+                    {
+                        cmd.Connection = cnn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUserId));
+                        try
+                        {
+                            cmd.Connection.Open();
+                            using(var rdr = cmd.ExecuteReader())
+                            {
+                                while (rdr.Read())
+                                {
+                                    res.Add(rdr.GetInt64(0));
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            if(cmd.Connection.State != ConnectionState.Closed)
+                            {
+                                cmd.Connection.Close();
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new ReadOnlyCollection<long>(res);
+        }
 
         public static ActionResult MaintainSession(long applicationUserId, string password,long companyId, string instanceName)
         {
@@ -721,6 +785,91 @@ namespace OpenFrameworkV3.Core.Security
         private ActionResult Update(long applicationUserId, long companyId, string instanceName)
         {
             var res = ActionResult.NoAction;
+            return res;
+        }
+
+        public static ActionResult RecoverPassword(string userEmail, string instanceName, string ip)
+        {
+            var res = ActionResult.NoAction;
+            var cns = Persistence.ConnectionString(instanceName);
+            if (!string.IsNullOrEmpty(cns))
+            {
+                var applicationUser = ApplicationUser.ByEmail(userEmail, instanceName);
+
+                using (var cmd = new SqlCommand("Core_User_RecoverPassword"))
+                {
+                    using (var cnn = new SqlConnection(cns))
+                    {
+                        var newPass = RandomPassword.Generate(6, 6);
+                        var newPassDB = Encrypt.EncryptString(Basics.Reverse(newPass), "OpenFramework");
+
+                        cmd.Connection = cnn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(DataParameter.Input("@ApplicationUserId", applicationUser.Id));
+                        cmd.Parameters.Add(DataParameter.Input("@NewPassword", newPassDB, 50));
+
+                        try
+                        {
+                            cmd.Connection.Open();
+                            cmd.ExecuteNonQuery();
+                            res = MailManager.SendPaswordRecovery(applicationUser.Id, newPass, instanceName);
+                        }
+                        finally
+                        {
+                            if (cmd.Connection.State != ConnectionState.Closed)
+                            {
+                                cmd.Connection.Close();
+                            }
+                        }
+                    }
+                }
+            }
+
+            return res;
+        }
+
+        public static ApplicationUser ByEmail(string email, string instanceName)
+        {
+            var res = ApplicationUser.Empty;
+            var cns = string.Empty;
+            using(var instance = Persistence.InstanceByName(instanceName))
+            {
+                cns = instance.Config.ConnectionString;
+            }
+
+            if (!string.IsNullOrEmpty(cns))
+            {
+                using (var cmd = new SqlCommand("Core_ApplicationUser_ByEmail"))
+                {
+                    using(var cnn = new SqlConnection(cns))
+                    {
+                        cmd.Connection = cnn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(DataParameter.Input("@ApplicationUserEmail", email, 100));
+                        try
+                        {
+                            cmd.Connection.Open();
+                            using(var rdr = cmd.ExecuteReader())
+                            {
+                                if (rdr.HasRows)
+                                {
+                                    rdr.Read();
+                                    var applicationUserId = rdr.GetInt64(0);
+                                    res = ApplicationUser.ById(applicationUserId, instanceName);
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            if(cmd.Connection.State != ConnectionState.Closed)
+                            {
+                                cmd.Connection.Close();
+                            }
+                        }
+                    }
+                }
+            }
+
             return res;
         }
 

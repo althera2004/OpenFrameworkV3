@@ -1,0 +1,34 @@
+﻿{
+    "Id": 201,
+    "ItemName": "Medicamento",
+    "Layout": {
+        "Icon": "fa fa-pills",
+        "Label": "Medicament",
+        "LabelPlural": "Medicaments",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [
+                { "Name": "Nombre" }
+            ]
+        },
+        "EditionType": "inline"
+    },
+    "PrimaryKeys": [ ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Nombre", "Label": "Medicament", "Type": "text", "Length": 100, "Required": true }
+    ],
+    "Lists": [
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+			"PageSize": 50,
+            "Layout": 1,
+            "EditAction": "InLine",
+			"Columns": [
+                { "DataProperty": "Nombre", "Linkable": true, "Orderable": true, "Search": true }
+            ], 
+            "Sorting": {"Index": 1, "SortingType": "asc"}
+        }
+	]
+}

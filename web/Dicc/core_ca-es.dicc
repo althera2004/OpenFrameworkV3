@@ -18,6 +18,9 @@ Chosen_NoResultsText::No hi han coincidències
 Common_Accept::Aceptar
 Common_AcceptAndExit::Aceptar i sortir
 Core_Feature_Dictionary_Label::Diccionaris
+Common_FooterLabelActions::Accions
+Common_FooterBtnActivate::Activar
+Common_FooterBtnInactivate::Desctivar
 Common_Action_Success::Operació realitzada amb èxit
 Common_Actions::Accions
 Common_Activate_Popup_BtnOk::Activar
@@ -596,7 +599,7 @@ Core_MailBox_FormTitle2::Enviaments a tercers
 Core_MailBox_Tip1::No que apareixerà com a remitent del correu.
 Core_MailBox_Label_Email::Email
 Core_MailBox_Label_SenderName::Nom
-Core_MailBox_LabeL_User::Usuari
+Core_MailBox_Label_User::Usuari
 Core_MailBox_Label_Password::Paraula de pas
 Core_MailBox_Label_Server::Servidor
 Core_MailBox_Label_Type::Tipus
@@ -1069,3 +1072,8 @@ Core_Contract_Services::Serveis contractats
 Item_Attachment_Btn_New::Afegir adjunt
 Core_Documents::Gestió documental
 Common_NoChangesToSave::No hi ha canvis per a desar
+Security_Group_Message_SeaveSuccess::Grup # modificat correctament
+Core_Security_PasswordPolicy::Política de contrasenyes
+Core_Security_AccessPolicy::Política d'accés
+Core_Security_GrantsPolicy::Política de permissos
+Core_Security_ExternalUsers::Usuaris externs

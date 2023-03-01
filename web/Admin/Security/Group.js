@@ -80,6 +80,8 @@ function SECURITYGROUP_Save() {
         "data": JSON.stringify(data, null, 2),
         "success": function (msg) {
             console.log("attachs = " + msg.d + ";");
+            var message = Dictionary.Security_Group_Message_SeaveSuccess.split('#').join($("#Name").val());
+            Notify(message, "success");
         },
         "error": function (msg) {
             PopupWarning(msg.responseText);

@@ -76,7 +76,7 @@
                     <label><%=this.Translate("Common_Footer_Label_Actions") %>:</label>&nbsp;
                     <button type="button" id="MainBtnSave" class="btn btn-xs btn-info" onclick="MAILBOXES_SaveMain();"><%=this.Translate("Common_Save") %></button>
                     <button type="button" id="MainBtnSendTest" class="btn btn-xs btn-info"><%=this.Translate("Core_MailBox_Button_SendTest") %></button>
-                    <button type="button" id="MainBtnCheck" class="btn btn-danger btn-xs" onclick="MAILBOXES_CheckBlackListMain();"><%=this.Translate("Core_MailBox_Button_BlackList") %></button>
+                    <button type="button" id="MainBtnCheck" class="btn btn-danger btn-xs" onclick="MAILBOXES_CheckBlackList(true);"><%=this.Translate("Core_MailBox_Button_BlackList") %></button>
                 </div>
             </div>
         </div>
@@ -113,9 +113,8 @@
                             <%=this.Translate("Core_MailBox_Tip3") %>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"><%=this.Translate("Core_MailBox_Label_User") %></label>
-
                                 <div class="col-sm-10">
-                                    <input type="password" id="Third_MailUser" class="form-control" name="password" />
+                                    <input type="text" id="Third_MailUser" class="form-control" name="password" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -155,9 +154,9 @@
 
                 <div class="panel-footer">
                     <label><%=this.Translate("Common_Footer_Label_Actions") %>:</label>&nbsp;
-                    <button type="button" id="ThirdBtnSave" class="btn btn-xs btn-info"><%=this.Translate("Common_Save") %></button>
+                    <button type="button" id="ThirdBtnSave" class="btn btn-xs btn-info" onclick="MAILBOXES_SaveThirdParty();"><%=this.Translate("Common_Save") %></button>
                     <button type="button" id="ThirdBtnSendTest" class="btn btn-xs btn-info"><%=this.Translate("Core_MailBox_Button_SendTest") %></button>
-                    <button type="button" id="ThirdBtnCheck" class="btn btn-danger btn-xs"><%=this.Translate("Core_MailBox_Button_BlackList") %></button>
+                    <button type="button" id="ThirdBtnCheck" class="btn btn-danger btn-xs" onclick="MAILBOXES_CheckBlackList(false);"><%=this.Translate("Core_MailBox_Button_BlackList") %></button>
                 </div>
             </div>
         </div>

@@ -1,0 +1,31 @@
+﻿{
+    "Id": 203, 
+	"ItemName": "Zona",
+	"Description": "Zona",
+    "Layout": {
+        "Icon": "far fa-map",
+        "Label": "Zona",
+        "LabelPlural": "Zonas",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [ { "Name": "Nombre" } ]
+        },
+        "EditionType": "inline"
+    },
+    "ForeignValues": [ ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Nombre", "Label": "Nombre", "Type": "text", "Length": 150, "Required": true }
+    ],
+	"Lists": [ 
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+            "EditAction": "InLine",
+			"Columns": [
+                { "DataProperty": "Nombre", "Search": true, "Orderable": true, "Linkable": true }
+            ]
+        }
+	]
+}

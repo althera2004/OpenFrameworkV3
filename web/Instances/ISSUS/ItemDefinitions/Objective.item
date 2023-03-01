@@ -22,7 +22,7 @@
 		{ "Name": "EmployeeId", "Label": "Responsable", "Type": "long" },
 		{ "Name": "DateStart", "Label": "Inici", "Type": "datetime" },
 		{ "Name": "DatePreview", "Label": "Data prevista", "Type": "datetime" },
-		{ "Name": "DateEnd", "Label": "Finalitzacio", "Type": "datetime" },
+		{ "Name": "DateEnd", "Label": "Finalització", "Type": "datetime" },
 		{ "Name": "Indicador", "Label": "Indicador vinculat", "Type": "boolean" },
 		{ "Name": "Meta", "Label": "Meta", "Type": "FixedList", "FixedListName": "ObjectiuMeta" },
 		{ "Name": "MetaValue", "Label": "Meta valor", "Type": "decimal", "Precission": 6 },

@@ -1,7 +1,3 @@
-USE [openf_support]
-GO
-
-/****** Object:  UserDefinedFunction [dbo].[fn_split]    Script Date: 27/12/2022 13:51:31 ******/
 SET ANSI_NULLS ON
 GO
 

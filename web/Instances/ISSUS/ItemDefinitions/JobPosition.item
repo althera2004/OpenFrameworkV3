@@ -34,9 +34,9 @@
             "Layout": 1,
             "EditAction": "FormPage",
 			"Columns": [
-                { "DataProperty": "Name" },
-                { "DataProperty": "JobPositionId", "Width": 300 },
-                { "DataProperty": "DepartmentId", "Width": 300 }
+                { "DataProperty": "Name", "Linkable": true, "Orderable": true, "Search": true },
+                { "DataProperty": "JobPositionId", "Orderable": true, "Search": true, "Width": 300 },
+                { "DataProperty": "DepartmentId", "Orderable": true, "Search": true, "Width": 300 }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
             "Sorting": {"Index": 1, "SortingType": "asc"} 

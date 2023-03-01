@@ -1,0 +1,7 @@
+{
+    "ConnectionString": "Data Source=hw120.dinaserver.com;Initial Catalog=openf_diola;User Id=openf_diola;Password=P@ssw0rd;",
+    "Id": 2023,
+    "Name": "Diola",
+    "Description": "Diola",
+    "DefaultLanguage": "es-es"
+}

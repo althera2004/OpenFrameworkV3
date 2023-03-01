@@ -969,7 +969,8 @@ function PageList(config) {
             }
 
             // Desde una lista principal no se eliminar, se obliga a entrar en la ficha
-            if (PageType === "PageList") {
+            // Excepto en modo Inline
+            if (PageType === "PageList" && listDefinition.EditAction != "InLine") {
                 buttonDelete = false;
             }
 
@@ -977,7 +978,10 @@ function PageList(config) {
             var editAction = "GoEncryptedView('" + itemDefinition.ItemName + "', '" + this.ListDefinition.Id + "', " + data.Id + ",'" + this.ListDefinition.FormId + "', null)";
             if (listDefinition.EditAction === "Popup") {
                 //editAction = "PopupItem('" + itemDefinition.Id + "', '" + listDefinition.Id + "', this.id);";
-                editAction = "PopupItem({'ItemName': '" + this.ItemDefinition.ItemName + "','ListId': '" + this.ListDefinition.Id + "','ItemId': " + data.Id+"});"
+                editAction = "PopupItem({'ItemName': '" + this.ItemDefinition.ItemName + "','ListId': '" + this.ListDefinition.Id + "','ItemId': " + data.Id + "});"
+            }
+            else if (listDefinition.EditAction === "InLine") {
+                editAction = "InLineEdition('" + itemDefinition.ItemName + "', '" + this.ListDefinition.Id + "', " + data.Id + ",'" + this.ListDefinition.FormId + "', null)";
             }
 
             if (buttonEdit) {
@@ -1089,7 +1093,7 @@ function PageList(config) {
         var cellTitle = "";
 
         // RenderData
-        if (typeof column.RenderData !== "undefined" && column.RenderData !== null && column.RenderData !== "") {
+        if (typeof column.Render !== "undefined" && column.Render !== null && column.Render !== "") {
             var data = null;
             if (typeof rowData[dataKeyName] === "object") {
                 data = JSON.stringify(rowData[dataKeyName]);
@@ -1102,7 +1106,7 @@ function PageList(config) {
                 searchData = rowData[dataKeyName] === null ? "" : rowData[dataKeyName];
             }
 
-            var renderedData = eval(column.RenderData + "(" + data + "," + JSON.stringify(rowData) + ");");
+            var renderedData = eval(column.Render + "(" + data + "," + JSON.stringify(rowData) + ");");
 
             if (typeof renderedData === "object") {
                 textData = renderedData.data;
@@ -1200,7 +1204,16 @@ function PageList(config) {
                 }
 
                 cellData = eval(column.RenderData + "(" + data + "," + JSON.stringify(rowData) + ");");
-                searchData = cellData;
+
+                if (typeof cellData === "object") {
+                    textData = cellData.data;
+                    cellTitle = cellTitle.Title;
+                    searchData = data;
+                }
+                else {
+                    textData = cellData;
+                    searchData = cellData;
+                }
             }
             else if (field === null) {
                 if (typeof rowData[column.ReplacedBy] === 'object') {
@@ -1371,20 +1384,16 @@ function PageList(config) {
                 PopupWarning(msg.responseText);
             }
         });
+    };
 
-        /*var url = "/Instances/" + Instance.Name + "/Data/ItemDataBase.aspx?I=" + Instance.Name + "&C=" + Company.Id + "&Action=" + this.CustomAjaxSource + "&listId=" + this.ListDefinition.Id + "&ItemName=" + this.ItemDefinition.ItemName + params;
-        $.getJSON(url,
-            function (data) {
-                //console.time("TableFillData" + data.ListId, data.ItemName + " --> " + data.ListId);
-                GetDataCallBack(data);
-                //console.timeEnd("TableFillData" + data.ListId, data.ItemName + " --> " + data.ListId);
-            }).error(function (e) {
-                if (e.readyState === 4 && e.status === 200) {
-                    //console.log(eval(e.responseText));
-                    var data = eval(e.responseText);
-                    GetDataCallBack(data);
-                }
-            });*/
+    this.GetDataFromListDefinition = function () {
+        GetDataFromListDefinitionStandalone({
+            "itemName": this.ItemDefinition.ItemName,
+            "listDefinitionId": this.ListDefinition.Id,
+            "parametersList": this.GetFinalParameters(),
+            "companyId": Company.Id,
+            "instanceName": Instance.Name
+        });
     };
 
     this.GetFinalParameters = function () {
@@ -1404,50 +1413,6 @@ function PageList(config) {
 
         return finalParameters;
     }
-
-    this.GetDataFromListDefinition = function () {
-		// console.log(this.ItemDefinition.ItemName, new Date());
-        /*var finalParameters = "";
-        if (this.ListDefinition !== null) {
-            if (typeof this.ListDefinition.Parameters !== "undefined" && this.ListDefinition.Parameters !== null) {
-                for (var x = 0; x < this.ListDefinition.Parameters.length; x++) {
-                    var value = this.ListDefinition.Parameters[x].Value;
-                    if (value === "#actualItemId#") {
-                        value = itemData.Id;
-                    }
-
-                    finalParameters += this.ListDefinition.Parameters[x].Name + "^" + value + "|";
-                }
-            }
-        }*/
-
-        var data = {
-            "itemName": this.ItemDefinition.ItemName,
-            "listDefinitionId": this.ListDefinition.Id,
-            "parametersList": this.GetFinalParameters(),
-            "companyId": Company.Id,
-            "instanceName": Instance.Name
-        };
-
-        GetDataFromListDefinitionStandalone(data);
-
-        /*$.ajax({
-            "type": "POST",
-            "url": "/Async/ItemService.asmx/GetList",
-            "contentType": "application/json; charset=utf-8",
-            "dataType": "json",
-            "data": JSON.stringify(data, null, 2),
-            "success": function (msg) {
-                var data = null;
-                eval("data = " + msg.d + ";");
-                if(debugConsole === true) { console.time("TableFillData", data.ItemName + " --> " + data.ListId); }
-                GetDataCallBack(data);
-            },
-            "error": function (msg) {
-                PopupWarning(msg.responseText);
-            }
-        });*/
-    };
 
     this.ScopeList = function (data) {
         // weke
@@ -1486,6 +1451,17 @@ function PageList(config) {
 
         return res;
     };
+
+    this.UpdateData = function (data) {
+        for (var x = 0; x < this.Data.length; x++) {
+            if (this.Data[x].Id === data.Id) {
+                this.Data[x] = data;
+                break;
+            }
+        }
+
+        this.Data.push(data);
+    }
     // --------------------- END GET DATA
 }
 
@@ -2128,6 +2104,15 @@ function ListSourceItemById(itemName, listId, itemId) {
     return null;
 }
 
+async function GetDataFromCustomAjaxSource(data) {
+    try {
+        const res = await GetDataFromCustomAjaxSourceGo(data);
+        console.log("weke", res);
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 async function GetDataFromListDefinitionStandalone(data) {
     try {
         const res = await GetDataFromListDefinitionStandaloneGo(data);
@@ -2135,6 +2120,25 @@ async function GetDataFromListDefinitionStandalone(data) {
     } catch (err) {
         console.log(err);
     }
+}
+
+function GetDataFromCustomAjaxSourceGo(data) {
+    $.ajax({
+        "type": "POST",
+        "url": "/Async/ItemService.asmx/GetListCustomAjaxSource",
+        "contentType": "application/json; charset=utf-8",
+        "dataType": "json",
+        "data": JSON.stringify(data, null, 2),
+        "success": function (msg) {
+            var data = null;
+            eval("data = " + msg.d + ";");
+            console.log("TableFillData", data);
+            GetDataCallBack(data);
+        },
+        "error": function (msg) {
+            PopupWarning(msg.responseText);
+        }
+    });
 }
 
 function GetDataFromListDefinitionStandaloneGo(data) {

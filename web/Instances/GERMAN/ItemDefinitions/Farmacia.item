@@ -1,0 +1,98 @@
+﻿{
+    "Id": 202, "ItemName": "Farmacia",
+	"Description": "Farmàcia",
+    "Layout": {
+        "Icon": "far fa-clinic-medical",
+        "Label": "Farmàcia",
+        "LabelPlural": "Farmàcies",
+        "Description": {
+            "Pattern": "{0}",
+            "Fields": [ { "Name": "Nombre" } ]
+        },
+        "EditionType": "inline"
+    },
+    "ForeignValues": [ { "ItemName": "LocationWayType" }, { "ItemName": "LocationPostalCode" } ],
+    "Fields": [
+        { "Name": "Id", "Type": "long", "Required": true },
+        { "Name": "Nombre", "Label": "Nombre", "Type": "text", "Length": 150, "Required": true },
+        { "Name": "NIF", "Label": "NIF", "Type": "text", "Length": 10, "Required": true },
+        { "Name": "Titular", "Label": "Titular", "Type": "text", "Length": 100 },
+        { "Name": "NColegiado", "Label": "NºCol·legiat", "Type": "text", "Length": 15 },
+		{ "Name": "Email1", "Label": "Email", "Type": "email", "Length": 150 },
+		{ "Name": "Tel1", "Label": "Tel.", "Type": "text", "Length": 20 },
+		{ "Name": "Tel2", "Label": "Tel Urg.", "Type": "text", "Length": 20 },	
+        { "Name": "Address", "Label": "Adreça", "Type": "text", "Length": 150, "Required": true },
+        { "Name": "LocationPostalCodeId", "Label": "Código postal", "Type": "long", "ColumnDataType": "Text" },
+        { "Name": "LocationWayTypeId", "Label": "Tipo de vía", "Type": "long", "ColumnDataType": "Text" },
+		{ "Name": "Latitude", "Type": "decimal", "Label": "Latitud" },
+		{ "Name": "Longitude", "Type": "decimal", "Label": "Longitud" },
+		{ "Name": "Main", "Label": "Principal", "Type": "boolean", "DataFormat": { "Name": "ToBooleanIcon" } },
+        { "Name": "Notas", "Label": "Notes", "Type": "textarea", "Length": 2000 }
+    ],
+	"Lists": [ 
+        {
+            "Id": "Custom",
+            "FormId": "Custom",
+            "Layout": 1,
+			"PageSize": 50,
+            "EditAction": 3,
+			"Columns": [
+                { "DataProperty": "Nombre", "Search": true, "Orderable": true, "Linkable": true },
+                { "DataProperty": "Titular", "Search": true, "Orderable": true, "Linkable": true, "Width": 250 },
+                { "DataProperty": "Tel1", "Width": 100 },
+                { "DataProperty": "Main", "Width": 100 }
+            ]
+        }
+	],
+    "Forms": [
+		{
+			"Id": "Custom",
+			"FormType": "Custom",
+			"DefaultSelected": true,
+			"Tabs": [				
+				{
+					"Label": "Dades",
+					"Id": "data",
+					"Rows": [
+						{
+							"Label": "Dades principals",
+							"Fields": [
+								{ "Name": "Nombre", "ColSpan": 2 },
+								{ "Name": "NIF" },
+								{ "Name": "Main" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Titular", "ColSpan": 2 },
+								{ "Name": "NColegiado" },
+								{ "Type": "Blank" }
+							]
+						},
+						{
+							"Fields": [
+								{ "Name": "Email1", "ColSpan": 2 },
+								{ "Name": "Tel1" },
+								{ "Name": "Tel2" }
+							]
+						},
+						{
+							"Label": "Localització",
+							"Fields": [
+								{ "Name": "LocationWayTypeId" },
+								{ "Name": "Address", "ColSpan": 2 },
+								{ "Name": "LocationPostalCodeId" }
+							]
+						},
+						{
+							"Label": "Notas",
+							"Fields": [
+								{ "Name": "Notas" }
+							]
+						}
+					]
+				}
+			]
+		}
+    ]
+}

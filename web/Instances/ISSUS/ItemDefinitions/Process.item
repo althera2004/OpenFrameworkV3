@@ -32,9 +32,9 @@
             "Layout": 1,
             "EditAction": "FormPage",
 			"Columns": [
-                { "DataProperty": "Name", "Search": true, "Orderable": true },
-                { "DataProperty": "JobPositionId", "Width": 250, "Search": true },
-                { "DataProperty": "ProcessTypeId", "Width": 200, "Search": true }
+                { "DataProperty": "Name", "Search": true, "Orderable": true, "Linkable": true },
+                { "DataProperty": "JobPositionId", "Width": 250, "Search": true, "Orderable": true },
+                { "DataProperty": "ProcessTypeId", "Width": 200, "Search": true, "Orderable": true }
             ],
             "Parameters": [ {"Name": "Active", "Value": "1"} ],
             "Sorting":  {"Index": 1, "SortingType": "asc"} 
